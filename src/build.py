@@ -9,7 +9,7 @@ def main():
 
 	parser = argparse.ArgumentParser()
 	
-	f = open('db', 'w')
+	f = open('../data/db_cache.json', 'w')
 
 	print("start")
 	

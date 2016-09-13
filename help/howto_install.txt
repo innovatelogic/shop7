@@ -1,1 +1,10 @@
-setup.py install
+1. setup openpyxl package
+>> setup.py install
+
+2. install mongo driver
+install/mongodb-win32-x86_64-2008plus-ssl-3.2.9-signed.msi
+
+3. install pymongo
+
+pyhon_path/.../pip.exe
+pip install pymongo
