@@ -4,6 +4,7 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
 from openpyxl.compat import range
 from openpyxl.cell import get_column_letter
+import cache_items
 
 
 def letter_to_index(letter):
@@ -36,51 +37,33 @@ def letter_to_index(letter):
 
 
 def main():
+
 	reload(sys)
+	
 	sys.setdefaultencoding('utf8')
 
 	parser = argparse.ArgumentParser()
 
 	print("start script")
-		
-	with io.open('../data/db_cache.json', 'w', encoding='utf8') as f:
+	
+	cur_file_dir = os.path.dirname(os.path.realpath(__file__))
+	proj_dir = os.path.dirname(cur_file_dir)
+	data_dir = cur_file_dir + '\..\data\\'
+	
+	print ('cur_file_dir:' + cur_file_dir)
+	print ('proj_dir:' + proj_dir)
+	print ('data_dir:' + data_dir)
+	
+	wb = load_workbook(data_dir + 'data.xlsx')
+	
+	ws = wb.active
+	
+	print wb.get_sheet_names()
+	
+	items_cache = cache_items.CacheItemsDB(data_dir + 'db_cache.json', ws)
+	
+	items_cache.generate()
 
-		print("open cache file")
-
-		wb = load_workbook('../data/data.xlsx')
-			
-		ws = wb.active 
-
-		print wb.get_sheet_names()
-		
-		#for sheet in wb:
-		#	print(sheet.title)
-			
-		row_count = ws.max_row - 1
-		max_column = ws.max_column
-		
-		print('rows:' + str(row_count))
-		print('columns:' + str(max_column) + ":" + get_column_letter(max_column))
-
-		#ws0 = wb.get_sheet_by_name("Export Products Sheet")
-		
-		#print(ws0.columns)
-		
-		range = 'B1:' + get_column_letter(max_column) + str(row_count)
-		for row in ws.iter_rows(range):
-			row_dict = {}
-			for cell in row:
-				if cell.value != None:
-					if cell.column == 'B':
-						row_dict['Name'] = cell.value
-					elif cell.column == 'F':
-						row_dict['Price'] = cell.value
-					#f.write(str(cell.value) + '\n')
-		
-			json_str = json.dumps(row_dict, ensure_ascii=False)
-			#json.dump(row_dict, f)
-			f.write(json_str + '\n')
-		
 	return 1
 	
 if __name__== "__main__":
