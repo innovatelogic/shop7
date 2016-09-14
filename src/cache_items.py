@@ -11,7 +11,7 @@ class CacheItemsDB:
 		self.sheet = sheet
 		
 	def generate(self):
-		print("generate...")
+		print("generate items cache...")
 		
 		row_count = self.sheet.max_row - 1
 		max_column = self.sheet.max_column

@@ -1,4 +1,4 @@
-1. setup openpyxl package
+1. setup openpyxl package you need unless Python2.7.11 version (Python 3 not tested!)
 >> setup.py install
 
 2. install mongo driver
@@ -9,5 +9,5 @@ install/mongodb-win32-x86_64-2008plus-ssl-3.2.9-signed.msi
 pyhon_path/.../pip.exe
 pip install pymongo
 
-
+to setup database
 http://theholmesoffice.com/how-to-create-a-mongodb-database/
