@@ -8,3 +8,6 @@ install/mongodb-win32-x86_64-2008plus-ssl-3.2.9-signed.msi
 
 pyhon_path/.../pip.exe
 pip install pymongo
+
+
+http://theholmesoffice.com/how-to-create-a-mongodb-database/
