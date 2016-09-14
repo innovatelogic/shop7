@@ -45,4 +45,55 @@ class CacheItemsDB:
 				dict['Price'] = cell.value
 			elif cell.column == 'G':
 				dict['Currency'] = cell.value
-			
+			elif cell.column == 'H':
+				dict['Unit'] = cell.value
+			elif cell.column == 'L':
+				dict['ImageRefs'] = cell.value
+			elif cell.column == 'M':
+				dict['Availability'] = cell.value
+			elif cell.column == 'N':
+				dict['Amount'] = cell.value	
+			elif cell.column == 'O':
+				dict['GroupID'] = cell.value		
+			elif cell.column == 'P':
+				dict['Prom_ua_subsection'] = cell.value		
+			elif cell.column == 'T':
+				dict['UniqID'] = cell.value			
+			elif cell.column == 'U':
+				dict['ProductID'] = cell.value							
+			elif cell.column == 'V':
+				dict['SubsectionID'] = cell.value					
+			elif cell.column == 'W':
+				dict['GroupID2'] = cell.value					
+			elif cell.column == 'AC':
+				dict['characteristicName0'] = cell.value					
+			elif cell.column == 'AE':
+				dict['characteristicValue0'] = cell.value				
+			elif cell.column == 'AF':
+				dict['characteristicName1'] = cell.value				
+			elif cell.column == 'AH':
+				dict['characteristicValue1'] = cell.value								
+			elif cell.column == 'AI':
+				dict['characteristicName2'] = cell.value				
+			elif cell.column == 'AK':
+				dict['characteristicValue2'] = cell.value				
+			elif cell.column == 'AL':
+				dict['characteristicName3'] = cell.value				
+			elif cell.column == 'AN':
+				dict['characteristicValue3'] = cell.value					
+			elif cell.column == 'AO':
+				dict['characteristicName4'] = cell.value				
+			elif cell.column == 'AQ':
+				dict['characteristicValue4'] = cell.value				
+			elif cell.column == 'AR':
+				dict['characteristicName5'] = cell.value				
+			elif cell.column == 'AT':
+				dict['characteristicValue5'] = cell.value					
+			elif cell.column == 'AU':
+				dict['characteristicName6'] = cell.value				
+			elif cell.column == 'AW':
+				dict['characteristicValue6'] = cell.value				
+				
+				
+				
+				
