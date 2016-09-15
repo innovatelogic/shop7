@@ -34,10 +34,10 @@ def main():
 	
 	#generate cache
 	groups_cache = cache_groups.CacheGroupsDB(groups_cache_filename, wb.get_sheet_by_name("Export Groups Sheet"))
-	groups_cache.generate()
+	#groups_cache.generate()
 	
 	items_cache = cache_items.CacheItemsDB(items_cache_filename, wb.get_sheet_by_name("Export Products Sheet"))
-	items_cache.generate()
+	#items_cache.generate()
 
 	#build data
 	groups = group_tree_generator.GropTreeGenerator(groups_cache_filename)
