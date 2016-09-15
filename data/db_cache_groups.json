@@ -1,0 +1,197 @@
+{"GroupName": "Корневая группа", "GroupNumber": 14056753}
+{"GroupName": "Аудио, Радио", "GroupNumber": 14287165, "GroupID": "radio"}
+{"GroupName": "Рукоделие", "GroupNumber": 14287166, "GroupID": "/rukodelie"}
+{"GroupName": "Мототовары", "GroupNumber": 14287167, "GroupID": "107194"}
+{"GroupName": "Бизнес, индустрия, услуги", "GroupNumber": 14287168, "GroupID": "uslugi"}
+{"GroupName": "Животные и Растения", "GroupNumber": 14287169, "GroupID": "rasteniya"}
+{"GroupName": "Обувь детская ", "GroupParentNumber": 14345552, "GroupNumber": 14287170, "GroupID": "53230"}
+{"GroupName": "Одежда, Обувь, Аксессуары", "GroupNumber": 14287171, "GroupID": "aksessuary"}
+{"GroupName": "Картины, антикварная мебель, предметы интерьера", "GroupNumber": 14287172, "GroupID": "112154"}
+{"GroupName": "Спец. одежда, обувь", "GroupNumber": 14287173, "GroupID": "110442"}
+{"GroupName": "Всё для ремонта, инструменты", "GroupNumber": 14287174, "GroupID": "instrumenty"}
+{"GroupName": "Ювелирные изделия, Бижутерия", "GroupNumber": 14287175, "GroupID": "bizhuteriya"}
+{"GroupName": "PSP, PlayStation, Xbox", "GroupNumber": 14287176, "GroupID": "111219"}
+{"GroupName": "Милитария", "GroupNumber": 14287177, "GroupID": "58356"}
+{"GroupName": "Другое", "GroupNumber": 14287178, "GroupID": "110443"}
+{"GroupName": "Другие категории", "GroupNumber": 14287179, "GroupID": "28772"}
+{"GroupName": "Автозапчасти", "GroupNumber": 14287180, "GroupID": "71542"}
+{"GroupName": "Велосипеды и аксессуары к ним", "GroupNumber": 14287181, "GroupID": "110435"}
+{"GroupName": "Спортинвентарь", "GroupNumber": 14287182, "GroupID": "110433"}
+{"GroupName": "Аксессуары для детей", "GroupParentNumber": 14345552, "GroupNumber": 14287183, "GroupID": "125549"}
+{"GroupName": "Комплектующие для ноутбуков", "GroupNumber": 14287184, "GroupID": "111287"}
+{"GroupName": "Дом, интерьер", "GroupNumber": 14287185, "GroupID": "interer"}
+{"GroupName": "Одежда детская", "GroupParentNumber": 14345552, "GroupNumber": 14287186, "GroupID": "50152"}
+{"GroupName": "Фан-сектор", "GroupParentID": "28772", "GroupParentNumber": 14287179, "GroupNumber": 14287187, "GroupID": "112067"}
+{"GroupName": "Готовые изделия", "GroupParentID": "/rukodelie", "GroupParentNumber": 14287166, "GroupNumber": 14287188, "GroupID": "123132"}
+{"GroupName": "Резиновые сапоги", "GroupParentID": "53230", "GroupParentNumber": 14287170, "GroupNumber": 14287189, "GroupID": "107313"}
+{"GroupName": "Ролики, скейты", "GroupParentID": "110433", "GroupParentNumber": 14287182, "GroupNumber": 14287190, "GroupID": "110527"}
+{"GroupName": "Боевые искусства", "GroupParentID": "110433", "GroupParentNumber": 14287182, "GroupNumber": 14287191, "GroupID": "110525"}
+{"GroupName": "Зимний спорт", "GroupParentID": "110433", "GroupParentNumber": 14287182, "GroupNumber": 14287192, "GroupID": "110528"}
+{"GroupName": "Фитнес, йога, аэробика, гимнастика", "GroupParentID": "110433", "GroupParentNumber": 14287182, "GroupNumber": 14287193, "GroupID": "123911"}
+{"GroupName": "Верхняя одежда", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287194, "GroupID": "75933"}
+{"GroupName": "Кроссовки, кеды, мокасины, бутсы", "GroupParentID": "53230", "GroupParentNumber": 14287170, "GroupNumber": 14287195, "GroupID": "75006"}
+{"GroupName": "Экипировка", "GroupParentID": "107194", "GroupParentNumber": 14287167, "GroupNumber": 14287196, "GroupID": "107197"}
+{"GroupName": "Видеоигры", "GroupParentID": "111219", "GroupParentNumber": 14287176, "GroupNumber": 14287197, "GroupID": "111225"}
+{"GroupName": "Шорты, бриджи, капри", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287198, "GroupID": "107354"}
+{"GroupName": "Пиджаки", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287199, "GroupID": "79688"}
+{"GroupName": "Блузки, рубашки", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287200, "GroupID": "255599"}
+{"GroupName": "Картины", "GroupParentID": "112154", "GroupParentNumber": 14287172, "GroupNumber": 14287201, "GroupID": "112155"}
+{"GroupName": "Карнавальные костюмы", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287202, "GroupID": "107366"}
+{"GroupName": "Предметы интерьера", "GroupParentID": "interer", "GroupParentNumber": 14287185, "GroupNumber": 14287203, "GroupID": "123103"}
+{"GroupName": "Обувь", "GroupParentID": "aksessuary", "GroupParentNumber": 14287171, "GroupNumber": 14287204, "GroupID": "52312"}
+{"GroupName": "Мужская одежда", "GroupParentID": "aksessuary", "GroupParentNumber": 14287171, "GroupNumber": 14287205, "GroupID": "52310"}
+{"GroupName": "Женская одежда", "GroupParentID": "aksessuary", "GroupParentNumber": 14287171, "GroupNumber": 14287206, "GroupID": "52311"}
+{"GroupName": "Водный спорт", "GroupParentID": "110433", "GroupParentNumber": 14287182, "GroupNumber": 14287207, "GroupID": "123909"}
+{"GroupName": "Джинсы", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287208, "GroupID": "58340"}
+{"GroupName": "Радиоприемники", "GroupParentID": "radio", "GroupParentNumber": 14287165, "GroupNumber": 14287209, "GroupID": "122970"}
+{"GroupName": "Аксессуары", "GroupParentID": "110442", "GroupParentNumber": 14287173, "GroupNumber": 14287210, "GroupID": "254828"}
+{"GroupName": "Галантерея и аксессуары", "GroupParentID": "aksessuary", "GroupParentNumber": 14287171, "GroupNumber": 14287211, "GroupID": "28780"}
+{"GroupName": "Наборы, комплекты", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287212, "GroupID": "107356"}
+{"GroupName": "Футболки, майки", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287213, "GroupID": "107353"}
+{"GroupName": "Альпинизм, спелеология", "GroupParentID": "110433", "GroupParentNumber": 14287182, "GroupNumber": 14287214, "GroupID": "125535"}
+{"GroupName": "Свитера, водолазки", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287215, "GroupID": "58339"}
+{"GroupName": "Ремни, пояса, подтяжки", "GroupParentID": "125549", "GroupParentNumber": 14287183, "GroupNumber": 14287216, "GroupID": "125556"}
+{"GroupName": "Джинсы", "GroupParentID": "aksessuary", "GroupParentNumber": 14287171, "GroupNumber": 14287217, "GroupID": "111916"}
+{"GroupName": "Двигатель", "GroupParentID": "71542", "GroupParentNumber": 14287180, "GroupNumber": 14287218, "GroupID": "71613"}
+{"GroupName": "Другие категории", "GroupParentID": "aksessuary", "GroupParentNumber": 14287171, "GroupNumber": 14287219, "GroupID": "28779"}
+{"GroupName": "PCMCIA карты", "GroupParentID": "111287", "GroupParentNumber": 14287184, "GroupNumber": 14287220, "GroupID": "125533"}
+{"GroupName": "Амуниция", "GroupParentID": "58356", "GroupParentNumber": 14287177, "GroupNumber": 14287221, "GroupID": "68026"}
+{"GroupName": "Комплектующие, расходные материалы", "GroupParentID": "instrumenty", "GroupParentNumber": 14287174, "GroupNumber": 14287222, "GroupID": "124258"}
+{"GroupName": "Сандалии, босоножки, шлепанцы", "GroupParentID": "53230", "GroupParentNumber": 14287170, "GroupNumber": 14287223, "GroupID": "75008"}
+{"GroupName": "Товары для животных", "GroupParentID": "rasteniya", "GroupParentNumber": 14287169, "GroupNumber": 14287224, "GroupID": "123151"}
+{"GroupName": "Головные уборы, шарфы", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287225, "GroupID": "58360"}
+{"GroupName": "Сумки", "GroupParentID": "aksessuary", "GroupParentNumber": 14287171, "GroupNumber": 14287226, "GroupID": "111921"}
+{"GroupName": "Промышленное оборудование", "GroupParentID": "uslugi", "GroupParentNumber": 14287168, "GroupNumber": 14287227, "GroupID": "123257"}
+{"GroupName": "Штаны", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287228, "GroupID": "123497"}
+{"GroupName": "Спортивные костюмы", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287229, "GroupID": "123496"}
+{"GroupName": "Бижутерия", "GroupParentID": "bizhuteriya", "GroupParentNumber": 14287175, "GroupNumber": 14287230, "GroupID": "52010"}
+{"GroupName": "Кофты, регланы", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287231, "GroupID": "125306"}
+{"GroupName": "Сапоги, ботинки", "GroupParentID": "53230", "GroupParentNumber": 14287170, "GroupNumber": 14287232, "GroupID": "75005"}
+{"GroupName": "Спортивные костюмы", "GroupParentID": "aksessuary", "GroupParentNumber": 14287171, "GroupNumber": 14287233, "GroupID": "75004"}
+{"GroupName": "Юбки", "GroupParentID": "50152", "GroupParentNumber": 14287186, "GroupNumber": 14287234, "GroupID": "123503"}
+{"GroupName": "Товары для конного спорта и верховой езды", "GroupParentID": "110433", "GroupParentNumber": 14287182, "GroupNumber": 14287235, "GroupID": "110534"}
+{"GroupName": "Велосипеды", "GroupParentID": "110435", "GroupParentNumber": 14287181, "GroupNumber": 14287236, "GroupID": "110535"}
+{"GroupName": "Экипировка для велоспорта", "GroupParentID": "110435", "GroupParentNumber": 14287181, "GroupNumber": 14287237, "GroupID": "110537"}
+{"GroupName": "Верхняя одежда", "GroupParentID": "110442", "GroupParentNumber": 14287173, "GroupNumber": 14287238, "GroupID": "110742"}
+{"GroupName": "Игры с мячом", "GroupParentID": "110433", "GroupParentNumber": 14287182, "GroupNumber": 14287239, "GroupID": "110533"}
+{"GroupName": "Термобелье", "GroupParentID": "110442", "GroupParentNumber": 14287173, "GroupNumber": 14287240, "GroupID": "254827"}
+{"GroupName": "Снаряжение, аксессуары", "GroupParentID": "110435", "GroupParentNumber": 14287181, "GroupNumber": 14287241, "GroupID": "110538"}
+{"GroupName": "ФАН сектор - Атрибутика фаната", "GroupNumber": 14287242, "GroupID": "112069"}
+{"GroupName": "Для зимних видов спорта", "GroupParentID": "75004", "GroupParentNumber": 14287233, "GroupNumber": 14287243, "GroupID": "85550"}
+{"GroupName": "Для летних видов спорта", "GroupParentID": "75004", "GroupParentNumber": 14287233, "GroupNumber": 14287244, "GroupID": "85551"}
+{"GroupName": "Универсальные", "GroupParentID": "75004", "GroupParentNumber": 14287233, "GroupNumber": 14287245, "GroupID": "85552"}
+{"GroupName": "Юбки", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287246, "GroupID": "57077"}
+{"GroupName": "Ремни, пряжки", "GroupParentID": "28780", "GroupParentNumber": 14287211, "GroupNumber": 14287247, "GroupID": "50553"}
+{"GroupName": "Галстуки", "GroupParentID": "28780", "GroupParentNumber": 14287211, "GroupNumber": 14287248, "GroupID": "50550"}
+{"GroupName": "Другое", "GroupParentID": "28780", "GroupParentNumber": 14287211, "GroupNumber": 14287249, "GroupID": "50555"}
+{"GroupName": "Бриджи", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287250, "GroupID": "99094"}
+{"GroupName": "Свитера", "GroupParentID": "52310", "GroupParentNumber": 14287205, "GroupNumber": 14287251, "GroupID": "123912"}
+{"GroupName": "Шорты", "GroupParentID": "52310", "GroupParentNumber": 14287205, "GroupNumber": 14287252, "GroupID": "101656"}
+{"GroupName": "Перчатки", "GroupParentID": "28780", "GroupParentNumber": 14287211, "GroupNumber": 14287253, "GroupID": "58312"}
+{"GroupName": "Другое", "GroupParentID": "110528", "GroupParentNumber": 14287192, "GroupNumber": 14287254, "GroupID": "144904"}
+{"GroupName": "Лыжи, палки", "GroupParentID": "110528", "GroupParentNumber": 14287192, "GroupNumber": 14287255, "GroupID": "144905"}
+{"GroupName": "Коньки", "GroupParentID": "110528", "GroupParentNumber": 14287192, "GroupNumber": 14287256, "GroupID": "144906"}
+{"GroupName": "Кривошипношатунные механизмы", "GroupParentID": "71613", "GroupParentNumber": 14287218, "GroupNumber": 14287257, "GroupID": "255216"}
+{"GroupName": "Другое", "GroupParentID": "110533", "GroupParentNumber": 14287239, "GroupNumber": 14287258, "GroupID": "255042"}
+{"GroupName": "Аксессуары", "GroupParentID": "110533", "GroupParentNumber": 14287239, "GroupNumber": 14287259, "GroupID": "255041"}
+{"GroupName": "Мотоботы", "GroupParentID": "107197", "GroupParentNumber": 14287196, "GroupNumber": 14287260, "GroupID": "125299"}
+{"GroupName": "Костюмы, пиджаки, жилеты", "GroupParentID": "52310", "GroupParentNumber": 14287205, "GroupNumber": 14287261, "GroupID": "58046"}
+{"GroupName": "Панно, подвески, колокольчики", "GroupParentID": "123103", "GroupParentNumber": 14287203, "GroupNumber": 14287262, "GroupID": "123112"}
+{"GroupName": "Другое", "GroupParentID": "123103", "GroupParentNumber": 14287203, "GroupNumber": 14287263, "GroupID": "123118"}
+{"GroupName": "Ботинки для лыж, сноуборда", "GroupParentID": "110528", "GroupParentNumber": 14287192, "GroupNumber": 14287264, "GroupID": "144910"}
+{"GroupName": "Платья", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287265, "GroupID": "148782"}
+{"GroupName": "Кроссовки", "GroupParentID": "52312", "GroupParentNumber": 14287204, "GroupNumber": 14287266, "GroupID": "255190"}
+{"GroupName": "Другое", "GroupParentID": "110525", "GroupParentNumber": 14287191, "GroupNumber": 14287267, "GroupID": "255055"}
+{"GroupName": "Болеро", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287268, "GroupID": "96000"}
+{"GroupName": "Пейзажи", "GroupParentID": "112155", "GroupParentNumber": 14287201, "GroupNumber": 14287269, "GroupID": "112156"}
+{"GroupName": "Другое", "GroupParentID": "123911", "GroupParentNumber": 14287193, "GroupNumber": 14287270, "GroupID": "255572"}
+{"GroupName": "Аксессуары ", "GroupParentID": "52312", "GroupParentNumber": 14287204, "GroupNumber": 14287271, "GroupID": "255189"}
+{"GroupName": "Ветровки, плащи", "GroupParentID": "75933", "GroupParentNumber": 14287194, "GroupNumber": 14287272, "GroupID": "123501"}
+{"GroupName": "Другое", "GroupParentID": "52310", "GroupParentNumber": 14287205, "GroupNumber": 14287273, "GroupID": "58049"}
+{"GroupName": "Велообувь", "GroupParentID": "110537", "GroupParentNumber": 14287237, "GroupNumber": 14287274, "GroupID": "255585"}
+{"GroupName": "Статуэтки, фигурки", "GroupParentID": "123103", "GroupParentNumber": 14287203, "GroupNumber": 14287275, "GroupID": "123105"}
+{"GroupName": "Другое", "GroupParentID": "52312", "GroupParentNumber": 14287204, "GroupNumber": 14287276, "GroupID": "255187"}
+{"GroupName": "Кеды", "GroupParentID": "52312", "GroupParentNumber": 14287204, "GroupNumber": 14287277, "GroupID": "255186"}
+{"GroupName": "Брюки", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287278, "GroupID": "52314"}
+{"GroupName": "Свитера", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287279, "GroupID": "52315"}
+{"GroupName": "Аксессуары", "GroupParentID": "110525", "GroupParentNumber": 14287191, "GroupNumber": 14287280, "GroupID": "255061"}
+{"GroupName": "Одежда", "GroupParentID": "110525", "GroupParentNumber": 14287191, "GroupNumber": 14287281, "GroupID": "255062"}
+{"GroupName": "Нижнее бельё", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287282, "GroupID": "52319"}
+{"GroupName": "Кардиганы", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287283, "GroupID": "106981"}
+{"GroupName": "Топы", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287284, "GroupID": "105147"}
+{"GroupName": "Майки", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287285, "GroupID": "105146"}
+{"GroupName": "Пиджаки", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287286, "GroupID": "94150"}
+{"GroupName": "Жилеты", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287287, "GroupID": "94151"}
+{"GroupName": "Мужская обувь", "GroupParentID": "52312", "GroupParentNumber": 14287204, "GroupNumber": 14287288, "GroupID": "255178"}
+{"GroupName": "Верхняя одежда", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287289, "GroupID": "52320"}
+{"GroupName": "Шлемы", "GroupParentID": "110537", "GroupParentNumber": 14287237, "GroupNumber": 14287290, "GroupID": "144665"}
+{"GroupName": "Велоформа", "GroupParentID": "110537", "GroupParentNumber": 14287237, "GroupNumber": 14287291, "GroupID": "144664"}
+{"GroupName": "Другое", "GroupParentID": "110537", "GroupParentNumber": 14287237, "GroupNumber": 14287292, "GroupID": "144663"}
+{"GroupName": "Футбол", "GroupParentID": "110533", "GroupParentNumber": 14287239, "GroupNumber": 14287293, "GroupID": "255039"}
+{"GroupName": "Брюки, комбинезоны", "GroupParentID": "110742", "GroupParentNumber": 14287238, "GroupNumber": 14287294, "GroupID": "254825"}
+{"GroupName": "Шорты", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287295, "GroupID": "86094"}
+{"GroupName": "Женские", "GroupParentID": "111916", "GroupParentNumber": 14287217, "GroupNumber": 14287296, "GroupID": "111918"}
+{"GroupName": "Костюмы", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287297, "GroupID": "52995"}
+{"GroupName": "Мужские", "GroupParentID": "111916", "GroupParentNumber": 14287217, "GroupNumber": 14287298, "GroupID": "111917"}
+{"GroupName": "Женская обувь", "GroupParentID": "52312", "GroupParentNumber": 14287204, "GroupNumber": 14287299, "GroupID": "255162"}
+{"GroupName": "Спецодежда", "GroupParentID": "124258", "GroupParentNumber": 14287222, "GroupNumber": 14287300, "GroupID": "145146"}
+{"GroupName": "Пуловеры, свитера, жилеты", "GroupParentID": "110742", "GroupParentNumber": 14287238, "GroupNumber": 14287301, "GroupID": "254823"}
+{"GroupName": "Другое", "GroupParentID": "110538", "GroupParentNumber": 14287241, "GroupNumber": 14287302, "GroupID": "144652"}
+{"GroupName": "Велосумки", "GroupParentID": "110538", "GroupParentNumber": 14287241, "GroupNumber": 14287303, "GroupID": "144655"}
+{"GroupName": "Шарфы, комплекты", "GroupParentID": "58360", "GroupParentNumber": 14287225, "GroupNumber": 14287304, "GroupID": "125310"}
+{"GroupName": "Ошейники, поводки, намордники", "GroupParentID": "123151", "GroupParentNumber": 14287224, "GroupNumber": 14287305, "GroupID": "123155"}
+{"GroupName": "Футболки, майки", "GroupParentID": "52310", "GroupParentNumber": 14287205, "GroupNumber": 14287306, "GroupID": "58043"}
+{"GroupName": "Другое", "GroupParentID": "107197", "GroupParentNumber": 14287196, "GroupNumber": 14287307, "GroupID": "249443"}
+{"GroupName": "Зимние комбинезоны, куртки", "GroupParentID": "75933", "GroupParentNumber": 14287194, "GroupNumber": 14287308, "GroupID": "123499"}
+{"GroupName": "Другое", "GroupParentID": "28779", "GroupParentNumber": 14287219, "GroupNumber": 14287309, "GroupID": "111927"}
+{"GroupName": "Другое", "GroupParentID": "111921", "GroupParentNumber": 14287226, "GroupNumber": 14287310, "GroupID": "111922"}
+{"GroupName": "Сумки", "GroupParentID": "111921", "GroupParentNumber": 14287226, "GroupNumber": 14287311, "GroupID": "111923"}
+{"GroupName": "Национальная одежда, обувь, аксессуары", "GroupParentID": "28779", "GroupParentNumber": 14287219, "GroupNumber": 14287312, "GroupID": "111928"}
+{"GroupName": "Браслеты", "GroupParentID": "52010", "GroupParentNumber": 14287230, "GroupNumber": 14287313, "GroupID": "54408"}
+{"GroupName": "Футболки", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287314, "GroupID": "52317"}
+{"GroupName": "Рубашки", "GroupParentID": "52310", "GroupParentNumber": 14287205, "GroupNumber": 14287315, "GroupID": "58044"}
+{"GroupName": "Кофты", "GroupParentID": "52310", "GroupParentNumber": 14287205, "GroupNumber": 14287316, "GroupID": "58045"}
+{"GroupName": "Брюки", "GroupParentID": "52310", "GroupParentNumber": 14287205, "GroupNumber": 14287317, "GroupID": "58047"}
+{"GroupName": "Кофты", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287318, "GroupID": "58040"}
+{"GroupName": "Туники", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287319, "GroupID": "58041"}
+{"GroupName": "Верхняя одежда", "GroupParentID": "52310", "GroupParentNumber": 14287205, "GroupNumber": 14287320, "GroupID": "58048"}
+{"GroupName": "Комплектующие, инструменты, материалы", "GroupParentID": "123257", "GroupParentNumber": 14287227, "GroupNumber": 14287321, "GroupID": "144595"}
+{"GroupName": "Серьги", "GroupParentID": "52010", "GroupParentNumber": 14287230, "GroupNumber": 14287322, "GroupID": "54410"}
+{"GroupName": "Ожерелья, бусы", "GroupParentID": "52010", "GroupParentNumber": 14287230, "GroupNumber": 14287323, "GroupID": "91073"}
+{"GroupName": "Кепки, бейсболки", "GroupParentID": "58360", "GroupParentNumber": 14287225, "GroupNumber": 14287324, "GroupID": "125309"}
+{"GroupName": "Панамы, платки, шляпы", "GroupParentID": "58360", "GroupParentNumber": 14287225, "GroupNumber": 14287325, "GroupID": "125308"}
+{"GroupName": "Шапки, береты, шлемы", "GroupParentID": "58360", "GroupParentNumber": 14287225, "GroupNumber": 14287326, "GroupID": "125307"}
+{"GroupName": "Мотошлемы", "GroupParentID": "107197", "GroupParentNumber": 14287196, "GroupNumber": 14287327, "GroupID": "125303"}
+{"GroupName": "Блузки, рубашки", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287328, "GroupID": "52318"}
+{"GroupName": "Мотокуртки", "GroupParentID": "107197", "GroupParentNumber": 14287196, "GroupNumber": 14287329, "GroupID": "125301"}
+{"GroupName": "Мотозащита", "GroupParentID": "107197", "GroupParentNumber": 14287196, "GroupNumber": 14287330, "GroupID": "125300"}
+{"GroupName": "Головные уборы, шарфы", "GroupParentID": "28779", "GroupParentNumber": 14287219, "GroupNumber": 14287331, "GroupID": "111930"}
+{"GroupName": "Другое", "GroupParentID": "52311", "GroupParentNumber": 14287206, "GroupNumber": 14287332, "GroupID": "52321"}
+{"GroupName": "Другое", "GroupParentID": "111930", "GroupParentNumber": 14287331, "GroupNumber": 14287333, "GroupID": "111941"}
+{"GroupName": "Пальто", "GroupParentID": "52320", "GroupParentNumber": 14287289, "GroupNumber": 14287334, "GroupID": "85538"}
+{"GroupName": "Куртки", "GroupParentID": "52320", "GroupParentNumber": 14287289, "GroupNumber": 14287335, "GroupID": "85540"}
+{"GroupName": "Пальто ", "GroupParentID": "58048", "GroupParentNumber": 14287320, "GroupNumber": 14287336, "GroupID": "85547"}
+{"GroupName": "Ветровки ", "GroupParentID": "58048", "GroupParentNumber": 14287320, "GroupNumber": 14287337, "GroupID": "85546"}
+{"GroupName": "Форма", "GroupParentID": "255039", "GroupParentNumber": 14287293, "GroupNumber": 14287338, "GroupID": "255048"}
+{"GroupName": "Другое", "GroupParentID": "52319", "GroupParentNumber": 14287282, "GroupNumber": 14287339, "GroupID": "62401"}
+{"GroupName": "Сапоги, ботинки", "GroupParentID": "255178", "GroupParentNumber": 14287288, "GroupNumber": 14287340, "GroupID": "255179"}
+{"GroupName": "Тапки", "GroupParentID": "255162", "GroupParentNumber": 14287299, "GroupNumber": 14287341, "GroupID": "255174"}
+{"GroupName": "Сапоги", "GroupParentID": "255162", "GroupParentNumber": 14287299, "GroupNumber": 14287342, "GroupID": "255173"}
+{"GroupName": " Ботинки", "GroupParentID": "255162", "GroupParentNumber": 14287299, "GroupNumber": 14287343, "GroupID": "255170"}
+{"GroupName": "Шарфы, шали", "GroupParentID": "111930", "GroupParentNumber": 14287331, "GroupNumber": 14287344, "GroupID": "111940"}
+{"GroupName": "Шубы", "GroupParentID": "52320", "GroupParentNumber": 14287289, "GroupNumber": 14287345, "GroupID": "85537"}
+{"GroupName": "Ветровки", "GroupParentID": "52320", "GroupParentNumber": 14287289, "GroupNumber": 14287346, "GroupID": "85542"}
+{"GroupName": "Шлепанцы", "GroupParentID": "255162", "GroupParentNumber": 14287299, "GroupNumber": 14287347, "GroupID": "255168"}
+{"GroupName": "Туфли", "GroupParentID": "255162", "GroupParentNumber": 14287299, "GroupNumber": 14287348, "GroupID": "255165"}
+{"GroupName": "Босоножки", "GroupParentID": "255162", "GroupParentNumber": 14287299, "GroupNumber": 14287349, "GroupID": "255166"}
+{"GroupName": "Сандалии, шлепанцы", "GroupParentID": "255178", "GroupParentNumber": 14287288, "GroupNumber": 14287350, "GroupID": "255181"}
+{"GroupName": "Туфли, мокасины", "GroupParentID": "255178", "GroupParentNumber": 14287288, "GroupNumber": 14287351, "GroupID": "255180"}
+{"GroupName": "Плащи", "GroupParentID": "52320", "GroupParentNumber": 14287289, "GroupNumber": 14287352, "GroupID": "85541"}
+{"GroupName": "Куртки", "GroupParentID": "58048", "GroupParentNumber": 14287320, "GroupNumber": 14287353, "GroupID": "85544"}
+{"GroupName": "Другое", "GroupParentID": "58048", "GroupParentNumber": 14287320, "GroupNumber": 14287354, "GroupID": "85549"}
+{"GroupName": "Плащи", "GroupParentID": "58048", "GroupParentNumber": 14287320, "GroupNumber": 14287355, "GroupID": "85548"}
+{"GroupName": "Зимние головные уборы", "GroupParentID": "111930", "GroupParentNumber": 14287331, "GroupNumber": 14287356, "GroupID": "111937"}
+{"GroupName": "Платки, палантины", "GroupParentID": "111930", "GroupParentNumber": 14287331, "GroupNumber": 14287357, "GroupID": "111939"}
+{"GroupName": "Летние головные уборы", "GroupParentID": "111930", "GroupParentNumber": 14287331, "GroupNumber": 14287358, "GroupID": "111938"}
+{"GroupName": "Корсеты", "GroupParentID": "52319", "GroupParentNumber": 14287282, "GroupNumber": 14287359, "GroupID": "62398"}
+{"GroupName": "Детская одежда, обувь, аксесуары", "GroupNumber": 14345552}

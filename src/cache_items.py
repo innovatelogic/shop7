@@ -19,17 +19,16 @@ class CacheItemsDB:
 		print('rows:' + str(row_count))
 		print('columns:' + str(max_column) + ":" + get_column_letter(max_column))
 		
-		print("opening cache file")
+		print("opening cache file:" + self.filename)
 		with io.open(self.filename, 'w', encoding='utf8') as f:
-			range = 'B1:' + get_column_letter(max_column) + str(row_count)
+			range = 'B2:' + get_column_letter(max_column) + str(row_count)
 			for row in self.sheet.iter_rows(range):
 				row_dict = {}
 				for cell in row:
 					self.store_cell(cell, row_dict)
-			
-				json_str = json.dumps(row_dict, ensure_ascii=False)
-				#json.dump(row_dict, f)
-				f.write(json_str + '\n')
+				
+				str_json = json.dumps(row_dict, sort_keys=False, ensure_ascii=False).encode('utf8')
+				f.write(unicode(str_json + '\n', 'utf8'))
 				
 	def store_cell(self, cell, dict):
 		if (cell.value != None):
