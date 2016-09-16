@@ -19,29 +19,17 @@ class Node:
 			self.parent_number = data['GroupParentNumber']
 		self.childs = []
 		
-		#pprint(self.name)
-		#pprint(self.id)
-		#pprint(self.number)
-		
 	def dump(self, f, deep):
 		self.woffset(deep, f)
-		f.write(unicode(str(self.number), 'utf8'))
+		f.write(unicode(str(self.number) + ' ' + str(self.name) + '\n', 'utf8'))
 		
 		if self.childs:
-			f.write(unicode('\n'))
-			self.woffset(deep + 1, f)
-			f.write(unicode('{'))
-			
 			for child in self.childs:
 				child.dump(f, deep + 1)
 			
-			f.write(unicode('\n'))
-			self.woffset(deep + 1, f)
-			f.write(unicode('}'))
-			
 	def woffset(self, deep, f):
 		for x in range(0, deep):
-			f.write(unicode(' '))
+			f.write(unicode('  '))
 
 class GropTreeGenerator:
 	def __init__(self, filename):
