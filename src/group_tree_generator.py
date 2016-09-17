@@ -2,34 +2,7 @@ import os, sys
 import codecs, json, io
 import codecs
 from pprint import pprint
-
-class Node:
-	def __init__(self, data):
-		self.name = data['GroupName']
-		self.number = data['GroupNumber']
-		self.id = None
-		self.parent_id = None
-		self.parent_number = None
-		
-		if data.get('GroupID'):
-			self.id = data['GroupID']
-		if data.get('GroupParentID'):
-			self.parent_id = data['GroupParentID']
-		if data.get('GroupParentNumber'):
-			self.parent_number = data['GroupParentNumber']
-		self.childs = []
-		
-	def dump(self, f, deep):
-		self.woffset(deep, f)
-		f.write(unicode(str(self.number) + ' ' + str(self.name) + '\n', 'utf8'))
-		
-		if self.childs:
-			for child in self.childs:
-				child.dump(f, deep + 1)
-			
-	def woffset(self, deep, f):
-		for x in range(0, deep):
-			f.write(unicode('  '))
+from group_tree import Node
 
 class GropTreeGenerator:
 	def __init__(self, filename):
@@ -89,9 +62,31 @@ class GropTreeGenerator:
 		return None
 	
 	def dump_tree(self):
+		print("opening damp groups file:" + self.filename + '.dump')
 		with io.open(self.filename + '.dump', 'w', encoding='utf8') as f:
+			print("opening OK")
 			f.write(unicode('{\n'))
 			self.root.dump(f, 0)
 			f.write(unicode('}\n'))
 		
+		print("opening flat dump groups file:" + self.filename + '.flat')
+		with io.open(self.filename + '.flat', 'w', encoding='utf8') as f:
+			print("opening OK")
+			flat = self.flatten_tree()
+			for item in flat:
+				f.write(unicode(str(item.number) + ' ' + str(item.name) + '\n', 'utf8'))
+				
+	def flatten_tree(self):
+		flat_array = []
+		if self.root:
+			top = self.root
+			index = 0
+			flat_array.append(top)
+			while top:
+				for child in top.childs:
+					flat_array.append(child)
+				index += 1
+				top = flat_array[index] if len(flat_array) > index else None
+				
+		return flat_array
 		
