@@ -7,6 +7,7 @@ from openpyxl.cell import get_column_letter
 import cache_items
 import cache_groups
 import group_tree_generator
+
 def main():
 
 	reload(sys)
@@ -41,7 +42,9 @@ def main():
 
 	#build data
 	groups = group_tree_generator.GropTreeGenerator(groups_cache_filename)
-	groups.generate();
+	groups.generate()
+	
+	
 	
 	return 1
 	

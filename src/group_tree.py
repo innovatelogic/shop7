@@ -30,3 +30,50 @@ class Node:
 	def woffset(self, deep, f):
 		for x in range(0, deep):
 			f.write(unicode('  '))
+			
+
+def dump_tree(filename, root):
+	print("opening damp groups file:" + filename + '.dump')
+	with io.open(filename + '.dump', 'w', encoding='utf8') as f:
+		print("opening OK")
+		f.write(unicode('{\n'))
+		root.dump(f, 0)
+		f.write(unicode('}\n'))
+	
+	print("opening flat dump groups file:" + filename + '.flat')
+	with io.open(filename + '.flat', 'w', encoding='utf8') as f:
+		print("opening OK")
+		flat = flatten_tree(root)
+		for item in flat:
+			f.write(unicode(str(item.number) + ' ' + str(item.name) + ' ', 'utf8'))
+			if item.parent_number:
+				f.write(unicode(str(item.parent_number), 'utf8'))
+			f.write(unicode('\n', 'utf8'))
+
+def flatten_tree(root):
+	flat_array = []
+	if root:
+		top = root
+		index_last = 0
+		flat_array.append(top)
+		while top:
+			for child in top.childs:
+				flat_array.append(child)
+			index_last += 1
+			top = flat_array[index_last] if len(flat_array) > index_last else None
+			
+	return flat_array
+	
+def unflatten_tree(self, plain_arr):
+	new_root = None
+	return new_root
+	
+def find_node_by_number(number, node):
+	if node:
+		if node.number == number:
+			return node
+		for child in node.childs:
+			out = find_node_by_number(number, child)
+			if out:
+				return out
+	return None
