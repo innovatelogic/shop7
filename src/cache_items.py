@@ -1,7 +1,6 @@
 import os, sys, shutil, argparse
 import codecs, json, io
-from openpyxl import Workbook
-from openpyxl import load_workbook
+from openpyxl import Workbook, load_workbook
 from openpyxl.compat import range
 from openpyxl.cell import get_column_letter
 

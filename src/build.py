@@ -1,12 +1,9 @@
 import os, sys, shutil, argparse
 import codecs, json, io
-from openpyxl import Workbook
 from openpyxl import load_workbook
-from openpyxl.compat import range
-from openpyxl.cell import get_column_letter
 import cache_items
 import cache_groups
-import group_tree_generator
+import builder_db
 
 def main():
 
@@ -40,11 +37,9 @@ def main():
 	items_cache = cache_items.CacheItemsDB(items_cache_filename, wb.get_sheet_by_name("Export Products Sheet"))
 	#items_cache.generate()
 
-	#build data
-	groups = group_tree_generator.GropTreeGenerator(groups_cache_filename)
-	groups.generate()
-	
-	
+	#build database
+	builder = builder_db.BuilderDB(groups_cache_filename, items_cache_filename)
+	builder.build()
 	
 	return 1
 	

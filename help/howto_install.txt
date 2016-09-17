@@ -11,3 +11,13 @@ pip install pymongo
 
 to setup database
 http://theholmesoffice.com/how-to-create-a-mongodb-database/
+
+MongoDB
+	* Install database as it write above
+	
+	* Add path "C:\Program Files\MongoDB\Server\3.2\bin" to %PATH% environment variable
+	
+	* Run mongodb driver and attach it to data source 
+			mongod.exe --dbpath [Path]
+	
+	* Run mongo.exe

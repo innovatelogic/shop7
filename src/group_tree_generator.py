@@ -4,7 +4,7 @@ import codecs
 from pprint import pprint
 from group_tree import Node, dump_tree, find_node_by_number
 
-class GropTreeGenerator:
+class GroupTreeGenerator:
 	def __init__(self, filename):
 			self.filename = filename
 			self.root = None
@@ -17,9 +17,7 @@ class GropTreeGenerator:
 			for line in f:
 				data = json.loads(line)
 				arr_groups.append(data)
-			#ustr_to_load = unicode(json_data.read(), 'utf8')
-			
-			#pprint(arr_groups)
+
 			self.build_tree(arr_groups)
 			
 		dump_tree(self.filename, self.root)
