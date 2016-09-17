@@ -1,23 +1,38 @@
+#########################################################################
+This file contains general requierements and howto info
+
+#########################################################################
+Python
+
 1. setup openpyxl package you need unless Python2.7.11 version (Python 3 not tested!)
 >> setup.py install
 
-2. install mongo driver
-install/mongodb-win32-x86_64-2008plus-ssl-3.2.9-signed.msi
 
-3. install pymongo
 
-pyhon_path/.../pip.exe
-pip install pymongo
-
-to setup database
-http://theholmesoffice.com/how-to-create-a-mongodb-database/
-
+#########################################################################
 MongoDB
-	* Install database as it write above
+	* Install database
+		*.1 install mongo driver
+			install/mongodb-win32-x86_64-2008plus-ssl-3.2.9-signed.msi
+
+		*.2 install pymongo
+			pyhon_path/.../pip.exe
+			pip install pymongo
+
+		*.3 to setup database
+			http://theholmesoffice.com/how-to-create-a-mongodb-database/
 	
 	* Add path "C:\Program Files\MongoDB\Server\3.2\bin" to %PATH% environment variable
+
+	* Run mongo.exe
 	
 	* Run mongodb driver and attach it to data source 
-			mongod.exe --dbpath [Path]
+		mongod.exe --dbpath [Path]
+
+#########################################################################
+Eclipse IDE
+	* Install java VM
+	* Install Eclipse (Neon?). run install laucher as administrator!
+	* Install pydev [http://www.pydev.org/manual_101_install.html]
+		Eclipse should be run with administrator rights
 	
-	* Run mongo.exe
