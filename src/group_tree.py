@@ -7,7 +7,9 @@ class Node:
 	def __init__(self, data):
 		self.name = data['GroupName']
 		self.number = data['GroupNumber']
-		self.id = None
+		self._id = None
+		self._parent_id = None
+		self.id = None # old data id from xlsx file
 		self.parent_id = None
 		self.parent_number = None
 		
@@ -39,7 +41,8 @@ def dump_tree(filename, root):
 		f.write(unicode('{\n'))
 		root.dump(f, 0)
 		f.write(unicode('}\n'))
-	
+		
+def dump_tree_flat(filename, root):
 	print("opening flat dump groups file:" + filename + '.flat')
 	with io.open(filename + '.flat', 'w', encoding='utf8') as f:
 		print("opening OK")
@@ -47,7 +50,11 @@ def dump_tree(filename, root):
 		for item in flat:
 			f.write(unicode(str(item.number) + ' ' + str(item.name) + ' ', 'utf8'))
 			if item.parent_number:
-				f.write(unicode(str(item.parent_number), 'utf8'))
+				f.write(unicode(str(item.parent_number) + ' ', 'utf8'))
+			if item._id:
+				f.write(unicode(str(item._id) + ' ', 'utf8'))
+			if item._parent_id:
+				f.write(unicode(str(item._parent_id) + ' ', 'utf8'))
 			f.write(unicode('\n', 'utf8'))
 
 def flatten_tree(root):

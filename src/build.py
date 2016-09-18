@@ -26,7 +26,7 @@ def main():
 	cache.cache()
 
 	#build database
-	builder = builder_db.BuilderDB(cache.groups_cache_filename, cache.items_cache_filename)
+	builder = builder_db.BuilderDB(cache)
 	builder.build()
 	
 	return 1

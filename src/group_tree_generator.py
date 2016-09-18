@@ -2,7 +2,7 @@ import os, sys
 import codecs, json, io
 import codecs
 from pprint import pprint
-from group_tree import Node, dump_tree, find_node_by_number
+from group_tree import Node, find_node_by_number, dump_tree, dump_tree_flat
 
 class GroupTreeGenerator:
 	def __init__(self, filename):
@@ -19,8 +19,10 @@ class GroupTreeGenerator:
 				arr_groups.append(data)
 
 			self.build_tree(arr_groups)
-			
+		
+		# debugging
 		dump_tree(self.filename, self.root)
+		dump_tree_flat(self.filename, self.root)
 			
 	def build_tree(self, arr_plain):
 		self.root = Node(arr_plain[0]) #zero element is a root
@@ -32,9 +34,14 @@ class GroupTreeGenerator:
 			if not item.get('GroupParentNumber'):
 				descents.append(item)
 		for node in descents:
-			self.root.childs.append(Node(node))
+			new_node = Node(node)
+			
+			#custom add reference to root as it does not exist in current version of xlsx file
+			new_node.parent_number = self.root.number 
+			self.root.childs.append(new_node)
 			arr_plain.remove(node)
 		
+		#link other nodes
 		while arr_plain:
 			to_remove = []
 			for item in arr_plain:

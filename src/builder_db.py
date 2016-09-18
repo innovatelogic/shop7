@@ -1,14 +1,15 @@
 import os, sys, shutil, argparse
 import group_tree_generator
+import cache_data
 import connection_db
 import group_writer_db
 
 CONNECTION_URL = 'mongodb://localhost:27017/'
 
 class BuilderDB:
-	def __init__(self, filename_groups_cache, filename_items_cache):
-		self.filename_groups_cache = filename_groups_cache
-		self.filename_items_cache = filename_items_cache
+	def __init__(self, cache):
+		self.filename_groups_cache = cache.groups_cache_filename
+		self.filename_items_cache = cache.items_cache_filename
 		self.connection = None
 		self.db = None
 		
