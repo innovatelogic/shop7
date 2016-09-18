@@ -31,7 +31,7 @@ MongoDB
 
 #########################################################################
 Eclipse IDE
-	* Install java VM
+	* Install java VM. On Windows 64 install 64 bit version of java/ (jre-8u101-windows-x64.exe)
 	* Install Eclipse (Neon?). run install laucher as administrator!
 	* Install pydev [http://www.pydev.org/manual_101_install.html]
 		Eclipse should be run with administrator rights

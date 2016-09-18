@@ -2,14 +2,16 @@ import os, sys
 from connection_db import ConnectionDB
 from group_tree import flatten_tree
 
-class GroupsDBWriter:
+ITEM_GROUP_NAME = 'item_groups'
+
+class GroupsWriterDB:
 	def __init__(self, root, connection):
 		self.root = root
 		self.connection = connection
 	
 	def write(self):
 
-		item_groups_db = self.connection.getCollection(self.connection.db, 'item_groups')
+		item_groups_db = self.connection.getCollection(self.connection.db, ITEM_GROUP_NAME)
 		
 		flat = flatten_tree(self.root)
 		

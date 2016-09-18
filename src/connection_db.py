@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from user_session_db import UserSessionDB
 
 class ConnectionDB:
 	def __init__(self, url):

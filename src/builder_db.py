@@ -1,7 +1,9 @@
 import os, sys, shutil, argparse
 import group_tree_generator
 import connection_db
-import group_db_writer
+import group_writer_db
+
+CONNECTION_URL = 'mongodb://localhost:27017/'
 
 class BuilderDB:
 	def __init__(self, filename_groups_cache, filename_items_cache):
@@ -17,13 +19,13 @@ class BuilderDB:
 
 		self.connect()
 		
-		groups_db = group_db_writer.GroupsDBWriter(groups.root, self.connection)
+		groups_db = group_writer_db.GroupsWriterDB(groups.root, self.connection)
 		groups_db.write()
 	
 		self.close()
 		
 	def connect(self):
-		self.connection = connection_db.ConnectionDB('mongodb://localhost:27017/')
+		self.connection = connection_db.ConnectionDB(CONNECTION_URL)
 		self.connection.connect()
 	
 	def close(self):
