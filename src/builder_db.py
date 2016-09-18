@@ -19,6 +19,8 @@ class BuilderDB:
 
 		self.connect()
 		
+		self.connection.drop()
+		
 		groups_db = group_writer_db.GroupsWriterDB(groups.root, self.connection)
 		groups_db.write()
 	
