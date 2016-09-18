@@ -29,3 +29,7 @@ class ConnectionDB:
 	
 	def getCollection(self, db, name):
 		return db[name]
+	
+	def drop(self):
+		if self.db:
+			self.db.drop_database()
