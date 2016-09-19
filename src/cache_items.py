@@ -28,7 +28,8 @@ class CacheItemsDB:
 				
 				str_json = json.dumps(row_dict, sort_keys=False, ensure_ascii=False).encode('utf8')
 				f.write(unicode(str_json + '\n', 'utf8'))
-				
+		print("items cache OK")
+		
 	def store_cell(self, cell, dict):
 		if (cell.value != None):
 			if cell.column == 'B':

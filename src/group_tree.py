@@ -1,24 +1,29 @@
 import os, sys
 import codecs, json, io
-import codecs
-from pprint import pprint
 
 class Node:
 	def __init__(self, data):
 		self.name = data['GroupName']
 		self.number = data['GroupNumber']
-		self._id = None
+		
 		self._parent_id = None
-		self.id = None # old data id from xlsx file
-		self.parent_id = None
-		self.parent_number = None
+		self._id = None 
 		
 		if data.get('GroupID'):
-			self.id = data['GroupID']
+			self.id = data['GroupID'] # old data id from xlsx file
+		else:
+			self.id = None
+			
 		if data.get('GroupParentID'):
 			self.parent_id = data['GroupParentID']
+		else:
+			self.parent_id = None
+			
 		if data.get('GroupParentNumber'):
 			self.parent_number = data['GroupParentNumber']
+		else:
+			self.parent_number = None
+			
 		self.childs = []
 		
 	def dump(self, f, deep):
@@ -81,6 +86,16 @@ def find_node_by_number(number, node):
 			return node
 		for child in node.childs:
 			out = find_node_by_number(number, child)
+			if out:
+				return out
+	return None
+
+def find_node_by_id(id, node):
+	if node:
+		if node.id == id:
+			return node
+		for child in node.childs:
+			out = find_node_by_id(id, child)
 			if out:
 				return out
 	return None

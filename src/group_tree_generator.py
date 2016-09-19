@@ -1,6 +1,5 @@
 import os, sys
 import codecs, json, io
-import codecs
 from pprint import pprint
 from group_tree import Node, find_node_by_number, dump_tree, dump_tree_flat
 
@@ -21,8 +20,8 @@ class GroupTreeGenerator:
 			self.build_tree(arr_groups)
 		
 		# debugging
-		dump_tree(self.filename, self.root)
-		dump_tree_flat(self.filename, self.root)
+		#dump_tree(self.filename, self.root)
+		#dump_tree_flat(self.filename, self.root)
 			
 	def build_tree(self, arr_plain):
 		self.root = Node(arr_plain[0]) #zero element is a root

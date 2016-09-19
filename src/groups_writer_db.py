@@ -9,23 +9,23 @@ class GroupsWriterDB:
 	
 	def write(self):
 
-		item_groups_db = self.connection.getCollection(self.connection.db, LayoutDB.ITEM_GROUP_NAME)
+		groups_db = self.connection.getCollection(self.connection.db, LayoutDB.GROUPS_NAME)
 		
 		#iterate over the tree and assign id's
 		self.assignTreeUIDs(self.root)
 		
-		dump_tree_flat("flat.txt", self.root)
-			
+		#dump_tree_flat("flat.txt", self.root)
+
 		flat = flatten_tree(self.root)
 		
 		#
 		for item in flat:
 			group_record = {'id': item.id, 'parent_id': item.parent_id, 'name':item.name, 'number':item.number}
 
-			if item.parent_number:
-				group_record['parent_number'] = item.parent_number
+			#if item.parent_number:
+			#	group_record['parent_number'] = item.parent_number
 		
-			item_groups_db.insert(group_record)
+			groups_db.insert(group_record)
 			
 	def assignTreeUIDs(self, root):
 		root._id = ObjectId()

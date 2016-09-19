@@ -2,7 +2,8 @@ from pymongo import MongoClient
 from user_session_db import UserSessionDB
 
 class LayoutDB:
-	ITEM_GROUP_NAME = 'item_groups'
+	GROUPS_NAME = 'item_groups'
+	ITEMS_NAME = 'items'
 
 class ConnectionDB:
 	def __init__(self, url):
@@ -35,4 +36,5 @@ class ConnectionDB:
 	
 	def drop(self):
 		if self.db:
-			self.db[LayoutDB.ITEM_GROUP_NAME].drop()
+			self.db[LayoutDB.GROUPS_NAME].drop()
+			self.db[LayoutDB.ITEMS_NAME].drop()

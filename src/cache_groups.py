@@ -43,9 +43,3 @@ class CacheGroupsDB:
 				dict['GroupParentNumber'] = cell.value
 			elif cell.column == 'E' and cell.value:
 				dict['GroupParentID'] = cell.value			
-			
-			
-			
-			
-			
-				
