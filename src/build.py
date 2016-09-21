@@ -16,6 +16,7 @@ def main():
 	parser.add_argument('-a', '--all', action='store_true', help='rebuild all data')
 	parser.add_argument('-c', '--cache', action='store_true', help='rebuild all data')
 	parser.add_argument('--out', type=str, help='data destination')
+	parser.add_argument('--user', type=str, help='user')
 	
 	args = parser.parse_args()
 	
