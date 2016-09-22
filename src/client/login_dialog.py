@@ -49,7 +49,7 @@ class LoginDialog(wx.Dialog):
         
         #self.mgr = wx.aui.AuiManager(self)
         
-        image = wx.Image('D:\shop7\data\img.jpg', wx.BITMAP_TYPE_ANY)
+        image = wx.Image('D:/shop7/res/img.jpg', wx.BITMAP_TYPE_ANY)
         #self.imageCtrl.SetBitmap(wx.BitmapFromImage(img))
 
         leftpanel = LoginPanel(self, wx.ID_ANY, size=(280, 600), pos=(0, 0))#, 
