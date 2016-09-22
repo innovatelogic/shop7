@@ -1,6 +1,7 @@
 import wx
 from proportional_splitter import ProportionalSplitter
 from groups_tree_view import GroupsTreeView
+from status_view_panel import StatusViewPanel
 
 TITLE_DLG = "Client"
 ONLINE_PANEL_HEIGHT = 50
@@ -23,7 +24,7 @@ class DocumentFrame(wx.Frame):
 
         self.statusbar = self.CreateStatusBar()
         
-        self.toppanel = wx.Panel(self, wx.ID_ANY, size = (self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT), pos = (0, 0))
+        self.toppanel = StatusViewPanel(self, wx.ID_ANY, size = (self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT), pos = (0, 0))
         self.toppanel.SetBackgroundColour((34, 65, 96))
         
         self.bottompanel = wx.Panel(self, wx.ID_ANY)
@@ -46,8 +47,29 @@ class DocumentFrame(wx.Frame):
         posHorSzr.Add(self.leftpanel, 0, wx.EXPAND)
         posHorSzr.Add(self.centerpanel, 1, wx.GROW)
         self.bottompanel.SetSizer(posHorSzr)
-        #posPnlSzr.Add(lbl2, 1, wx.GROW)
         
+        ###
+        self.centerpanel.toppanel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, 45), pos = (0, 0))
+        self.centerpanel.toppanel.SetBackgroundColour((215, 215, 215))
+        self.centerpanel.bottompanel = wx.Panel(self.centerpanel, wx.ID_ANY)
+        self.centerpanel.bottompanel.SetBackgroundColour((255, 255, 255))
+        
+        posCenterPanelVertSzr = wx.BoxSizer(wx.VERTICAL)
+        posCenterPanelVertSzr.Add(self.centerpanel.toppanel, 0, wx.EXPAND)
+        posCenterPanelVertSzr.Add(self.centerpanel.bottompanel, 1, wx.GROW)
+        self.centerpanel.SetSizer(posCenterPanelVertSzr)
+                
+        self.centerpanel.bottompanel.left_tree = GroupsTreeView(self.centerpanel.bottompanel, 1, wx.DefaultPosition, (250, -1), wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS)
+        self.centerpanel.bottompanel.right = wx.Panel(self.centerpanel.bottompanel, wx.ID_ANY)
+        self.centerpanel.bottompanel.right.SetBackgroundColour((235, 235, 235))
+        
+        posDocHorSzr = wx.BoxSizer(wx.HORIZONTAL)
+        posDocHorSzr.Add(self.centerpanel.bottompanel.left_tree, 0, wx.EXPAND)
+        posDocHorSzr.Add(self.centerpanel.bottompanel.right, 1, wx.GROW)
+        self.centerpanel.bottompanel.SetSizer(posDocHorSzr)
+
+        #self.centerpanel.leftpanel = self.centerpanel.tree #wx.Panel(self.split1)
+                
         #posPnl = wx.Panel(self)
         #lbl1 = wx.StaticText(posPnl, label="Position")
         #lbl2 = wx.StaticText(posPnl, label="Size")
@@ -79,7 +101,6 @@ class DocumentFrame(wx.Frame):
         
         #self.centerpanel.tree = GroupsTreeView(self.centerpanel.split1, 1, wx.DefaultPosition, (-1, -1), wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS)
         #self.centerpanel.leftpanel = self.centerpanel.tree #wx.Panel(self.split1)
-        
         
         #self.leftpanel.Add(self.tree, 1, wx.EXPAND)
         
