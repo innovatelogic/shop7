@@ -8,7 +8,10 @@ Python
 >> setup.py install
 
 
-
+PIP
+	to update pip
+		python -m pip install --upgrade pip
+		
 #########################################################################
 MongoDB
 	* Install database
@@ -35,4 +38,19 @@ Eclipse IDE
 	* Install Eclipse (Neon?). run install laucher as administrator!
 	* Install pydev [http://www.pydev.org/manual_101_install.html]
 		Eclipse should be run with administrator rights
+	
+#########################################################################
+RabbitMQ
+	* install Erlang binary file (otp_win64_19.1.exe)
+		https://www.rabbitmq.com/install-windows.html
+		
+	* install rabbitmq server (rabbitmq-server-3.6.5.exe)
+
+	* install pika
+		pip install pika
+		
+	* for management only! insatall management tools rabbitmq
+		login http://localhost:15672/ by default
+		login 'guest' pass 'guest' 
+		
 	

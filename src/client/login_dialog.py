@@ -1,7 +1,7 @@
 import sys
 import wx, wx.html
 from proportional_splitter import ProportionalSplitter
-import wx.aui
+import httplib
 
 TITLE_DLG = "Login Buisness___"
 
@@ -16,9 +16,10 @@ class HtmlWindow(wx.html.HtmlWindow):
             self.SetStandardFonts()
 
 class LoginPanel(wx.Panel):
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, specs, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-
+        
+        self.specs = specs
         self.login = wx.TextCtrl(self, value="email", pos=(50, 200), size=(180,-1))
         self.passw = wx.TextCtrl(self, value="password", pos=(50, 250), size=(180,-1))
         self.loginButton = wx.Button(self, label="Login", pos=(50, 300), size=(180, -1))
@@ -27,14 +28,19 @@ class LoginPanel(wx.Panel):
         self.SetBackgroundColour((250, 178, 54))
     
     def OnClickLogin(self, event):
-        self.GetParent().Destroy()
+        #self.GetParent().Destroy()
+        conn = httplib.HTTPConnection(self.specs['auth']['host'] + ':' + self.specs['auth']['port'])
+        conn.request("HEAD","/index.html")
+        res = conn.getresponse()
+        print res.status, res.reason
         return
 
 class LoginDialog(wx.Dialog):
-    def __init__(self):
+    def __init__(self, specs):
         wx.Dialog.__init__(self, None, -1, TITLE_DLG,
             style= (wx.DEFAULT_DIALOG_STYLE|wx.THICK_FRAME|wx.TAB_TRAVERSAL) ^ wx.RESIZE_BORDER,
             size=(800, 600))
+        self.specs = specs
         
         #self.split1 = ProportionalSplitter(self, wx.ID_ANY, 0.4)
         #self.split1.SetSashInvisible(False)    
@@ -52,7 +58,7 @@ class LoginDialog(wx.Dialog):
         image = wx.Image('D:/shop7/res/img.jpg', wx.BITMAP_TYPE_ANY)
         #self.imageCtrl.SetBitmap(wx.BitmapFromImage(img))
 
-        leftpanel = LoginPanel(self, wx.ID_ANY, size=(280, 600), pos=(0, 0))#, 
+        leftpanel = LoginPanel(self.specs, self, wx.ID_ANY, size=(280, 600), pos=(0, 0))
         rightpanel = wx.Panel(self, wx.ID_ANY, size = (500, 600), pos = (280, 0))
         
         imageBitmap = wx.StaticBitmap(rightpanel, wx.ID_ANY, wx.BitmapFromImage(image))

@@ -1,0 +1,2 @@
+set AUTH_SERVER_HOST=localhost
+set AUTH_SERVER_PORT=9000
