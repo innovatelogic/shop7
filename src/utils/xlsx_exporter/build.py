@@ -1,20 +1,24 @@
 import os, sys, shutil, argparse
 import codecs, json, io
 from openpyxl import load_workbook
+
+from os import path
+sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
+
 import cache_items
 import cache_groups
 import builder_db
 import cache_data
 
 def main():
-
 	reload(sys)
 	
 	sys.setdefaultencoding('utf8')
 
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-a', '--all', action='store_true', help='rebuild all data')
-	parser.add_argument('-c', '--cache', action='store_true', help='rebuild all data')
+	parser.add_argument('--all', action='store_true', help='rebuild all data')
+	parser.add_argument('--cache', action='store_true', help='rebuild all data')
+	parser.add_argument('--input', type=str, help='input data folder')
 	parser.add_argument('--out', type=str, help='data destination')
 	parser.add_argument('--user', type=str, help='user')
 	
@@ -23,17 +27,18 @@ def main():
 	try:
 		print("start script")
 		
-		cur_file_dir = os.path.dirname(os.path.realpath(__file__))
-		proj_dir = os.path.dirname(cur_file_dir)
+		if not hasattr(args, 'input'):
+			raise Exception("No --in attribute")
 		
-		print ('curr file dir:' + cur_file_dir)
-		print ('proj dir:' + proj_dir)
+		data_folder = path.abspath(args.input) + '/'
 		
-		cache = cache_data.CacheData(cur_file_dir + '\..\data\\')
+		print('data folder:', data_folder)
+		
+		cache = cache_data.CacheData(data_folder)
 		
 		build_cache = False
 
-		if hasattr(args, 'a') or hasattr(args, 'all') or hasattr(args, 'c') or hasattr(args, 'cache'):
+		if hasattr(args, 'all') or hasattr(args, 'cache'):
 			build_cache = True
 			
 		if build_cache:	
@@ -50,4 +55,5 @@ def main():
 	return 1
 	
 if __name__== "__main__":
+	sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
 	main()

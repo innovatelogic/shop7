@@ -1,4 +1,4 @@
-from connection_db import ConnectionDB, LayoutDB
+from common.connection_db import ConnectionDB, LayoutDB
 from group_tree import flatten_tree, dump_tree_flat
 from bson.objectid import ObjectId
 

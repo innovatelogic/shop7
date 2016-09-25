@@ -1,4 +1,4 @@
-from connection_db import ConnectionDB, LayoutDB
+from common.connection_db import ConnectionDB, LayoutDB
 from group_tree import find_node_by_id
 from bson.objectid import ObjectId
 

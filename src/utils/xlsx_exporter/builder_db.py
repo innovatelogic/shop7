@@ -1,8 +1,8 @@
 import os, sys, shutil
 import codecs, json, io
-import group_tree_generator
+import common.group_tree_generator
 import cache_data
-import connection_db
+import common.connection_db
 import groups_writer_db
 import items_writer_db
 
@@ -17,7 +17,7 @@ class BuilderDB:
 		
 	def build(self):
 				
-		groups = group_tree_generator.GroupTreeGenerator(self.filename_groups_cache)
+		groups = common.group_tree_generator.GroupTreeGenerator(self.filename_groups_cache)
 		groups.generate()
 
 		self.connect()
@@ -34,7 +34,7 @@ class BuilderDB:
 		self.close()
 		
 	def connect(self):
-		self.connection = connection_db.ConnectionDB(CONNECTION_URL)
+		self.connection = common.connection_db.ConnectionDB(CONNECTION_URL)
 		self.connection.connect()
 	
 	def close(self):
