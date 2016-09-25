@@ -1,7 +1,7 @@
 import sys
 import wx, wx.html
 from proportional_splitter import ProportionalSplitter
-import httplib
+import httplib, urllib
 
 TITLE_DLG = "Login Buisness___"
 
@@ -20,8 +20,8 @@ class LoginPanel(wx.Panel):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         
         self.specs = specs
-        self.login = wx.TextCtrl(self, value="email", pos=(50, 200), size=(180,-1))
-        self.passw = wx.TextCtrl(self, value="password", pos=(50, 250), size=(180,-1))
+        self.login = wx.TextCtrl(self, value="", pos=(50, 200), size=(180,-1))
+        self.passw = wx.TextCtrl(self, value="", pos=(50, 250), size=(180,-1), style=wx.TE_PASSWORD)
         self.loginButton = wx.Button(self, label="Login", pos=(50, 300), size=(180, -1))
         
         self.Bind(wx.EVT_BUTTON, self.OnClickLogin, self.loginButton)
@@ -30,10 +30,15 @@ class LoginPanel(wx.Panel):
     def OnClickLogin(self, event):
         #self.GetParent().Destroy()
         conn = httplib.HTTPConnection(self.specs['auth']['host'] + ':' + self.specs['auth']['port'])
-        conn.request("HEAD","/index.html")
+        
+        params = urllib.urlencode({'login': self.login.GetValue(), 'pass': self.passw.GetValue()})
+      
+        conn.request("POST", params)
         res = conn.getresponse()
         print res.status, res.reason
-        return
+        
+        conn.close()
+
 
 class LoginDialog(wx.Dialog):
     def __init__(self, specs):

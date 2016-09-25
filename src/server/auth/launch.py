@@ -37,6 +37,11 @@ class AuthHandler(SimpleHTTPRequestHandler):
             self.wfile.write(self.headers.getheader('Authorization'))
             self.wfile.write('not authenticated')
             pass
+        
+    def do_POST(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
 
 def test(HandlerClass = AuthHandler, ServerClass = BaseHTTPServer.HTTPServer):
     BaseHTTPServer.test(HandlerClass, ServerClass)
