@@ -31,6 +31,11 @@ MongoDB
 	
 	* Run mongodb driver and attach it to data source 
 		mongod.exe --dbpath [Path]
+		
+		
+	* commands mongo.exe
+		show collections
+	
 
 #########################################################################
 Eclipse IDE

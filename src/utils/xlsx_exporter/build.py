@@ -28,7 +28,7 @@ def main():
 		print("start script")
 		
 		if not hasattr(args, 'input'):
-			raise Exception("No --in attribute")
+			raise Exception("No [input] attribute")
 		
 		data_folder = path.abspath(args.input) + '/'
 		
