@@ -4,11 +4,16 @@ import sys
 import base64
 import time
 import argparse
+import urlparse
+import cgi
 
+from ms_connection import MSConnection
 key = ""
 
 class HTTPAuthHandler(SimpleHTTPRequestHandler):
-    ''' Main class to present webpages and authentication. '''
+    def set_ms_connection(self, ms_connection):
+        self.ms_connection = ms_connection
+        
     def do_HEAD(self):
         print "send header"
         self.send_response(200)
@@ -39,6 +44,39 @@ class HTTPAuthHandler(SimpleHTTPRequestHandler):
             pass
         
     def do_POST(self):
+
+        content_len = int(self.headers.getheader('content-length', 0))
+        post_body = self.rfile.read(content_len)
+        
+        dict = eval(post_body)
+        
+        print dict['opcode']
+        print dict['login']
+        print dict['password']
+        
+        self.ms_connection.send(post_body)
+            
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
+
+    def parse_POST(self):
+        ctype, pdict = parse_header(self.headers['content-type'])
+        if ctype == 'multipart/form-data':
+            postvars = parse_multipart(self.rfile, pdict)
+        elif ctype == 'application/x-www-form-urlencoded':
+            length = int(self.headers['content-length'])
+            postvars = parse_qs(
+                    self.rfile.read(length), 
+                    keep_blank_values=1)
+        else:
+            postvars = {}
+        return postvars
+    
+
+def MakeHandlerClassFromArgv(ms_connection):
+    class CustomHandler(HTTPAuthHandler, object):
+        def __init__(self, *args, **kwargs):
+            self.set_ms_connection(ms_connection)
+            super(CustomHandler, self).__init__(*args, **kwargs)
+    return CustomHandler

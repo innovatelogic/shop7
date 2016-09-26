@@ -29,11 +29,19 @@ class LoginPanel(wx.Panel):
     
     def OnClickLogin(self, event):
         #self.GetParent().Destroy()
-        conn = httplib.HTTPConnection(self.specs['auth']['host'] + ':' + self.specs['auth']['port'])
+        url = self.specs['auth']['host'] + ':' + self.specs['auth']['port']
         
-        params = urllib.urlencode({'login': self.login.GetValue(), 'pass': self.passw.GetValue()})
-      
-        conn.request("POST", params)
+        print url
+        
+        conn = httplib.HTTPConnection(url)
+        
+        params = { 'opcode':'auth', 'login': self.login.GetValue(), 'password': self.passw.GetValue()}
+
+        headers = {"Content-type": "application/x-www-form-urlencoded",
+                   "Accept": "text/plain"}
+        
+        conn.request("POST", "/", str(params), headers=headers)
+        
         res = conn.getresponse()
         print res.status, res.reason
         

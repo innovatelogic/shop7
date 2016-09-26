@@ -1,6 +1,8 @@
 import pika
 
-class AuthHandler:
+AUTH_MS_CHANNEL_NAME = 'ms-auth-pipe'
+
+class AuthConnection:
     def __init__(self, specs):
         self.specs = specs
         pass
@@ -10,10 +12,10 @@ class AuthHandler:
         
         channel = connection.channel()
         
-        channel.queue_declare(queue='auth-pipe')
+        channel.queue_declare(queue=AUTH_MS_CHANNEL_NAME)
         
         channel.basic_consume(self.callback,
-                              queue='auth-pipe',
+                              queue=AUTH_MS_CHANNEL_NAME,
                               no_ack=True)
         
         print('master server auth channel: STARTED')

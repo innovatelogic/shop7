@@ -1,11 +1,11 @@
 import sys
 
 from user_session import UserSession
-from auth_handler import AuthHandler
+from auth_connection import AuthConnection
 
 class MasterServer:
     def __init__(self, specs):
-        self.auth_handler = AuthHandler(specs)
+        self.auth_handler = AuthConnection(specs)
         pass
     
     
