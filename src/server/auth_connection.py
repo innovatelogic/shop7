@@ -18,7 +18,7 @@ class AuthConnection:
                               queue=AUTH_MS_CHANNEL_NAME,
                               no_ack=True)
         
-        print('master server auth channel: STARTED')
+        print('Master server auth channel: STARTED')
         
         channel.start_consuming()
         pass
