@@ -50,29 +50,13 @@ class HTTPAuthHandler(SimpleHTTPRequestHandler):
         
         dict = eval(post_body)
         
-        print dict['opcode']
-        print dict['login']
-        print dict['password']
+        print str(dict)
         
         self.ms_connection.send(post_body)
             
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-
-    def parse_POST(self):
-        ctype, pdict = parse_header(self.headers['content-type'])
-        if ctype == 'multipart/form-data':
-            postvars = parse_multipart(self.rfile, pdict)
-        elif ctype == 'application/x-www-form-urlencoded':
-            length = int(self.headers['content-length'])
-            postvars = parse_qs(
-                    self.rfile.read(length), 
-                    keep_blank_values=1)
-        else:
-            postvars = {}
-        return postvars
-    
 
 def MakeHandlerClassFromArgv(ms_connection):
     class CustomHandler(HTTPAuthHandler, object):

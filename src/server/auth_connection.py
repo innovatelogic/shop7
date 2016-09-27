@@ -3,7 +3,9 @@ import pika
 AUTH_MS_CHANNEL_NAME = 'ms-auth-pipe'
 
 class AuthConnection:
-    def __init__(self, specs):
+    '''process communication between master server & auth'''
+    def __init__(self, master, specs):
+        self.master = master
         self.specs = specs
         pass
         
@@ -18,13 +20,14 @@ class AuthConnection:
                               queue=AUTH_MS_CHANNEL_NAME,
                               no_ack=True)
         
-        print('Master server auth channel: STARTED')
+        print('auth channel: STARTED')
         
         channel.start_consuming()
-        pass
     
     def stop(self):
         pass
     
     def callback(self, ch, method, properties, body):
-            print(" [x] Received %r" % body)
+        dict = eval(body)
+        self.master.authentificateUser(dict['login'], dict['password'])
+        #print(" [x] Received %r" % body)

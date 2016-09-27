@@ -6,10 +6,9 @@ import common.connection_db
 import groups_writer_db
 import items_writer_db
 
-CONNECTION_URL = 'mongodb://localhost:27017/'
-
 class BuilderDB:
-	def __init__(self, cache):
+	def __init__(self, specs, cache):
+		self.specs = specs
 		self.filename_groups_cache = cache.groups_cache_filename
 		self.filename_items_cache = cache.items_cache_filename
 		self.connection = None
@@ -34,7 +33,7 @@ class BuilderDB:
 		self.close()
 		
 	def connect(self):
-		self.connection = common.connection_db.ConnectionDB(CONNECTION_URL)
+		self.connection = common.connection_db.ConnectionDB(self.specs)
 		self.connection.connect()
 	
 	def close(self):

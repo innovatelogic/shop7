@@ -22,13 +22,13 @@ class AuthServer:
 
         httpd = server_class((host_name, port_number), HandlerClass)
         
-        print(time.asctime(), "Server Starts - %s:%s" % (host_name, port_number))
+        print(time.asctime(), "Auth Server Starts - %s:%s" % (host_name, port_number))
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
              pass
         httpd.server_close()
-        print time.asctime(), "Server Stops - %s:%s" % (host_name, port_number)
+        print time.asctime(), "Auth Server Stops - %s:%s" % (host_name, port_number)
         
         self.ms_connection.stop()
         pass

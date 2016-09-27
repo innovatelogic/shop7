@@ -6,20 +6,23 @@ class LayoutDB:
 	ITEMS_NAME = 'items'
 
 class ConnectionDB:
-	def __init__(self, url):
-		self.url = url
+	def __init__(self, specs):
+		self.specs = specs
 		self.connection = None
 		self.db = None
 		
 	def connect(self):
-		print('Connect to database...')
-		self.connection = MongoClient(self.url)
-		if not self.connection:
-			raise Exception("Failed connect to database: %s", str(self.url))
+		url = self.specs['db']['host'] + ':' + self.specs['db']['port'] + '/'
 		
-		self.db = self.getDocument('shop7_test')
+		print("Connect to database %s", url)
+		
+		self.connection = MongoClient('mongodb://localhost:27017/')
+		if not self.connection:
+			raise Exception("Failed connect to database: %s", url)
+		
+		self.db = self.getDocument(self.specs['db']['name'])
 		if not self.db:
-			raise Exception("Failed get document in database: %s", str(self.url))
+			raise Exception("Failed get document in database: %s", url)
 		
 		print self.db
 		print('Connection OK')

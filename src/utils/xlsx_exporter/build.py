@@ -21,9 +21,20 @@ def main():
 	parser.add_argument('--input', type=str, help='input data folder')
 	parser.add_argument('--out', type=str, help='data destination')
 	parser.add_argument('--user', type=str, help='user')
+	parser.add_argument('--dbhost', type=str, help='database host name')
+	parser.add_argument('--dbport', type=str, help='database port')
+	parser.add_argument('--dbname', type=str, help='database name')
 	
 	args = parser.parse_args()
 	
+	specs = dict()
+    
+	specs['db'] = {
+        'host':args.dbhost,
+        'port':args.dbport,
+        'name':args.dbname
+        }
+    
 	try:
 		print("start script")
 		
@@ -45,7 +56,7 @@ def main():
 			cache.cache()
 	
 		#build database
-		builder = builder_db.BuilderDB(cache)
+		builder = builder_db.BuilderDB(specs, cache)
 		builder.build()
 		
 	except Exception:
