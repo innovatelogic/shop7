@@ -52,9 +52,13 @@ class HTTPAuthHandler(SimpleHTTPRequestHandler):
         
         print str(dict)
         
-        self.ms_connection.send(post_body)
+        flag = self.ms_connection.send(post_body)
+        
+        code = 401 #pessimistic by default
+        if flag == 'True':
+            code = 200
             
-        self.send_response(200)
+        self.send_response(code)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 

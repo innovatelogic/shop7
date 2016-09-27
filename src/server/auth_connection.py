@@ -16,18 +16,27 @@ class AuthConnection:
         
         channel.queue_declare(queue=AUTH_MS_CHANNEL_NAME)
         
+        channel.basic_qos(prefetch_count=1)
+
         channel.basic_consume(self.callback,
                               queue=AUTH_MS_CHANNEL_NAME,
                               no_ack=True)
         
-        print('auth channel: STARTED')
+        print('auth channel consuming: STARTED')
         
         channel.start_consuming()
     
     def stop(self):
         pass
     
-    def callback(self, ch, method, properties, body):
+    def callback(self, ch, method, props, body):
+        
         dict = eval(body)
-        self.master.authentificateUser(dict['login'], dict['password'])
-        #print(" [x] Received %r" % body)
+        flag = self.master.authentificateUser(dict['login'], dict['password'])
+        
+        ch.basic_publish(exchange='',
+                     routing_key=props.reply_to,
+                     properties=pika.BasicProperties(correlation_id = props.correlation_id),
+                     body=str(flag))
+        
+        #ch.basic_ack(delivery_tag = method.delivery_tag)

@@ -31,6 +31,8 @@ class AuthHTTPConnection:
         res = self.connection.getresponse()
         print res.status, res.reason
         
+        return res.status == 200
+        
 #############################################################################
 class LoginPanel(wx.Panel):
     def __init__(self, connection, parent, *args, **kwargs):
@@ -45,7 +47,8 @@ class LoginPanel(wx.Panel):
         self.SetBackgroundColour((250, 178, 54))
     
     def OnClickLogin(self, event):
-        self.connection.request(self.login.GetValue(), self.passw.GetValue())
+        if self.connection.request(self.login.GetValue(), self.passw.GetValue()):
+            self.GetParent().Close(True)
        
 
 #############################################################################

@@ -14,22 +14,22 @@ class ConnectionDB:
 	def connect(self):
 		url = self.specs['db']['host'] + ':' + self.specs['db']['port'] + '/'
 		
-		print("Connect to database %s", url)
+		print("Connect to database %s" % url)
 		
-		self.connection = MongoClient('mongodb://localhost:27017/')
+		self.connection = MongoClient(url)
 		if not self.connection:
-			raise Exception("Failed connect to database: %s", url)
+			raise Exception("Failed connect to database: %s" % url)
 		
 		self.db = self.getDocument(self.specs['db']['name'])
 		if not self.db:
-			raise Exception("Failed get document in database: %s", url)
+			raise Exception("Failed get document in database: %s" % url)
 		
 		print self.db
 		print('Connection OK')
 		
 	def close(self):
 		self.connection.close()
-		print('Connection closed')
+		print('Connection to database closed')
 		
 	def getDocument(self, name):
 		return self.connection[name]
