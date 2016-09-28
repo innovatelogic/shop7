@@ -32,11 +32,15 @@ class AuthConnection:
     def callback(self, ch, method, props, body):
         
         dict = eval(body)
-        flag = self.master.authentificateUser(dict['login'], dict['password'])
+        flag, user = self.master.authentificateUser(dict['login'], dict['password'])
+        
+        reply = ''
+        if flag and user:
+            reply = str({'auth':flag, 'token':user.token, 'name':user.name})
         
         ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = props.correlation_id),
-                     body=str(flag))
+                     body=str(reply))
         
         #ch.basic_ack(delivery_tag = method.delivery_tag)

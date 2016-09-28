@@ -5,10 +5,17 @@ from document_frame import DocumentFrame
 import argparse
 
 def StartLogin(specs):
+    isLogin = False
+    
     dlg = LoginDialog(specs)
-    dlg.ShowModal()
-    #dlg.Destroy()  
+    res = dlg.ShowModal()
+    
+    if dlg.connection_result:
+        isLogin = True
         
+    dlg.Destroy()  
+    return [isLogin, dlg.connection_result]
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--auth_host', type=str, help='auth server host')
@@ -37,11 +44,11 @@ def main():
     
     app = wx.App(False)  # Create a new app, don't redirect stdout/stderr to a window.
 
-    StartLogin(specs)
+    isLogin, result = StartLogin(specs)
 
-    frame = DocumentFrame(None)
-    
-    app.MainLoop() 
+    if isLogin:
+        frame = DocumentFrame(None, result)
+        app.MainLoop() 
     
 if __name__== "__main__":
     main()

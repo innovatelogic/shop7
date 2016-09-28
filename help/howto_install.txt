@@ -36,6 +36,7 @@ MongoDB
 	* commands mongo.exe
 		show dbs
 		show collections
+		db.[collection].find()
 	
 
 #########################################################################

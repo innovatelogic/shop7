@@ -52,16 +52,17 @@ class HTTPAuthHandler(SimpleHTTPRequestHandler):
         
         print str(dict)
         
-        flag = self.ms_connection.send(post_body)
+        result = self.ms_connection.send(post_body)
         
         code = 401 #pessimistic by default
-        if flag == 'True':
-            code = 200
-            
+        if result:
+            code = 200 #processed auth
+        
         self.send_response(code)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-
+        self.wfile.write(result)
+        
 def MakeHandlerClassFromArgv(ms_connection):
     class CustomHandler(HTTPAuthHandler, object):
         def __init__(self, *args, **kwargs):

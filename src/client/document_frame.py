@@ -8,9 +8,11 @@ ONLINE_PANEL_HEIGHT = 50
 LEFT_PANEL_WIDTH = 100
 
 class DocumentFrame(wx.Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, specs):
         wx.Frame.__init__(self, parent, title=TITLE_DLG, size=(800, 600))
+        self.specs = eval(specs)
         
+        print self.specs
         menuBar = wx.MenuBar()
         menu = wx.Menu()
         m_exit = menu.Append(wx.ID_EXIT, "E&xit\tAlt-X", "Close window and exit program.")
@@ -24,7 +26,7 @@ class DocumentFrame(wx.Frame):
 
         self.statusbar = self.CreateStatusBar()
         
-        self.toppanel = StatusViewPanel(self, wx.ID_ANY, size = (self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT), pos = (0, 0))
+        self.toppanel = StatusViewPanel(self.specs, self, wx.ID_ANY, size = (self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT), pos = (0, 0))
         self.toppanel.SetBackgroundColour((34, 65, 96))
         
         self.bottompanel = wx.Panel(self, wx.ID_ANY)
@@ -129,11 +131,8 @@ class DocumentFrame(wx.Frame):
     def OnReSize(self, event):
             "Window has been resized, so we need to adjust the window."
             #self.toppanel.SetSize((self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT))
-            
             #left_panel_height = self.GetSize().GetHeight() - ONLINE_PANEL_HEIGHT
             #self.leftpanel.SetSize((LEFT_PANEL_WIDTH, left_panel_height))
-            
             #center_panel_width = self.GetSize().GetWidth() - LEFT_PANEL_WIDTH
             #self.centerpanel.SetSize((center_panel_width, left_panel_height))
-            
             event.Skip()

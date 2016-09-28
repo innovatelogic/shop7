@@ -1,37 +1,9 @@
 import sys
 import wx, wx.html
 from proportional_splitter import ProportionalSplitter
-import httplib, urllib
+from auth_http_connection import AuthHTTPConnection
 
 TITLE_DLG = "Login Buisness___"
-
-#############################################################################
-class AuthHTTPConnection:
-    def __init__(self, specs):
-        self.specs = specs
-        self.url = self.specs['auth']['host'] + ':' + self.specs['auth']['port']
-        self.connection = None
-        
-        self.initConnection()
-        
-    def initConnection(self):
-        self.connection = httplib.HTTPConnection(self.url)
-
-    def stopConnection(self):
-        self.connection.close()
-        
-    def request(self, login, password):
-        params = { 'opcode':'auth', 'login': login, 'password': password}
-
-        headers = {"Content-type": "application/x-www-form-urlencoded",
-                   "Accept": "text/plain"}
-        
-        self.connection.request("POST", "/", str(params), headers=headers)
-        
-        res = self.connection.getresponse()
-        print res.status, res.reason
-        
-        return res.status == 200
         
 #############################################################################
 class LoginPanel(wx.Panel):
@@ -47,8 +19,11 @@ class LoginPanel(wx.Panel):
         self.SetBackgroundColour((250, 178, 54))
     
     def OnClickLogin(self, event):
-        if self.connection.request(self.login.GetValue(), self.passw.GetValue()):
-            self.GetParent().Close(True)
+        res, options = self.connection.request(self.login.GetValue(), self.passw.GetValue())
+        
+        if res:
+            self.GetParent().connection_result = options
+            self.GetParent().Close(False)
        
 
 #############################################################################
@@ -57,9 +32,10 @@ class LoginDialog(wx.Dialog):
         wx.Dialog.__init__(self, None, -1, TITLE_DLG,
             style= (wx.DEFAULT_DIALOG_STYLE|wx.THICK_FRAME|wx.TAB_TRAVERSAL) ^ wx.RESIZE_BORDER,
             size=(800, 600))
-        self.specs = specs
         
+        self.specs = specs
         self.auth_connection = AuthHTTPConnection(specs)
+        self.connection_result = ''
         
         image = wx.Image('D:/shop7/res/img.jpg', wx.BITMAP_TYPE_ANY)
 
@@ -71,7 +47,11 @@ class LoginDialog(wx.Dialog):
         leftpanel.SetBackgroundColour((250, 178, 54))
         rightpanel.SetBackgroundColour((0, 178, 54))
         
+        self.Bind(wx.EVT_CLOSE, self.OnClose)
+        
         self.Fit()
-
-        
-        
+    
+    def OnClose(self, event):
+        print('In OnClose')
+        event.Skip()
+        pass
