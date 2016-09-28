@@ -2,6 +2,8 @@
 import argparse
 from auth_server import AuthServer
 
+AUTH_MS_CHANNEL_NAME = 'ms-auth-pipe'
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, help='server host')
@@ -19,7 +21,8 @@ def main():
     
     specs['auth_server'] = {
         'host':args.host,
-        'port':int(args.port)
+        'port':int(args.port),
+        'queue':AUTH_MS_CHANNEL_NAME
         }
     
     auth_server = AuthServer(specs)

@@ -36,6 +36,7 @@ class LoginDialog(wx.Dialog):
         self.specs = specs
         self.auth_connection = AuthHTTPConnection(specs)
         self.connection_result = ''
+        self.on_close = False
         
         image = wx.Image('D:/shop7/res/img.jpg', wx.BITMAP_TYPE_ANY)
 
@@ -53,5 +54,6 @@ class LoginDialog(wx.Dialog):
     
     def OnClose(self, event):
         print('In OnClose')
+        self.on_close = True
         event.Skip()
         pass

@@ -10,11 +10,19 @@ def StartLogin(specs):
     dlg = LoginDialog(specs)
     res = dlg.ShowModal()
     
+    on_close = dlg.on_close
+    
     if dlg.connection_result:
         isLogin = True
-        
+    
     dlg.Destroy()  
-    return [isLogin, dlg.connection_result]
+    return [on_close, isLogin, dlg.connection_result]
+
+
+def RunClient(app, specs, connection_info):
+    frame = DocumentFrame(None, connection_info)
+    app.MainLoop() 
+    return DocumentFrame.logout_flag
 
 def main():
     parser = argparse.ArgumentParser()
@@ -22,12 +30,6 @@ def main():
     parser.add_argument('--auth_port', help='auth server port')
     
     args = parser.parse_args()
-    
-    if not hasattr(args, 'auth_host'):
-        raise Exception("Not auth host argument")
-    
-    if not hasattr(args, 'auth_port'):
-        raise Exception("Not auth port argument")
     
     if not hasattr(args, 'auth_host'):
         raise Exception("Not auth host argument")
@@ -44,11 +46,16 @@ def main():
     
     app = wx.App(False)  # Create a new app, don't redirect stdout/stderr to a window.
 
-    isLogin, result = StartLogin(specs)
-
-    if isLogin:
-        frame = DocumentFrame(None, result)
-        app.MainLoop() 
+    while True:
+        on_close, isLogin, result = StartLogin(specs)
+        
+        if isLogin:
+            if not RunClient(app, specs, result):
+                break
+            continue
+        
+        if on_close:
+            break
     
 if __name__== "__main__":
     main()

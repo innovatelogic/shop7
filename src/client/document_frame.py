@@ -8,11 +8,12 @@ ONLINE_PANEL_HEIGHT = 50
 LEFT_PANEL_WIDTH = 100
 
 class DocumentFrame(wx.Frame):
+    logout_flag = False
     def __init__(self, parent, specs):
         wx.Frame.__init__(self, parent, title=TITLE_DLG, size=(800, 600))
         self.specs = eval(specs)
+        DocumentFrame.logout_flag = False
         
-        print self.specs
         menuBar = wx.MenuBar()
         menu = wx.Menu()
         m_exit = menu.Append(wx.ID_EXIT, "E&xit\tAlt-X", "Close window and exit program.")
@@ -136,3 +137,6 @@ class DocumentFrame(wx.Frame):
             #center_panel_width = self.GetSize().GetWidth() - LEFT_PANEL_WIDTH
             #self.centerpanel.SetSize((center_panel_width, left_panel_height))
             event.Skip()
+            
+    def OnLogOff(self):
+        DocumentFrame.logout_flag = True

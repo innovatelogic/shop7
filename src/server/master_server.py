@@ -49,12 +49,14 @@ class MasterServer:
         
         #check already not authentificated
         if loginPass == True:
-            if self.userSessions.get(user['_id']) == None:
+            user_session = self.userSessions.get(user['_id'])
+            if user_session == None:
                 user_session = UserSession(++USER_TOKEN_START, user['_id'], user['nick'])
                 self.userSessions[user['_id']] = user_session
                 ausPass = True
             else:
                 print(time.asctime(), "user try to %s re-authentificate" % login)
+                ausPass = True
                     
             print(time.asctime(), "user %s authentificate OK" % login)
         else:

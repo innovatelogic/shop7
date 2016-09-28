@@ -1,8 +1,6 @@
 import pika
 import uuid
 
-AUTH_MS_CHANNEL_NAME = 'ms-auth-pipe'
-
 class MSConnection:
     def __init__(self, specs):
         self.specs = specs
@@ -15,7 +13,7 @@ class MSConnection:
         
         self.channel = self.connection.channel()
         
-        self.channel.queue_declare(queue=AUTH_MS_CHANNEL_NAME)
+        self.channel.queue_declare(queue=self.specs['auth_server']['queue'])
         
         self.result = self.channel.queue_declare(exclusive=True)
         self.callback_queue = self.result.method.queue
@@ -36,7 +34,7 @@ class MSConnection:
         self.corr_id = str(uuid.uuid4())
 
         self.channel.basic_publish(exchange='',
-                      routing_key=AUTH_MS_CHANNEL_NAME,
+                      routing_key=self.specs['auth_server']['queue'],
                        properties=pika.BasicProperties(
                                          reply_to = self.callback_queue,
                                          correlation_id = self.corr_id,

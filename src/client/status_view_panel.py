@@ -13,4 +13,6 @@ class StatusViewPanel(wx.Panel):
         
     def OnClickLogOff(self, event):
         print "OnClickLogOff"
+        self.GetParent().OnLogOff()
+        self.GetParent().Close(False)
         pass
