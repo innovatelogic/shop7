@@ -26,7 +26,6 @@ def main():
     auth_server.run()
         
     #key = base64.b64encode('guest:guest')
-    
     #run_forever(args.host, int(args.port))
     
 if __name__ == '__main__':

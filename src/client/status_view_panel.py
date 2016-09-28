@@ -5,4 +5,12 @@ class StatusViewPanel(wx.Panel):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         
         self.specs = specs
-        self.quote = wx.StaticText(self, label="Hello: %s " % self.specs['name'], pos=(20, 30))
+        self.name = wx.StaticText(self, label="Hello: %s " % self.specs['name'], pos=(10, 10))
+        self.name.SetForegroundColour((255, 255, 255))
+        self.logoffButton = wx.Button(self, label="Logoff", pos=(700, 10), size=(40, 20))
+    
+        self.Bind(wx.EVT_BUTTON, self.OnClickLogOff, self.logoffButton)
+        
+    def OnClickLogOff(self, event):
+        print "OnClickLogOff"
+        pass
