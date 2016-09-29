@@ -18,9 +18,7 @@ class HTTPAuthHandler(SimpleHTTPRequestHandler):
         post_body = self.rfile.read(content_len)
         
         dict = eval(post_body)
-        
-        #print str(dict)
-        
+       
         result = self.ms_connection.send(post_body)
         
         code = 401 #pessimistic by default

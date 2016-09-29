@@ -4,6 +4,7 @@ set AUTH_SERVER_PORT=9000
 
 :: master server
 set MASTER_SERVER_HOST=localhost
+set MS_AUTH_QUEUE_NAME=ms-auth-pipe-XCXX
 
 :: database
 set DB_HOST_NAME=mongodb://localhost

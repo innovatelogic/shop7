@@ -9,11 +9,11 @@ class MSConnection:
         pass
         
     def start(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.specs['auth_server']['host']))
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.specs['ms']['host']))
         
         self.channel = self.connection.channel()
         
-        self.channel.queue_declare(queue=self.specs['auth_server']['queue'])
+        self.channel.queue_declare(queue=self.specs['ms']['ms_auth_queue'])
         
         self.result = self.channel.queue_declare(exclusive=True)
         self.callback_queue = self.result.method.queue
@@ -34,7 +34,7 @@ class MSConnection:
         self.corr_id = str(uuid.uuid4())
 
         self.channel.basic_publish(exchange='',
-                      routing_key=self.specs['auth_server']['queue'],
+                      routing_key=self.specs['ms']['ms_auth_queue'],
                        properties=pika.BasicProperties(
                                          reply_to = self.callback_queue,
                                          correlation_id = self.corr_id,

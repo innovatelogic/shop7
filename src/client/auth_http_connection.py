@@ -22,6 +22,7 @@ class AuthHTTPConnection:
         self.connection.request("POST", "/", str(params), headers=headers)
         
         res = self.connection.getresponse()
+        
         #print res.status, res.reason
        
         return [res.status == 200, res.read()]

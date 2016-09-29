@@ -8,21 +8,30 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, help='server host')
     parser.add_argument('--port', help='server port')
+    parser.add_argument('--mshost', type=str, help='master server host')
+    parser.add_argument('--ms_auth_queue', type=str, help='master server host')
     
     args = parser.parse_args()
     
     if not hasattr(args, 'host'):
         raise Exception("Not host argument")
-    
     if not hasattr(args, 'port'):
         raise Exception("Not port argument")
-    
+    if not hasattr(args, 'mshost'):
+        raise Exception("Not host argument")
+    if not hasattr(args, 'ms_auth_queue'):
+        raise Exception("Not ms_auth_quevue argument")
+      
     specs = dict()
     
     specs['auth_server'] = {
         'host':args.host,
         'port':int(args.port),
-        'queue':AUTH_MS_CHANNEL_NAME
+        }
+    
+    specs['ms'] = {
+        'host':args.mshost,
+        'ms_auth_queue':args.ms_auth_queue
         }
     
     auth_server = AuthServer(specs)

@@ -22,7 +22,7 @@ class LoginPanel(wx.Panel):
         res, options = self.connection.request(self.login.GetValue(), self.passw.GetValue())
         
         if res:
-            self.GetParent().connection_result = options
+            self.GetParent().connection_info = options
             self.GetParent().Close(False)
        
 
@@ -34,8 +34,8 @@ class LoginDialog(wx.Dialog):
             size=(800, 600))
         
         self.specs = specs
-        self.auth_connection = AuthHTTPConnection(specs)
-        self.connection_result = ''
+        self.auth_connection = AuthHTTPConnection(self.specs)
+        self.connection_info = ''
         self.on_close = False
         
         image = wx.Image('D:/shop7/res/img.jpg', wx.BITMAP_TYPE_ANY)

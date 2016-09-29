@@ -9,7 +9,7 @@ USER_TOKEN_START = 456890
 class MasterServer:
     def __init__(self, specs):
         self.specs = specs
-        self.auth_handler = AuthConnection(self,specs)
+        self.auth_handler = None
         self.db_connection = None
         self.userSessions = {}
         pass
@@ -17,6 +17,8 @@ class MasterServer:
     def run(self):
         
         print(time.asctime(), "Master Server Starts")
+        
+        self.auth_handler = AuthConnection(self, self.specs)
         
         self.connectDB()
         

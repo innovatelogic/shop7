@@ -12,11 +12,11 @@ def StartLogin(specs):
     
     on_close = dlg.on_close
     
-    if dlg.connection_result:
+    if dlg.connection_info:
         isLogin = True
     
     dlg.Destroy()  
-    return [on_close, isLogin, dlg.connection_result]
+    return [on_close, isLogin, dlg.connection_info]
 
 
 def RunClient(app, specs, connection_info):
@@ -47,10 +47,10 @@ def main():
     app = wx.App(False)  # Create a new app, don't redirect stdout/stderr to a window.
 
     while True:
-        on_close, isLogin, result = StartLogin(specs)
+        on_close, isLogin, connection_info = StartLogin(specs)
         
         if isLogin:
-            if not RunClient(app, specs, result):
+            if not RunClient(app, specs, connection_info):
                 break
             continue
         

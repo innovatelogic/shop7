@@ -9,16 +9,18 @@ from ms_connection import MSConnection
 class AuthServer:
     def __init__(self, specs):
         self.specs = specs
-        self.ms_connection = MSConnection(specs)
+        self.ms_connection = None
     
     def run(self):
-        host_name = self.specs['auth_server']['host']
-        port_number = self.specs['auth_server']['port']
-        
+
+        self.ms_connection = MSConnection(self.specs)
         self.ms_connection.start()
         
         server_class = BaseHTTPServer.HTTPServer
         HandlerClass = MakeHandlerClassFromArgv(self.ms_connection)
+        
+        host_name = self.specs['auth_server']['host']
+        port_number = self.specs['auth_server']['port']
 
         httpd = server_class((host_name, port_number), HandlerClass)
         
