@@ -19,8 +19,7 @@ class MSConnection:
         self.result = self.channel.queue_declare(exclusive=True)
         self.callback_queue = self.result.method.queue
 
-        self.channel.basic_consume(self.on_response, no_ack=True,
-                                   queue=self.callback_queue)
+        self.channel.basic_consume(self.on_response, no_ack=True, queue=self.callback_queue)
 
 
     def stop(self):
@@ -35,8 +34,8 @@ class MSConnection:
         self.corr_id = str(uuid.uuid4())
 
         self.channel.basic_publish(exchange='topic_link',
-                      routing_key=self.specs['ms']['ms_auth_queue'],
-                       properties=pika.BasicProperties(
+                        routing_key=self.specs['ms']['ms_auth_queue'],
+                        properties=pika.BasicProperties(
                                          reply_to = self.callback_queue,
                                          correlation_id = self.corr_id,
                                          ),

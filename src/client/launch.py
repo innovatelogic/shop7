@@ -1,9 +1,11 @@
 
 import wx
 import argparse
+from threading import Event
 from login_dialog import LoginDialog
 from document_frame import DocumentFrame
 from ms_connection import MSConnection
+
 
 def StartLogin(specs):
     isLogin = False
@@ -22,17 +24,24 @@ def StartLogin(specs):
 
 def RunClient(app, specs, connection_info):
     
+    ready = Event() 
     
-    ms_connection = MSConnection(specs)
+    ms_connection = MSConnection(specs, ready)
     ms_connection.start()
     
-    frame = DocumentFrame(None, connection_info, ms_connection)
+    #block until ready
+    ready.wait()
     
-    app.MainLoop() 
+    dict = eval(connection_info)
+    print dict
+    print 'ms_connection.send'
+    if ms_connection.send(str({'opcode': 'auth_activate', 'token':dict['token']})):
+        print 'True'
+        frame = DocumentFrame(None, connection_info, ms_connection)
+        app.MainLoop() 
     
     ms_connection.stop()
-    
-    
+
     return DocumentFrame.logout_flag
 
 def main():

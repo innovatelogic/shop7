@@ -82,4 +82,5 @@ class MasterServer:
         
         return [loginPass and ausPass, user_session]
     
-    
+    def activateUserAuth(self, token):
+        return True

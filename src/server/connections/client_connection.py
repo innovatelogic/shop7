@@ -14,11 +14,11 @@ class ClientsConnection:
         
         channel = yield connection.channel()
         
-        exchange = yield channel.exchange_declare(exchange='topic_link', type='topic')
+        exchange = yield channel.exchange_declare(exchange='topic_link2', type='topic')
     
         queue = yield channel.queue_declare(queue=self.specs['master']['ms_client_queue'], auto_delete=False, exclusive=False)
     
-        yield channel.queue_bind(exchange='topic_link', queue=self.specs['master']['ms_client_queue'])
+        yield channel.queue_bind(exchange='topic_link2', queue=self.specs['master']['ms_client_queue'])
     
         yield channel.basic_qos(prefetch_count=1)
     
@@ -41,12 +41,26 @@ class ClientsConnection:
     
     @defer.inlineCallbacks
     def read(self, queue_object):
-        ch,method,properties,body = yield queue_object.get()
+        ch, method, properties, body = yield queue_object.get()
     
         if body:
             print body
+            dict = eval(body)
+            if dict['opcode'] == 'auth_activate':
+                self.do_auth_activate(dict['token'], ch, method, properties)
+            
     
         #yield ch.basic_ack(delivery_tag=method.delivery_tag)
     
     def callback(self, ch, method, props, body):
         print body
+        
+    def do_auth_activate(self, token, ch, method, props):
+        result = self.master.activateUserAuth(token)
+        
+        print 'do_auth_activate'
+        
+        ch.basic_publish(exchange='topic_link2',
+                     routing_key=props.reply_to,
+                     properties=pika.BasicProperties(correlation_id = props.correlation_id),
+                     body='str(result)')
