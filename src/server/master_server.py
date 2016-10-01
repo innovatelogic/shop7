@@ -1,15 +1,22 @@
 import sys
 import time
+from pika.connection import ConnectionParameters
+from twisted.internet import protocol, reactor
+from pika.adapters.twisted_connection import TwistedProtocolConnection
+
 from user_session import UserSession
-from auth_connection import AuthConnection
+from connections.auth_connection import AuthConnection
+from connections.client_connection import ClientsConnection
 import common.connection_db
 
 USER_TOKEN_START = 456890
-
+    
+#############################################################################
 class MasterServer:
     def __init__(self, specs):
         self.specs = specs
         self.auth_handler = None
+        self.clients_connection = None
         self.db_connection = None
         self.userSessions = {}
         pass
@@ -18,12 +25,21 @@ class MasterServer:
         
         print(time.asctime(), "Master Server Starts")
         
-        self.auth_handler = AuthConnection(self, self.specs)
+        parameters = ConnectionParameters()
+        cc = protocol.ClientCreator(reactor,
+                                    TwistedProtocolConnection,
+                                    parameters)
+        
+        self.auth_handler = AuthConnection(self, self.specs, cc)
+        self.clients_connection = ClientsConnection(self, self.specs, cc)
         
         self.connectDB()
         
         self.auth_handler.start()
-        
+        self.clients_connection.start()
+
+        reactor.run()
+
         self.disconnectDB()
         
         print(time.asctime(), "Master Server Stops")

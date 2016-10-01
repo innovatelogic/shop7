@@ -60,4 +60,9 @@ RabbitMQ
 		login http://localhost:15672/ by default
 		login 'guest' pass 'guest' 
 		
-	
+#########################################################################
+Twisted
+	* install
+		pip install --verbose twisted
+		
+		http://pika.readthedocs.io/en/latest/examples/connecting_async.html

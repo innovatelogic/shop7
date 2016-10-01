@@ -9,7 +9,7 @@ class MSConnection:
         pass
         
     def start(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.specs['ms']['host']))
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.specs['ms']['host'], port=5672))
         
         self.channel = self.connection.channel()
         
@@ -33,7 +33,7 @@ class MSConnection:
         self.response = None
         self.corr_id = str(uuid.uuid4())
 
-        self.channel.basic_publish(exchange='',
+        self.channel.basic_publish(exchange='topic_link',
                       routing_key=self.specs['ms']['ms_auth_queue'],
                        properties=pika.BasicProperties(
                                          reply_to = self.callback_queue,
