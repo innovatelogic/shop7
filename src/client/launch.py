@@ -1,8 +1,9 @@
 
 import wx
+import argparse
 from login_dialog import LoginDialog
 from document_frame import DocumentFrame
-import argparse
+from ms_connection import MSConnection
 
 def StartLogin(specs):
     isLogin = False
@@ -20,8 +21,18 @@ def StartLogin(specs):
 
 
 def RunClient(app, specs, connection_info):
-    frame = DocumentFrame(None, connection_info)
+    
+    
+    ms_connection = MSConnection(specs)
+    ms_connection.start()
+    
+    frame = DocumentFrame(None, connection_info, ms_connection)
+    
     app.MainLoop() 
+    
+    ms_connection.stop()
+    
+    
     return DocumentFrame.logout_flag
 
 def main():

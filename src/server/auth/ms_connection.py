@@ -9,7 +9,8 @@ class MSConnection:
         pass
         
     def start(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.specs['ms']['host'], port=5672))
+        port_number = 5672
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.specs['ms']['host'], port=port_number))
         
         self.channel = self.connection.channel()
         

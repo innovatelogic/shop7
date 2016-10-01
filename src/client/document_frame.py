@@ -3,15 +3,18 @@ from proportional_splitter import ProportionalSplitter
 from groups_tree_view import GroupsTreeView
 from status_view_panel import StatusViewPanel
 
+
 TITLE_DLG = "Client"
 ONLINE_PANEL_HEIGHT = 50
 LEFT_PANEL_WIDTH = 100
 
 class DocumentFrame(wx.Frame):
     logout_flag = False
-    def __init__(self, parent, specs):
+    def __init__(self, parent, specs, ms_connection):
         wx.Frame.__init__(self, parent, title=TITLE_DLG, size=(800, 600))
         self.specs = eval(specs)
+        self.ms_connection = ms_connection
+        print specs
         DocumentFrame.logout_flag = False
         
         menuBar = wx.MenuBar()

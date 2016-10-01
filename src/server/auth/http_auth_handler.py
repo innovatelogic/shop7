@@ -14,7 +14,6 @@ class HTTPAuthHandler(SimpleHTTPRequestHandler):
         self.ms_connection = ms_connection
      
     def do_POST(self):
-        print 'post'
         content_len = int(self.headers.getheader('content-length', 0))
         post_body = self.rfile.read(content_len)
         

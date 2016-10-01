@@ -3,7 +3,7 @@ import pika
 from twisted.internet import defer, protocol, task
 
 class ClientsConnection:
-    '''process communication between clients & ms server'''
+    '''process communication between clients & ms'''
     def __init__(self, master, specs, client_creator):
         self.master = master
         self.specs = specs
