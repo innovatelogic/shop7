@@ -1,6 +1,7 @@
 import pika
 import threading
 import uuid
+#from pika.credentials import ExternalCredentials
 
 class MSConnection(threading.Thread):
     def __init__(self, specs, ready=None, *args, **kwargs):
@@ -11,16 +12,16 @@ class MSConnection(threading.Thread):
         self.channel = None
     
     def run(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port = 5672))
-        
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=5672))
         self.channel = self.connection.channel()
-        
-        self.channel.queue_declare(queue='ms-client-pipe-XCXX')
-        
-        self.result = self.channel.queue_declare(exclusive=True)
+        self.channel.queue_declare(queue='ms-client-pipe-XCXX', auto_delete=True)
+        self.result = self.channel.queue_declare()
         self.callback_queue = self.result.method.queue
+        
+        self.queue_name = self.result.method.queue
+        print self.queue_name
 
-        self.channel.basic_consume(self.on_response, queue='ms-client-pipe-XCXX', no_ack=True)
+        self.channel.basic_consume(self.on_response, queue=self.queue_name, no_ack=True)
         
         self.ready.set()
     
@@ -33,7 +34,7 @@ class MSConnection(threading.Thread):
         self.response = None
         self.corr_id = str(uuid.uuid4())
         print 'send'
-        self.channel.basic_publish(exchange='topic_link2',
+        self.channel.basic_publish(exchange='1',
                        routing_key='ms-client-pipe-XCXX',
                        properties=pika.BasicProperties(
                                          reply_to = self.callback_queue,
@@ -42,7 +43,7 @@ class MSConnection(threading.Thread):
                       body=body)
         
         while self.response is None:
-            print 'loop'
+            #print 'loop'
             self.connection.process_data_events()
             
         print 'insend'

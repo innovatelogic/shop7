@@ -14,11 +14,11 @@ class ClientsConnection:
         
         channel = yield connection.channel()
         
-        exchange = yield channel.exchange_declare(exchange='topic_link2', type='topic')
+        exchange = yield channel.exchange_declare(exchange='1', type='topic')
     
-        queue = yield channel.queue_declare(queue=self.specs['master']['ms_client_queue'], auto_delete=False, exclusive=False)
+        queue = yield channel.queue_declare(queue=self.specs['master']['ms_client_queue'], auto_delete=True, exclusive=False)
     
-        yield channel.queue_bind(exchange='topic_link2', queue=self.specs['master']['ms_client_queue'])
+        yield channel.queue_bind(exchange='1', queue=self.specs['master']['ms_client_queue'])
     
         yield channel.basic_qos(prefetch_count=1)
     
@@ -59,8 +59,9 @@ class ClientsConnection:
         result = self.master.activateUserAuth(token)
         
         print 'do_auth_activate'
+        print props.reply_to
         
-        ch.basic_publish(exchange='topic_link2',
+        ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = props.correlation_id),
-                     body='str(result)')
+                     body='Hello')

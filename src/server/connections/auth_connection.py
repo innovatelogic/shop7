@@ -14,11 +14,11 @@ class AuthConnection:
         
         channel = yield connection.channel()
     
-        exchange = yield channel.exchange_declare(exchange='topic_link', type='topic')
+        exchange = yield channel.exchange_declare(exchange='0', type='topic')
     
-        queue = yield channel.queue_declare(queue=self.specs['master']['ms_auth_queue'], auto_delete=False, exclusive=False)
+        queue = yield channel.queue_declare(queue=self.specs['master']['ms_auth_queue'], auto_delete=True, exclusive=False)
     
-        yield channel.queue_bind(exchange='topic_link', queue=self.specs['master']['ms_auth_queue'])
+        yield channel.queue_bind(exchange='0', queue=self.specs['master']['ms_auth_queue'])
     
         yield channel.basic_qos(prefetch_count=1)
     
