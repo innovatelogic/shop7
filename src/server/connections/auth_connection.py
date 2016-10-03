@@ -31,8 +31,7 @@ class AuthConnection:
         print('Auth connection queue established')
         
     def start(self):
-        port = 5672
-        d = self.client_creator.connectTCP(self.specs['master']['host'], port)
+        d = self.client_creator.connectTCP(self.specs['master']['host'], self.specs['master']['ms_queue_port'])
         d.addCallback(lambda protocol: protocol.ready)
         d.addCallback(self.run)
     
@@ -55,7 +54,14 @@ class AuthConnection:
         
         reply = ''
         if flag and user:
-            reply = str({'auth':flag, 'token':user.token, 'name':user.name})
+            reply = str({'auth':flag,
+                          'token':user.token,
+                          'name':user.name,
+                          'ms_host':self.specs['master']['host'],
+                          'queue':self.specs['master']['ms_client_queue'],
+                          'queue_port':self.specs['master']['ms_queue_port']})
+            
+            print reply
         
         ch.basic_publish(exchange='',
                      routing_key=props.reply_to,

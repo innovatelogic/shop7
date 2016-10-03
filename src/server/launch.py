@@ -17,6 +17,7 @@ def main():
     parser.add_argument('--dbname', type=str, help='database name')
     parser.add_argument('--ms_auth_queue', type=str, help='master-auth queue name')
     parser.add_argument('--ms_client_queue', type=str, help='master-client queue name')
+    parser.add_argument('--ms_queue_port', type=str, help='master-client queue port')
     
     args = parser.parse_args()
     
@@ -34,6 +35,8 @@ def main():
         raise Exception("Not ms_auth_queue argument")
     if not hasattr(args, 'ms_client_queue'):
         raise Exception("Not ms_client_queue argument")
+    if not hasattr(args, 'ms_queue_port'):
+        raise Exception("Not ms_queue_port argument")
     
     specs = dict()
     
@@ -41,7 +44,8 @@ def main():
         'host':args.host,
         'db_name':args.db_name,
         'ms_auth_queue':args.ms_auth_queue,
-        'ms_client_queue':args.ms_client_queue
+        'ms_client_queue':args.ms_client_queue,
+        'ms_queue_port':int(args.ms_queue_port)
         }
     
     specs['db'] = {

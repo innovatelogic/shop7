@@ -4,38 +4,50 @@ import uuid
 #from pika.credentials import ExternalCredentials
 
 class MSConnection(threading.Thread):
-    def __init__(self, specs, ready=None, *args, **kwargs):
+    ''' establish connection with MS'''
+    ''' connection info format
+        reply = {'auth':flag,
+                  'token':user.token,
+                  'name':user.name,
+                  'ms_host':self.specs['master']['host'],
+                  'queue':self.specs['master']['ms_client_queue'],
+                  'queue_port':self.specs['master']['ms_queue_port']}
+'''
+
+    def __init__(self, connection_info, ready=None, *args, **kwargs):
         super(MSConnection, self).__init__(*args, **kwargs)
         self.ready = ready
-        self.specs = specs
+        self.connection_info = connection_info
         self.connection = None
         self.channel = None
     
     def run(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=5672))
+        print self.connection_info
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.connection_info['ms_host'],
+                                                                             port=int(self.connection_info['queue_port'])
+                                                                             ))
         self.channel = self.connection.channel()
-        self.channel.queue_declare(queue='ms-client-pipe-XCXX', auto_delete=True)
+        self.channel.queue_declare(queue=self.connection_info['queue'], auto_delete=True)
         self.result = self.channel.queue_declare()
         self.callback_queue = self.result.method.queue
-        
+       
         self.queue_name = self.result.method.queue
-        print self.queue_name
+        #print self.result.method.queueame
 
         self.channel.basic_consume(self.on_response, queue=self.queue_name, no_ack=True)
         
         self.ready.set()
     
     def on_response(self, ch, method, props, body):
-        print 'on_response'
         if self.corr_id == props.correlation_id:
             self.response = body
         
     def send(self, body):
         self.response = None
         self.corr_id = str(uuid.uuid4())
-        print 'send'
-        self.channel.basic_publish(exchange='1',
-                       routing_key='ms-client-pipe-XCXX',
+
+        self.channel.basic_publish(exchange='',
+                       routing_key=self.connection_info['queue'],
                        properties=pika.BasicProperties(
                                          reply_to = self.callback_queue,
                                          correlation_id = self.corr_id,
@@ -43,10 +55,8 @@ class MSConnection(threading.Thread):
                       body=body)
         
         while self.response is None:
-            #print 'loop'
             self.connection.process_data_events()
             
-        print 'insend'
         #return self.response
         return True
     

@@ -9,7 +9,8 @@ def main():
     parser.add_argument('--host', type=str, help='server host')
     parser.add_argument('--port', help='server port')
     parser.add_argument('--mshost', type=str, help='master server host')
-    parser.add_argument('--ms_auth_queue', type=str, help='master server host')
+    parser.add_argument('--ms_auth_queue', type=str, help='master server auth queue name')
+    parser.add_argument('--ms_queue_port', type=str, help='master server auth queue port')
     
     args = parser.parse_args()
     
@@ -21,7 +22,9 @@ def main():
         raise Exception("Not host argument")
     if not hasattr(args, 'ms_auth_queue'):
         raise Exception("Not ms_auth_quevue argument")
-      
+    if not hasattr(args, 'ms_queue_port'):
+        raise Exception("Not ms_auth_port argument")
+     
     specs = dict()
     
     specs['auth_server'] = {
@@ -31,7 +34,8 @@ def main():
     
     specs['ms'] = {
         'host':args.mshost,
-        'ms_auth_queue':args.ms_auth_queue
+        'ms_auth_queue':args.ms_auth_queue,
+        'ms_queue_port':int(args.ms_queue_port)
         }
     
     auth_server = AuthServer(specs)

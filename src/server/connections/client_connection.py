@@ -31,8 +31,7 @@ class ClientsConnection:
         print('Clients connection queue established')
         
     def start(self):
-        port = 5672
-        d = self.client_creator.connectTCP(self.specs['master']['host'], port)
+        d = self.client_creator.connectTCP(self.specs['master']['host'], self.specs['master']['ms_queue_port'])
         d.addCallback(lambda protocol: protocol.ready)
         d.addCallback(self.run)
         

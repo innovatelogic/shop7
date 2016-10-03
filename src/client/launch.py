@@ -6,7 +6,7 @@ from login_dialog import LoginDialog
 from document_frame import DocumentFrame
 from ms_connection import MSConnection
 
-
+#----------------------------------------------------------------------------------------------
 def StartLogin(specs):
     isLogin = False
     
@@ -22,21 +22,21 @@ def StartLogin(specs):
     return [on_close, isLogin, dlg.connection_info]
 
 
+#----------------------------------------------------------------------------------------------
 def RunClient(app, specs, connection_info):
     
     ready = Event() 
     
-    ms_connection = MSConnection(specs, ready)
+    ms_connection = MSConnection(eval(connection_info), ready)
     ms_connection.start()
     
     #block until ready
     ready.wait()
     
     dict = eval(connection_info)
-    print dict
-    print 'ms_connection.send'
+    #print dict
+    #print 'ms_connection.send'
     if ms_connection.send(str({'opcode': 'auth_activate', 'token':dict['token']})):
-        print 'True'
         frame = DocumentFrame(None, connection_info, ms_connection)
         app.MainLoop() 
     
@@ -44,6 +44,7 @@ def RunClient(app, specs, connection_info):
 
     return DocumentFrame.logout_flag
 
+#----------------------------------------------------------------------------------------------
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--auth_host', type=str, help='auth server host')

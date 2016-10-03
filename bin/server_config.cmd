@@ -4,6 +4,7 @@ set AUTH_SERVER_PORT=9000
 
 :: master server
 set MASTER_SERVER_HOST=localhost
+set MASTER_SERVER_QUEUE_PORT=5672
 set MS_AUTH_QUEUE_NAME=ms-auth-pipe-XCXX
 set MS_CLIENT_QUEUE_NAME=ms-client-pipe-XCXX
 
