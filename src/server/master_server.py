@@ -71,7 +71,7 @@ class MasterServer:
             user_session = None #self.userSessions.get(user['_id'])
             
             _id = user['_id']
-            for session in self.userSessions:
+            for key, session in self.userSessions.iteritems():
                 if session.id == _id:
                     user_session = session
                     break
