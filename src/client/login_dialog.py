@@ -7,12 +7,12 @@ TITLE_DLG = "Login Buisness___"
         
 #############################################################################
 class LoginPanel(wx.Panel):
-    def __init__(self, connection, parent, *args, **kwargs):
+    def __init__(self, connection, specs, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        
+        self.specs = specs
         self.connection = connection
-        self.login = wx.TextCtrl(self, value="", pos=(50, 200), size=(180,-1))
-        self.passw = wx.TextCtrl(self, value="", pos=(50, 250), size=(180,-1), style=wx.TE_PASSWORD)
+        self.login = wx.TextCtrl(self, value=self.specs['user']['login'], pos=(50, 200), size=(180,-1))
+        self.passw = wx.TextCtrl(self, value=self.specs['user']['pass'], pos=(50, 250), size=(180,-1), style=wx.TE_PASSWORD)
         self.loginButton = wx.Button(self, label="Login", pos=(50, 300), size=(180, -1))
         
         self.Bind(wx.EVT_BUTTON, self.OnClickLogin, self.loginButton)
@@ -40,7 +40,7 @@ class LoginDialog(wx.Dialog):
         
         image = wx.Image('D:/shop7/res/img.jpg', wx.BITMAP_TYPE_ANY)
 
-        leftpanel = LoginPanel(self.auth_connection, self, wx.ID_ANY, size=(280, 600), pos=(0, 0))
+        leftpanel = LoginPanel(self.auth_connection, specs, self, wx.ID_ANY, size=(280, 600), pos=(0, 0))
         rightpanel = wx.Panel(self, wx.ID_ANY, size = (500, 600), pos = (280, 0))
         
         imageBitmap = wx.StaticBitmap(rightpanel, wx.ID_ANY, wx.BitmapFromImage(image))
@@ -53,7 +53,8 @@ class LoginDialog(wx.Dialog):
         self.Fit()
     
     def OnClose(self, event):
-        print('In OnClose')
+        #print('In OnClose')
+        #self.auth_connection.stopConnection() ???
         self.on_close = True
         event.Skip()
         pass

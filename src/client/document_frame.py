@@ -14,7 +14,7 @@ class DocumentFrame(wx.Frame):
         wx.Frame.__init__(self, parent, title=TITLE_DLG, size=(800, 600))
         self.specs = eval(specs)
         self.ms_connection = ms_connection
-        print specs
+        
         DocumentFrame.logout_flag = False
         
         menuBar = wx.MenuBar()

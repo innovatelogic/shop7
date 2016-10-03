@@ -22,7 +22,6 @@ class MSConnection(threading.Thread):
         self.channel = None
     
     def run(self):
-        print self.connection_info
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.connection_info['ms_host'],
                                                                              port=int(self.connection_info['queue_port'])
                                                                              ))
@@ -30,7 +29,6 @@ class MSConnection(threading.Thread):
         self.channel.queue_declare(queue=self.connection_info['queue'], auto_delete=True)
         self.result = self.channel.queue_declare()
         self.callback_queue = self.result.method.queue
-       
         self.queue_name = self.result.method.queue
         #print self.result.method.queueame
 
@@ -57,8 +55,7 @@ class MSConnection(threading.Thread):
         while self.response is None:
             self.connection.process_data_events()
             
-        #return self.response
-        return True
+        return eval(self.response)
     
     
     def stop(self):

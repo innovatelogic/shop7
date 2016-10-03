@@ -50,7 +50,8 @@ class MasterServer:
         
     def disconnectDB(self):
         self.db_connection.close()
-    
+
+#----------------------------------------------------------------------------------------------
     def authentificateUser(self, login, password):
         loginPass = False
         ausPass = False
@@ -70,7 +71,7 @@ class MasterServer:
             user_session = self.userSessions.get(user['_id'])
             if user_session == None:
                 user_session = UserSession(++USER_TOKEN_START, user['_id'], user['nick'])
-                self.userSessions[user['_id']] = user_session
+                self.userSessions[user_session.token] = user_session
                 ausPass = True
             else:
                 print(time.asctime(), "user try to %s re-authentificate" % login)
@@ -81,6 +82,14 @@ class MasterServer:
             print(time.asctime(), "user %s authentificate FAILED" % login)
         
         return [loginPass and ausPass, user_session]
-    
+
+#----------------------------------------------------------------------------------------------
     def activateUserAuth(self, token):
-        return True
+        out = False
+        user_session = self.userSessions[token]
+        
+        if user_session:
+            if not user_session.activated:
+                user_session.activated = True
+                out = True 
+        return out

@@ -57,10 +57,9 @@ class ClientsConnection:
     def do_auth_activate(self, token, ch, method, props):
         result = self.master.activateUserAuth(token)
         
-        print 'do_auth_activate'
-        print props.reply_to
-        
+        reply = str({'res': result})
+
         ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = props.correlation_id),
-                     body='Hello')
+                     body=reply)

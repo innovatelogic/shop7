@@ -1,6 +1,7 @@
 
 import wx
 import argparse
+import time
 from threading import Event
 from login_dialog import LoginDialog
 from document_frame import DocumentFrame
@@ -34,9 +35,10 @@ def RunClient(app, specs, connection_info):
     ready.wait()
     
     dict = eval(connection_info)
-    #print dict
-    #print 'ms_connection.send'
-    if ms_connection.send(str({'opcode': 'auth_activate', 'token':dict['token']})):
+
+    status = ms_connection.send(str({'opcode': 'auth_activate', 'token':dict['token']}))
+    
+    if status['res']:
         frame = DocumentFrame(None, connection_info, ms_connection)
         app.MainLoop() 
     
@@ -49,7 +51,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--auth_host', type=str, help='auth server host')
     parser.add_argument('--auth_port', help='auth server port')
-    
+    parser.add_argument('--login', type=str, help='default user login')
+    parser.add_argument('--password', help='default user pass')    
     args = parser.parse_args()
     
     if not hasattr(args, 'auth_host'):
@@ -64,6 +67,21 @@ def main():
         'host':args.auth_host,
         'port':args.auth_port
         }
+    
+    def_login = ''
+    if hasattr(args, 'login'):
+        def_login = args.login
+        
+    def_pass = ''
+    if hasattr(args, 'password'):
+        def_pass = args.password
+  
+    specs['user'] = {
+        'login':def_login,
+        'pass':def_pass
+        }
+    
+    print(time.asctime(), "Client Starts")
     
     app = wx.App(False)  # Create a new app, don't redirect stdout/stderr to a window.
 

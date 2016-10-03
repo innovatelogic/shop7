@@ -61,8 +61,6 @@ class AuthConnection:
                           'queue':self.specs['master']['ms_client_queue'],
                           'queue_port':self.specs['master']['ms_queue_port']})
             
-            print reply
-        
         ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = props.correlation_id),
