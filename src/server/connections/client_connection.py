@@ -43,17 +43,16 @@ class ClientsConnection:
         ch, method, properties, body = yield queue_object.get()
     
         if body:
-            print body
+            #print body
             dict = eval(body)
-            if dict['opcode'] == 'auth_activate':
+            code = dict['opcode']
+            if code == 'auth_activate':
                 self.do_auth_activate(dict['token'], ch, method, properties)
-            
+            elif code == 'logout':
+                self.do_logout(dict['token'], ch, method, properties)
     
         #yield ch.basic_ack(delivery_tag=method.delivery_tag)
-    
-    def callback(self, ch, method, props, body):
-        print body
-        
+
     def do_auth_activate(self, token, ch, method, props):
         result = self.master.activateUserAuth(token)
         
@@ -63,3 +62,15 @@ class ClientsConnection:
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = props.correlation_id),
                      body=reply)
+    
+    def do_logout(self, token, ch, method, props):
+        result = self.master.logoutUser(token)
+        
+        reply = str({'res': result})
+
+        ch.basic_publish(exchange='',
+                     routing_key=props.reply_to,
+                     properties=pika.BasicProperties(correlation_id = props.correlation_id),
+                     body=reply)
+        
+        

@@ -39,7 +39,7 @@ def RunClient(app, specs, connection_info):
     status = ms_connection.send(str({'opcode': 'auth_activate', 'token':dict['token']}))
     
     if status['res']:
-        frame = DocumentFrame(None, connection_info, ms_connection)
+        frame = DocumentFrame(None, dict, ms_connection)
         app.MainLoop() 
     
     ms_connection.stop()
@@ -53,6 +53,7 @@ def main():
     parser.add_argument('--auth_port', help='auth server port')
     parser.add_argument('--login', type=str, help='default user login')
     parser.add_argument('--password', help='default user pass')    
+    
     args = parser.parse_args()
     
     if not hasattr(args, 'auth_host'):

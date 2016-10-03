@@ -68,7 +68,14 @@ class MasterServer:
         
         #check already not authentificated
         if loginPass == True:
-            user_session = self.userSessions.get(user['_id'])
+            user_session = None #self.userSessions.get(user['_id'])
+            
+            _id = user['_id']
+            for session in self.userSessions:
+                if session.id == _id:
+                    user_session = session
+                    break
+            
             if user_session == None:
                 user_session = UserSession(++USER_TOKEN_START, user['_id'], user['nick'])
                 self.userSessions[user_session.token] = user_session
@@ -92,4 +99,17 @@ class MasterServer:
             if not user_session.activated:
                 user_session.activated = True
                 out = True 
+        print(time.asctime(), "user {0} activated {1}".format(user_session.name, str(out)))
+        return out
+
+#----------------------------------------------------------------------------------------------
+    def logoutUser(self, token):
+        out = False
+        name = str(token)
+        user_session = self.userSessions.get(token)
+        if user_session:
+            name = user_session.name
+            del self.userSessions[token]
+            out = True
+        print(time.asctime(), "user {0} logout {1}".format(name, str(out)))
         return out

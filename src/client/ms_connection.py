@@ -57,7 +57,6 @@ class MSConnection(threading.Thread):
             
         return eval(self.response)
     
-    
     def stop(self):
         self.connection.close()
         pass

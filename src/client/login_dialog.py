@@ -54,7 +54,7 @@ class LoginDialog(wx.Dialog):
     
     def OnClose(self, event):
         #print('In OnClose')
-        #self.auth_connection.stopConnection() ???
+        self.auth_connection.stopConnection()
         self.on_close = True
         event.Skip()
         pass

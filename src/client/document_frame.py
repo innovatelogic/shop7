@@ -10,9 +10,9 @@ LEFT_PANEL_WIDTH = 100
 
 class DocumentFrame(wx.Frame):
     logout_flag = False
-    def __init__(self, parent, specs, ms_connection):
+    def __init__(self, parent, connection_info, ms_connection):
         wx.Frame.__init__(self, parent, title=TITLE_DLG, size=(800, 600))
-        self.specs = eval(specs)
+        self.connection_info = connection_info
         self.ms_connection = ms_connection
         
         DocumentFrame.logout_flag = False
@@ -30,7 +30,7 @@ class DocumentFrame(wx.Frame):
 
         self.statusbar = self.CreateStatusBar()
         
-        self.toppanel = StatusViewPanel(self.specs, self, wx.ID_ANY, size = (self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT), pos = (0, 0))
+        self.toppanel = StatusViewPanel(self.connection_info, self, wx.ID_ANY, size = (self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT), pos = (0, 0))
         self.toppanel.SetBackgroundColour((34, 65, 96))
         
         self.bottompanel = wx.Panel(self, wx.ID_ANY)
