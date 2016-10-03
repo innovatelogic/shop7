@@ -38,7 +38,7 @@ class LoginDialog(wx.Dialog):
         self.connection_info = ''
         self.on_close = False
         
-        image = wx.Image('D:/shop7/res/img.jpg', wx.BITMAP_TYPE_ANY)
+        image = wx.Image('../res/img.jpg', wx.BITMAP_TYPE_ANY)
 
         leftpanel = LoginPanel(self.auth_connection, specs, self, wx.ID_ANY, size=(280, 600), pos=(0, 0))
         rightpanel = wx.Panel(self, wx.ID_ANY, size = (500, 600), pos = (280, 0))
