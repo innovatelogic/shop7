@@ -3,9 +3,9 @@ import wx
 import argparse
 import time
 from threading import Event
-from login_dialog import LoginDialog
-from document_frame import DocumentFrame
-from ms_connection import MSConnection
+from ui.login_dialog import LoginDialog
+from ui.document_frame import DocumentFrame
+from connections.ms_connection import MSConnection
 
 #----------------------------------------------------------------------------------------------
 def StartLogin(specs):

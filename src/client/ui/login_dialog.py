@@ -1,7 +1,7 @@
 import sys
 import wx, wx.html
 from proportional_splitter import ProportionalSplitter
-from auth_http_connection import AuthHTTPConnection
+from connections.auth_http_connection import AuthHTTPConnection
 
 TITLE_DLG = "Login Buisness___"
         
