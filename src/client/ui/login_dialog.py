@@ -10,7 +10,7 @@ class LoginPanel(wx.Panel):
     def __init__(self, connection, specs, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.specs = specs
-        self.connection = connection
+        self.auth_connection = connection
         self.login = wx.TextCtrl(self, value=self.specs['user']['login'], pos=(50, 200), size=(180,-1))
         self.passw = wx.TextCtrl(self, value=self.specs['user']['pass'], pos=(50, 250), size=(180,-1), style=wx.TE_PASSWORD)
         self.loginButton = wx.Button(self, label="Login", pos=(50, 300), size=(180, -1))
@@ -19,8 +19,8 @@ class LoginPanel(wx.Panel):
         self.SetBackgroundColour((250, 178, 54))
     
     def OnClickLogin(self, event):
-        res, options = self.connection.request(self.login.GetValue(), self.passw.GetValue())
-        
+        res, options = self.auth_connection.request(self.login.GetValue(), self.passw.GetValue())
+        print res, options
         if res:
             self.GetParent().connection_info = options
             self.GetParent().Close(False)

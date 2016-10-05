@@ -65,7 +65,8 @@ class DocumentFrame(wx.Frame):
         posCenterPanelVertSzr.Add(self.centerpanel.bottompanel, 1, wx.GROW)
         self.centerpanel.SetSizer(posCenterPanelVertSzr)
                 
-        self.centerpanel.bottompanel.left_tree = GroupsTreeView(self.centerpanel.bottompanel, 1, wx.DefaultPosition, (250, -1), wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS)
+        self.centerpanel.bottompanel.left_tree = GroupsTreeView(self.ms_connection, self.centerpanel.bottompanel, 1, wx.DefaultPosition, (250, -1),
+                                                                 wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
         self.centerpanel.bottompanel.right = wx.Panel(self.centerpanel.bottompanel, wx.ID_ANY)
         self.centerpanel.bottompanel.right.SetBackgroundColour((235, 235, 235))
         
@@ -142,4 +143,8 @@ class DocumentFrame(wx.Frame):
             event.Skip()
             
     def OnLogOff(self):
+        self.ms_connection.send(str({'opcode': 'logout', 'token':self.connection_info['token']}))
         DocumentFrame.logout_flag = True
+        
+    def GetGroups(self, id):
+        return self.ms_connection.send({'opcode': 'get_groups', 'id':id, 'token':self.connection_info['token']})

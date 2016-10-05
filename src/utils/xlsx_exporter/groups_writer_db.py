@@ -20,7 +20,7 @@ class GroupsWriterDB:
 		
 		#
 		for item in flat:
-			group_record = {'id': item.id, 'parent_id': item.parent_id, 'name':item.name, 'number':item.number}
+			group_record = {'_id': item._id, 'parent_id': item._parent_id, 'name':item.name, 'number':item.number}
 
 			#if item.parent_number:
 			#	group_record['parent_number'] = item.parent_number

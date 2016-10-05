@@ -13,9 +13,6 @@ class StatusViewPanel(wx.Panel):
         
     def OnClickLogOff(self, event):
         print "OnClickLogOff"
-        
-        self.GetParent().ms_connection.send(str({'opcode': 'logout', 'token':self.connection_info['token']}))
-        
         self.GetParent().OnLogOff()
         self.GetParent().Close(False)
         pass

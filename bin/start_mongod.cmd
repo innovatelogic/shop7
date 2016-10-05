@@ -1,4 +1,4 @@
-::@echo off
+@echo off
 
 set CONFIG_FILE="%~dp0mongod.conf"
 

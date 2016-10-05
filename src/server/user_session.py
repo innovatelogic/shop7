@@ -10,10 +10,12 @@ class UserSession:
         self.name = name
         pass
     
+    #----------------------------------------------------------------------------------------------    
     def start(self):
         ''' statrs when user connected to master server'''
         pass
     
+    #----------------------------------------------------------------------------------------------    
     def close(self):
         ''' ends when user disconnect from master server'''
         pass

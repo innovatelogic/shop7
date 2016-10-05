@@ -3,6 +3,7 @@ import time
 from pika.connection import ConnectionParameters
 from twisted.internet import protocol, reactor
 from pika.adapters.twisted_connection import TwistedProtocolConnection
+from bson.objectid import ObjectId
 
 from user_session import UserSession
 from connections.auth_connection import AuthConnection
@@ -55,14 +56,12 @@ class MasterServer:
     def authentificateUser(self, login, password):
         loginPass = False
         ausPass = False
-        
-        users = self.db_connection.db['users'].find({'email':login})
-        
+        print 'find_one'
+        user = self.db_connection.db['users'].find_one({'email':login})
+        print 'find_one pass'
         #check password
-        for user in users:
-            if user['password'] == password:
-                loginPass = True
-            break
+        if user['password'] == password:
+            loginPass = True
         
         user_session = None
         
@@ -112,4 +111,24 @@ class MasterServer:
             del self.userSessions[token]
             out = True
         print(time.asctime(), "user {0} logout {1}".format(name, str(out)))
+        return out
+    
+#----------------------------------------------------------------------------------------------    
+    def get_groups(self, str_id):
+        
+        out = []
+        if str_id == '-1':
+            root = self.db_connection.db['item_groups'].find_one({'parent_id': None})
+            if root:
+                out.append({'id':str(root['_id']), 'parent_id': None, 'name':root['name']})
+        elif str_id == '-2':
+            out = self.get_groups('-1')
+            groups = self.db_connection.db['item_groups'].find({'parent_id': ObjectId(out[0]['id'])})
+            for group in groups:
+                 out.append({'id':str(group['_id']), 'parent_id': str(group['parent_id']), 'name':group['name']})
+        else:
+            groups = self.db_connection.db['item_groups'].find({'parent_id': ObjectId(str_id)})
+            for group in groups:
+                 out.append({'id':str(group['_id']), 'parent_id': str(group['parent_id']), 'name':group['name']})
+                
         return out
