@@ -17,7 +17,7 @@ class CacheData:
         self.items_cache_filename = self.path + CACHE_ITEMS_FILENAME
         
     def cache(self):
-        print 'Start caching data..'
+        print('Start caching data..')
                 
         wb = load_workbook(self.path + XLSX_FILENAME)
 
