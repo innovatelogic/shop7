@@ -2,6 +2,7 @@
 import sys
 import argparse
 from os import path
+sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
 
 from cache_data import CacheData
 from writer_db import WriterDB
