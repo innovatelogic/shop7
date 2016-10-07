@@ -115,15 +115,15 @@ class MasterServer:
     
 #----------------------------------------------------------------------------------------------    
     def get_groups(self, str_id):
-        
+        ''' return categories by id. integer with sing -id means how levels will return '''
         out = []
         if str_id == '-1':
-            root = self.db_connection.db['item_groups'].find_one({'parent_id': None})
+            root = self.db_connection.db['categories'].find_one({'parent_id': None})
             if root:
                 out.append({'id':str(root['_id']), 'parent_id': None, 'name':root['name']})
         elif str_id == '-2':
             out = self.get_groups('-1')
-            groups = self.db_connection.db['item_groups'].find({'parent_id': ObjectId(out[0]['id'])})
+            groups = self.db_connection.db['categories'].find({'parent_id': ObjectId(out[0]['id'])})
             for group in groups:
                  out.append({'id':str(group['_id']), 'parent_id': str(group['parent_id']), 'name':group['name']})
         else:

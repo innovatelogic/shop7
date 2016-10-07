@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from user_session_db import UserSessionDB
 
 class LayoutDB:
+	CATEGORIES = 'categories'
 	GROUPS_NAME = 'item_groups'
 	ITEMS_NAME = 'items'
 

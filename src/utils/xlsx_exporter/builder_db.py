@@ -20,7 +20,6 @@ class BuilderDB:
 		groups.generate()
 
 		self.connect()
-		
 		self.connection.drop()
 		
 		groups_db = groups_writer_db.GroupsWriterDB(groups.root, self.connection)
