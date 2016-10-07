@@ -1,3 +1,4 @@
+import codecs, json, io
 from common.connection_db import ConnectionDB, LayoutDB
 from bson.objectid import ObjectId
 
@@ -22,20 +23,35 @@ class BuilderDB():
         
         categories_db = self.connection.getCollection(self.connection.db, LayoutDB.CATEGORIES)
         
+        mapping = dict()
         stack = []
         
         stack.append(self.tree.root)
         while len(stack):
             top = stack.pop(0)
-            top.id = ObjectId()
             
-            category_record = {'_id': top.id, 'parent_id': top.parent_id, 'name':top.name}
+            top._id = ObjectId()
+            mapping[str(top._id)] = top.id
+            
+            category_record = {'_id': top._id, 'parent_id': top.parent_id, 'name':top.name}
             categories_db.insert(category_record)
             
             for child in top.childs:
-                child.parent_id = top.id
+                child.parent_id = top._id
                 stack.insert(0, child)
         
+        self.save_mapping(mapping)
         self.close()
         pass
+    
+    def save_mapping(self, mapping):
+        ''' save mapping from old id to new id'''
+        fullpath = self.specs['input']['path'] + 'cat_mapping.map'
+        print("opening damp categories mapping file:" + fullpath)
+        with io.open(fullpath, 'w', encoding='utf8') as f:
+            for key, value in mapping.iteritems():
+                row = {'id_key':key, 'id_val':value}
+                str_row = json.dumps(row, sort_keys=False, ensure_ascii=False).encode('utf8')
+                f.write(unicode(str_row + '\n', 'utf8'))
+                
         

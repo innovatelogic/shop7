@@ -4,6 +4,7 @@ class CategoryNode():
     def __init__(self, name, id):
         self.name = name
         self.id = id
+        self._id = None
         self.parent_id = None
         self.childs = []
         
