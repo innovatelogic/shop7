@@ -17,33 +17,50 @@ def main():
 
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--all', action='store_true', help='rebuild all data')
-	parser.add_argument('--cache', action='store_true', help='rebuild all data')
+	parser.add_argument('--cache', action='store_true', help='rebuild cache only')
 	parser.add_argument('--input', type=str, help='input data folder')
 	parser.add_argument('--out', type=str, help='data destination')
-	parser.add_argument('--user', type=str, help='user')
+	parser.add_argument('--user', type=str, help='user login name')
 	parser.add_argument('--dbhost', type=str, help='database host name')
 	parser.add_argument('--dbport', type=str, help='database port')
 	parser.add_argument('--dbname', type=str, help='database name')
+	parser.add_argument('--mapping', type=str, help='path to categories mapping file')
 	
 	args = parser.parse_args()
 	
+	print("User %s"%args.user)
+	
+	# check attributes correctness
+	if not hasattr(args, 'input'):
+		raise Exception("No [input] attribute")
+	
+	if not hasattr(args, 'user'):
+		raise Exception("No [user] attribute")
+	
+	if not hasattr(args, 'mapping'):
+		raise Exception("No [mapping] attribute")
+	
+	data_folder = path.abspath(args.input) + '/'
+	
+	print('data folder:', data_folder)
+	
 	specs = dict()
-    
+	
+	specs['path'] = {
+		"data":data_folder,
+		"mapping":args.mapping
+    }
+	specs['user'] = {'user':args.user}
+	
 	specs['db'] = {
         'host':args.dbhost,
         'port':args.dbport,
         'name':args.dbname
         }
-    
+	
+	
 	try:
 		print("start script")
-		
-		if not hasattr(args, 'input'):
-			raise Exception("No [input] attribute")
-		
-		data_folder = path.abspath(args.input) + '/'
-		
-		print('data folder:', data_folder)
 		
 		cache = cache_data.CacheData(data_folder)
 		
