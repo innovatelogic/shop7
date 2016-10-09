@@ -2,7 +2,7 @@ import os, sys, shutil
 import codecs, json, io
 import common.group_tree_generator
 import cache_data
-import common.connection_db
+import common.db.connection
 import groups_writer_db
 import items_writer_db
 
@@ -32,7 +32,7 @@ class BuilderDB:
 		self.close()
 		
 	def connect(self):
-		self.connection = common.connection_db.ConnectionDB(self.specs)
+		self.connection = common.db.connection.ConnectionDB(self.specs)
 		self.connection.connect()
 	
 	def close(self):

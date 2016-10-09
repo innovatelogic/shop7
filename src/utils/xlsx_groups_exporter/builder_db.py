@@ -1,5 +1,5 @@
 import codecs, json, io
-from common.connection_db import ConnectionDB, LayoutDB
+from common.db.connection import ConnectionDB, LayoutDB
 from bson.objectid import ObjectId
 
 class BuilderDB():

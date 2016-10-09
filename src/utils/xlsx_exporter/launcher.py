@@ -16,6 +16,7 @@ def main():
 	sys.setdefaultencoding('utf8')
 
 	parser = argparse.ArgumentParser()
+	
 	parser.add_argument('--all', action='store_true', help='rebuild all data')
 	parser.add_argument('--cache', action='store_true', help='rebuild cache only')
 	parser.add_argument('--input', type=str, help='input data folder')
@@ -48,21 +49,20 @@ def main():
 	
 	specs['path'] = {
 		"data":data_folder,
-		"mapping":args.mapping
+		"mapping":args.mapping,
     }
-	specs['user'] = {'user':args.user}
+	specs['user'] = {'login':args.user}
 	
 	specs['db'] = {
         'host':args.dbhost,
         'port':args.dbport,
-        'name':args.dbname
+        'name':args.dbname,
         }
-	
 	
 	try:
 		print("start script")
 		
-		cache = cache_data.CacheData(data_folder)
+		cache = cache_data.CacheData(specs)
 		
 		build_cache = False
 

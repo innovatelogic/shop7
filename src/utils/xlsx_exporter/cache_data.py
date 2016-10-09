@@ -1,4 +1,5 @@
 import codecs, json, io
+import time
 from openpyxl import load_workbook
 import cache_items
 import cache_groups
@@ -11,15 +12,17 @@ SHEET_GROUPS = 'Export Groups Sheet'
 SHEET_ITEMS = 'Export Products Sheet'
 
 class CacheData:
-    def __init__(self, path):
-        self.path = path
-        self.groups_cache_filename = self.path + CACHE_GROUPS_FILENAME
-        self.items_cache_filename = self.path + CACHE_ITEMS_FILENAME
+    def __init__(self, specs):
+        self.specs = specs
+        
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        self.groups_cache_filename = self.specs['path']['data'] + 'cache_groups_' + self.specs['user']['login'] + '_' + timestr + '.json'
+        self.items_cache_filename = self.specs['path']['data'] + 'cache_items_' + self.specs['user']['login'] + '_' + timestr + '.json'
         
     def cache(self):
         print('Start caching data..')
                 
-        wb = load_workbook(self.path + XLSX_FILENAME)
+        wb = load_workbook(self.specs['path']['data'] + XLSX_FILENAME)
 
         print wb.get_sheet_names()
         

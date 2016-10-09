@@ -8,7 +8,7 @@ from bson.objectid import ObjectId
 from user_session import UserSession
 from connections.auth_connection import AuthConnection
 from connections.client_connection import ClientsConnection
-import common.connection_db
+import common.db.connection
 
 USER_TOKEN_START = 456890
     
@@ -46,7 +46,7 @@ class MasterServer:
         print(time.asctime(), "Master Server Stops")
         
     def connectDB(self):
-        self.db_connection = common.connection_db.ConnectionDB(self.specs)
+        self.db_connection = common.db.connection.ConnectionDB(self.specs)
         self.db_connection.connect()
         
     def disconnectDB(self):
