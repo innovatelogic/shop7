@@ -1,17 +1,17 @@
-from common.connection_db import ConnectionDB, LayoutDB
+from common.db.connection import LayoutDB
 from group_tree import find_node_by_id
 from bson.objectid import ObjectId
 
 class ItemsWriterDB:
-    def __init__(self, items, groups_root, connection):
+    def __init__(self, items, groups_root, db):
         self.items = items
         self.groups_root = groups_root
-        self.connection = connection
+        self.db = db
                
     def write(self):
         print ('Start write items to database...')
         
-        items_db = self.connection.getCollection(self.connection.db, LayoutDB.ITEMS_NAME)
+        items_db = self.db.connection.getCollection(self.db.connection.db, LayoutDB.ITEMS_NAME)
         
         for item in self.items:
             record = {'name':item['Name']}

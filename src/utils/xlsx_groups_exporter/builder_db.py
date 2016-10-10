@@ -1,5 +1,6 @@
 import codecs, json, io
 from common.db.connection import ConnectionDB, LayoutDB
+from common.db.instance import Instance
 from bson.objectid import ObjectId
 
 class BuilderDB():

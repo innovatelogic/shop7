@@ -1,15 +1,15 @@
-from common.connection_db import ConnectionDB, LayoutDB
+from common.db.connection import LayoutDB
 from group_tree import flatten_tree, dump_tree_flat
 from bson.objectid import ObjectId
 
 class GroupsWriterDB:
-	def __init__(self, root, connection):
+	def __init__(self, root, db):
 		self.root = root
-		self.connection = connection
+		self.db = db
 	
 	def write(self):
 
-		groups_db = self.connection.getCollection(self.connection.db, LayoutDB.GROUPS_NAME)
+		groups_db = self.db.connection.getCollection(self.db.connection.db, LayoutDB.GROUPS_NAME)
 		
 		#iterate over the tree and assign id's
 		self.assignTreeUIDs(self.root)
