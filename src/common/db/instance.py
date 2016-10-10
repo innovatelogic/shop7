@@ -1,5 +1,7 @@
+
 class Instance():
-	def __init__(self, specs)
+	''' incapsulate db management'''
+	def __init__(self, specs):
 		self.specs = specs
 		
 	def connect(self):

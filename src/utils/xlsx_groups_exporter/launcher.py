@@ -13,6 +13,7 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=str, help='input data folder')
+    parser.add_argument('--out', type=str, help='output data folder')
     parser.add_argument('--dbhost', type=str, help='database host name')
     parser.add_argument('--dbport', type=str, help='database port')
     parser.add_argument('--dbname', type=str, help='database name')
@@ -21,14 +22,27 @@ def main():
     specs = dict()
     
     if not hasattr(args, 'input'):
-        raise Exception('no input attribute')
+        raise Exception('no [input] attribute')
     
-    specs['input'] = { 'path':path.abspath(args.input) + '/'} 
+    if not hasattr(args, 'out'):
+        raise Exception('no [out] attribute')
+    
+    data_folder = path.dirname(path.abspath(args.input)) + '/'
+    data_filename = path.basename(args.input)
+    data_out = path.abspath(args.out) + '/'
+    
+    print data_out
+    
+    specs['input'] = { 
+        'path':data_folder,
+        'filename':data_filename,
+        'out':data_out,
+        } 
     
     specs['db'] = {
         'host':args.dbhost,
         'port':args.dbport,
-        'name':args.dbname
+        'name':args.dbname,
         }
     
     try:

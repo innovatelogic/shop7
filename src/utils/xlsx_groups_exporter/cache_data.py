@@ -12,13 +12,13 @@ XLSX_FILENAME='categories.xlsx'
 class CacheData():
     def __init__(self, specs):
         self.specs = specs
-        pass
+        self.cahepath = self.specs['input']['out'] + self.specs['input']['filename'] + '.json'
     
 #----------------------------------------------------------------------------------------------    
     def generate(self):
         print("Start caching data...")
         
-        fullpath = self.specs['input']['path'] + XLSX_FILENAME
+        fullpath = self.specs['input']['path'] + self.specs['input']['filename']
         
         wb = load_workbook(fullpath)
         
@@ -29,10 +29,8 @@ class CacheData():
         print('rows:' + str(row_count))
         print('columns:' + str(max_column) + ":" + get_column_letter(max_column))
         
-        cahepath = self.specs['input']['path'] + XLSX_FILENAME + '.dump'
-        
-        print("opening cache file:" + cahepath)
-        with io.open(cahepath, 'w', encoding='utf8') as f:
+        print("opening cache file:" + self.cahepath)
+        with io.open(self.cahepath, 'w', encoding='utf8') as f:
             range = 'A2:' + get_column_letter(max_column) + str(row_count)
             for row in self.sheet.iter_rows(range):
                 row_dict = {}
@@ -61,12 +59,11 @@ class CacheData():
 #----------------------------------------------------------------------------------------------                
     def generateTreeFromCache(self):
         '''load cache and generate tree'''
-        fullpath = self.specs['input']['path'] + XLSX_FILENAME + '.dump'
         
-        print("opening cache groups file:" + fullpath)
+        print("opening cache groups file:" + self.cahepath)
         arr_groups = []
         
-        with io.open(fullpath , 'r', encoding='utf8') as f:
+        with io.open(self.cahepath , 'r', encoding='utf8') as f:
             for line in f:
                 data = json.loads(line)
                 arr_groups.append(data)

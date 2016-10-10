@@ -19,8 +19,8 @@ def main():
 	
 	parser.add_argument('--all', action='store_true', help='rebuild all data')
 	parser.add_argument('--cache', action='store_true', help='rebuild cache only')
-	parser.add_argument('--input', type=str, help='input data folder')
-	parser.add_argument('--out', type=str, help='data destination')
+	parser.add_argument('--input', type=str, help='input data file')
+	parser.add_argument('--out', type=str, help='output cache folder')
 	parser.add_argument('--user', type=str, help='user login name')
 	parser.add_argument('--dbhost', type=str, help='database host name')
 	parser.add_argument('--dbport', type=str, help='database port')
@@ -35,21 +35,30 @@ def main():
 	if not hasattr(args, 'input'):
 		raise Exception("No [input] attribute")
 	
+	if not hasattr(args, 'out'):
+		raise Exception("No [out] attribute")
+	
 	if not hasattr(args, 'user'):
 		raise Exception("No [user] attribute")
 	
 	if not hasattr(args, 'mapping'):
 		raise Exception("No [mapping] attribute")
 	
-	data_folder = path.abspath(args.input) + '/'
+	data_folder = path.dirname(path.abspath(args.input)) + '/'
+	data_filename = path.basename(args.input)
+	out_path = path.abspath(args.out) + '/'
 	
 	print('data folder:', data_folder)
+	print('data filename:', data_filename)
+	print('out folder', out_path)
 	
 	specs = dict()
 	
 	specs['path'] = {
-		"data":data_folder,
-		"mapping":args.mapping,
+		'data':data_folder,
+		'filename':data_filename,
+		'mapping':args.mapping,
+		'out':out_path,
     }
 	specs['user'] = {'login':args.user}
 	
@@ -83,5 +92,4 @@ def main():
 	return 1
 	
 if __name__== "__main__":
-	sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
 	main()

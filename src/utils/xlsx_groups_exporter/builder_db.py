@@ -45,8 +45,8 @@ class BuilderDB():
         pass
     
     def save_mapping(self, mapping):
-        ''' save mapping from old id to new id'''
-        fullpath = self.specs['input']['path'] + 'cat_mapping.map'
+        ''' save mapping from old id <-> new id'''
+        fullpath = self.specs['input']['out'] + 'cat_mapping.map'
         print("opening damp categories mapping file:" + fullpath)
         with io.open(fullpath, 'w', encoding='utf8') as f:
             for key, value in mapping.iteritems():
