@@ -23,4 +23,7 @@ class Users():
         if data:
             return User(data)
         return None
-            
+    
+    def drop(self):
+        '''drop collection. rem in production'''
+        self.cat.drop()

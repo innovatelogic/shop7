@@ -26,13 +26,14 @@ class BuilderDB:
 		if user:
 			print("get user /'%s/' OK"%self.specs['user']['login'])
 			
+			self.db.items.drop()
 			self.db.connection.drop()
 			
 			groups_db = groups_writer_db.GroupsWriterDB(groups.root, self.db)
 			groups_db.write()
 			
 			items = self.loadItems(self.filename_items_cache)
-			items_db = items_writer_db.ItemsWriterDB(items, groups.root, self.db)
+			items_db = items_writer_db.ItemsWriterDB(items, groups.root, self.db, user)
 			items_db.write()
 		else:
 			print('no such user in database')

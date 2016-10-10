@@ -41,4 +41,4 @@ class ConnectionDB:
 	def drop(self):
 		if self.db:
 			self.db[LayoutDB.GROUPS_NAME].drop()
-			self.db[LayoutDB.ITEMS_NAME].drop()
+			#self.db[LayoutDB.ITEMS_NAME].drop()

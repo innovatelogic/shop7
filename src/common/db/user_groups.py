@@ -1,7 +1,12 @@
 
+USER_GROUPS_CATEGORY_NAME = 'user_groups'
+
 class UserGroups():
     def __init__(self, connection):
-        pass
+        self.connection = connection
+        
+    def init(self):
+        self.cat = self.connection.db[USER_GROUPS_CATEGORY_NAME]   
     
     def add_user_group(self, specs):
         pass
