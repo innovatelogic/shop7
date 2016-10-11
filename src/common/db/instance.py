@@ -1,4 +1,5 @@
 from connection import ConnectionDB
+from user_groups import UserGroups
 from users import Users
 from items import Items
 
@@ -7,11 +8,13 @@ class Instance():
 	def __init__(self, specs):
 		self.specs = specs
 		self.connection = ConnectionDB(self.specs)
-		self.users = Users(self.connection)
-		self.items = Items(self.connection)
+		self.user_groups = UserGroups(self)
+		self.users = Users(self)
+		self.items = Items(self)
 		
 	def connect(self):
 		self.connection.connect()
+		self.user_groups.init()
 		self.users.init()
 		self.items.init()
 		

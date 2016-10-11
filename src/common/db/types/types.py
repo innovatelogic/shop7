@@ -1,25 +1,50 @@
 
 class User():
 	def __init__(self, spec):
-		self.id = spec['_id']
-		self.name = spec['name']
+		self._id = spec['_id']
 		self.group_id = spec['group_id']
+		self.name = spec['name']
 		self.email = spec['email']
 		self.pwhs = spec['pwhsh']
 		self.phone = spec['phone']
+		
+	def get(self):
+		record = {
+			'_id':self._id,
+			'group_id':self.group_id,
+			'name':self.name,
+			'email':self.email,
+			'pwhsh':self.pwhs,
+			'phone':self.phone,
+			}
+		return record
 
 class UserRecord():
 	'''user id to rights correspondences'''
-	def __init__(self, id, rights):
-		self.id = id
+	def __init__(self, _id, rights):
+		self._id = _id
 		self.rights = rights
+	
+	def get(self):
+		record = {
+			'_id':self._id,
+			'rights':self.rights,
+			}
+		return record
 
 class UserGroup():
 	def __init__(self, spec):
-		self.id = spec['_id']
-		self.records = []
+		self._id = spec['_id']
+		self.records = {}
 		for i in range(0, len(spec['records'])):
-			self.record.append(UserRecord(spec['records'][i]['id'], spec[records][i]['rights']))
+			self.records[spec['records'][i]._id] = spec['records'][i].rights
+		
+	def get(self):
+		record = {
+			'_id':self._id,
+			'records':self.records,
+			}
+		return record
 		
 class Item():
 	CHARACTERISTICS_MAX = 16

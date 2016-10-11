@@ -1,18 +1,37 @@
+from types.types import UserGroup, UserRecord
 
 USER_GROUPS_CATEGORY_NAME = 'user_groups'
 
 class UserGroups():
-    def __init__(self, connection):
-        self.connection = connection
+    def __init__(self, instance):
+        self.instance = instance
         
     def init(self):
-        self.cat = self.connection.db[USER_GROUPS_CATEGORY_NAME]   
+        self.cat = self.instance.connection.db[USER_GROUPS_CATEGORY_NAME]
     
-    def add_user_group(self, specs):
-        pass
+    def add_user_group(self, group):
+        self.cat.insert(group.get())
     
-    def def_user_group(self, id):
-        pass
+    def get_user_group(self, id):
+        print('get_user_group')
+        data = self.cat.find_one({'_id':id})
+        if data:
+            spec = {'_id': str(data['_id'])}
+            spec['records'] = []
+            for key, value in data['records'].iteritems():
+                spec['records'].append(UserRecord(key, value))
+            return UserGroup(spec)
+        return None
     
-    def modify_user_group(self, id, specs):
-        pass
+    def update_user_group(self, group):
+        self.cat.update_one({
+          '_id': group._id
+        },{
+          '$set': {
+            'records': group.records
+          }
+        }, upsert=False)
+    
+    def drop(self):
+        '''drop collection. rem in production'''
+        self.cat.drop()

@@ -1,7 +1,7 @@
 #from common.db.connection import LayoutDB
 from group_tree import find_node_by_id
 from bson.objectid import ObjectId
-from common.db.types import Item
+from common.db.types.types import Item
 
 class ItemsWriterDB:
     def __init__(self, items, groups_root, db, user):
@@ -12,8 +12,6 @@ class ItemsWriterDB:
                
     def write(self):
         print ('Start write items to database...')
-        
-        #items_db = self.db.connection.getCollection(self.db.connection.db, LayoutDB.ITEMS_NAME)
         
         for item in self.items:
             
@@ -31,7 +29,7 @@ class ItemsWriterDB:
             record = {'name':item['name']}
             
             record['_id'] = ObjectId()
-            record['user_id'] = self.user.id
+            record['user_id'] = self.user._id
             record['user_group_id'] = self.user.group_id
             record['category_id'] = 0
             
@@ -84,6 +82,5 @@ class ItemsWriterDB:
                     record[field] = item[field]
             
             self.db.items.add_item(Item(record))
-            #items_db.insert(record)
             
         print ('Write items OK')

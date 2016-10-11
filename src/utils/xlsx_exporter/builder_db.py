@@ -20,11 +20,39 @@ class BuilderDB:
 
 		self.db.connect()
 		
+	'''	self.db.users.drop()
+		self.db.user_groups.drop()
+		
+		#add test user
+		user_spec = {
+			'name':'name name',
+			'email':'admin',
+			'pwhsh':'admin',
+			'phone':'+8044000000'
+			}
+		
+		self.db.users.add_user(user_spec)
+		
+		print 'user add'
+		print user_spec['group_id']
+		
+		group = self.db.user_groups.get_user_group(user_spec['group_id'])
+		
+		user_spec2 = {
+			'name':'foo',
+			'email':'foo',
+			'pwhsh':'foo',
+			'phone':'+8044000001'
+			}
+		
+		self.db.users.add_user(user_spec2, group._id)
+	'''
+	
 		# retrieve user form database
 		user = self.db.users.get_user_by_name(self.specs['user']['login'])
 		
 		if user:
-			print("get user /'%s/' OK"%self.specs['user']['login'])
+			print("get user \'%s\' OK"%self.specs['user']['login'])
 			
 			self.db.items.drop()
 			self.db.connection.drop()
