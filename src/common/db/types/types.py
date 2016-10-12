@@ -20,7 +20,7 @@ class User():
 		return record
 
 class UserRecord():
-	'''user id to rights correspondences'''
+	'''user id to rights correspondences. uses in construction spec for UserGroup'''
 	def __init__(self, _id, rights):
 		self._id = _id
 		self.rights = rights

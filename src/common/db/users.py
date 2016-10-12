@@ -2,7 +2,6 @@ from types.types import User, UserRecord, UserGroup
 from user_groups import UserGroups
 from bson.objectid import ObjectId
 
-
 USERS_CATEGORY_NAME = 'users'
 
 class Users():
@@ -12,13 +11,14 @@ class Users():
     def init(self):
         self.cat = self.instance.connection.db[USERS_CATEGORY_NAME]
         
-    def add_user(self, spec, group_id = None, rights = None):
+    def add_user(self, spec, group_id, rights):
         '''add new user. if group_id = None create new user group with user admin rights 
            otherwise group_id and rights should be set
            return boolean value'''
+        UNIQUE_FIELD_NAME = 'email'
         
         out = False
-        if not self.get_user_by_name(spec['email']):
+        if not self.get_user_by_name(spec[UNIQUE_FIELD_NAME]):
             if group_id:
                 group = self.instance.user_groups.get_user_group(group_id)
                 if group:
@@ -29,10 +29,7 @@ class Users():
                     
                     self.cat.insert(new_user.get())
                     
-                    group.records[str(spec['_id'])] = 'rw++'
-                    
-                    print 'ddd'
-                    print group.records
+                    group.records[str(spec['_id'])] = rights
                     
                     self.instance.user_groups.update_user_group(group)
                     
@@ -40,15 +37,17 @@ class Users():
                     print('[Users::add_user] failed get group %s'%str(group_id))
             else:
                 # no group_id, create group and assign user to it    
-                spec['_id'] = str(ObjectId())
-                group_spec = {'_id':str(ObjectId())}
+                new_user_id = ObjectId()
+                new_group_id = ObjectId()
                 
-                spec['group_id'] = group_spec['_id']
+                spec['_id'] = str(new_user_id)
+                spec['group_id'] = str(new_group_id)
                 
-                group_spec['records'] = []
-                group_spec['records'].append(UserRecord(spec['_id'], "rw+"))
+                spec_group = {'_id':str(new_group_id)}             
+                spec_group['records'] = []
+                spec_group['records'].append(UserRecord(spec['_id'], rights))
                 
-                new_group = UserGroup(group_spec)
+                new_group = UserGroup(spec_group)
                 
                 # TODO check spec valid?
                 new_user = User(spec)
@@ -62,8 +61,18 @@ class Users():
         
         return out
     
-    def del_user(self, id):
-        pass
+    def remove_user(self, id):
+        ''' removes user by id. cause modifying user group and remove it if necessary'''
+        out = False
+        data = self.cat.find_one({'_id':id})
+        
+        if data:
+            res = self.instance.user_groups.remove_user_from_group(data['group_id'], data['_id'])
+            self.cat.remove({"_id": data['_id']})
+            out = True
+        else:
+            print("[Users::del_user] user {} dont exist".format(id))
+        return out
     
     def modify_user(self, id, spec):
         pass
