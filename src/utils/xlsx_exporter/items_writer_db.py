@@ -1,17 +1,21 @@
-#from common.db.connection import LayoutDB
 from group_tree import find_node_by_id
 from bson.objectid import ObjectId
 from common.db.types.types import Item
+from category_mapping import CategoryMapping
 
 class ItemsWriterDB:
-    def __init__(self, items, groups_root, db, user):
+    def __init__(self, specs, items, groups_root, db, user):
+        self.specs = specs
         self.items = items
         self.groups_root = groups_root
         self.db = db
         self.user = user
+        self.mapping = CategoryMapping(self.specs)
                
     def write(self):
         print ('Start write items to database...')
+        
+        self.init_mapping()
         
         for item in self.items:
             
@@ -27,11 +31,21 @@ class ItemsWriterDB:
             #FIELD_NAME = 'characteristicName'
             
             record = {'name':item['name']}
-            
             record['_id'] = ObjectId()
             record['user_id'] = self.user._id
             record['user_group_id'] = self.user.group_id
-            record['category_id'] = 0
+            
+            if 'subsectionID' in item:
+                subsection = item['keywords']
+                category_id = self.mapping.get_category(subsection)
+                if category_id:
+                    record['category_id'] = category_id
+                else:
+                    print('WARNING! category # %s have not found in mapping. Set \'0\'' % subsection)
+                    record['category_id'] = 0
+            else:
+                print('WARNING! item # %s have not category. Set \'0\'' % item['uniqID'])
+                record['category_id'] = 0
             
             if 'keywords' in item:
                 record['keywords'] = item['keywords']
@@ -84,3 +98,7 @@ class ItemsWriterDB:
             self.db.items.add_item(Item(record))
             
         print ('Write items OK')
+        
+    def init_mapping(self):
+        print('[ItemsWriterDB::init_mapping]')
+        self.mapping.init()

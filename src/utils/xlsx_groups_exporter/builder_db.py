@@ -49,10 +49,10 @@ class BuilderDB():
         ''' save mapping from old id <-> new id'''
         fullpath = self.specs['input']['out'] + 'cat_mapping.map'
         print("opening damp categories mapping file:" + fullpath)
-        with io.open(fullpath, 'w', encoding='utf8') as f:
+        with io.open(fullpath, 'w') as f:
             for key, value in mapping.iteritems():
                 row = {'id_key':key, 'id_val':value}
-                str_row = json.dumps(row, sort_keys=False, ensure_ascii=False).encode('utf8')
-                f.write(unicode(str_row + '\n', 'utf8'))
+                str_row = json.dumps(row, sort_keys=False, ensure_ascii=False)
+                f.write(str_row.encode('ascii', 'ignore'))
                 
         

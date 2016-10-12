@@ -33,10 +33,10 @@ class BuilderDB:
 			groups_db.write()
 			
 			items = self.loadItems(self.filename_items_cache)
-			items_db = items_writer_db.ItemsWriterDB(items, groups.root, self.db, user)
+			items_db = items_writer_db.ItemsWriterDB(self.specs, items, groups.root, self.db, user)
 			items_db.write()
 		else:
-			print('no such user in database')
+			print('[BuilderDB::build] no such user in database')
 			
 		self.db.disconnect()
 		
@@ -51,11 +51,11 @@ class BuilderDB:
 	
 	
 ###############
-		self.db.users.drop()
+		'''self.db.users.drop()
 		self.db.user_groups.drop()
 		
 		#add test user
-		'''
+		
 		user_spec = {
 			'name':'admin',
 			'email':'admin',
