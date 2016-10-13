@@ -18,26 +18,16 @@ class ItemsWriterDB:
         self.init_mapping()
         
         for item in self.items:
-            
-            #self.id = spec['_id']
-            #self.user_id = spec['user_id']
-            #self.user_group_id = spec['user_group_id']
-            #self.category = spec['category_id']
-            #self.name = spec['name']
-            #self.amount = spec['amount']
-            #self.price = spec['price']
-            #self.currency = spec['currency']
-            #self.characteristics = []
-            #FIELD_NAME = 'characteristicName'
-            
+
             record = {'name':item['name']}
+            
             record['_id'] = ObjectId()
             record['user_id'] = self.user._id
             record['user_group_id'] = self.user.group_id
             
             if 'subsectionID' in item:
-                subsection = item['keywords']
-                category_id = self.mapping.get_category(subsection)
+                subsection = item['subsectionID']
+                category_id = self.mapping.get_category(str(subsection))
                 if category_id:
                     record['category_id'] = category_id
                 else:

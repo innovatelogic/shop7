@@ -11,16 +11,13 @@ class CategoryMapping():
         
     def loadItems(self, filename):
         print ('opening mapping file:' + filename)
-        with io.open(filename, 'r', encoding = 'utf8') as f:
+        with io.open(filename, 'r', encoding="utf8") as f:
             print 'opening OK'
             for line in f:
-                print line
-                row = json.loads(line.encode('ascii', 'ignore'))
-                print row
+                row = json.loads(line)
                 self.mapping[row['id_val']] = row['id_key'] # for farst search swap key-val
-        return self.mapping
-    
+            
     def get_category(self, id):
         if id in self.mapping:
-            return self.mapping(id)
+            return self.mapping[id]
         return None
