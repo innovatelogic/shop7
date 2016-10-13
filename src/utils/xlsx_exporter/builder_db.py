@@ -1,10 +1,11 @@
-import os, sys, shutil
+import os, sys, shutil, time
 import codecs, json, io
 import common.group_tree_generator
 import cache_data
 import common.db.instance
 import groups_writer_db
 import items_writer_db
+from common.image_loader import ImageURLLoader
 
 class BuilderDB:
 	'''write cache to database'''
@@ -33,8 +34,18 @@ class BuilderDB:
 			groups_db.write()
 			
 			items = self.loadItems(self.filename_items_cache)
-			items_db = items_writer_db.ItemsWriterDB(self.specs, items, groups.root, self.db, user)
+			items_db = items_writer_db.ItemsWriterDB(self.specs, items, self.db, user)
 			items_db.write()
+
+			timestr = time.strftime("%Y%m%d-%H%M%S")
+			img_refs_filename = self.specs['path']['out'] + 'img_refs_' + self.specs['user']['login'] + '_' + timestr + '.json'
+			items_db.save_ref_mapping(img_refs_filename)
+			
+			#load resources
+			print('start load resources')
+			loader = ImageURLLoader(img_refs_filename, self.specs['path']['out'] + self.specs['user']['login'])
+			loader.run()
+         	
 		else:
 			print('[BuilderDB::build] no such user in database')
 			

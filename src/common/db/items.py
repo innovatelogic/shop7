@@ -13,6 +13,21 @@ class Items():
         self.cat.insert(item.get())
     
     def remove_item(self, id):
+        ''' removes item from db. return boolean result '''
+        out = False
+        data = self.cat.find_one({'_id':id})
+        if data:
+            self.cat.remove({"_id": data['_id']})
+            out = True
+        return out
+    
+    def get_item(self, id):
+        data = self.cat.find_one({'_id':id})
+        if data:
+            return Item(data)
+        return None
+    
+    def update_item(self, spec):
         pass
     
     def drop(self):

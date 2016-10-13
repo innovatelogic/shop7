@@ -25,6 +25,7 @@ def main():
 	parser.add_argument('--dbhost', type=str, help='database host name')
 	parser.add_argument('--dbport', type=str, help='database port')
 	parser.add_argument('--dbname', type=str, help='database name')
+	parser.add_argument('--dbdrop', action='store_true', help='drop data for current user')
 	parser.add_argument('--mapping', type=str, help='path to categories mapping file')
 	
 	args = parser.parse_args()
@@ -47,11 +48,13 @@ def main():
 	data_folder = path.dirname(path.abspath(args.input)) + '/'
 	data_filename = path.basename(args.input)
 	out_path = path.abspath(args.out) + '/'
+	resource_folder = out_path + '/' + args.user
 	
 	print('data folder:', data_folder)
 	print('data filename:', data_filename)
 	print('out folder', out_path)
-	
+	print('resource folder', resource_folder)
+
 	specs = dict()
 	
 	specs['path'] = {
@@ -59,6 +62,7 @@ def main():
 		'filename':data_filename,
 		'mapping':args.mapping,
 		'out':out_path,
+		'res':resource_folder
     }
 	specs['user'] = {'login':args.user}
 	
@@ -66,6 +70,7 @@ def main():
         'host':args.dbhost,
         'port':args.dbport,
         'name':args.dbname,
+        'dbdrop':args.dbdrop,
         }
 	
 	try:
