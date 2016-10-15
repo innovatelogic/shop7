@@ -9,6 +9,7 @@ from user_session import UserSession
 from connections.auth_connection import AuthConnection
 from connections.client_connection import ClientsConnection
 import common.db.connection
+import common.db.instance
 
 USER_TOKEN_START = 456890
     
@@ -18,7 +19,7 @@ class MasterServer:
         self.specs = specs
         self.auth_handler = None
         self.clients_connection = None
-        self.db_connection = None
+        self.db = common.db.instance.Instance(self.specs)
         self.userSessions = {}
         pass
     
@@ -34,58 +35,50 @@ class MasterServer:
         self.auth_handler = AuthConnection(self, self.specs, cc)
         self.clients_connection = ClientsConnection(self, self.specs, cc)
         
-        self.connectDB()
+        
+        self.db.connect()
+        
         
         self.auth_handler.start()
         self.clients_connection.start()
 
         reactor.run()
 
-        self.disconnectDB()
+        self.db.disconnect()
         
         print(time.asctime(), "Master Server Stops")
         
-    def connectDB(self):
-        self.db_connection = common.db.connection.ConnectionDB(self.specs)
-        self.db_connection.connect()
-        
-    def disconnectDB(self):
-        self.db_connection.close()
-
 #----------------------------------------------------------------------------------------------
     def authentificateUser(self, login, password):
         loginPass = False
         ausPass = False
-        print 'find_one'
-        user = self.db_connection.db['users'].find_one({'email':login})
-        print 'find_one pass'
-        #check password
-        if user['password'] == password:
-            loginPass = True
         
-        user_session = None
+        print('[authentificateUser]')
+        user = self.db.users.get_user_by_name(login)
         
-        #check already not authentificated
-        if loginPass == True:
-            user_session = None #self.userSessions.get(user['_id'])
-            
-            _id = user['_id']
-            for key, session in self.userSessions.iteritems():
-                if session.id == _id:
-                    user_session = session
-                    break
-            
-            if user_session == None:
-                user_session = UserSession(++USER_TOKEN_START, user['_id'], user['nick'])
-                self.userSessions[user_session.token] = user_session
-                ausPass = True
+        if user:
+            print('[authentificateUser] user ok')
+            if user.pwhs == password:
+                loginPass = True
+        
+                user_session = None
+                
+                _id = user._id
+                for key, session in self.userSessions.iteritems():
+                    if session.id == _id:
+                        user_session = session
+                        break
+                if user_session == None:
+                    user_session = UserSession(++USER_TOKEN_START, user._id, user.name)
+                    self.userSessions[user_session.token] = user_session
+                    ausPass = True
+                else:
+                    print(time.asctime(), "user try to %s re-authentificate" % login)
+                    ausPass = True
+                        
+                print(time.asctime(), "user %s authentificate OK" % login)
             else:
-                print(time.asctime(), "user try to %s re-authentificate" % login)
-                ausPass = True
-                    
-            print(time.asctime(), "user %s authentificate OK" % login)
-        else:
-            print(time.asctime(), "user %s authentificate FAILED" % login)
+                print(time.asctime(), "user %s authentificate FAILED" % login)
         
         return [loginPass and ausPass, user_session]
 
@@ -117,7 +110,7 @@ class MasterServer:
     def get_groups(self, str_id):
         ''' return categories by id. integer with sing -id means how levels will return '''
         out = []
-        if str_id == '-1':
+        '''if str_id == '-1':
             root = self.db_connection.db['categories'].find_one({'parent_id': None})
             if root:
                 out.append({'id':str(root['_id']), 'parent_id': None, 'name':root['name']})
@@ -130,5 +123,5 @@ class MasterServer:
             groups = self.db_connection.db['item_groups'].find({'parent_id': ObjectId(str_id)})
             for group in groups:
                  out.append({'id':str(group['_id']), 'parent_id': str(group['parent_id']), 'name':group['name']})
-                
+                '''
         return out

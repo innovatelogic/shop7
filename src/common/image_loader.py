@@ -48,6 +48,7 @@ class ImageURLLoader():
 					print("loaded {}".format(val))
 					n += 1
 					number+=1
+					time.sleep(0.1)
 				except URLError, e:
 					print('exception {} file {} not found. moving on...'.format(e, val))
 

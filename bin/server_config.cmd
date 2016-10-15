@@ -12,3 +12,6 @@ set MS_CLIENT_QUEUE_NAME=ms-client-pipe-XCXX
 set DB_HOST_NAME=mongodb://localhost
 set DB_PORT=27017
 set MASTER_DB_NAME=shop7_test
+
+
+set RES_FOLDER=%~dp0../data/res
