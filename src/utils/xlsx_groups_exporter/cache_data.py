@@ -69,7 +69,8 @@ class CacheData():
                 arr_groups.append(data)
             
         self.buildTree(arr_groups)
-        #common.categories_tree.dump_category_tree(fullpath + '.tmp', self.tree.root)
+        
+        common.categories_tree.dump_category_tree(self.cahepath + '.tmp', self.tree.root)
         
 #----------------------------------------------------------------------------------------------           
     def buildTree(self, array):

@@ -95,7 +95,7 @@ class ClientsConnection:
     
     #----------------------------------------------------------------------------------------------    
     def do_category_childs(self, token, id, ch, method, props):
-        groups = self.master.get_childs.get_groups(id)
+        groups = self.master.category_model.get_childs(id)
         
         reply = str(groups)
         

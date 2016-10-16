@@ -28,19 +28,23 @@ class BuilderDB():
         stack = []
         
         stack.append(self.tree.root)
-        while len(stack):
-            top = stack.pop(0)
-            
-            top._id = ObjectId()
-            mapping[str(top._id)] = top.id
-            
-            category_record = {'_id': top._id, 'parent_id': top.parent_id, 'name':top.name}
-            categories_db.insert(category_record)
-            
-            for child in top.childs:
-                child.parent_id = top._id
-                stack.insert(0, child)
         
+        while len(stack):
+            
+            new_stack = []
+            for item in stack:
+                item._id = ObjectId()
+                
+                category_record = {'_id': item._id, 'parent_id': item.parent_id, 'name':item.name}
+                categories_db.insert(category_record)
+            
+                mapping[str(item._id)] = item.id
+            
+                for child in item.childs:
+                    child.parent_id = item._id
+                    new_stack.append(child)
+            stack = new_stack
+       
         self.save_mapping(mapping)
         self.close()
         pass

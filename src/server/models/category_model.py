@@ -15,7 +15,6 @@ class CategoryModel():
         print('Load category model')
 
         self.root = self.CategoryNode(self.db_instance.categories.get_root_category());
-        print self.root.category.get()
         self.hashmap[str(self.root.category._id)] = self.root
         
         stack = []
@@ -49,26 +48,36 @@ class CategoryModel():
         if (nlvl > max_n):
             nlvl = max_n
         
-        stack = []
-        stack.append(self.root)
-        
-        while (len(stack) > 0 or nlvl > 0):
-            top = stack.pop(0)
+        out.append({'_id':str(self.root.category._id), 'parent_id': str(self.root.category.parent_id), 'name':self.root.category.name, 'n_childs':str(len(self.root.childs))})
             
-            out.append({'_id':str(top.category._id), 'parent_id': str(top.category.parent_id), 'name':top.category.name})
-            
-            childs = top.childs
-            nlvl -= 1
-            
-            for child in childs:
-                stack.insert(0, child)
+        for item in self.root.childs:
+            out.append({'_id':str(item.category._id), 'parent_id': str(item.category.parent_id), 'name':item.category.name, 'n_childs':str(len(item.childs))})
             
         return out
+    
+    '''    stack = []
+        stack.append(self.root)
+        
+        depth = 0
+        while (len(stack) > 0 or depth <= 1):
+            
+            new_stack = []
+            for item in stack:
+
+                out.append({'_id':str(item.category._id), 'parent_id': str(item.category.parent_id), 'name':item.category.name, 'n_childs':str(len(item.childs))})
+            
+                for child in item.childs:
+                    new_stack.append(child)
+                
+            stack = new_stack
+            
+            depth += 1
+            nlvl -= 1'''
 
     #----------------------------------------------------------------------------------------------  
     def get_childs(self, str_parent_id):
         out = []
         node = self.hashmap[str_parent_id]
-        for child in node.childs:
-            out.append({'_id':str(child._id), 'parent_id': str(child.parent_id), 'name':child.name})
+        for item in node.childs:
+            out.append({'_id':str(item.category._id), 'parent_id': str(item.category.parent_id), 'name':item.category.name, 'n_childs':str(len(item.childs))})
         return out
