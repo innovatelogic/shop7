@@ -1,9 +1,9 @@
-import sys
-import time
+import sys, time
 from pika.connection import ConnectionParameters
 from twisted.internet import protocol, reactor
 from pika.adapters.twisted_connection import TwistedProtocolConnection
 from bson.objectid import ObjectId
+from models.category_model import CategoryModel
 
 from user_session import UserSession
 from connections.auth_connection import AuthConnection
@@ -20,6 +20,7 @@ class MasterServer:
         self.auth_handler = None
         self.clients_connection = None
         self.db = common.db.instance.Instance(self.specs)
+        self.category_model = CategoryModel(self.db)
         self.userSessions = {}
         pass
     
@@ -35,9 +36,9 @@ class MasterServer:
         self.auth_handler = AuthConnection(self, self.specs, cc)
         self.clients_connection = ClientsConnection(self, self.specs, cc)
         
-        
         self.db.connect()
         
+        self.category_model.load()
         
         self.auth_handler.start()
         self.clients_connection.start()

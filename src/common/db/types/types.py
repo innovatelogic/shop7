@@ -1,4 +1,18 @@
 
+class Category():
+	def __init__(self, spec):
+		self._id = spec['_id']
+		self.parent_id = spec['parent_id']
+		self.name = spec['name']
+		
+	def get(self):
+		record = {
+			'_id':self._id,
+			'parent_id':self.parent_id,
+			'name':self.name,
+			}
+		return record
+
 class User():
 	def __init__(self, spec):
 		self._id = spec['_id']
