@@ -10,7 +10,7 @@ class Categories():
         self.cat = self.instance.connection.db[CATEGORIES_NAME]
           
     def get_root_category(self):
-        data = self.cat.find_one({'parent_id':None})
+        data = self.cat.find_one({'name':'root'})
         if data:
             return Category(data)
         return None

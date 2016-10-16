@@ -55,6 +55,8 @@ class ClientsConnection:
                 self.do_logout(dict['token'], ch, method, properties)
             elif code == 'get_groups':
                 self.do_get_groups(dict['token'], dict['id'], ch, method, properties)
+            elif code == 'get_category_childs':
+                self.do_category_childs(dict['token'], dict['id'], ch, method, properties)
     
         #yield ch.basic_ack(delivery_tag=method.delivery_tag)
         
@@ -82,7 +84,18 @@ class ClientsConnection:
         
     #----------------------------------------------------------------------------------------------    
     def do_get_groups(self, token, id, ch, method, props):
-        groups = self.master.get_groups(str(id))
+        groups = self.master.category_model.get_groups(id)
+        
+        reply = str(groups)
+        
+        ch.basic_publish(exchange='',
+             routing_key=props.reply_to,
+             properties=pika.BasicProperties(correlation_id = props.correlation_id),
+             body=reply)
+    
+    #----------------------------------------------------------------------------------------------    
+    def do_category_childs(self, token, id, ch, method, props):
+        groups = self.master.get_childs.get_groups(id)
         
         reply = str(groups)
         
