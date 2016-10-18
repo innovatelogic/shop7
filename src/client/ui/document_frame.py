@@ -17,6 +17,11 @@ class DocumentFrame(wx.Frame):
         
         DocumentFrame.logout_flag = False
         
+        self.InitInterface()
+                
+        self.Show(True)
+        
+    def InitInterface(self):
         menuBar = wx.MenuBar()
         menu = wx.Menu()
         m_exit = menu.Append(wx.ID_EXIT, "E&xit\tAlt-X", "Close window and exit program.")
@@ -74,64 +79,8 @@ class DocumentFrame(wx.Frame):
         posDocHorSzr.Add(self.centerpanel.bottompanel.left_tree, 0, wx.EXPAND)
         posDocHorSzr.Add(self.centerpanel.bottompanel.right, 1, wx.GROW)
         self.centerpanel.bottompanel.SetSizer(posDocHorSzr)
-
-        #self.centerpanel.leftpanel = self.centerpanel.tree #wx.Panel(self.split1)
-                
-        #posPnl = wx.Panel(self)
-        #lbl1 = wx.StaticText(posPnl, label="Position")
-        #lbl2 = wx.StaticText(posPnl, label="Size")
-        #sizeCtrl = wx.TextCtrl(posPnl)
-
-        #posPnlSzr = wx.BoxSizer(wx.HORIZONTAL)
-        #posPnlSzr.Add(lbl1, 1, wx.FIXED)
-        #posPnlSzr.Add(sizeCtrl, 1, wx.FIXED)
-        #posPnlSzr.Add(lbl2, 1, wx.GROW)
-
-        #posPnl.SetSizer(posPnlSzr)
-
-        #create a top leverl sizer to add to the frame itself
-        #mainSzr = wx.BoxSizer(wx.VERTICAL)
-        #mainSzr.Add(posPnl, 1, wx.GROW)
-
-        #self.SetSizerAndFit(mainSzr)
-        #self.centerpanel.split1 = ProportionalSplitter(self.centerpanel, wx.ID_ANY, 0.62)
-                
-        #self.centerpanel.doc_leftpanel = wx.Panel(self.centerpanel.split1)
-        #self.centerpanel.doc_leftpanel.SetBackgroundColour((0, 0, 0))
-        
-        #self.centerpanel.doc_rightpanel = wx.Panel(self.centerpanel.split1, pos = (LEFT_PANEL_WIDTH, ONLINE_PANEL_HEIGHT))
-        #self.centerpanel.doc_rightpanel.SetBackgroundColour((200, 191, 231))   
-        
-        #self.centerpanel.split1.SplitVertically(self.centerpanel.doc_leftpanel, self.centerpanel.doc_rightpanel)
-        
-        #self.split2 = ProportionalSplitter(self.split1, wx.ID_ANY, 0.50)
-        
-        #self.centerpanel.tree = GroupsTreeView(self.centerpanel.split1, 1, wx.DefaultPosition, (-1, -1), wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS)
-        #self.centerpanel.leftpanel = self.centerpanel.tree #wx.Panel(self.split1)
-        
-        #self.leftpanel.Add(self.tree, 1, wx.EXPAND)
-        
-        #self.leftpanel.SetBackgroundColour('pink')
-        
-        #self.centerpanel.rightpanel = wx.Panel(self.centerpanel.split1)
-        #self.centerpanel.rightpanel.SetBackgroundColour((200, 191, 231))    
-        
-        #self.centerpanel.split1.SplitVertically(self.centerpanel.leftpanel, self.centerpanel.rightpanel)
-        
-        #self.topleftpanel = wx.Panel (self.split2)
-        #self.topleftpanel.SetBackgroundColour('pink')
-        
-        
-        #self.bottomleftpanel = wx.Panel (self.split2)
-        #self.bottomleftpanel.SetBackgroundColour('sky Blue')
-
-        ## add your controls to the splitters:
-        #self.split1.SplitVertically(self.split2, self.rightpanel)
-        #self.split2.SplitHorizontally(self.topleftpanel, self.bottomleftpanel)
         
         self.Bind(wx.EVT_SIZE, self.OnReSize)
-                
-        self.Show(True)
         
     def OnReSize(self, event):
             "Window has been resized, so we need to adjust the window."

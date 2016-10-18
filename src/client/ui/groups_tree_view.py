@@ -15,7 +15,6 @@ class GroupsTreeView(wx.TreeCtrl):
         
         for i in groups[1:]:
             ch = self.AppendItem(root, i['name'], -1, -1, wx.TreeItemData(i['_id']))
-            #self.SetPyData(ch, )
             
             if i['n_childs'] != '0':
                 self.SetItemHasChildren(ch);

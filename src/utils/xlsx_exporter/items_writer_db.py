@@ -18,8 +18,17 @@ class ItemsWriterDB:
         print ('Start write items to database...')
         
         self.img_map = {}
-
+        
+        num = 0
+        max_num = self.specs['opt']['nitem']
+        
         for item in self.items:
+            
+            if (max_num > 0):
+                if (num >= max_num):
+                    break
+                num += 1
+            
             record = {'name':item['name'],
                       '_id':ObjectId(),
                       'user_id':self.user._id,
@@ -86,6 +95,8 @@ class ItemsWriterDB:
                 field = 'characteristicName' + str(idx)
                 if field in item:                 
                     record[field] = item[field]
+            
+            record['add_time'] = time.asctime()
             
             self.db.items.add_item(Item(record))
         

@@ -75,6 +75,7 @@ class Item():
 		self.currency = spec['currency']
 		self.availability = spec['availability']
 		self.unit = spec['unit']
+		self.add_time = spec['add_time']
 		
 		self.characteristics = []
 		
@@ -96,6 +97,7 @@ class Item():
 			'currency':self.currency,
 			'availability':self.availability,
 			'unit':self.unit,
+			'add_time':self.add_time,
 				}
 		for i in range(0, len(self.characteristics)):
 			field_name_numered = self.CHARACTERISTIC_FIELD_NAME + str(i)

@@ -27,6 +27,7 @@ def main():
 	parser.add_argument('--dbname', type=str, help='database name')
 	parser.add_argument('--dbdrop', action='store_true', help='drop data for current user')
 	parser.add_argument('--mapping', type=str, help='path to categories mapping file')
+	parser.add_argument('--nitem', type=int, help='number of items to exoprt. -1 all')
 	
 	args = parser.parse_args()
 	
@@ -71,7 +72,12 @@ def main():
         'port':args.dbport,
         'name':args.dbname,
         'dbdrop':args.dbdrop,
+        'nitem':args.nitem,
         }
+	
+	specs['opt'] = {
+		'nitem':args.nitem,
+		}
 	
 	try:
 		print("start script")
