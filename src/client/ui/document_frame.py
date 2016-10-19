@@ -2,7 +2,7 @@ import wx
 from proportional_splitter import ProportionalSplitter
 from groups_tree_view import GroupsTreeView
 from status_view_panel import StatusViewPanel
-
+from doc_control_panel import DocControlPanel
 
 TITLE_DLG = "Client"
 ONLINE_PANEL_HEIGHT = 50
@@ -25,7 +25,7 @@ class DocumentFrame(wx.Frame):
         menuBar = wx.MenuBar()
         menu = wx.Menu()
         m_exit = menu.Append(wx.ID_EXIT, "E&xit\tAlt-X", "Close window and exit program.")
-        #self.Bind(wx.EVT_MENU, self.OnClose, m_exit)
+
         menuBar.Append(menu, "&File")
         menu = wx.Menu()
         m_about = menu.Append(wx.ID_ABOUT, "&About", "Information about this program")
@@ -35,6 +35,11 @@ class DocumentFrame(wx.Frame):
 
         self.statusbar = self.CreateStatusBar()
         
+        self.doLayout();
+        
+        self.Bind(wx.EVT_SIZE, self.OnReSize)
+        
+    def doLayout(self):
         self.toppanel = StatusViewPanel(self.connection_info, self, wx.ID_ANY, size = (self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT), pos = (0, 0))
         self.toppanel.SetBackgroundColour((34, 65, 96))
         
@@ -47,8 +52,7 @@ class DocumentFrame(wx.Frame):
         self.SetSizer(posVertSzr)
               
         left_panel_height = self.GetSize().GetHeight() - ONLINE_PANEL_HEIGHT
-        self.leftpanel = wx.Panel(self.bottompanel, wx.ID_ANY, size = (LEFT_PANEL_WIDTH, left_panel_height), pos = (0, ONLINE_PANEL_HEIGHT))
-        self.leftpanel.SetBackgroundColour((34, 65, 96))
+        self.leftpanel = DocControlPanel(self.connection_info,self.bottompanel, wx.ID_ANY, size = (LEFT_PANEL_WIDTH, left_panel_height), pos = (0, ONLINE_PANEL_HEIGHT))
         
         center_panel_width = self.GetSize().GetWidth() - LEFT_PANEL_WIDTH
         self.centerpanel = wx.Panel(self.bottompanel, wx.ID_ANY, size = (center_panel_width, left_panel_height), pos = (LEFT_PANEL_WIDTH, ONLINE_PANEL_HEIGHT))
@@ -80,15 +84,10 @@ class DocumentFrame(wx.Frame):
         posDocHorSzr.Add(self.centerpanel.bottompanel.right, 1, wx.GROW)
         self.centerpanel.bottompanel.SetSizer(posDocHorSzr)
         
-        self.Bind(wx.EVT_SIZE, self.OnReSize)
+        self.Layout()
         
     def OnReSize(self, event):
             "Window has been resized, so we need to adjust the window."
-            #self.toppanel.SetSize((self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT))
-            #left_panel_height = self.GetSize().GetHeight() - ONLINE_PANEL_HEIGHT
-            #self.leftpanel.SetSize((LEFT_PANEL_WIDTH, left_panel_height))
-            #center_panel_width = self.GetSize().GetWidth() - LEFT_PANEL_WIDTH
-            #self.centerpanel.SetSize((center_panel_width, left_panel_height))
             event.Skip()
             
     def OnLogOff(self):
