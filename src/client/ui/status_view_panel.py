@@ -7,39 +7,60 @@ class StatusViewPanel(wx.Panel):
         
         bmp = wx.ArtProvider.GetBitmap(wx.ART_TIP, wx.ART_OTHER, (16, 16))
         inputOneIco = wx.StaticBitmap(self, wx.ID_ANY, bmp)
-        inputTxtOne = wx.TextCtrl(self, wx.ID_ANY, '')
+        inputTxtOne = wx.TextCtrl(self, wx.ID_ANY, '', size=(140, 20))
 
-        topSizer = wx.BoxSizer(wx.HORIZONTAL)
-        gridSizer = wx.GridSizer(rows=1, cols=3, hgap=5, vgap=5)
-        
-        inputOneSizer = wx.BoxSizer(wx.HORIZONTAL)
-        inputTwoSizer = wx.BoxSizer(wx.HORIZONTAL)
-        input_3_Sizer = wx.BoxSizer(wx.HORIZONTAL)
-        
         self.label_name = wx.StaticText(self, label="Hello: %s " % self.connection_info['name'], pos=(10, 10))
         self.label_name.SetForegroundColour((255, 255, 255))
         self.logoffButton = wx.Button(self, label="Logoff", size=(40, 20))
         
-        #inputOneSizer.Add((20,-1), proportion=1)  # this is a spacer
-        #inputOneSizer.Add(inputOneIco, 1, wx.ALIGN_LEFT, 5)
-        inputOneSizer.Add(self.label_name, 1, wx.ALIGN_LEFT, 5)
+        #topSizer = wx.BoxSizer(wx.HORIZONTAL)
+        #gridSizer = wx.GridSizer(rows=1, cols=3, hgap=5, vgap=5)
         
-        inputTwoSizer.Add((20,20), 1, wx.EXPAND) # this is a spacer
-        inputTwoSizer.Add(inputTxtOne, 1, wx.ALL, 5)
+        gridsizer = wx.FlexGridSizer(cols=5, rows = 1)
+        gridsizer.AddGrowableRow(0)
+        gridsizer.AddGrowableCol(1)
+        gridsizer.AddGrowableCol(3)
+        
+        #sizer_vert  = wx.BoxSizer(wx.VERTICAL)
+        #sizer_hor_1 = wx.BoxSizer(wx.HORIZONTAL)
+        
+        #sizer_vert.Add (sizer_hor_1)
+         
+        sizer_0 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_1 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_2 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_3 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_4 = wx.BoxSizer(wx.HORIZONTAL)
+        
+        #inputOneSizer.Add((20,-1), 1, wx.ALL|wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)  # this is a spacer
+        
+        sizer_0.Add(inputOneIco, flag = wx.ALIGN_CENTER_VERTICAL) #, 1, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL, 5
+        sizer_0.Add(self.label_name, flag = wx.ALIGN_CENTER_VERTICAL) #, 1, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL, 5
+        
+        sizer_1.Add((20,20), 1, wx.EXPAND)
+        
+        #inputTwoSizer.Add((20,20), 1, wx.EXPAND) # this is a spacer
+        sizer_2.Add((20,20), 1, wx.EXPAND) # this is a spacer
+        sizer_2.Add(inputTxtOne, flag = wx.ALL|wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
+        sizer_2.Add((20,20), 1, wx.EXPAND) # this is a spacer
         #inputTwoSizer.Add(labelTwo, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         
-        input_3_Sizer.Add((20,20), 1, wx.EXPAND) # this is a spacer
-        input_3_Sizer.Add(self.logoffButton, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL)
-        input_3_Sizer.Add((20,20), 1, wx.EXPAND)
+        sizer_3.Add((20,20), 1, wx.EXPAND)
+        
+        sizer_4.Add((20,-1), 1, wx.EXPAND) # this is a spacer
+        sizer_4.Add(self.logoffButton, flag = wx.ALIGN_CENTER_VERTICAL)
+        sizer_4.Add((5,-1), 1, wx.EXPAND)
          
-        gridSizer.Add(inputOneSizer, 0, wx.ALIGN_LEFT)
-        gridSizer.Add(inputTwoSizer, 0, wx.EXPAND )
-        gridSizer.Add(input_3_Sizer, 0, wx.ALIGN_RIGHT)
+        gridsizer.Add(sizer_0, flag = wx.EXPAND) #, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL, 5
+        gridsizer.Add(sizer_1, flag = wx.EXPAND) #, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL
+        gridsizer.Add(sizer_2, flag = wx.EXPAND)
+        gridsizer.Add(sizer_3, flag = wx.EXPAND)
+        gridsizer.Add(sizer_4, flag = wx.EXPAND) #, 0, , flag = wx.ALIGN_CENTER_VERTICAL
         
         
         #self.Add(gridSizer, 0, wx.ALL|wx.EXPAND, 5)
-        
-        self.SetSizer(gridSizer)
+        #parentsizer.Add (sizer_hor_1, flag = wx.EXPAND)
+        self.SetSizer(gridsizer)
         #topSizer.Fit(self)
         
         #self.lpanel = wx.Panel(self, wx.ID_ANY)
