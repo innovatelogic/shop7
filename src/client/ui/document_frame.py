@@ -74,7 +74,7 @@ class DocumentFrame(wx.Frame):
         
         # toggle panels
         self.cases_panel = DocumentViewPanel(self.connection_info, self.ms_connection, 
-                                             self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
+                                             self.centerpanel, wx.ID_ANY, size = (-1, -1))
         self.clients_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
         self.clients_panel.SetBackgroundColour((255, 0, 0))
         self.connect_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
@@ -87,13 +87,24 @@ class DocumentFrame(wx.Frame):
         self.view_panels.append(self.connect_panel)
         self.view_panels.append(self.settings_panel)
         
+        
+        self.gridsizer = wx.FlexGridSizer(cols=1, rows = 1)
+        self.gridsizer.AddGrowableRow(0)
+        self.gridsizer.AddGrowableCol(0)
+      
         self.TogglePanel(EPanels.EPanel_Cases)
+        
+        self.centerpanel.SetSizer(self.gridsizer)
         
         self.Layout()
         #self.cases_panel.Layout()
         
     def OnReSize(self, event):
             "Window has been resized, so we need to adjust the window."
+            self.centerpanel.Layout()
+            #W,H = self.centerpanel.GetSize()
+            #for i in range(0, EPanels.EPanel_MAX):
+            #    self.view_panels[i].SetSize(W, H)
             event.Skip()
             
     def OnLogOff(self):
@@ -109,11 +120,12 @@ class DocumentFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnClick_Clients, self.leftpanel.btn_clients)
         self.Bind(wx.EVT_BUTTON, self.OnClick_Connect, self.leftpanel.btn_conect)
         self.Bind(wx.EVT_BUTTON, self.OnClick_Settings, self.leftpanel.btn_settings)
-        pass
     
     def TogglePanel(self, index):
+        self.gridsizer.Clear()
         for i in range(0, EPanels.EPanel_MAX):
             if i == index:
+                self.gridsizer.Add(self.view_panels[i], 0, wx.EXPAND)
                 self.view_panels[i].Show()
                 self.view_panels[i].Layout()
             else:
