@@ -33,8 +33,6 @@ class GroupsTreeView(wx.TreeCtrl):
         
         result = self.ms_connection.send(str({'opcode': 'get_category_childs', 'id':str(_id), 'token':0}))
         
-        print result
-        
         groups = result['res']
         
         for i in groups[1:]:
