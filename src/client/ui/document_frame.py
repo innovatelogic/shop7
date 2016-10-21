@@ -101,7 +101,7 @@ class DocumentFrame(wx.Frame):
         
     def OnReSize(self, event):
             "Window has been resized, so we need to adjust the window."
-            self.centerpanel.Layout()
+            #self.centerpanel.Layout()
             #W,H = self.centerpanel.GetSize()
             #for i in range(0, EPanels.EPanel_MAX):
             #    self.view_panels[i].SetSize(W, H)

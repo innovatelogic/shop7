@@ -1,6 +1,7 @@
 import pika
 
 from twisted.internet import defer, protocol, task
+from common.msg.message_cont import MessageContaier, EAspect
 
 class ClientsConnection:
     '''process communication between clients & ms'''
@@ -8,7 +9,8 @@ class ClientsConnection:
         self.master = master
         self.specs = specs
         self.client_creator = client_creator
-    
+        self.message_cont = MessageContaier(self.master, '../res/msg/messages.xml', EAspect.EAspect_Server)
+        
     #----------------------------------------------------------------------------------------------
     @defer.inlineCallbacks
     def run(self, connection):
@@ -46,60 +48,11 @@ class ClientsConnection:
         ch, method, properties, body = yield queue_object.get()
     
         if body:
-            #print body
-            dict = eval(body)
-            code = dict['opcode']
-            if code == 'auth_activate':
-                self.do_auth_activate(dict['token'], ch, method, properties)
-            elif code == 'logout':
-                self.do_logout(dict['token'], ch, method, properties)
-            elif code == 'get_groups':
-                self.do_get_groups(dict['token'], dict['id'], ch, method, properties)
-            elif code == 'get_category_childs':
-                self.do_category_childs(dict['token'], dict['id'], ch, method, properties)
+            self.process_msg(ch, method, properties, body)
     
         #yield ch.basic_ack(delivery_tag=method.delivery_tag)
-        
-    #----------------------------------------------------------------------------------------------    
-    def do_auth_activate(self, token, ch, method, props):
-        result = self.master.activateUserAuth(token)
-        
-        reply = str({'res': result})
-
-        ch.basic_publish(exchange='',
-                     routing_key=props.reply_to,
-                     properties=pika.BasicProperties(correlation_id = props.correlation_id),
-                     body=reply)
-
-    #----------------------------------------------------------------------------------------------    
-    def do_logout(self, token, ch, method, props):
-        result = self.master.logoutUser(token)
-        
-        reply = str({'res': result})
-
-        ch.basic_publish(exchange='',
-                     routing_key=props.reply_to,
-                     properties=pika.BasicProperties(correlation_id = props.correlation_id),
-                     body=reply)
-        
-    #----------------------------------------------------------------------------------------------    
-    def do_get_groups(self, token, id, ch, method, props):
-        groups = self.master.category_model.get_groups(id)
-        
-        reply = str(groups)
-        
-        ch.basic_publish(exchange='',
-             routing_key=props.reply_to,
-             properties=pika.BasicProperties(correlation_id = props.correlation_id),
-             body=reply)
     
     #----------------------------------------------------------------------------------------------    
-    def do_category_childs(self, token, id, ch, method, props):
-        groups = self.master.category_model.get_childs(id)
+    def process_msg(self, ch, method, properties, body):
+        self.message_cont.process_msg(ch, method, properties, body)
         
-        reply = str(groups)
-        
-        ch.basic_publish(exchange='',
-             routing_key=props.reply_to,
-             properties=pika.BasicProperties(correlation_id = props.correlation_id),
-             body=reply)

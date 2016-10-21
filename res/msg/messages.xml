@@ -1,0 +1,17 @@
+<messages>
+	<msg name="auth_activate">
+		<server get="token" send="res"/>
+	</msg>
+	<msg name="logout">
+		<client send="token" get="res"/>
+		<server get="token" send="res"/>
+	</msg>
+	<msg name="get_groups">
+		<client send="token;id" get="res"/>
+		<server get="token;id" send="res"/>
+	</msg>
+	<msg name="get_category_childs">
+		<client send="token;id" get="res"/>
+		<server get="token;id" send="res"/>
+	</msg>
+</messages>

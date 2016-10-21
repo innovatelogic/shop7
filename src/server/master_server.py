@@ -8,7 +8,7 @@ from models.category_model import CategoryModel
 from user_session import UserSession
 from connections.auth_connection import AuthConnection
 from connections.client_connection import ClientsConnection
-import common.db.connection
+
 import common.db.instance
 
 USER_TOKEN_START = 456890
@@ -25,7 +25,6 @@ class MasterServer:
         pass
     
     def run(self):
-        
         print(time.asctime(), "Master Server Starts")
         
         parameters = ConnectionParameters()

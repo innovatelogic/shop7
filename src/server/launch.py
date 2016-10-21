@@ -41,7 +41,6 @@ def main():
     if not hasattr(args, 'res'):
         raise Exception("Not resource folder")
     
-    
     specs = dict()
     
     specs['master'] = {

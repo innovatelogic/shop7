@@ -49,7 +49,6 @@ class LoginDialog(wx.Dialog):
         rightpanel.SetBackgroundColour((0, 178, 54))
         
         self.Bind(wx.EVT_CLOSE, self.OnClose)
-        
         self.Fit()
     
     def OnClose(self, event):

@@ -9,7 +9,9 @@ class GroupsTreeView(wx.TreeCtrl):
         wx.TreeCtrl.__init__(self, parent, id, position, size, style)
         self.ms_connection = ms_connection
         
-        groups = self.ms_connection.send(str({'opcode': 'get_groups', 'id':1, 'token':0}))
+        result = self.ms_connection.send(str({'opcode': 'get_groups', 'id':1, 'token':0}))
+        
+        groups = result['res']
         
         root = self.AddRoot(groups[0]['name'])
         
@@ -29,7 +31,11 @@ class GroupsTreeView(wx.TreeCtrl):
         
         _id = self.GetPyData(item)
         
-        groups = self.ms_connection.send(str({'opcode': 'get_category_childs', 'id':str(_id), 'token':0}))
+        result = self.ms_connection.send(str({'opcode': 'get_category_childs', 'id':str(_id), 'token':0}))
+        
+        print result
+        
+        groups = result['res']
         
         for i in groups[1:]:
             ch = self.AppendItem(item, i['name'], -1, -1, wx.TreeItemData(i['_id']))
