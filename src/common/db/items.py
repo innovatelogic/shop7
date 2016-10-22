@@ -31,6 +31,13 @@ class Items():
     def update_item(self, spec):
         pass
     
+    def get_user_items(self, token, category_id, offset):
+        data = self.cat.find({'category_id':category_id})
+        items = []
+        for i in data:
+            items.append(Item(i))
+        return items
+    
     def drop(self):
         '''drop collection. rem in production'''
         self.cat.drop()

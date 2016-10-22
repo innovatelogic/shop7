@@ -50,14 +50,23 @@ class DocumentViewPanel(wx.Panel):
                          style=wx.LC_REPORT
                          |wx.BORDER_SUNKEN
                          )
-        self.list_ctrl.InsertColumn(0, 'Subject')
-        self.list_ctrl.InsertColumn(1, 'Due')
-        self.list_ctrl.InsertColumn(2, 'Location', width=125)
+        self.list_ctrl.InsertColumn(0, 'Name')
+        self.list_ctrl.InsertColumn(1, '2')
+        self.list_ctrl.InsertColumn(2, '3', width=125)
         
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.list_ctrl, 0, wx.ALL|wx.EXPAND, 5)
         self.bottompanel.right.SetSizer(sizer)
+    
+    def update_list(self, items):
+        self.list_ctrl.DeleteAllItems()
         
+        arr = items['res']
+        for i in range(len(arr)):
+            pos = self.list_ctrl.InsertStringItem(i, arr[i]['name'])
+            #self.list_ctrl.SetStringItem(pos,1,"data")
+            #self.list_ctrl.SetStringItem(pos,2,"data")
+            
         ################################
         #self.products = [Book("wxPython in Action", "Robin Dunn",
         #                      "1932394621", "Manning"),

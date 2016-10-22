@@ -22,6 +22,7 @@ class GroupsTreeView(wx.TreeCtrl):
                 self.SetItemHasChildren(ch);
         
         wx.EVT_TREE_ITEM_EXPANDING(self, self.GetId(), self.OnExpanding)
+        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChanged)
         
     def setEvents(self):
         pass
@@ -41,5 +42,10 @@ class GroupsTreeView(wx.TreeCtrl):
             if i['n_childs'] != '0':
                 self.SetItemHasChildren(ch);
         pass
+    
+    def OnSelChanged(self, event):
+        item =  event.GetItem()
+        _id = self.GetPyData(item)
         
-        
+        items = self.ms_connection.send_msg('get_items', {'category_id':str(_id), 'offset':0})
+        self.GetParent().GetParent().update_list(items)

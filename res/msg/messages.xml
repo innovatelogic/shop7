@@ -19,6 +19,4 @@
 		<client send="token;category_id;offset" get="res"/>
 		<server get="token;category_id;offset" send="res"/>
 	</msg>
-	
-	
 </messages>

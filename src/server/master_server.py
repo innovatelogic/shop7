@@ -11,8 +11,6 @@ from connections.auth_connection import AuthConnection
 from connections.client_connection import ClientsConnection
 
 import common.db.instance
-
-USER_TOKEN_START = 456890
     
 #----------------------------------------------------------------------------------------------
 class MasterServer:

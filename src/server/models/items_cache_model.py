@@ -5,5 +5,13 @@ class ItemsCacheModel():
         self.db_instance = db_instance
         pass
     
-    
+    def get_items(self, token, category_id, offset):
+        out = []
+        items = self.db_instance.items.get_user_items(token, category_id, offset)
+        
+        for item in items:
+            out.append({'_id':str(item._id), 'name':item.name})
+        return out
+        
+        
     

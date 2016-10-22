@@ -70,4 +70,4 @@ class Message_server_get_items(Message):
         
     def do_process(self, ch, method, props, body):
         dict = eval(body)
-        #return self.master.category_model.get_childs(dict['id'])
+        return self.master.items_cache_model.get_items(dict['token'], dict['category_id'], dict['offset'])
