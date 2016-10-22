@@ -15,4 +15,10 @@
 		<client send="token;id" get="res"/>
 		<server get="token;id" send="res"/>
 	</msg>
+	<msg name="get_items">
+		<client send="token;category_id;offset" get="res"/>
+		<server get="token;category_id;offset" send="res"/>
+	</msg>
+	
+	
 </messages>

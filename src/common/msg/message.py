@@ -27,26 +27,26 @@ class Message():
                      body=reply)
 
 #----------------------------------------------------------------------------------------------
-class Message_auth_activate(Message):
+class Message_server_auth_activate(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
 
     def do_process(self, ch, method, props, body):
         dict = eval(body)
         
-        return self.master.activateUserAuth(dict['token'])
+        return self.master.users_model.activateUserAuth(dict['token'])
 
 #----------------------------------------------------------------------------------------------  
-class Message_logout(Message):
+class Message_server_logout(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
 
     def do_process(self, ch, method, props, body):
         dict = eval(body)
-        return self.master.logoutUser(dict['token'])
+        return self.master.users_model.logoutUser(dict['token'])
 
 #----------------------------------------------------------------------------------------------       
-class Message_get_groups(Message):
+class Message_server_get_groups(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
         
@@ -55,10 +55,19 @@ class Message_get_groups(Message):
         return self.master.category_model.get_groups(dict['id'])
 
 #----------------------------------------------------------------------------------------------       
-class Message_get_category_childs(Message):
+class Message_server_get_category_childs(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
         
     def do_process(self, ch, method, props, body):
         dict = eval(body)
         return self.master.category_model.get_childs(dict['id'])
+    
+    #----------------------------------------------------------------------------------------------       
+class Message_server_get_items(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+        
+    def do_process(self, ch, method, props, body):
+        dict = eval(body)
+        #return self.master.category_model.get_childs(dict['id'])

@@ -50,7 +50,7 @@ class AuthConnection:
     def do_auth(self, ch, method, props, body):
         
         dict = eval(body)
-        flag, user = self.master.authentificateUser(dict['login'], dict['password'])
+        flag, user = self.master.users_model.authentificateUser(dict['login'], dict['password'])
         
         reply = ''
         if flag and user:

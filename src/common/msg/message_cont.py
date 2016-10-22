@@ -21,7 +21,7 @@ class MessageContaier():
         
         for msg in e.findall('msg'):
             msg_name = msg.get('name')
-            class_ = getattr(importlib.import_module("common.msg.message"), 'Message_' + msg_name)
+            class_ = getattr(importlib.import_module("common.msg.message"), 'Message_server_' + msg_name)
             if self.aspect == EAspect.EAspect_Client:
                 for clt in msg.findall('client'):
                     self.dict_messages[msg_name] = class_(self.master, clt.get('get'), clt.get('send'))
