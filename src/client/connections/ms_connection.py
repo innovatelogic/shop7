@@ -3,6 +3,7 @@ import threading
 import uuid
 #from pika.credentials import ExternalCredentials
 from msg.message_client_cont import MessageClientContaier
+from bson.objectid import ObjectId
 
 class MSConnection(threading.Thread):
     ''' establish connection with MS'''

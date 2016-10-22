@@ -1,4 +1,5 @@
 import wx
+from bson.objectid import ObjectId
 
 class GroupsTreeView(wx.TreeCtrl):
     '''Our customized TreeCtrl class

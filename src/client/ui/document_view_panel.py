@@ -1,4 +1,5 @@
 import wx
+from bson.objectid import ObjectId
 from groups_tree_view import GroupsTreeView
 #from ObjectListView import ObjectListView, ColumnDefn
 
@@ -51,8 +52,12 @@ class DocumentViewPanel(wx.Panel):
                          |wx.BORDER_SUNKEN
                          )
         self.list_ctrl.InsertColumn(0, 'Name')
-        self.list_ctrl.InsertColumn(1, '2')
-        self.list_ctrl.InsertColumn(2, '3', width=125)
+        self.list_ctrl.InsertColumn(1, 'Availability')
+        self.list_ctrl.InsertColumn(2, 'Amount')
+        self.list_ctrl.InsertColumn(3, 'Unit')
+        self.list_ctrl.InsertColumn(4, 'Price')
+        self.list_ctrl.InsertColumn(5, 'Currency')
+        self.list_ctrl.InsertColumn(6, 'Desc')
         
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.list_ctrl, 0, wx.ALL|wx.EXPAND, 5)
@@ -64,8 +69,12 @@ class DocumentViewPanel(wx.Panel):
         arr = items['res']
         for i in range(len(arr)):
             pos = self.list_ctrl.InsertStringItem(i, arr[i]['name'])
-            #self.list_ctrl.SetStringItem(pos,1,"data")
-            #self.list_ctrl.SetStringItem(pos,2,"data")
+            self.list_ctrl.SetStringItem(pos, 1, arr[i]['availability'])
+            self.list_ctrl.SetStringItem(pos, 2, str(arr[i]['amount']))
+            self.list_ctrl.SetStringItem(pos, 3, arr[i]['unit'])
+            self.list_ctrl.SetStringItem(pos, 4, str(arr[i]['price']))
+            self.list_ctrl.SetStringItem(pos, 5, arr[i]['currency'])
+            self.list_ctrl.SetStringItem(pos, 6, arr[i]['desc'])
             
         ################################
         #self.products = [Book("wxPython in Action", "Robin Dunn",

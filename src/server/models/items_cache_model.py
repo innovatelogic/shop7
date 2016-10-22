@@ -10,7 +10,7 @@ class ItemsCacheModel():
         items = self.db_instance.items.get_user_items(token, category_id, offset)
         
         for item in items:
-            out.append({'_id':str(item._id), 'name':item.name})
+            out.append(item.get())
         return out
         
         
