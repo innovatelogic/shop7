@@ -36,7 +36,7 @@ def RunClient(app, specs, connection_info):
     
     dict = eval(connection_info)
 
-    status = ms_connection.send(str({'opcode': 'auth_activate', 'token':dict['token']}))
+    status = ms_connection.send_msg('auth_activate', {})
     
     if status['res']:
         frame = DocumentFrame(None, dict, ms_connection)

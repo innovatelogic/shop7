@@ -1,7 +1,10 @@
 import pika
 
 class Message():
-    def __init__(self, get, send):
+    def __init__(self, connection_info, channel, callback_queue, get, send):
+        self.channel = channel
+        self.connection_info = connection_info
+        self.callback_queue = callback_queue
         self.send_params = []
         self.get_params = []
         self.__parse(get, send)
@@ -15,26 +18,52 @@ class Message():
         for s in arr:
             self.send_params.append(s)
             
+    def send(self, params, corr_id):
+        params = self.update_params(params)
+        
+        self.channel.basic_publish(exchange='',
+                       routing_key=self.connection_info['queue'],
+                       properties=pika.BasicProperties(
+                                         reply_to = self.callback_queue,
+                                         correlation_id = corr_id,
+                                         ),
+                      body=str(params))
+
+#----------------------------------------------------------------------------------------------  
+class Message_client_auth_activate(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+
+    def update_params(self, params):
+        params['opcode'] = 'auth_activate'
+        params['token'] = self.connection_info['token']
+        return params
 #----------------------------------------------------------------------------------------------  
 class Message_client_logout(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
 
-    def do_process(self, ch, method, props, body):
-        pass
+    def update_params(self, params):
+        params['opcode'] = 'logout'
+        params['token'] = self.connection_info['token']
+        return params
 
 #----------------------------------------------------------------------------------------------       
 class Message_client_get_groups(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
         
-    def do_process(self, ch, method, props, body):
-        pass
+    def update_params(self, params):
+        params['opcode'] = 'get_groups'
+        params['token'] = self.connection_info['token']
+        return params
 
 #----------------------------------------------------------------------------------------------       
 class Message_client_get_category_childs(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
         
-    def do_process(self, ch, method, props, body):
-        pass
+    def update_params(self, params):
+        params['opcode'] = 'get_category_childs'
+        params['token'] = self.connection_info['token']
+        return params

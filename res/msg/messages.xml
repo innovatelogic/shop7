@@ -1,5 +1,6 @@
 <messages>
 	<msg name="auth_activate">
+		<client send="token" get="res"/>
 		<server get="token" send="res"/>
 	</msg>
 	<msg name="logout">

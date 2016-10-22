@@ -108,11 +108,11 @@ class DocumentFrame(wx.Frame):
             event.Skip()
             
     def OnLogOff(self):
-        self.ms_connection.send(str({'opcode': 'logout', 'token':self.connection_info['token']}))
+        self.ms_connection.send_msg('logout', {})
         DocumentFrame.logout_flag = True
         
     def GetGroups(self, id):
-        return self.ms_connection.send({'opcode': 'get_groups', 'id':id, 'token':self.connection_info['token']})
+        return self.ms_connection.send_msg('get_groups', {'id':id})
     
     def BindEvents(self):
         self.Bind(wx.EVT_SIZE, self.OnReSize)
