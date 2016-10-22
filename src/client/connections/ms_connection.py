@@ -2,6 +2,7 @@ import pika
 import threading
 import uuid
 #from pika.credentials import ExternalCredentials
+from msg.message_client_cont import MessageClientContaier
 
 class MSConnection(threading.Thread):
     ''' establish connection with MS'''
@@ -20,6 +21,7 @@ class MSConnection(threading.Thread):
         self.connection_info = connection_info
         self.connection = None
         self.channel = None
+        self.msg_client_cont = MessageClientContaier('../res/msg/messages.xml')
     
     def run(self):
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.connection_info['ms_host'],
