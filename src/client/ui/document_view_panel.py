@@ -1,6 +1,7 @@
 import wx
 from bson.objectid import ObjectId
 from groups_tree_view import GroupsTreeView
+from wx.lib.agw import ultimatelistctrl as ULC
 #from ObjectListView import ObjectListView, ColumnDefn
 
 class Book(object):
@@ -47,34 +48,45 @@ class DocumentViewPanel(wx.Panel):
         posDocHorSzr.Add(self.bottompanel.right, 1, wx.GROW)
         self.bottompanel.SetSizer(posDocHorSzr)
         
-        self.list_ctrl = wx.ListCtrl(self.bottompanel.right, size=(-1, 800),
-                         style=wx.LC_REPORT
-                         |wx.BORDER_SUNKEN
-                         )
-        self.list_ctrl.InsertColumn(0, 'Name')
-        self.list_ctrl.InsertColumn(1, 'Availability')
-        self.list_ctrl.InsertColumn(2, 'Amount')
-        self.list_ctrl.InsertColumn(3, 'Unit')
-        self.list_ctrl.InsertColumn(4, 'Price')
-        self.list_ctrl.InsertColumn(5, 'Currency')
-        self.list_ctrl.InsertColumn(6, 'Desc')
+        self.list_ctrl = ULC.UltimateListCtrl(self.bottompanel.right, size=(-1, 800), agwStyle=ULC.ULC_REPORT|ULC.ULC_HAS_VARIABLE_ROW_HEIGHT) #style=wx.LC_REPORT|wx.BORDER_SUNKEN
+            
+        self.list_ctrl.InsertColumn(0, 'Img')
+        self.list_ctrl.InsertColumn(1, 'Name')
+        self.list_ctrl.InsertColumn(2, 'Availability')
+        self.list_ctrl.InsertColumn(3, 'Amount')
+        self.list_ctrl.InsertColumn(4, 'Unit')
+        self.list_ctrl.InsertColumn(5, 'Price')
+        self.list_ctrl.InsertColumn(6, 'Currency')
+        self.list_ctrl.InsertColumn(7, 'Desc')
         
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.list_ctrl, 0, wx.ALL|wx.EXPAND, 5)
         self.bottompanel.right.SetSizer(sizer)
+        
+
     
     def update_list(self, items):
         self.list_ctrl.DeleteAllItems()
         
+        il = wx.ImageList(48, 48)
+        self.list_ctrl.SetImageList(il, wx.IMAGE_LIST_SMALL)
+        images=["../res/tumbnail.jpg"]
+        for i in images:
+            img = wx.Image(i, wx.BITMAP_TYPE_ANY)
+            img = wx.BitmapFromImage(img)
+            il.Add(img)
+        
         arr = items['res']
         for i in range(len(arr)):
-            pos = self.list_ctrl.InsertStringItem(i, arr[i]['name'])
-            self.list_ctrl.SetStringItem(pos, 1, arr[i]['availability'])
-            self.list_ctrl.SetStringItem(pos, 2, str(arr[i]['amount']))
-            self.list_ctrl.SetStringItem(pos, 3, arr[i]['unit'])
-            self.list_ctrl.SetStringItem(pos, 4, str(arr[i]['price']))
-            self.list_ctrl.SetStringItem(pos, 5, arr[i]['currency'])
-            self.list_ctrl.SetStringItem(pos, 6, arr[i]['desc'])
+            pos = self.list_ctrl.InsertImageStringItem(i,'', 0)
+            self.list_ctrl.SetStringItem(pos, 1, arr[i]['name'])
+            self.list_ctrl.SetStringItem(pos, 2, arr[i]['availability'])
+            self.list_ctrl.SetStringItem(pos, 3, str(arr[i]['amount']))
+            self.list_ctrl.SetStringItem(pos, 4, arr[i]['unit'])
+            self.list_ctrl.SetStringItem(pos, 5, str(arr[i]['price']))
+            self.list_ctrl.SetStringItem(pos, 6, arr[i]['currency'])
+            self.list_ctrl.SetStringItem(pos, 7, arr[i]['desc'])
+            
             
         ################################
         #self.products = [Book("wxPython in Action", "Robin Dunn",
