@@ -2,6 +2,7 @@ import wx
 from bson.objectid import ObjectId
 from groups_tree_view import GroupsTreeView
 from wx.lib.agw import ultimatelistctrl as ULC
+from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin
 #from ObjectListView import ObjectListView, ColumnDefn
 
 class Book(object):
@@ -17,6 +18,12 @@ class Book(object):
         self.author = author
         self.mfg = mfg
         self.title = title
+        
+class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
+    def __init__(self, parent):
+        wx.ListCtrl.__init__(self, parent, -1, size=(-1, 800), style=wx.LC_REPORT | wx.SUNKEN_BORDER)
+        CheckListCtrlMixin.__init__(self)
+        ListCtrlAutoWidthMixin.__init__(self)
                 
 class DocumentViewPanel(wx.Panel):
     def __init__(self, connection_info, ms_connection, parent, *args, **kwargs):
@@ -47,47 +54,80 @@ class DocumentViewPanel(wx.Panel):
         posDocHorSzr.Add(self.bottompanel.left_tree, 0, wx.EXPAND)
         posDocHorSzr.Add(self.bottompanel.right, 1, wx.GROW)
         self.bottompanel.SetSizer(posDocHorSzr)
+
+        self.list_ctrl = CheckListCtrl(self.bottompanel.right) #style=wx.LC_REPORT|wx.BORDER_SUNKEN
+        #, size=(-1, 800), style=wx.LC_REPORT| wx.BORDER_NONE
+        #                         | wx.LC_EDIT_LABELS
+        #                         | wx.LC_SORT_ASCENDING
+        info = wx.ListItem()
+        info._mask = wx.LIST_MASK_TEXT| wx.LIST_MASK_IMAGE | wx.LIST_MASK_FORMAT
+        info.m_image = -1
+        info.m_format = 0
+        info.m_text = "Img"
         
-        self.list_ctrl = ULC.UltimateListCtrl(self.bottompanel.right, size=(-1, 800), agwStyle=ULC.ULC_REPORT|ULC.ULC_HAS_VARIABLE_ROW_HEIGHT) #style=wx.LC_REPORT|wx.BORDER_SUNKEN
-            
-        self.list_ctrl.InsertColumn(0, 'Img')
-        self.list_ctrl.InsertColumn(1, 'Name')
-        self.list_ctrl.InsertColumn(2, 'Availability')
-        self.list_ctrl.InsertColumn(3, 'Amount')
-        self.list_ctrl.InsertColumn(4, 'Unit')
-        self.list_ctrl.InsertColumn(5, 'Price')
-        self.list_ctrl.InsertColumn(6, 'Currency')
-        self.list_ctrl.InsertColumn(7, 'Desc')
+        self.list_ctrl.InsertColumnInfo(0, info)
+        
+        info.m_image = 0
+        self.list_ctrl.InsertColumnInfo(1, info)
+        
+        self.list_ctrl.InsertColumn(2, 'Name')
+        self.list_ctrl.InsertColumn(3, 'Availability')
+        self.list_ctrl.InsertColumn(4, 'Amount')
+        self.list_ctrl.InsertColumn(5, 'Unit')
+        self.list_ctrl.InsertColumn(6, 'Price')
+        self.list_ctrl.InsertColumn(7, 'Currency')
+        self.list_ctrl.InsertColumn(8, 'Desc')
         
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.list_ctrl, 0, wx.ALL|wx.EXPAND, 5)
         self.bottompanel.right.SetSizer(sizer)
         
+    def SetColumnImage(self, col, image):
+         item = self.list_ctrl.GetColumn(col)
+         # preserve all other attributes too
+         item.SetMask( wx.LIST_MASK_STATE |
+                       wx.LIST_MASK_TEXT  |
+                       wx.LIST_MASK_IMAGE |
+                       wx.LIST_MASK_DATA  |
+                       wx.LIST_SET_ITEM   |
+                       wx.LIST_MASK_WIDTH |
+                       wx.LIST_MASK_FORMAT )
+         item.SetImage(image)
+         self.list_ctrl.SetColumn(col, item)
 
+    def ClearColumnImage(self, col):
+        self.list_ctrl.SetColumnImage(col, -1)
     
     def update_list(self, items):
-        self.list_ctrl.DeleteAllItems()
         
-        il = wx.ImageList(48, 48)
-        self.list_ctrl.SetImageList(il, wx.IMAGE_LIST_SMALL)
+        self.il = wx.ImageList(48, 48)
+        
         images=["../res/tumbnail.jpg"]
         for i in images:
             img = wx.Image(i, wx.BITMAP_TYPE_ANY)
             img = wx.BitmapFromImage(img)
-            il.Add(img)
+            self.il.Add(img)
+            
+        self.list_ctrl.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
+        
+        self.list_ctrl.DeleteAllItems()
         
         arr = items['res']
         for i in range(len(arr)):
             pos = self.list_ctrl.InsertImageStringItem(i,'', 0)
-            self.list_ctrl.SetStringItem(pos, 1, arr[i]['name'])
-            self.list_ctrl.SetStringItem(pos, 2, arr[i]['availability'])
-            self.list_ctrl.SetStringItem(pos, 3, str(arr[i]['amount']))
-            self.list_ctrl.SetStringItem(pos, 4, arr[i]['unit'])
-            self.list_ctrl.SetStringItem(pos, 5, str(arr[i]['price']))
-            self.list_ctrl.SetStringItem(pos, 6, arr[i]['currency'])
-            self.list_ctrl.SetStringItem(pos, 7, arr[i]['desc'])
+            self.list_ctrl.SetStringItem(pos, 2, arr[i]['name'])
+            self.list_ctrl.SetStringItem(pos, 3, arr[i]['availability'])
+            self.list_ctrl.SetStringItem(pos, 4, str(arr[i]['amount']))
+            self.list_ctrl.SetStringItem(pos, 5, arr[i]['unit'])
+            self.list_ctrl.SetStringItem(pos, 6, str(arr[i]['price']))
+            self.list_ctrl.SetStringItem(pos, 7, arr[i]['currency'])
+            self.list_ctrl.SetStringItem(pos, 8, arr[i]['desc'])
             
+            item = self.list_ctrl.GetItem(pos)
+            self.list_ctrl.SetItemColumnImage(pos, 1, 0)
             
+            #SetColumnImage(0,0)
+            #self.SetColumnImage(1,0)
         ################################
         #self.products = [Book("wxPython in Action", "Robin Dunn",
         #                      "1932394621", "Manning"),
