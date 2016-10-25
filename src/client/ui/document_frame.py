@@ -13,7 +13,9 @@ class EPanels:
     EPanel_Clients = 1
     EPanel_Connect = 2
     EPanel_Settings = 3
-    EPanel_MAX = 4
+    EPanel_Statistics = 4
+    EPanel_Dashboard = 5
+    EPanel_MAX = 6
 
 class DocumentFrame(wx.Frame):
     logout_flag = False
@@ -76,17 +78,17 @@ class DocumentFrame(wx.Frame):
         self.cases_panel = DocumentViewPanel(self.connection_info, self.ms_connection, 
                                              self.centerpanel, wx.ID_ANY, size = (-1, -1))
         self.clients_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
-        self.clients_panel.SetBackgroundColour((255, 0, 0))
         self.connect_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
-        self.connect_panel.SetBackgroundColour((0, 255, 0))
         self.settings_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
-        self.settings_panel.SetBackgroundColour((0, 255, 255))
+        self.statistics_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
+        self.dashboard_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
         
         self.view_panels.append(self.cases_panel)
         self.view_panels.append(self.clients_panel)
         self.view_panels.append(self.connect_panel)
         self.view_panels.append(self.settings_panel)
-        
+        self.view_panels.append(self.statistics_panel)
+        self.view_panels.append(self.dashboard_panel)
         
         self.gridsizer = wx.FlexGridSizer(cols=1, rows = 1)
         self.gridsizer.AddGrowableRow(0)
@@ -120,26 +122,42 @@ class DocumentFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnClick_Clients, self.leftpanel.btn_clients)
         self.Bind(wx.EVT_BUTTON, self.OnClick_Connect, self.leftpanel.btn_conect)
         self.Bind(wx.EVT_BUTTON, self.OnClick_Settings, self.leftpanel.btn_settings)
-    
+        self.Bind(wx.EVT_BUTTON, self.OnClick_Statistics, self.leftpanel.btn_statistics)
+        self.Bind(wx.EVT_BUTTON, self.OnClick_Dashboard, self.leftpanel.btn_dashboard)
+        
     def TogglePanel(self, index):
+        out = None
         self.gridsizer.Clear()
         for i in range(0, EPanels.EPanel_MAX):
             if i == index:
                 self.gridsizer.Add(self.view_panels[i], 0, wx.EXPAND)
                 self.view_panels[i].Show()
                 self.view_panels[i].Layout()
+                out = self.view_panels[i]
             else:
                 self.view_panels[i].Hide()
         self.centerpanel.Layout()
+        return out
         
     def OnClick_Cases(self, event):
         self.TogglePanel(EPanels.EPanel_Cases)
         
     def OnClick_Clients(self, event):
-        self.TogglePanel(EPanels.EPanel_Clients)
+        panel = self.TogglePanel(EPanels.EPanel_Clients)
+        panel.SetBackgroundColour((255, 0, 0))
     
     def OnClick_Connect(self, event):
-        self.TogglePanel(EPanels.EPanel_Connect)
+        panel = self.TogglePanel(EPanels.EPanel_Connect)
+        panel.SetBackgroundColour((0, 255, 0))
     
     def OnClick_Settings(self, event):
-        self.TogglePanel(EPanels.EPanel_Settings)
+        panel = self.TogglePanel(EPanels.EPanel_Settings)
+        panel.SetBackgroundColour((0, 255, 255))
+        
+    def OnClick_Statistics(self, event):
+        panel = self.TogglePanel(EPanels.EPanel_Statistics)
+        panel.SetBackgroundColour((0, 123, 255))
+        
+    def OnClick_Dashboard(self, event):
+        panel = self.TogglePanel(EPanels.EPanel_Dashboard)
+        panel.SetBackgroundColour((123, 123, 255))

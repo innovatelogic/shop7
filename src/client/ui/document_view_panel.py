@@ -5,25 +5,15 @@ from wx.lib.agw import ultimatelistctrl as ULC
 from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin
 #from ObjectListView import ObjectListView, ColumnDefn
 
-class Book(object):
-    """
-    Model of the Book object
- 
-    Contains the following attributes:
-    'ISBN', 'Author', 'Manufacturer', 'Title'
-    """
-    #----------------------------------------------------------------------
-    def __init__(self, title, author, isbn, mfg):
-        self.isbn = isbn
-        self.author = author
-        self.mfg = mfg
-        self.title = title
         
 class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     def __init__(self, parent):
         wx.ListCtrl.__init__(self, parent, -1, size=(-1, 800), style=wx.LC_REPORT | wx.SUNKEN_BORDER)
         CheckListCtrlMixin.__init__(self)
         ListCtrlAutoWidthMixin.__init__(self)
+        
+    def OnCheckItem(self, index, flag):
+        print(index, flag)
                 
 class DocumentViewPanel(wx.Panel):
     def __init__(self, connection_info, ms_connection, parent, *args, **kwargs):
@@ -65,11 +55,12 @@ class DocumentViewPanel(wx.Panel):
         info.m_format = 0
         info.m_text = "Img"
         
-        self.list_ctrl.InsertColumnInfo(0, info)
+        #self.list_ctrl.InsertColumnInfo(0, info)
         
         info.m_image = 0
-        self.list_ctrl.InsertColumnInfo(1, info)
-        
+        #self.list_ctrl.InsertColumnInfo(1, info)
+        self.list_ctrl.InsertColumn(0, '')
+        self.list_ctrl.InsertColumn(1, 'Img')
         self.list_ctrl.InsertColumn(2, 'Name')
         self.list_ctrl.InsertColumn(3, 'Availability')
         self.list_ctrl.InsertColumn(4, 'Amount')
@@ -77,6 +68,10 @@ class DocumentViewPanel(wx.Panel):
         self.list_ctrl.InsertColumn(6, 'Price')
         self.list_ctrl.InsertColumn(7, 'Currency')
         self.list_ctrl.InsertColumn(8, 'Desc')
+        
+        self.list_ctrl.SetColumnWidth(0, 25)
+        self.list_ctrl.SetColumnWidth(1, 128)
+        self.list_ctrl.setResizeColumn(9)
         
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.list_ctrl, 0, wx.ALL|wx.EXPAND, 5)
@@ -100,9 +95,9 @@ class DocumentViewPanel(wx.Panel):
     
     def update_list(self, items):
         
-        self.il = wx.ImageList(48, 48)
+        self.il = wx.ImageList(128, 128)
         
-        images=["../res/tumbnail.jpg"]
+        images=["../res/img/check_0.png", "../res/img/check_1.png", "../res/img/label_128.png"]
         for i in images:
             img = wx.Image(i, wx.BITMAP_TYPE_ANY)
             img = wx.BitmapFromImage(img)
@@ -114,7 +109,7 @@ class DocumentViewPanel(wx.Panel):
         
         arr = items['res']
         for i in range(len(arr)):
-            pos = self.list_ctrl.InsertImageStringItem(i,'', 0)
+            pos = self.list_ctrl.Append([''])
             self.list_ctrl.SetStringItem(pos, 2, arr[i]['name'])
             self.list_ctrl.SetStringItem(pos, 3, arr[i]['availability'])
             self.list_ctrl.SetStringItem(pos, 4, str(arr[i]['amount']))
@@ -123,8 +118,11 @@ class DocumentViewPanel(wx.Panel):
             self.list_ctrl.SetStringItem(pos, 7, arr[i]['currency'])
             self.list_ctrl.SetStringItem(pos, 8, arr[i]['desc'])
             
+            #item = self.list_ctrl.GetItem(pos)
+            #self.list_ctrl.SetItemColumnImage(pos, 0, 1)
+            
             item = self.list_ctrl.GetItem(pos)
-            self.list_ctrl.SetItemColumnImage(pos, 1, 0)
+            self.list_ctrl.SetItemColumnImage(pos, 1, 2)
             
             #SetColumnImage(0,0)
             #self.SetColumnImage(1,0)
