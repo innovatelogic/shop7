@@ -1,9 +1,9 @@
 import wx
 import wx.lib.agw.gradientbutton as GB
-
+from category_trees_panel import EPanelCategory
 
 class ButtonPanel(wx.Panel):
-    
+
     COLOR_DARK_BLUE_THEME = wx.Colour(34, 65, 96)
     COLOR_LIGHT_GRAY_THEME = wx.Colour(215, 215, 215)
     
@@ -76,6 +76,10 @@ class CategoriesControllerPanel(wx.Panel):
         
     def OnClick_BaseAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.base_aspect_button)
+        
+        self.GetParent().SwitchPanel(EPanelCategory.EPanel_Base)
     
     def OnClick_SecondAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.second_aspect_button)
+        
+        self.GetParent().SwitchPanel(EPanelCategory.EPanel_Secondary)

@@ -1,6 +1,6 @@
 import wx
 from bson.objectid import ObjectId
-from categories_control_panel import CategoriesControlPanel
+from categories_main_panel import CategoriesMainPanel
 from ui.proportional_splitter import ProportionalSplitter
 from groups_tree_view import GroupsTreeView
 
@@ -24,15 +24,11 @@ class DocumentViewPanel(wx.Panel):
         self.doLayout()
         
     def doLayout(self):
-        
         self.split1 = wx.SplitterWindow(self)
         
         W,H = self.GetSize()
-        self.lpanel = CategoriesControlPanel(self.connection_info, self.split1, wx.ID_ANY, size = (200, -1), pos = (0, 0))
-        self.lpanel.SetBackgroundColour((215, 215, 0))
-        
+        self.lpanel = CategoriesMainPanel(self.connection_info, self.ms_connection, self.split1, wx.ID_ANY, size = (200, -1), pos = (0, 0))
         self.rpanel = wx.Panel(self.split1, wx.ID_ANY)
-        self.rpanel.SetBackgroundColour((0, 255, 255))
         
         self.split1.SplitVertically(self.lpanel, self.rpanel)
         self.split1.SetSashGravity(0.25)
@@ -48,8 +44,10 @@ class DocumentViewPanel(wx.Panel):
         #self.SetSizer(posCenterPanelVertSzr)
         return
     
-        self.bottompanel.left_tree = GroupsTreeView(self.ms_connection, self.bottompanel, 1, wx.DefaultPosition, (250, -1),
-                                                                 wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
+        self.bottompanel.left_tree = GroupsTreeView(self.ms_connection, 
+                                                    self.bottompanel, 1, wx.DefaultPosition, (250, -1),
+                                                    wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
+        
         self.bottompanel.right = wx.Panel(self.bottompanel, wx.ID_ANY)
         self.bottompanel.right.SetBackgroundColour((235, 235, 235))
         
