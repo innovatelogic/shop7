@@ -14,8 +14,8 @@ class AuthHTTPConnection:
     def stopConnection(self):
         self.connection.close()
         
-    def request(self, login, password):
-        params = { 'opcode':'auth', 'login': login, 'password': password}
+    def request(self, login, password, anonimous):
+        params = { 'opcode':'auth', 'login': login, 'password': password, 'anon':anonimous}
         headers = {"Content-type": "application/x-www-form-urlencoded",
                    "Accept": "text/plain"}
         

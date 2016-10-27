@@ -13,19 +13,29 @@ class LoginPanel(wx.Panel):
         self.auth_connection = connection
         self.login = wx.TextCtrl(self, value=self.specs['user']['login'], pos=(50, 200), size=(180,-1))
         self.passw = wx.TextCtrl(self, value=self.specs['user']['pass'], pos=(50, 250), size=(180,-1), style=wx.TE_PASSWORD)
-        self.loginButton = wx.Button(self, label="Login", pos=(50, 300), size=(180, -1))
+        self.anon = wx.CheckBox(self, label = 'login anonymous', pos=(50, 285), size=(180,-1))
+        self.loginButton = wx.Button(self, label="Login", pos=(50, 310), size=(180, -1))
         
         self.Bind(wx.EVT_BUTTON, self.OnClickLogin, self.loginButton)
         self.SetBackgroundColour((250, 178, 54))
+        
+        self.Bind(wx.EVT_CHECKBOX, self.onAnonChecked, self.anon) 
     
     def OnClickLogin(self, event):
-        res, options = self.auth_connection.request(self.login.GetValue(), self.passw.GetValue())
+        res, options = self.auth_connection.request(self.login.GetValue(), self.passw.GetValue(), self.anon.GetValue())
         print res, options
         if res:
             self.GetParent().connection_info = options
             self.GetParent().Close(False)
        
-
+    def onAnonChecked(self, e): 
+        cb = e.GetEventObject()
+        enable = cb.GetValue() == False
+        self.login.Enable(enable)
+        self.passw.Enable(enable)
+      
+        #print cb.GetLabel(),' is clicked', cb.GetValue()
+      
 #############################################################################
 class LoginDialog(wx.Dialog):
     def __init__(self, specs):

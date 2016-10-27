@@ -1,10 +1,10 @@
 import wx
 from bson.objectid import ObjectId
+from categories_control_panel import CategoriesControlPanel
+from proportional_splitter import ProportionalSplitter
 from groups_tree_view import GroupsTreeView
-from wx.lib.agw import ultimatelistctrl as ULC
-from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin
-#from ObjectListView import ObjectListView, ColumnDefn
 
+from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin
         
 class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     def __init__(self, parent):
@@ -24,17 +24,30 @@ class DocumentViewPanel(wx.Panel):
         self.doLayout()
         
     def doLayout(self):
-        W,H = self.GetSize()
-        self.toppanel = wx.Panel(self, wx.ID_ANY, size = (-1, 45), pos = (0, 0))
-        self.toppanel.SetBackgroundColour((215, 215, 215))
-        self.bottompanel = wx.Panel(self, wx.ID_ANY)
-        self.bottompanel.SetBackgroundColour((255, 255, 255))
         
-        posCenterPanelVertSzr = wx.BoxSizer(wx.VERTICAL)
-        posCenterPanelVertSzr.Add(self.toppanel, 0, wx.EXPAND)
-        posCenterPanelVertSzr.Add(self.bottompanel, 1, wx.GROW)
-        self.SetSizer(posCenterPanelVertSzr)
-                
+        self.split1 = wx.SplitterWindow(self)
+        
+        W,H = self.GetSize()
+        self.lpanel = CategoriesControlPanel(self.connection_info, self.split1, wx.ID_ANY, size = (200, -1), pos = (0, 0))
+        self.lpanel.SetBackgroundColour((215, 215, 0))
+        
+        self.rpanel = wx.Panel(self.split1, wx.ID_ANY)
+        self.rpanel.SetBackgroundColour((0, 255, 255))
+        
+        self.split1.SplitVertically(self.lpanel, self.rpanel)
+        self.split1.SetSashGravity(0.25)
+        self.split1.SetMinimumPaneSize(200)
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(self.split1, 1, wx.EXPAND)
+        self.SetSizer(sizer)
+        
+        #posCenterPanelVertSzr = wx.BoxSizer(wx.HORIZONTAL)
+        #posCenterPanelVertSzr.Add(self.lpanel, 0, wx.EXPAND)
+        #posCenterPanelVertSzr.Add(self.rpanel, 1, wx.GROW)
+        
+        #self.SetSizer(posCenterPanelVertSzr)
+        return
+    
         self.bottompanel.left_tree = GroupsTreeView(self.ms_connection, self.bottompanel, 1, wx.DefaultPosition, (250, -1),
                                                                  wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
         self.bottompanel.right = wx.Panel(self.bottompanel, wx.ID_ANY)
@@ -45,19 +58,10 @@ class DocumentViewPanel(wx.Panel):
         posDocHorSzr.Add(self.bottompanel.right, 1, wx.GROW)
         self.bottompanel.SetSizer(posDocHorSzr)
 
-        self.list_ctrl = CheckListCtrl(self.bottompanel.right) #style=wx.LC_REPORT|wx.BORDER_SUNKEN
-        #, size=(-1, 800), style=wx.LC_REPORT| wx.BORDER_NONE
-        #                         | wx.LC_EDIT_LABELS
-        #                         | wx.LC_SORT_ASCENDING
-        info = wx.ListItem()
-        info._mask = wx.LIST_MASK_TEXT| wx.LIST_MASK_IMAGE | wx.LIST_MASK_FORMAT
-        info.m_image = -1
-        info.m_format = 0
-        info.m_text = "Img"
+        self.list_ctrl = CheckListCtrl(self.bottompanel.right)
         
         #self.list_ctrl.InsertColumnInfo(0, info)
         
-        info.m_image = 0
         #self.list_ctrl.InsertColumnInfo(1, info)
         self.list_ctrl.InsertColumn(0, '')
         self.list_ctrl.InsertColumn(1, 'Img')

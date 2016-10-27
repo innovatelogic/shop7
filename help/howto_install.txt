@@ -69,8 +69,16 @@ Twisted
 		pip install --verbose twisted
 		
 		http://pika.readthedocs.io/en/latest/examples/connecting_async.html
+
 		
 #########################################################################
 WxPython
 		* install from https://www.wxpython.org/download.php
 		your configuration (WIN)
+
+
+
+#########################################################################
+#########################################################################
+LINUX
+sudo apt-get install ssh
