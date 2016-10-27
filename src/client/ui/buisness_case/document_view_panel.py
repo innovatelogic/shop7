@@ -1,7 +1,7 @@
 import wx
 from bson.objectid import ObjectId
 from categories_control_panel import CategoriesControlPanel
-from proportional_splitter import ProportionalSplitter
+from ui.proportional_splitter import ProportionalSplitter
 from groups_tree_view import GroupsTreeView
 
 from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin

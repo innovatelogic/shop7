@@ -1,5 +1,5 @@
 import wx
-from buisness_case.categories_controller import CategoriesControllerPanel
+from categories_controller import CategoriesControllerPanel
 
 class CategoriesControlPanel(wx.Panel):
     def __init__(self, connection_info, parent, *args, **kwargs):

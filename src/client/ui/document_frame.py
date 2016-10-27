@@ -2,11 +2,11 @@ import wx
 from proportional_splitter import ProportionalSplitter
 from status_view_panel import StatusViewPanel
 from doc_control_panel import DocControlPanel
-from document_view_panel import DocumentViewPanel
+from buisness_case.document_view_panel import DocumentViewPanel
+
 TITLE_DLG = "Client"
 ONLINE_PANEL_HEIGHT = 50
 LEFT_PANEL_WIDTH = 100
-
 
 class EPanels:
     EPanel_Cases = 0
