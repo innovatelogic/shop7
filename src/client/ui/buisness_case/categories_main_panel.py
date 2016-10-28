@@ -3,12 +3,6 @@ from categories_controller import CategoriesControllerPanel
 from category_trees_panel import CategoryTreesPanel
 from groups_tree_view import GroupsTreeView
 
-class EPanelCategory:
-    EPanel_Base = 0
-    EPanel_Secondary = 1
-    EPanel_MAX = 2
-
-
 class CategoriesMainPanel(wx.Panel):
     def __init__(self, connection_info, ms_connection, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)

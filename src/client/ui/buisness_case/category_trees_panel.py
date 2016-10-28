@@ -13,17 +13,17 @@ class CategoryTreesPanel(wx.Panel):
         self.SetBackgroundColour((255, 0, 0))
         self.view_panels = []
         self.doLayout()
+        self.TogglePanel(EPanelCategory.EPanel_Base)
         
     def doLayout(self):
-        #self.left_tree = GroupsTreeView(self.ms_connection, 
-        #                                        self, 1, wx.DefaultPosition, (-1, -1),
-        #                                        wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
         
         self.base_panel = wx.Panel(self, wx.ID_ANY, size = (-1, -1))
-        self.secondary_panel = wx.Panel(self, wx.ID_ANY, size = (-1, -1))
+        
+        self.secondary_panel = self.sec_tree = GroupsTreeView(self.ms_connection, 
+                                        self, 1, wx.DefaultPosition, (-1, -1),
+                                        wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT) #wx.Panel(self, wx.ID_ANY, size = (-1, -1))
         
         self.base_panel.SetBackgroundColour((54, 45, 54))
-        self.secondary_panel.SetBackgroundColour((255, 45, 23))
         
         self.view_panels.append(self.base_panel)
         self.view_panels.append(self.secondary_panel)
@@ -31,9 +31,7 @@ class CategoryTreesPanel(wx.Panel):
         self.gridsizer = wx.FlexGridSizer(cols=1, rows = 1)
         self.gridsizer.AddGrowableRow(0)
         self.gridsizer.AddGrowableCol(0)
-      
-        self.TogglePanel(EPanelCategory.EPanel_Base)
-        
+           
         self.SetSizer(self.gridsizer)
         
         self.Layout()
