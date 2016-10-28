@@ -1,6 +1,7 @@
 import wx
 from bson.objectid import ObjectId
 from categories_main_panel import CategoriesMainPanel
+from items_main_panel import ItemsMainPanel
 from ui.proportional_splitter import ProportionalSplitter
 from groups_tree_view import GroupsTreeView
 
@@ -28,7 +29,7 @@ class DocumentViewPanel(wx.Panel):
         
         W,H = self.GetSize()
         self.lpanel = CategoriesMainPanel(self.connection_info, self.ms_connection, self.split1, wx.ID_ANY, size = (200, -1), pos = (0, 0))
-        self.rpanel = wx.Panel(self.split1, wx.ID_ANY)
+        self.rpanel = ItemsMainPanel(self.connection_info, self.ms_connection, self.split1, wx.ID_ANY)
         
         self.split1.SplitVertically(self.lpanel, self.rpanel)
         self.split1.SetSashGravity(0.25)

@@ -76,10 +76,8 @@ class CategoriesControllerPanel(wx.Panel):
         
     def OnClick_BaseAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.base_aspect_button)
-        
         self.GetParent().SwitchPanel(EPanelCategory.EPanel_Base)
     
     def OnClick_SecondAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.second_aspect_button)
-        
         self.GetParent().SwitchPanel(EPanelCategory.EPanel_Secondary)
