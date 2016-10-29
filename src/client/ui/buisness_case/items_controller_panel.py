@@ -4,7 +4,6 @@ import wx.lib.agw.gradientbutton as GB
 class ButtonPanel(wx.Panel):
 
     COLOR_DARK_BLUE_THEME = wx.Colour(34, 65, 96)
-    COLOR_LIGHT_GRAY_THEME = wx.Colour(215, 215, 215)
     
     BTN_WIDTH = 40
     BTN_HEIGHT = 30
@@ -24,7 +23,6 @@ class ItemsControllerPanel(wx.Panel):
     COLOR_LIGHT_GRAY_THEME = wx.Colour(215, 215, 215)
     def __init__(self, connection_info, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.SetBackgroundColour(self.COLOR_LIGHT_GRAY_THEME)
         self.doLayout()
         
     def doLayout(self):

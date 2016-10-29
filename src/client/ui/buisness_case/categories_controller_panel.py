@@ -28,8 +28,6 @@ class ButtonPanel(wx.Panel):
         self.base_aspect_button.SetBottomStartColour(self.COLOR_DARK_BLUE_THEME)
         self.second_aspect_button.SetBottomStartColour(self.COLOR_DARK_BLUE_THEME)
         
-        self.SetBackgroundColour(self.COLOR_LIGHT_GRAY_THEME)
-        
         self.buttons.append(self.base_aspect_button)
         self.buttons.append(self.second_aspect_button)
         
@@ -44,7 +42,6 @@ class ButtonPanel(wx.Panel):
 class CategoriesControllerPanel(wx.Panel):
     def __init__(self, connection_info, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.SetBackgroundColour((215, 215, 215))
         self.doLayout()
         self.BindEvents()
         

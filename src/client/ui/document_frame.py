@@ -30,17 +30,6 @@ class DocumentFrame(wx.Frame):
         self.Show(True)
         
     def InitInterface(self):
-        menuBar = wx.MenuBar()
-        menu = wx.Menu()
-        m_exit = menu.Append(wx.ID_EXIT, "E&xit\tAlt-X", "Close window and exit program.")
-
-        menuBar.Append(menu, "&File")
-        menu = wx.Menu()
-        m_about = menu.Append(wx.ID_ABOUT, "&About", "Information about this program")
-        
-        menuBar.Append(menu, "&Help")
-        self.SetMenuBar(menuBar)
-
         self.statusbar = self.CreateStatusBar()
         
         self.doLayout();

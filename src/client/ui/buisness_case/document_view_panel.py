@@ -25,7 +25,7 @@ class DocumentViewPanel(wx.Panel):
         self.doLayout()
         
     def doLayout(self):
-        self.split1 = wx.SplitterWindow(self)
+        self.split1 = wx.SplitterWindow(self, style = wx.SP_THIN_SASH)
         
         W,H = self.GetSize()
         self.lpanel = CategoriesMainPanel(self.connection_info, self.ms_connection, self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
@@ -39,6 +39,7 @@ class DocumentViewPanel(wx.Panel):
         self.SetSizer(sizer)
         
         self.split1.SetSashPosition(200, True)
+
         #posCenterPanelVertSzr = wx.BoxSizer(wx.HORIZONTAL)
         #posCenterPanelVertSzr.Add(self.lpanel, 0, wx.EXPAND)
         #posCenterPanelVertSzr.Add(self.rpanel, 1, wx.GROW)
