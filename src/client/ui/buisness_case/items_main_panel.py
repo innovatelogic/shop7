@@ -1,5 +1,6 @@
 import wx
 from items_controller_panel import ItemsControllerPanel
+from items_list_panel import ItemsListPanel
 
 class ItemsMainPanel(wx.Panel):
     def __init__(self, connection_info, ms_connection, parent, *args, **kwargs):
@@ -11,13 +12,12 @@ class ItemsMainPanel(wx.Panel):
         
     def doLayout(self):
         self.toppanel = ItemsControllerPanel(self.connection_info, self, wx.ID_ANY, size = (-1, 40), pos = (0, 0))
+        self.bottompanel = ItemsListPanel(self.connection_info, self.ms_connection, self, wx.ID_ANY)
         
-        self.bottompanel = wx.Panel(self, wx.ID_ANY)
+        vsizer = wx.BoxSizer(wx.VERTICAL)
+        vsizer.Add(self.toppanel, 0, wx.EXPAND)
+        vsizer.Add(self.bottompanel, 1, wx.GROW)
         
-        posCenterPanelVertSzr = wx.BoxSizer(wx.VERTICAL)
-        posCenterPanelVertSzr.Add(self.toppanel, 0, wx.EXPAND)
-        posCenterPanelVertSzr.Add(self.bottompanel, 1, wx.GROW)
-        
-        self.SetSizer(posCenterPanelVertSzr)
+        self.SetSizer(vsizer)
 
         self.Layout()
