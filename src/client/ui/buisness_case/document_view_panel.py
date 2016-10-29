@@ -28,16 +28,17 @@ class DocumentViewPanel(wx.Panel):
         self.split1 = wx.SplitterWindow(self)
         
         W,H = self.GetSize()
-        self.lpanel = CategoriesMainPanel(self.connection_info, self.ms_connection, self.split1, wx.ID_ANY, size = (200, -1), pos = (0, 0))
+        self.lpanel = CategoriesMainPanel(self.connection_info, self.ms_connection, self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
         self.rpanel = ItemsMainPanel(self.connection_info, self.ms_connection, self.split1, wx.ID_ANY)
         
         self.split1.SplitVertically(self.lpanel, self.rpanel)
         self.split1.SetSashGravity(0.25)
-        self.split1.SetMinimumPaneSize(200)
+        self.split1.SetMinimumPaneSize(250)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.split1, 1, wx.EXPAND)
         self.SetSizer(sizer)
         
+        self.split1.SetSashPosition(200, True)
         #posCenterPanelVertSzr = wx.BoxSizer(wx.HORIZONTAL)
         #posCenterPanelVertSzr.Add(self.lpanel, 0, wx.EXPAND)
         #posCenterPanelVertSzr.Add(self.rpanel, 1, wx.GROW)

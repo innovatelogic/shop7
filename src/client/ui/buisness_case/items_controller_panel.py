@@ -45,10 +45,6 @@ class ItemsControllerPanel(wx.Panel):
         self.search_btn = wx.BitmapButton(self, wx.NewId(), bitmap=bmp_search, size = (20, 20))
         self.columns_btn = wx.BitmapButton(self, wx.NewId(), bitmap=bmp_search, size = (20, 20))
         self.columns_name = wx.StaticText(self, label="columns", pos=(10, 10))
-        #self.columns_name.SetForegroundColour((0, 0, 0))
-        
-        #bmp_folder = wx.Bitmap("../res/img/dropdown.png", wx.BITMAP_TYPE_ANY)
-        #self.dropdown_btn = wx.BitmapButton(self, wx.NewId(), bitmap=bmp_folder, size = (20, 20))
         
         sizer_0.Add((40,-1), 1, wx.EXPAND) # this is a spacer
         sizer_0.Add(self.btnpanel, flag = wx.ALIGN_CENTER_VERTICAL)

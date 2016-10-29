@@ -1,5 +1,6 @@
 import wx
 from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin
+from items_list_bottom_control_panel import ItemsListBottomControlPanel
 
 class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     def __init__(self, parent):
@@ -19,8 +20,8 @@ class ItemsListPanel(wx.Panel):
         self.doLayout()
         
     def doLayout(self):
-        self.toppanel = wx.Panel(self, wx.ID_ANY, size=(-1, 25)) #
-        self.bottompanel = wx.Panel(self, wx.ID_ANY, size=(-1, 30))
+        self.toppanel = wx.Panel(self, wx.ID_ANY, size=(-1, 25))
+        self.bottompanel = ItemsListBottomControlPanel(self.connection_info, self.ms_connection, self, wx.ID_ANY, size=(-1, 30))
       
         self.list_ctrl = self.initListCtrl(self.toppanel)
         
