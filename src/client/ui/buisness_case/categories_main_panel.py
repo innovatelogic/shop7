@@ -4,18 +4,16 @@ from category_trees_panel import CategoryTreesPanel
 from groups_tree_view import GroupsTreeView
 
 class CategoriesMainPanel(wx.Panel):
-    def __init__(self, connection_info, ms_connection, parent, *args, **kwargs):
+    def __init__(self, realm, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.connection_info = connection_info
-        self.ms_connection = ms_connection 
-        #self.SetBackgroundColour((34, 65, 96))
+        self.realm = realm
         
         self.doLayout()
         
     def doLayout(self):
-        self.toppanel = CategoriesControllerPanel(self.connection_info, self, wx.ID_ANY, size = (-1, 40), pos = (0, 0))
+        self.toppanel = CategoriesControllerPanel(self, wx.ID_ANY, size = (-1, 40), pos = (0, 0))
         
-        self.bottompanel = CategoryTreesPanel(self.ms_connection, self, wx.ID_ANY)
+        self.bottompanel = CategoryTreesPanel(self.realm, self, wx.ID_ANY)
         
         posCenterPanelVertSzr = wx.BoxSizer(wx.VERTICAL)
         posCenterPanelVertSzr.Add(self.toppanel, 0, wx.EXPAND)

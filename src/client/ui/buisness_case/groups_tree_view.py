@@ -4,13 +4,13 @@ from bson.objectid import ObjectId
 class GroupsTreeView(wx.TreeCtrl):
     '''Our customized TreeCtrl class
     '''
-    def __init__(self, ms_connection, parent, id, position, size, style):
+    def __init__(self, realm, parent, id, position, size, style):
         '''Initialize our tree
         '''
         wx.TreeCtrl.__init__(self, parent, id, position, size, style)
-        self.ms_connection = ms_connection
+        self.realm = realm
         
-        result = self.ms_connection.send_msg('get_groups', {'id':1})
+        result = self.realm.ms_connection().send_msg('get_groups', {'id':1})
         
         groups = result['res']
         
@@ -33,7 +33,7 @@ class GroupsTreeView(wx.TreeCtrl):
         
         _id = self.GetPyData(item)
         
-        result = self.ms_connection.send_msg('get_category_childs', {'id':str(_id)})
+        result = self.realm.ms_connection().send_msg('get_category_childs', {'id':str(_id)})
         
         groups = result['res']
         
@@ -48,5 +48,5 @@ class GroupsTreeView(wx.TreeCtrl):
         item =  event.GetItem()
         _id = self.GetPyData(item)
         
-        items = self.ms_connection.send_msg('get_items', {'category_id':str(_id), 'offset':0})
+        items = self.realm.ms_connection().send_msg('get_items', {'category_id':str(_id), 'offset':0})
         self.GetParent().GetParent().update_list(items)

@@ -18,11 +18,13 @@ class EPanels:
     EPanel_MAX = 6
 
 class DocumentFrame(wx.Frame):
+    
+    COLOR_DARK_BLUE_THEME = wx.Colour(34, 65, 96)
+    
     logout_flag = False
-    def __init__(self, parent, connection_info, ms_connection):
+    def __init__(self, parent, realm):
         wx.Frame.__init__(self, parent, title=TITLE_DLG, size=(800, 600))
-        self.connection_info = connection_info
-        self.ms_connection = ms_connection
+        self.realm = realm
         DocumentFrame.logout_flag = False
         self.view_panels = []
         self.InitInterface()
@@ -37,11 +39,10 @@ class DocumentFrame(wx.Frame):
         self.BindEvents()
         
     def doLayout(self):
-        self.toppanel = StatusViewPanel(self.connection_info, self, wx.ID_ANY, size = (self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT), pos = (0, 0))
-        self.toppanel.SetBackgroundColour((34, 65, 96))
+        self.toppanel = StatusViewPanel(self.realm, self, wx.ID_ANY, size = (self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT), pos = (0, 0))
+        self.toppanel.SetBackgroundColour(self.COLOR_DARK_BLUE_THEME)
         
         self.bottompanel = wx.Panel(self, wx.ID_ANY)
-        self.bottompanel.SetBackgroundColour((0, 0, 0))
         
         posVertSzr = wx.BoxSizer(wx.VERTICAL)
         posVertSzr.Add(self.toppanel, 0, wx.EXPAND)
@@ -49,8 +50,7 @@ class DocumentFrame(wx.Frame):
         self.SetSizer(posVertSzr)
               
         left_panel_height = self.GetSize().GetHeight() - ONLINE_PANEL_HEIGHT
-        self.leftpanel = DocControlPanel(self.connection_info, 
-                                         self.bottompanel,
+        self.leftpanel = DocControlPanel(self.bottompanel,
                                          wx.ID_ANY,
                                          size = (LEFT_PANEL_WIDTH, left_panel_height), pos = (0, ONLINE_PANEL_HEIGHT))
         
@@ -64,8 +64,7 @@ class DocumentFrame(wx.Frame):
         self.bottompanel.SetSizer(posHorSzr)
         
         # toggle panels
-        self.cases_panel = DocumentViewPanel(self.connection_info, self.ms_connection, 
-                                             self.centerpanel, wx.ID_ANY, size = (-1, -1))
+        self.cases_panel = DocumentViewPanel(self.realm, self.centerpanel, wx.ID_ANY, size = (-1, -1))
         self.clients_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
         self.connect_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
         self.settings_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))

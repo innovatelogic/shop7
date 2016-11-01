@@ -1,15 +1,16 @@
 import wx
+from realm.realm import Realm
 
 class StatusViewPanel(wx.Panel):
-    def __init__(self, connection_info, parent, *args, **kwargs):
+    def __init__(self, realm, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.connection_info = connection_info
+        self.realm = realm
         
         bmp = wx.ArtProvider.GetBitmap(wx.ART_TIP, wx.ART_OTHER, (16, 16))
         inputOneIco = wx.StaticBitmap(self, wx.ID_ANY, bmp)
         inputTxtOne = wx.TextCtrl(self, wx.ID_ANY, '', size=(140, 20))
 
-        self.label_name = wx.StaticText(self, label="Hello: %s " % self.connection_info['name'], pos=(10, 10))
+        self.label_name = wx.StaticText(self, label="Hello: %s " % self.realm.connection_info['name'], pos=(10, 10))
         self.label_name.SetForegroundColour((255, 255, 255))
         self.logoffButton = wx.Button(self, label="Logoff", size=(40, 20))
         

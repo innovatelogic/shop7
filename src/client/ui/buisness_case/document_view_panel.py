@@ -17,10 +17,9 @@ class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
         print(index, flag)
                 
 class DocumentViewPanel(wx.Panel):
-    def __init__(self, connection_info, ms_connection, parent, *args, **kwargs):
+    def __init__(self, realm, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.connection_info = connection_info
-        self.ms_connection = ms_connection
+        self.realm = realm
         self.SetBackgroundColour((255, 255, 255))
         self.doLayout()
         
@@ -28,8 +27,8 @@ class DocumentViewPanel(wx.Panel):
         self.split1 = wx.SplitterWindow(self, style = wx.SP_THIN_SASH)
         
         W,H = self.GetSize()
-        self.lpanel = CategoriesMainPanel(self.connection_info, self.ms_connection, self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
-        self.rpanel = ItemsMainPanel(self.connection_info, self.ms_connection, self.split1, wx.ID_ANY)
+        self.lpanel = CategoriesMainPanel(self.realm, self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
+        self.rpanel = ItemsMainPanel(self.realm, self.split1, wx.ID_ANY)
         
         self.split1.SplitVertically(self.lpanel, self.rpanel)
         self.split1.SetSashGravity(0.25)

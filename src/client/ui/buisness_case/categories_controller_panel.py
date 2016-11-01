@@ -40,7 +40,7 @@ class ButtonPanel(wx.Panel):
                 self.buttons[i].Move((pos[0], self.BTN_POS_X))
         
 class CategoriesControllerPanel(wx.Panel):
-    def __init__(self, connection_info, parent, *args, **kwargs):
+    def __init__(self, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.doLayout()
         self.BindEvents()

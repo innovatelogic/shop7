@@ -21,7 +21,7 @@ class ButtonPanel(wx.Panel):
 
 class ItemsControllerPanel(wx.Panel):
     COLOR_LIGHT_GRAY_THEME = wx.Colour(215, 215, 215)
-    def __init__(self, connection_info, parent, *args, **kwargs):
+    def __init__(self, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.doLayout()
         

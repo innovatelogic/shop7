@@ -2,7 +2,7 @@ import wx
 import wx.lib.agw.gradientbutton as GB
                 
 class DocControlPanel(wx.Panel):
-    def __init__(self, connection_info, parent, *args, **kwargs):
+    def __init__(self, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.SetBackgroundColour((34, 65, 96))
         

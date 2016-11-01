@@ -12,16 +12,15 @@ class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
         print(index, flag)
 
 class ItemsListPanel(wx.Panel):
-    def __init__(self, connection_info, ms_connection, parent, *args, **kwargs):
+    def __init__(self, realm, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.connection_info = connection_info
-        self.ms_connection = ms_connection 
+        self.realm = realm
         
         self.doLayout()
         
     def doLayout(self):
         self.toppanel = wx.Panel(self, wx.ID_ANY, size=(-1, 25))
-        self.bottompanel = ItemsListBottomControlPanel(self.connection_info, self.ms_connection, self, wx.ID_ANY, size=(-1, 30))
+        self.bottompanel = ItemsListBottomControlPanel(self, wx.ID_ANY, size=(-1, 30))
       
         self.list_ctrl = self.initListCtrl(self.toppanel)
         

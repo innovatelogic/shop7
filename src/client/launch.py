@@ -6,7 +6,8 @@ from threading import Event
 from ui.login_dialog import LoginDialog
 from ui.document_frame import DocumentFrame
 from connections.ms_connection import MSConnection
-
+from realm.realm import Realm
+ 
 #----------------------------------------------------------------------------------------------
 def StartLogin(specs):
     isLogin = False
@@ -34,12 +35,12 @@ def RunClient(app, specs, connection_info):
     #block until ready
     ready.wait()
     
-    dict = eval(connection_info)
-
     status = ms_connection.send_msg('auth_activate', {})
     
     if status['res']:
-        frame = DocumentFrame(None, dict, ms_connection)
+        realm = Realm(ms_connection, specs, eval(connection_info))
+        
+        frame = DocumentFrame(None, realm)
         app.MainLoop() 
     
     ms_connection.stop()

@@ -7,9 +7,9 @@ class EPanelCategory:
     EPanel_MAX = 2
 
 class CategoryTreesPanel(wx.Panel):
-    def __init__(self, ms_connection, parent, *args, **kwargs):
+    def __init__(self, realm, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.ms_connection = ms_connection 
+        self.realm = realm 
         self.SetBackgroundColour((255, 0, 0))
         self.view_panels = []
         self.doLayout()
@@ -19,7 +19,7 @@ class CategoryTreesPanel(wx.Panel):
         
         self.base_panel = wx.Panel(self, wx.ID_ANY, size = (-1, -1))
         
-        self.secondary_panel = self.sec_tree = GroupsTreeView(self.ms_connection, 
+        self.secondary_panel = self.sec_tree = GroupsTreeView(self.realm, 
                                         self, 1, wx.DefaultPosition, (-1, -1),
                                         wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT) #wx.Panel(self, wx.ID_ANY, size = (-1, -1))
         

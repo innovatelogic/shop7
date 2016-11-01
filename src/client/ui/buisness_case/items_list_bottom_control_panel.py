@@ -1,10 +1,8 @@
 import wx
 
 class ItemsListBottomControlPanel(wx.Panel):
-    def __init__(self, connection_info, ms_connection, parent, *args, **kwargs):
+    def __init__(self, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.connection_info = connection_info
-        self.ms_connection = ms_connection 
         
         self.doLayout()
         
