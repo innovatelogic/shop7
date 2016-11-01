@@ -1,5 +1,4 @@
 import wx
-from bson.objectid import ObjectId
 
 class GroupsTreeView(wx.TreeCtrl):
     '''Our customized TreeCtrl class
@@ -9,44 +8,18 @@ class GroupsTreeView(wx.TreeCtrl):
         '''
         wx.TreeCtrl.__init__(self, parent, id, position, size, style)
         self.realm = realm
-        
-        result = self.realm.ms_connection().send_msg('get_groups', {'id':1})
-        
-        groups = result['res']
-        
-        root = self.AddRoot(groups[0]['name'])
-        
-        for i in groups[1:]:
-            ch = self.AppendItem(root, i['name'], -1, -1, wx.TreeItemData(i['_id']))
-            
-            if i['n_childs'] != '0':
-                self.SetItemHasChildren(ch);
-        
-        wx.EVT_TREE_ITEM_EXPANDING(self, self.GetId(), self.OnExpanding)
-        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChanged)
-        
-    def setEvents(self):
-        pass
     
-    def OnExpanding(self, event):
-        item = event.GetItem()
-        
-        _id = self.GetPyData(item)
-        
-        result = self.realm.ms_connection().send_msg('get_category_childs', {'id':str(_id)})
-        
-        groups = result['res']
-        
-        for i in groups[1:]:
-            ch = self.AppendItem(item, i['name'], -1, -1, wx.TreeItemData(i['_id']))
+    def init_list(self, items):
+        root = self.AddRoot(items[0]['name'])
+        for item in items[1:]:
+            ch = self.AppendItem(root, item['name'], -1, -1, wx.TreeItemData(item['_id']))
             
-            if i['n_childs'] != '0':
+            if item['n_childs'] != '0':
                 self.SetItemHasChildren(ch);
-        pass
-    
-    def OnSelChanged(self, event):
-        item =  event.GetItem()
-        _id = self.GetPyData(item)
-        
-        items = self.realm.ms_connection().send_msg('get_items', {'category_id':str(_id), 'offset':0})
-        self.GetParent().GetParent().update_list(items)
+
+    def append_childs(self, items, parent_item):
+        for item in items[1:]:
+            ch = self.AppendItem(parent_item, item['name'], -1, -1, wx.TreeItemData(item['_id']))
+            
+            if item['n_childs'] != '0':
+                self.SetItemHasChildren(ch);

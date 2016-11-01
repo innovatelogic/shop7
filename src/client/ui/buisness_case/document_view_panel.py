@@ -20,14 +20,18 @@ class DocumentViewPanel(wx.Panel):
     def __init__(self, realm, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.realm = realm
-        self.SetBackgroundColour((255, 255, 255))
+        self.callback_category_selected = self.callback_category_selected
         self.doLayout()
         
     def doLayout(self):
         self.split1 = wx.SplitterWindow(self, style = wx.SP_THIN_SASH)
         
-        W,H = self.GetSize()
-        self.lpanel = CategoriesMainPanel(self.realm, self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
+        
+        
+        self.lpanel = CategoriesMainPanel(self.realm, 
+                                          self.callback_category_selected,
+                                          self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
+        
         self.rpanel = ItemsMainPanel(self.realm, self.split1, wx.ID_ANY)
         
         self.split1.SplitVertically(self.lpanel, self.rpanel)
@@ -39,11 +43,6 @@ class DocumentViewPanel(wx.Panel):
         
         self.split1.SetSashPosition(200, True)
 
-        #posCenterPanelVertSzr = wx.BoxSizer(wx.HORIZONTAL)
-        #posCenterPanelVertSzr.Add(self.lpanel, 0, wx.EXPAND)
-        #posCenterPanelVertSzr.Add(self.rpanel, 1, wx.GROW)
-        
-        #self.SetSizer(posCenterPanelVertSzr)
         return
     
         self.bottompanel.left_tree = GroupsTreeView(self.ms_connection, 
@@ -80,6 +79,10 @@ class DocumentViewPanel(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.list_ctrl, 0, wx.ALL|wx.EXPAND, 5)
         self.bottompanel.right.SetSizer(sizer)
+        
+    def callback_category_selected(self, aspect, cat_id):
+        self.rpanel.process_category_selection(aspect, cat_id)
+        
         
     def SetColumnImage(self, col, image):
          item = self.list_ctrl.GetColumn(col)
