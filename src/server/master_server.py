@@ -6,6 +6,7 @@ from bson.objectid import ObjectId
 from models.category_model import CategoryModel
 from models.users_model import UsersModel
 from models.items_cache_model import ItemsCacheModel
+from models.base_aspects_container import BaseAspectsContainer
 
 from connections.auth_connection import AuthConnection
 from connections.client_connection import ClientsConnection
@@ -22,6 +23,7 @@ class MasterServer:
         self.category_model = CategoryModel(self.db)
         self.users_model = UsersModel(self.db)
         self.items_cache_model = ItemsCacheModel(self.db)
+        self.base_aspects_container = BaseAspectsContainer(self.db)
         pass
     
     def run(self):
@@ -37,7 +39,7 @@ class MasterServer:
         
         self.db.connect()
         
-        self.category_model.load()
+        self.load()
         
         self.auth_handler.start()
         self.clients_connection.start()
@@ -48,3 +50,7 @@ class MasterServer:
         
         print(time.asctime(), "Master Server Stops")
     
+    def load(self):
+        self.base_aspects_container.load()
+        self.category_model.load()
+        

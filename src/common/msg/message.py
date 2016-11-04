@@ -52,7 +52,7 @@ class Message_server_get_groups(Message):
         
     def do_process(self, ch, method, props, body):
         dict = eval(body)
-        return self.master.category_model.get_groups(dict['id'])
+        return self.master.base_aspects_container.get_first_level_categories('prom_ua')
 
 #----------------------------------------------------------------------------------------------       
 class Message_server_get_category_childs(Message):
@@ -61,7 +61,7 @@ class Message_server_get_category_childs(Message):
         
     def do_process(self, ch, method, props, body):
         dict = eval(body)
-        return self.master.category_model.get_childs(dict['id'])
+        return self.master.base_aspects_container.get_childs('prom_ua', dict['id'])
     
     #----------------------------------------------------------------------------------------------       
 class Message_server_get_items(Message):
