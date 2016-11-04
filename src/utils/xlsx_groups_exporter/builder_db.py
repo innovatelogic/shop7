@@ -1,7 +1,7 @@
 import codecs, json, io
-from common.db.connection import ConnectionDB, LayoutDB
-from common.db.instance import Instance
 from bson.objectid import ObjectId
+import common.db.instance
+from common.db.types.types import Category
 
 class BuilderDB():
     def __init__(self, specs, tree):
@@ -10,41 +10,43 @@ class BuilderDB():
         self.connection = None
         
     def connect(self):
-        self.connection = ConnectionDB(self.specs)
-        self.connection.connect()
-        
+        self.db = common.db.instance.Instance(self.specs)
+        self.db.connect()
+
     def close(self):
-        self.connection.close()
+        self.db.disconnect()
             
     def build(self):
         '''write to db and generate mapping file'''
         self.connect()
         
-        self.connection.db[LayoutDB.CATEGORIES].drop()
+        #categories_db.insert({'_id':"prom_ua"})
+        #categories_db.insert({'_id':"amazon"})
+        #categories_db.insert({'_id':"ebay"})
         
-        categories_db = self.connection.getCollection(self.connection.db, LayoutDB.CATEGORIES)
-        
+        self.db.base_aspects.clear('prom_ua')
+            
         mapping = dict()
         stack = []
         
         stack.append(self.tree.root)
-        
-        while len(stack):
-            
+
+        while len(stack):      
             new_stack = []
             for item in stack:
                 item._id = ObjectId()
                 
-                category_record = {'_id': item._id, 'parent_id': item.parent_id, 'name':item.name}
-                categories_db.insert(category_record)
-            
+                cat = Category({'_id': item._id, 'parent_id': item.parent_id, 'name':item.name})
+                self.db.base_aspects.add_category('prom_ua', cat)
+                
                 mapping[str(item._id)] = item.id
             
                 for child in item.childs:
                     child.parent_id = item._id
                     new_stack.append(child)
+            
             stack = new_stack
-       
+        
         self.save_mapping(mapping)
         self.close()
         pass

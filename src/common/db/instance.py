@@ -3,6 +3,7 @@ from user_groups import UserGroups
 from users import Users
 from items import Items
 from categories import Categories
+from base_aspects import BaseAspects
 
 class Instance():
 	''' incapsulate db management'''
@@ -13,6 +14,7 @@ class Instance():
 		self.users = Users(self)
 		self.items = Items(self)
 		self.categories = Categories(self)
+		self.base_aspects = BaseAspects(self)
 		
 	def connect(self):
 		self.connection.connect()
@@ -20,6 +22,7 @@ class Instance():
 		self.users.init()
 		self.items.init()
 		self.categories.init()
+		self.base_aspects.init()
 		
 	def disconnect(self):
 		self.connection.close()
