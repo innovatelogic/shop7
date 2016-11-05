@@ -7,6 +7,7 @@ class UsersModel():
     def __init__(self, db_instance):
         self.db_instance = db_instance
         self.userSessions = {}
+        self.userGroupsFwght = {}
         
         #----------------------------------------------------------------------------------------------
     def authentificateUser(self, login, password):
@@ -65,3 +66,20 @@ class UsersModel():
             out = True
         print(time.asctime(), "user {0} logout {1}".format(name, str(out)))
         return out
+
+#---------------------------------------------------------------------------------------------- 
+    def createUser(self, rights, group_id = None):
+        '''creates user with all facility or attach to group [group_id] '''
+        pass
+    
+#----------------------------------------------------------------------------------------------     
+    def deleteUser(self, id):
+        '''delete user. if user last in group delete all aditional facility (group, items, mapping, aspect)'''
+        pass
+    
+#----------------------------------------------------------------------------------------------         
+    def updateUser(self, spec):
+        '''update user. 
+        TODO spec doc
+        '''
+        pass

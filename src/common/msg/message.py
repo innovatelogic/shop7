@@ -63,7 +63,7 @@ class Message_server_get_category_childs(Message):
         dict = eval(body)
         return self.master.base_aspects_container.get_childs('prom_ua', dict['id'])
     
-    #----------------------------------------------------------------------------------------------       
+#----------------------------------------------------------------------------------------------       
 class Message_server_get_items(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
@@ -71,3 +71,12 @@ class Message_server_get_items(Message):
     def do_process(self, ch, method, props, body):
         dict = eval(body)
         return self.master.items_cache_model.get_items(dict['token'], dict['category_id'], dict['offset'])
+
+#----------------------------------------------------------------------------------------------
+class Message_server_get_aspects(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+        
+    def do_process(self, ch, method, props, body):
+        #dict = eval(body)
+        return self.master.base_aspects_container.get_aspects()

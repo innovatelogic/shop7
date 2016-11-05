@@ -68,7 +68,7 @@ class Message_client_get_category_childs(Message):
         params['token'] = self.connection_info['token']
         return params
     
-    #----------------------------------------------------------------------------------------------       
+#----------------------------------------------------------------------------------------------       
 class Message_client_get_items(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
@@ -77,3 +77,13 @@ class Message_client_get_items(Message):
         params['opcode'] = 'get_items'
         params['token'] = self.connection_info['token']
         return params
+
+#----------------------------------------------------------------------------------------------       
+class Message_client_get_aspects(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+        
+    def update_params(self, params):
+        params['opcode'] = 'get_aspects'
+        params['token'] = self.connection_info['token']
+        return params    

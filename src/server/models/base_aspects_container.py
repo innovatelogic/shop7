@@ -86,3 +86,9 @@ class BaseAspectsContainer():
                             'n_childs':str(len(item.childs))})
                 
         return out
+    
+    def get_aspects(self):
+        out = []
+        for key in self.aspects:
+            out.append(key)
+        return out

@@ -27,3 +27,7 @@ class Realm():
     def get_items(self, aspect, _id, offset = 0, count = 50):
         items = self.ms_connection().send_msg('get_items', {'category_id':str(_id), 'offset':offset})
         return items
+    
+    def get_aspects(self):
+        aspects = self.ms_connection().send_msg('get_aspects', {})
+        return aspects

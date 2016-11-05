@@ -28,6 +28,8 @@ class DocumentFrame(wx.Frame):
         DocumentFrame.logout_flag = False
         self.view_panels = []
         self.InitInterface()
+        
+        print self.realm.get_aspects()
                 
         self.Show(True)
         
