@@ -52,5 +52,5 @@ class MasterServer:
     
     def load(self):
         self.base_aspects_container.load()
-        self.category_model.load()
+        #self.category_model.load()
         

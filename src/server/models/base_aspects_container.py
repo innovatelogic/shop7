@@ -41,7 +41,7 @@ class BaseAspectsContainer():
                 
                 childs = self.db_inst.base_aspects.get_childs(aspect, top.category)
                 count += 1
-                
+
                 for child in childs:
                     node = CategoryNode(child)
                     self.aspects[aspect].hashmap[str(node.category._id)] = node

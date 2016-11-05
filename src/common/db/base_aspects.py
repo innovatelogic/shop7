@@ -26,10 +26,24 @@ class BaseAspects():
     def get_childs(self, aspect, parent):
         out = []
         if parent:
-            records = self.cat.find({'_id':aspect}, { "categories": { '$elemMatch' : {'parent_id':parent._id} } })
+            
+            pipeline = [
+                {'$match': { '_id':aspect}},
+                {'$unwind':'$categories'},
+                {'$match': {"categories.parent_id":parent._id} },
+                #{ "$group": {'categories':{ _id:'$_id'}}}
+                ]
+            
+            cursor = self.cat.aggregate(pipeline)
+            
+            records = list(cursor)
+            
+            #records = self.cat.find({'_id':aspect}, { "categories": { '$elemMatch' : {'parent_id':parent._id} } })
+            #print records
             for record in records:
                 if record and record.get('categories') and len(record['categories']):
-                    out.append(Category(record['categories'][0]))
+                    #print record['categories']
+                    out.append(Category(record['categories']))
                 
         return out
     
