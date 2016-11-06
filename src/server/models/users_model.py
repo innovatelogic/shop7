@@ -1,5 +1,6 @@
 import time
 from user_session import UserSession
+from groups_model import GroupsModel
 
 USER_TOKEN_START = 456890
 
@@ -8,7 +9,7 @@ class UsersModel():
         self.db_instance = db_instance
         self.userSessions = {}
         self.groupSessions = {}
-        self.userGroupsFwght = {}
+        self.groupsModel = GroupsModel(db_instance)
         
 #----------------------------------------------------------------------------------------------
     def authentificateUser(self, login, password):
@@ -30,9 +31,15 @@ class UsersModel():
                     if session.id == _id:
                         user_session = session
                         break
+                    
                 if user_session == None:
-                    user_session = UserSession(++USER_TOKEN_START, user._id, user.name, user.group_id)
-                    self.userSessions[user_session.token] = user_session
+                    ++USER_TOKEN_START
+                    user_session = UserSession(USER_TOKEN_START, user._id, user.name, user.group_id)
+                    self.userSessions[USER_TOKEN_START] = user_session
+                    
+                    #cache group info
+                    self.groupsModel.loadUserGroupSession(user.group_id, USER_TOKEN_START)
+                    
                     ausPass = True
                 else:
                     print(time.asctime(), "user try to %s re-authentificate" % login)
@@ -63,7 +70,12 @@ class UsersModel():
         user_session = self.userSessions.get(token)
         if user_session:
             name = user_session.name
+            
             del self.userSessions[token]
+            
+            #release group info
+            self.groupsModel.releaseUserGroupSession(USER_TOKEN_START)
+            
             out = True
         print(time.asctime(), "user {0} logout {1}".format(name, str(out)))
         return out

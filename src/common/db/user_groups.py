@@ -17,7 +17,7 @@ class UserGroups():
         '''retrieve data from db. form spec and constructs UserGroup object'''
         data = self.cat.find_one({'_id':id})
         if data:
-            spec = {'_id': str(data['_id'])}
+            spec = {'_id': str(data['_id']), 'aspect_id':str(data['aspect_id'])}
             spec['records'] = []
             for key, value in data['records'].iteritems():
                 spec['records'].append(UserRecord(key, value))

@@ -41,6 +41,8 @@ MongoDB
 		
 		* rename fields
 			db.users.updateMany({}, {$rename: {"nick":"name"}})
+			
+			db.user_groups.update({"_id":"57fe1cc492d3a52e906e1c7a"}, {$set:{"aspect_id":ObjectId("581f36a692d3a519b0171c19")}})
 	
 
 #########################################################################

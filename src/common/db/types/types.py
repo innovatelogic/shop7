@@ -49,6 +49,7 @@ class UserRecord():
 class UserGroup():
 	def __init__(self, spec):
 		self._id = spec['_id']
+		self.aspect_id = spec['aspect_id']
 		self.records = {}
 		for i in range(0, len(spec['records'])):
 			self.records[spec['records'][i]._id] = spec['records'][i].rights
@@ -56,6 +57,7 @@ class UserGroup():
 	def get(self):
 		record = {
 			'_id':self._id,
+			'aspect_id':self.aspect_id,
 			'records':self.records,
 			}
 		return record
