@@ -7,9 +7,10 @@ class UsersModel():
     def __init__(self, db_instance):
         self.db_instance = db_instance
         self.userSessions = {}
+        self.groupSessions = {}
         self.userGroupsFwght = {}
         
-        #----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
     def authentificateUser(self, login, password):
         loginPass = False
         ausPass = False
@@ -30,7 +31,7 @@ class UsersModel():
                         user_session = session
                         break
                 if user_session == None:
-                    user_session = UserSession(++USER_TOKEN_START, user._id, user.name)
+                    user_session = UserSession(++USER_TOKEN_START, user._id, user.name, user.group_id)
                     self.userSessions[user_session.token] = user_session
                     ausPass = True
                 else:
@@ -80,6 +81,6 @@ class UsersModel():
 #----------------------------------------------------------------------------------------------         
     def updateUser(self, spec):
         '''update user. 
-        TODO spec doc
+        TODO spec doc.
         '''
         pass

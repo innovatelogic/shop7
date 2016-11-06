@@ -1,13 +1,14 @@
 
 
 class UserSession:
-    def __init__(self, token, id, name):
+    def __init__(self, token, id, name, group_id):
         ''' creates when auth ok'''
         self.activated = False
         self.time_started = ''
         self.token = token
         self.id = id
         self.name = name
+        self.group_id = group_id
         pass
     
     #----------------------------------------------------------------------------------------------    

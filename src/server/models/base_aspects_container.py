@@ -47,8 +47,7 @@ class BaseAspectsContainer():
                     self.aspects[aspect].hashmap[str(node.category._id)] = node
                     top.childs.append(node)
                     stack.insert(0, node) 
-        
-        
+
         if count == 0:
              print('aspect {} not loaded completely'.format(aspect))
         else:

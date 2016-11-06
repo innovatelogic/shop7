@@ -104,3 +104,36 @@ class Item():
 			record[field_name_numered] = self.characteristics[i]
 			
 		return record
+
+class UserAspect():
+	class Node():
+		def __init__(self, category):
+			self.category = category
+			self.childs = []
+        
+	def __init__(self, spec):
+		self._id = spec['_id']
+		self.group_id = spec['group_id']
+		self.node_root = spec['node_root']
+		
+	def get(self):
+		record = {
+			'_id':self._id,
+			'group_id':self.group_id,
+			'categories':[]
+			}
+		
+		stack = []
+		stack.append(self.node_root)
+
+		while len(stack):      
+			new_stack = []
+			for item in stack:
+				record['categories'].append(item.category.get())
+            
+				for child in item.childs:
+					new_stack.append(child)
+					
+			stack = new_stack
+
+		return record

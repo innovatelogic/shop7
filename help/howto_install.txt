@@ -37,6 +37,7 @@ MongoDB
 		show dbs
 		show collections
 		db.[collection].find()
+		db.[collection].drop()
 		
 		* rename fields
 			db.users.updateMany({}, {$rename: {"nick":"name"}})

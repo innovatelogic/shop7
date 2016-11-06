@@ -53,6 +53,11 @@ class MasterServer:
         print(time.asctime(), "Master Server Stops")
     
     def load(self):
+        #user = self.db.users.get_user_by_name("admin")
+        #self.user_aspects_container.createUserAspect(user.group_id)
+        
         self.base_aspects_container.load()
         #self.category_model.load()
+        
+        
         
