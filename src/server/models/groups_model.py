@@ -12,10 +12,11 @@ class GroupsModel():
         else:
             print(time.asctime(), "load user group")
             new_group = self.db_instance.user_groups.get_user_group(group_id)
+            aspect = self.db_instance.user_aspects.get_aspect(new_group.aspect_id)
             
-            spec = {'group':new_group, 'refs':1}
+            spec = {'group':new_group, 'aspect':aspect, 'refs':1}
             self.userGroupSessions[group_id] = spec
-            print(time.asctime(), "load user group ok")
+
             
 #----------------------------------------------------------------------------------------------            
     def releaseUserGroupSession(self, group_id):
