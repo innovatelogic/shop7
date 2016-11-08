@@ -1,6 +1,5 @@
 import wx
 import wx.lib.agw.gradientbutton as GB
-from category_trees_panel import EPanelCategory
 
 class ButtonPanel(wx.Panel):
 
@@ -40,8 +39,15 @@ class ButtonPanel(wx.Panel):
                 self.buttons[i].Move((pos[0], self.BTN_POS_X))
         
 class CategoriesControllerPanel(wx.Panel):
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self,
+                callback_ToggleBaseAspect, 
+                callback_ToggleSecondAspect,
+                callback_OnClickSelectSecondAspect,   
+                parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
+        self.callback_ToggleBaseAspect = callback_ToggleBaseAspect
+        self.callback_ToggleSecondAspect = callback_ToggleSecondAspect
+        self.callback_OnClickSelectSecondAspect = callback_OnClickSelectSecondAspect
         self.doLayout()
         self.BindEvents()
         
@@ -70,11 +76,15 @@ class CategoriesControllerPanel(wx.Panel):
     def BindEvents(self):
         self.Bind(wx.EVT_BUTTON, self.OnClick_BaseAspect, self.btnpanel.base_aspect_button)
         self.Bind(wx.EVT_BUTTON, self.OnClick_SecondAspect, self.btnpanel.second_aspect_button)
+        self.Bind(wx.EVT_BUTTON, self.OnClick_SelectSecondAspect, self.dropdown_btn)
         
     def OnClick_BaseAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.base_aspect_button)
-        self.GetParent().SwitchPanel(EPanelCategory.EPanel_Base)
+        self.callback_ToggleBaseAspect()
     
     def OnClick_SecondAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.second_aspect_button)
-        self.GetParent().SwitchPanel(EPanelCategory.EPanel_Secondary)
+        self.callback_ToggleSecondAspect()
+        
+    def OnClick_SelectSecondAspect(self, event):
+        self.callback_OnClickSelectSecondAspect()

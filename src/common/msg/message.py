@@ -78,5 +78,4 @@ class Message_server_get_aspects(Message):
         Message.__init__(self, *args, **kwargs)
         
     def do_process(self, ch, method, props, body):
-        #dict = eval(body)
         return self.master.base_aspects_container.get_aspects()
