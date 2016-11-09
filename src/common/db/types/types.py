@@ -117,6 +117,7 @@ class UserAspect():
 		self._id = spec['_id']
 		self.group_id = spec['group_id']
 		self.node_root = spec['node_root']
+		self.hashmap = spec['hashmap']
 		
 	def get(self):
 		record = {

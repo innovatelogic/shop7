@@ -19,6 +19,9 @@ class ItemsMainPanel(wx.Panel):
         self.SetSizer(vsizer)
         self.Layout()
         
+    def process_user_category_selection(self, cat_id):
+        print ('[process_user_selection]')
+        
     def process_category_selection(self, aspect, cat_id):
         items = self.realm.get_items(aspect, cat_id, 0, 50)
         self.bottompanel.update_list(items)

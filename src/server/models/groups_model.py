@@ -46,3 +46,18 @@ class GroupsModel():
                             'n_childs':str(len(item.childs))})
                 
         return out
+
+#----------------------------------------------------------------------------------------------     
+    def get_child_categories(self, group_id, str_parent_id):
+        out = []
+        if self.userGroupSessions.get(group_id):
+            aspect = self.userGroupSessions[group_id]['aspect']
+            node = aspect.hashmap[str_parent_id]
+            for item in node.childs:
+                out.append({'_id':str(item.category._id), 
+                            'parent_id': str(item.category.parent_id),
+                            'name':item.category.name, 
+                            'n_childs':str(len(item.childs))})
+                
+        return out
+    

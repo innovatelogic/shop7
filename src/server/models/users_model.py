@@ -106,4 +106,7 @@ class UsersModel():
 #----------------------------------------------------------------------------------------------        
     def get_first_level_categories(self, token):
         return self.groupsModel.get_first_level_categories(self.get_group_id_by_token(token))
-    
+
+#----------------------------------------------------------------------------------------------  
+    def get_child_categories(self, token, _id):
+        return self.groupsModel.get_child_categories(self.get_group_id_by_token(token), _id)

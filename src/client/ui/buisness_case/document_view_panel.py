@@ -20,16 +20,14 @@ class DocumentViewPanel(wx.Panel):
     def __init__(self, realm, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.realm = realm
-        self.callback_category_selected = self.callback_category_selected
         self.doLayout()
         
     def doLayout(self):
         self.split1 = wx.SplitterWindow(self, style = wx.SP_THIN_SASH)
         
-        
-        
-        self.lpanel = CategoriesMainPanel(self.realm, 
-                                          self.callback_category_selected,
+        self.lpanel = CategoriesMainPanel(self.realm,
+                                          self.callback_user_category_selected,
+                                          self.callback_secondary_category_selected,
                                           self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
         
         self.rpanel = ItemsMainPanel(self.realm, self.split1, wx.ID_ANY)
@@ -80,7 +78,10 @@ class DocumentViewPanel(wx.Panel):
         sizer.Add(self.list_ctrl, 0, wx.ALL|wx.EXPAND, 5)
         self.bottompanel.right.SetSizer(sizer)
         
-    def callback_category_selected(self, aspect, cat_id):
+    def callback_user_category_selected(self, cat_id):
+        self.rpanel.process_user_category_selection(cat_id)
+        
+    def callback_secondary_category_selected(self, aspect, cat_id):
         self.rpanel.process_category_selection(aspect, cat_id)
         
         

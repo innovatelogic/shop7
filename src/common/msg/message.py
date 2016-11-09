@@ -54,7 +54,7 @@ class Message_server_get_categiries_1st_lvl(Message):
         dict = eval(body)
         
         res = None
-        if dict['aspect'] == 'user':
+        if dict['aspect'] == '':
             res = self.master.users_model.get_first_level_categories(dict['token'])
         else:
             res = self.master.base_aspects_container.get_first_level_categories(dict['aspect'])
@@ -67,7 +67,12 @@ class Message_server_get_category_childs(Message):
         
     def do_process(self, ch, method, props, body):
         dict = eval(body)
-        return self.master.base_aspects_container.get_childs('prom_ua', dict['id'])
+        res = None
+        if dict['aspect'] == '':
+            res = self.master.users_model.get_child_categories(dict['token'], dict['id'])
+        else:
+            res = self.master.base_aspects_container.get_child_categories(dict['aspect'], dict['id'])
+        return res
     
 #----------------------------------------------------------------------------------------------       
 class Message_server_get_items(Message):

@@ -4,10 +4,14 @@ from category_trees_panel import CategoryTreesPanel, EPanelCategory
 from groups_tree_view import GroupsTreeView
 
 class CategoriesMainPanel(wx.Panel):
-    def __init__(self, realm, callback_cat_selected, parent, *args, **kwargs):
+    def __init__(self, realm, 
+                 callback_user_cat_selected,
+                 callback_secondary_cat_selected,
+                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.realm = realm
-        self.callback_cat_selected = callback_cat_selected
+        self.callback_user_cat_selected = callback_user_cat_selected
+        self.callback_secondary_cat_selected = callback_secondary_cat_selected
         self.base_aspects = self.realm.get_aspects()
         self.active_aspect_idx = -1
         
@@ -21,7 +25,11 @@ class CategoriesMainPanel(wx.Panel):
                                                   self.callback_ToggleSecondAspect,
                                                   self.callback_OnClickSelectSecondAspect,
                                                   self, wx.ID_ANY, size = (-1, 40), pos = (0, 0))
-        self.bottompanel = CategoryTreesPanel(self.realm, self.callback_cat_selected, self, wx.ID_ANY)
+        
+        self.bottompanel = CategoryTreesPanel(self.realm, 
+                                              self.callback_user_cat_selected,
+                                              self.callback_secondary_cat_selected,
+                                              self, wx.ID_ANY)
         
         posCenterPanelVertSzr = wx.BoxSizer(wx.VERTICAL)
         posCenterPanelVertSzr.Add(self.toppanel, 0, wx.EXPAND)
@@ -49,7 +57,6 @@ class CategoriesMainPanel(wx.Panel):
         pass
     
     def callback_OnClickSelectSecondAspect(self, pos):
-        #print('callback_OnClickSelectSecondAspect')
         self.OnShowPopup(pos)
         pass
         
@@ -63,7 +70,6 @@ class CategoriesMainPanel(wx.Panel):
     def OnPopupItemSelected(self, event):
         item = self.popupmenu.FindItemById(event.GetId())
         text = item.GetText()
-        #wx.MessageBox(("You selected item {}").format(event.GetId()))
         for i in range(len(self.base_aspects)):
             if self.base_aspects[i] == text:
                 self.PopulateSecondaryList(i)

@@ -21,6 +21,9 @@ class UserAspects():
             category_root = self.get_root_category(ObjectId(_id))
             node_root = UserAspect.Node(category_root)
             
+            hashmap = {}
+            hashmap[str(category_root._id)] = node_root
+            
             stack = []
             stack.append(node_root)
             
@@ -31,10 +34,11 @@ class UserAspects():
 
                 for child in childs:
                     node = UserAspect.Node(child)
+                    hashmap[str(child._id)] = node
                     top.childs.append(node)
                     stack.insert(0, node) 
             
-            return UserAspect({'_id':data['_id'], 'group_id':data['group_id'], 'node_root':node_root})
+            return UserAspect({'_id':data['_id'], 'group_id':data['group_id'], 'node_root':node_root, 'hashmap':hashmap})
         return None
         
     def add_aspect(self, aspect):

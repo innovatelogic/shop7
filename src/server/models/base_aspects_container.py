@@ -73,7 +73,7 @@ class BaseAspectsContainer():
                 
         return out
 
-    def get_childs(self, aspect, str_parent_id):
+    def get_child_categories(self, aspect, str_parent_id):
         out = []
         if self.aspects.get(aspect):
             aspect = self.aspects[aspect]

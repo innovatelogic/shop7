@@ -7,10 +7,14 @@ class EPanelCategory:
     EPanel_MAX = 2
 
 class CategoryTreesPanel(wx.Panel):
-    def __init__(self, realm, callback_cat_selected, parent, *args, **kwargs):
+    def __init__(self, realm,
+                  callback_user_cat_selected,
+                  callback_secondary_cat_selected,
+                   parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.realm = realm 
-        self.callback_cat_selected = callback_cat_selected
+        self.callback_user_cat_selected = callback_user_cat_selected
+        self.callback_secondary_cat_selected = callback_secondary_cat_selected
         self.SetBackgroundColour((255, 0, 0))
         self.view_panels = []
         self.doLayout()
@@ -40,11 +44,13 @@ class CategoryTreesPanel(wx.Panel):
         self.Layout()
         
     def bind(self):
-        self.secondary_tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.OnExpandingTreeNode)
-        self.secondary_tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChangedTreeNode)
+        self.base_tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.OnExpandingTreeNode_User)
+        self.base_tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChangedTreeNode_User)
+        self.secondary_tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.OnExpandingTreeNode_Secondary)
+        self.secondary_tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChangedTreeNode_Secondary)
         
     def PopulateBaseList(self):
-        categories = self.realm.get_categiries_1st_lvl('user')
+        categories = self.realm.get_user_categiries_1st_lvl()
         self.base_tree.DeleteAllItems()
         self.base_tree.init_list(categories)
 
@@ -68,17 +74,22 @@ class CategoryTreesPanel(wx.Panel):
         self.Layout()
         return out
     
-    def OnExpandingTreeNode(self, event):
+    def OnExpandingTreeNode_User(self, event):
+        item = event.GetItem()
+        categories = self.realm.get_user_category_childs(self.secondary_tree.GetPyData(item))
+        self.base_tree.append_childs(categories, item)
+    
+    def OnSelChangedTreeNode_User(self, event):
+        item =  event.GetItem()
+        _id = self.secondary_tree.GetPyData(item)
+        self.callback_user_cat_selected(_id)
+    
+    def OnExpandingTreeNode_Secondary(self, event):
         item = event.GetItem()
         categories = self.realm.get_category_childs(self.aspect, self.secondary_tree.GetPyData(item))
         self.secondary_tree.append_childs(categories, item)
     
-    def OnSelChangedTreeNode(self, event):
+    def OnSelChangedTreeNode_Secondary(self, event):
         item =  event.GetItem()
         _id = self.secondary_tree.GetPyData(item)
-        
-        self.callback_cat_selected(self.aspect, _id)
-        #items = self.realm.get_items('prom', _id, 0, 50)
-        
-        #items = self.realm.ms_connection().send_msg('get_items', {'category_id':str(_id), 'offset':0})
-        #self.GetParent().GetParent().update_list(items)
+        self.callback_secondary_cat_selected(self.aspect, _id)

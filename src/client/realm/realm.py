@@ -21,7 +21,15 @@ class Realm():
         return result['res']
     
     def get_category_childs(self, aspect, _id):
-        result = self.ms_connection().send_msg('get_category_childs', {'id':str(_id)})
+        result = self.ms_connection().send_msg('get_category_childs', {'id':str(_id), 'aspect':aspect})
+        return result['res']
+    
+    def get_user_categiries_1st_lvl(self):
+        result = self.ms_connection().send_msg('get_categiries_1st_lvl', {'id':1, 'aspect':''})
+        return result['res']
+    
+    def get_user_category_childs(self, _id):
+        result = self.ms_connection().send_msg('get_category_childs', {'id':str(_id), 'aspect':''})
         return result['res']
     
     def get_items(self, aspect, _id, offset = 0, count = 50):
