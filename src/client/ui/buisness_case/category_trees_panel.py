@@ -14,6 +14,7 @@ class CategoryTreesPanel(wx.Panel):
         self.SetBackgroundColour((255, 0, 0))
         self.view_panels = []
         self.doLayout()
+        self.aspect = ''
         self.TogglePanel(EPanelCategory.EPanel_Base)
         
     def doLayout(self):
@@ -33,8 +34,6 @@ class CategoryTreesPanel(wx.Panel):
            
         self.SetSizer(self.gridsizer)
         
-        self.init_lists()
-        
         self.bind()
         
         self.Layout()
@@ -43,10 +42,13 @@ class CategoryTreesPanel(wx.Panel):
         self.secondary_tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.OnExpandingTreeNode)
         self.secondary_tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChangedTreeNode) 
         
-    def init_lists(self):
-        categories = self.realm.get_categiries_1st_lvl('prom')
+    def PopulateSecondaryList(self, aspect):
+        print(aspect)
+        self.aspect = aspect
+        categories = self.realm.get_categiries_1st_lvl(aspect)
+        self.secondary_tree.DeleteAllItems()
         self.secondary_tree.init_list(categories)
-        
+    
     def TogglePanel(self, index):
         out = None
         self.gridsizer.Clear()
@@ -63,14 +65,14 @@ class CategoryTreesPanel(wx.Panel):
     
     def OnExpandingTreeNode(self, event):
         item = event.GetItem()
-        categories = self.realm.get_category_childs('prom', self.secondary_tree.GetPyData(item))
+        categories = self.realm.get_category_childs(self.aspect, self.secondary_tree.GetPyData(item))
         self.secondary_tree.append_childs(categories, item)
     
     def OnSelChangedTreeNode(self, event):
         item =  event.GetItem()
         _id = self.secondary_tree.GetPyData(item)
         
-        self.callback_cat_selected('prom', _id)
+        self.callback_cat_selected(self.aspect, _id)
         #items = self.realm.get_items('prom', _id, 0, 50)
         
         #items = self.realm.ms_connection().send_msg('get_items', {'category_id':str(_id), 'offset':0})

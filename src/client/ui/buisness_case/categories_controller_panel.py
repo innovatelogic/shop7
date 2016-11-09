@@ -19,7 +19,7 @@ class ButtonPanel(wx.Panel):
         
     def doLayout(self):
         self.base_aspect_button = GB.GradientButton(self, label="My aspect", pos = (0, self.BTN_POS_X), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
-        self.second_aspect_button = GB.GradientButton(self, label="Prom", pos = (self.BTN_WIDTH, self.BTN_POS_X), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
+        self.second_aspect_button = GB.GradientButton(self, label="Test", pos = (self.BTN_WIDTH, self.BTN_POS_X), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
 
         self.base_aspect_button.SetBaseColours(self.COLOR_DARK_BLUE_THEME, self.COLOR_LIGHT_GRAY_THEME)
         self.second_aspect_button.SetBaseColours(self.COLOR_DARK_BLUE_THEME, self.COLOR_LIGHT_GRAY_THEME)
@@ -30,6 +30,8 @@ class ButtonPanel(wx.Panel):
         self.buttons.append(self.base_aspect_button)
         self.buttons.append(self.second_aspect_button)
         
+        self.Layout()
+        
     def ToggleUp(self, btn):
         for i in range(0, len(self.buttons)):
             pos = self.buttons[i].GetPosition()
@@ -39,6 +41,7 @@ class ButtonPanel(wx.Panel):
                 self.buttons[i].Move((pos[0], self.BTN_POS_X))
         
 class CategoriesControllerPanel(wx.Panel):
+    BTN_DROP_SIZE = 20
     def __init__(self,
                 callback_ToggleBaseAspect, 
                 callback_ToggleSecondAspect,
@@ -62,7 +65,7 @@ class CategoriesControllerPanel(wx.Panel):
         self.btnpanel = ButtonPanel(self, wx.ID_ANY, pos = (0, 0), size = (140, -1))
         
         bmp_folder = wx.Bitmap("../res/img/dropdown.png", wx.BITMAP_TYPE_ANY)
-        self.dropdown_btn = wx.BitmapButton(self, wx.NewId(), bitmap=bmp_folder, size = (20, 20))
+        self.dropdown_btn = wx.BitmapButton(self, wx.NewId(), bitmap=bmp_folder, size = (self.BTN_DROP_SIZE, self.BTN_DROP_SIZE))
 
         sizer_0.Add(self.btnpanel, flag = wx.ALL)
         sizer_1.Add((20,-1), 1, wx.EXPAND) # this is a spacer
@@ -72,6 +75,8 @@ class CategoriesControllerPanel(wx.Panel):
         gridsizer.Add(sizer_1, flag = wx.EXPAND) 
 
         self.SetSizer(gridsizer)
+        
+        self.Layout()
         
     def BindEvents(self):
         self.Bind(wx.EVT_BUTTON, self.OnClick_BaseAspect, self.btnpanel.base_aspect_button)
@@ -87,4 +92,10 @@ class CategoriesControllerPanel(wx.Panel):
         self.callback_ToggleSecondAspect()
         
     def OnClick_SelectSecondAspect(self, event):
-        self.callback_OnClickSelectSecondAspect()
+        pos = self.dropdown_btn.GetScreenPosition()
+        pos[0] += self.BTN_DROP_SIZE
+        self.callback_OnClickSelectSecondAspect(pos)
+        
+    def SetSecondAspectName(self, name):
+        self.btnpanel.second_aspect_button.SetLabelText(name)
+        self.btnpanel.second_aspect_button.Refresh()

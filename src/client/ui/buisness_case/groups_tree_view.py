@@ -7,7 +7,6 @@ class GroupsTreeView(wx.TreeCtrl):
         '''Initialize our tree
         '''
         wx.TreeCtrl.__init__(self, parent, id, position, size, style)
-        self.realm = realm
     
     def init_list(self, items):
         root = self.AddRoot(items[0]['name'])

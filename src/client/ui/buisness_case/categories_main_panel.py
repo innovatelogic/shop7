@@ -8,8 +8,11 @@ class CategoriesMainPanel(wx.Panel):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.realm = realm
         self.callback_cat_selected = callback_cat_selected
+        self.base_aspects = self.realm.get_aspects()
+        self.active_aspect_idx = -1
         
         self.doLayout()
+        self.PopulateSecondaryList(0)
         
     def doLayout(self):
         self.toppanel = CategoriesControllerPanel(self.callback_ToggleBaseAspect,
@@ -24,17 +27,17 @@ class CategoriesMainPanel(wx.Panel):
         
         self.SetSizer(posCenterPanelVertSzr)
         
-        self.popupmenu = wx.Menu()
-        for text in "one two three four five".split():
-            item = self.popupmenu.Append(-1, text)
-            self.Bind(wx.EVT_MENU, self.OnPopupItemSelected, item)
-        #self.Bind(wx.EVT_CONTEXT_MENU, self.OnShowPopup)
+        self.initPopup()
         
         self.Layout()
         
-    def BindEvents(self):
-        pass
-    
+    def initPopup(self):
+        self.popupmenu = wx.Menu()
+        print self.base_aspects
+        for aspect in self.base_aspects:
+            item = self.popupmenu.Append(-1, aspect)
+            self.Bind(wx.EVT_MENU, self.OnPopupItemSelected, item)
+        
     def callback_ToggleBaseAspect(self):
         self.SwitchPanel(EPanelCategory.EPanel_Base)
         pass
@@ -43,20 +46,30 @@ class CategoriesMainPanel(wx.Panel):
         self.SwitchPanel(EPanelCategory.EPanel_Secondary)
         pass
     
-    def callback_OnClickSelectSecondAspect(self):
-        print('callback_OnClickSelectSecondAspect')
-        self.OnShowPopup()
+    def callback_OnClickSelectSecondAspect(self, pos):
+        #print('callback_OnClickSelectSecondAspect')
+        self.OnShowPopup(pos)
         pass
         
     def SwitchPanel(self, index):
         self.bottompanel.TogglePanel(index)
         
-    def OnShowPopup(self):
-        pos = wx.GetMousePosition()
-        pos = self.ScreenToClient(pos)
-        self.PopupMenu(self.popupmenu, pos)
+    def OnShowPopup(self, pos):
+        cl_pos = self.ScreenToClient(pos)
+        self.PopupMenu(self.popupmenu, cl_pos)
         
     def OnPopupItemSelected(self, event):
         item = self.popupmenu.FindItemById(event.GetId())
         text = item.GetText()
-        wx.MessageBox("You selected item '%s'" % text)
+        #wx.MessageBox(("You selected item {}").format(event.GetId()))
+        for i in range(len(self.base_aspects)):
+            if self.base_aspects[i] == text:
+                self.PopulateSecondaryList(i)
+                break
+        
+    def PopulateSecondaryList(self, index):
+        if index >= 0 and index < len(self.base_aspects):
+            if index != self.active_aspect_idx:
+                self.active_aspect_idx = index
+                self.bottompanel.PopulateSecondaryList(self.base_aspects[index])
+                self.toppanel.SetSecondAspectName(self.base_aspects[index])

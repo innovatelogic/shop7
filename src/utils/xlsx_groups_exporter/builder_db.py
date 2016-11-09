@@ -4,6 +4,7 @@ import common.db.instance
 from common.db.types.types import Category
 
 class BuilderDB():
+    ASPECT_ID = 'amazon'
     def __init__(self, specs, tree):
         self.specs = specs
         self.tree = tree
@@ -24,7 +25,7 @@ class BuilderDB():
         #categories_db.insert({'_id':"amazon"})
         #categories_db.insert({'_id':"ebay"})
         
-        self.db.base_aspects.clear('prom_ua')
+        self.db.base_aspects.clear(self.ASPECT_ID)
             
         mapping = dict()
         stack = []
@@ -37,7 +38,7 @@ class BuilderDB():
                 item._id = ObjectId()
                 
                 cat = Category({'_id': item._id, 'parent_id': item.parent_id, 'name':item.name})
-                self.db.base_aspects.add_category('prom_ua', cat)
+                self.db.base_aspects.add_category(self.ASPECT_ID, cat)
                 
                 mapping[str(item._id)] = item.id
             

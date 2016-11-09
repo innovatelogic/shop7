@@ -29,5 +29,5 @@ class Realm():
         return items
     
     def get_aspects(self):
-        aspects = self.ms_connection().send_msg('get_aspects', {})
-        return aspects
+        result = self.ms_connection().send_msg('get_aspects', {})
+        return result['res']
