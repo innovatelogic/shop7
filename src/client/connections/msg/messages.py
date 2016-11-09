@@ -49,12 +49,12 @@ class Message_client_logout(Message):
         return params
 
 #----------------------------------------------------------------------------------------------       
-class Message_client_get_groups(Message):
+class Message_client_get_categiries_1st_lvl(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
         
     def update_params(self, params):
-        params['opcode'] = 'get_groups'
+        params['opcode'] = 'get_categiries_1st_lvl'
         params['token'] = self.connection_info['token']
         return params
 

@@ -46,13 +46,19 @@ class Message_server_logout(Message):
         return self.master.users_model.logoutUser(dict['token'])
 
 #----------------------------------------------------------------------------------------------       
-class Message_server_get_groups(Message):
+class Message_server_get_categiries_1st_lvl(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
         
     def do_process(self, ch, method, props, body):
         dict = eval(body)
-        return self.master.base_aspects_container.get_first_level_categories('prom_ua')
+        
+        res = None
+        if dict['aspect'] == 'user':
+            res = self.master.users_model.get_first_level_categories(dict['token'])
+        else:
+            res = self.master.base_aspects_container.get_first_level_categories(dict['aspect'])
+        return res
 
 #----------------------------------------------------------------------------------------------       
 class Message_server_get_category_childs(Message):

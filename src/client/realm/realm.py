@@ -17,7 +17,7 @@ class Realm():
         pass
     
     def get_categiries_1st_lvl(self, aspect):
-        result = self.ms_connection().send_msg('get_groups', {'id':1})
+        result = self.ms_connection().send_msg('get_categiries_1st_lvl', {'id':1, 'aspect':aspect})
         return result['res']
     
     def get_category_childs(self, aspect, _id):

@@ -18,14 +18,15 @@ class CategoryTreesPanel(wx.Panel):
         self.TogglePanel(EPanelCategory.EPanel_Base)
         
     def doLayout(self):
-        self.base_panel = wx.Panel(self, wx.ID_ANY, size = (-1, -1))
+        self.base_tree = GroupsTreeView(self.realm, 
+                                        self, 1, wx.DefaultPosition, (-1, -1),
+                                        wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
+        
         self.secondary_tree = self.sec_tree = GroupsTreeView(self.realm, 
                                         self, 1, wx.DefaultPosition, (-1, -1),
                                         wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
         
-        self.base_panel.SetBackgroundColour((54, 45, 54))
-        
-        self.view_panels.append(self.base_panel)
+        self.view_panels.append(self.base_tree)
         self.view_panels.append(self.secondary_tree)
         
         self.gridsizer = wx.FlexGridSizer(cols=1, rows = 1)
@@ -40,10 +41,14 @@ class CategoryTreesPanel(wx.Panel):
         
     def bind(self):
         self.secondary_tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.OnExpandingTreeNode)
-        self.secondary_tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChangedTreeNode) 
+        self.secondary_tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChangedTreeNode)
         
+    def PopulateBaseList(self):
+        categories = self.realm.get_categiries_1st_lvl('user')
+        self.base_tree.DeleteAllItems()
+        self.base_tree.init_list(categories)
+
     def PopulateSecondaryList(self, aspect):
-        print(aspect)
         self.aspect = aspect
         categories = self.realm.get_categiries_1st_lvl(aspect)
         self.secondary_tree.DeleteAllItems()

@@ -50,7 +50,13 @@ class UsersModel():
                 print(time.asctime(), "user %s authentificate FAILED" % login)
         
         return [loginPass and ausPass, user_session]
-
+    
+#----------------------------------------------------------------------------------------------
+    def get_group_id_by_token(self, token):
+        if self.userSessions.get(token):
+            return self.userSessions[token].group_id
+        return 0
+    
 #----------------------------------------------------------------------------------------------
     def activateUserAuth(self, token):
         out = False
@@ -96,3 +102,8 @@ class UsersModel():
         TODO spec doc.
         '''
         pass
+
+#----------------------------------------------------------------------------------------------        
+    def get_first_level_categories(self, token):
+        return self.groupsModel.get_first_level_categories(self.get_group_id_by_token(token))
+    

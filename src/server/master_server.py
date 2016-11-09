@@ -1,4 +1,5 @@
-import sys, time
+import os, sys, time
+import subprocess
 from pika.connection import ConnectionParameters
 from twisted.internet import protocol, reactor
 from pika.adapters.twisted_connection import TwistedProtocolConnection
@@ -46,6 +47,10 @@ class MasterServer:
         self.auth_handler.start()
         self.clients_connection.start()
 
+        #os.system("auth_server.cmd")
+        
+        subprocess.Popen("auth_server.cmd", shell=True)
+        
         reactor.run()
 
         self.db.disconnect()

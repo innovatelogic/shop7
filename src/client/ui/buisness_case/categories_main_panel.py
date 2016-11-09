@@ -12,6 +12,8 @@ class CategoriesMainPanel(wx.Panel):
         self.active_aspect_idx = -1
         
         self.doLayout()
+        
+        self.bottompanel.PopulateBaseList()
         self.PopulateSecondaryList(0)
         
     def doLayout(self):
