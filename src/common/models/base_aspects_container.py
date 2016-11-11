@@ -23,7 +23,6 @@ class BaseAspectsContainer():
         self.load_aspect("amazon")
         self.load_aspect("ebay")
     
-    
     def load_aspect(self, aspect):
         print('Load aspect {}'.format(aspect))
         count = 0

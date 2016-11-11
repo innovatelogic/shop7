@@ -37,8 +37,3 @@ class ConnectionDB:
 	
 	def getCollection(self, db, name):
 		return db[name]
-	
-	def drop(self):
-		if self.db:
-			self.db[LayoutDB.GROUPS_NAME].drop()
-			#self.db[LayoutDB.ITEMS_NAME].drop()

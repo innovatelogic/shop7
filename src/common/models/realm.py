@@ -1,9 +1,9 @@
 import common.db.instance
-from models.category_model import CategoryModel
-from models.users_model import UsersModel
-from models.items_cache_model import ItemsCacheModel
-from models.base_aspects_container import BaseAspectsContainer
-from models.user_aspects_container import UserAspectsContainer
+from category_model import CategoryModel
+from users_model import UsersModel
+from items_cache_model import ItemsCacheModel
+from base_aspects_container import BaseAspectsContainer
+from user_aspects_container import UserAspectsContainer
 
 class Realm():
     def __init__(self, specs):

@@ -15,9 +15,12 @@ class CacheData:
         self.items_cache_filename = self.specs['path']['out'] + 'cache_items_' + self.specs['user']['login'] + '_' + timestr + '.json'
         
     def cache(self):
-        print('Start caching data..')
+        
+        filename = self.specs['path']['data'] + self.specs['path']['filename']
+        
+        print('Start caching data {}'.format(filename))
                 
-        wb = load_workbook(self.specs['path']['data'] + self.specs['path']['filename'])
+        wb = load_workbook(filename)
 
         print wb.get_sheet_names()
         

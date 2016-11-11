@@ -1,5 +1,4 @@
 
-
 class UserSession:
     def __init__(self, token, id, name, group_id):
         ''' creates when auth ok'''

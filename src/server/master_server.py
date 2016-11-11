@@ -3,8 +3,7 @@ import subprocess
 from pika.connection import ConnectionParameters
 from twisted.internet import protocol, reactor
 from pika.adapters.twisted_connection import TwistedProtocolConnection
-#from bson.objectid import ObjectId
-from models.realm import Realm
+from common.models.realm import Realm
 
 from connections.auth_connection import AuthConnection
 from connections.client_connection import ClientsConnection
