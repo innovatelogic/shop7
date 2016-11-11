@@ -3,17 +3,11 @@ import subprocess
 from pika.connection import ConnectionParameters
 from twisted.internet import protocol, reactor
 from pika.adapters.twisted_connection import TwistedProtocolConnection
-from bson.objectid import ObjectId
-from models.category_model import CategoryModel
-from models.users_model import UsersModel
-from models.items_cache_model import ItemsCacheModel
-from models.base_aspects_container import BaseAspectsContainer
-from models.user_aspects_container import UserAspectsContainer
+#from bson.objectid import ObjectId
+from models.realm import Realm
 
 from connections.auth_connection import AuthConnection
 from connections.client_connection import ClientsConnection
-
-import common.db.instance
     
 #----------------------------------------------------------------------------------------------
 class MasterServer:
@@ -21,12 +15,7 @@ class MasterServer:
         self.specs = specs
         self.auth_handler = None
         self.clients_connection = None
-        self.db = common.db.instance.Instance(self.specs)
-        self.category_model = CategoryModel(self.db)
-        self.users_model = UsersModel(self.db)
-        self.items_cache_model = ItemsCacheModel(self.db)
-        self.base_aspects_container = BaseAspectsContainer(self.db)
-        self.user_aspects_container = UserAspectsContainer(self.db)
+        self.__realm = Realm(self.specs)
         pass
     
     def run(self):
@@ -40,9 +29,7 @@ class MasterServer:
         self.auth_handler = AuthConnection(self, self.specs, cc)
         self.clients_connection = ClientsConnection(self, self.specs, cc)
         
-        self.db.connect()
-        
-        self.load()
+        self.__realm.start()
         
         self.auth_handler.start()
         self.clients_connection.start()
@@ -53,16 +40,10 @@ class MasterServer:
         
         reactor.run()
 
-        self.db.disconnect()
+        self.__realm.stop()
         
         print(time.asctime(), "Master Server Stops")
-    
-    def load(self):
-        #user = self.db.users.get_user_by_name("admin")
-        #self.user_aspects_container.createUserAspect(user.group_id)
-        
-        self.base_aspects_container.load()
-        #self.category_model.load()
-        
-        
+  
+    def realm(self):
+        return self.__realm
         

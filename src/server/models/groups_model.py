@@ -17,7 +17,6 @@ class GroupsModel():
             spec = {'group':new_group, 'aspect':aspect, 'refs':1}
             self.userGroupSessions[group_id] = spec
 
-            
 #----------------------------------------------------------------------------------------------            
     def releaseUserGroupSession(self, group_id):
         self.userGroupSessions[group_id]['refs'] -= 1
