@@ -90,3 +90,11 @@ class BaseAspectsContainer():
         for key in self.aspects:
             out.append(key)
         return out
+    
+    def get_aspect_category(self, aspect, _id):
+        out = None
+        if self.aspects.get(aspect):
+            if _id in self.aspects[aspect].hashmap:
+                out = self.aspects[aspect].hashmap[_id]
+        return out
+        

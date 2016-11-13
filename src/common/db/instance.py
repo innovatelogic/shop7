@@ -5,6 +5,7 @@ from items import Items
 from categories import Categories
 from base_aspects import BaseAspects
 from user_aspects import UserAspects
+from items_mapping import ItemsMapping
 
 class Instance():
 	''' incapsulate db management'''
@@ -17,6 +18,7 @@ class Instance():
 		self.categories = Categories(self)
 		self.base_aspects = BaseAspects(self)
 		self.user_aspects = UserAspects(self)
+		self.items_mapping = ItemsMapping(self)
 		
 	def connect(self):
 		self.connection.connect()
@@ -26,6 +28,7 @@ class Instance():
 		self.categories.init()
 		self.base_aspects.init()
 		self.user_aspects.init()
+		self.items_mapping.init()
 		
 	def disconnect(self):
 		self.connection.close()

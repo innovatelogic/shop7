@@ -1,14 +1,15 @@
 import time, io, json
 from group_tree import find_node_by_id
 from bson.objectid import ObjectId
-from common.db.types.types import Item
+from common.db.types.types import Item, ItemMapping
+
 from category_mapping import CategoryMapping
 
 class ItemsWriterDB:
-    def __init__(self, specs, items, db, user):
+    def __init__(self, specs, items, realm, user):
         self.specs = specs
         self.items = items
-        self.db = db
+        self.realm = realm
         self.user = user
         self.mapping = CategoryMapping(self.specs)
         self.mapping.init()
@@ -35,17 +36,17 @@ class ItemsWriterDB:
                       'user_group_id':self.user.group_id
                       }
             
-            if 'subsectionID' in item:
-                subsection = item['subsectionID']
-                category_id = self.mapping.get_category(str(subsection))
-                if category_id:
-                    record['category_id'] = category_id
-                else:
-                    print('WARNING! category # %s have not found in mapping. Set \'0\'' % subsection)
-                    record['category_id'] = 0
-            else:
-                print('WARNING! item # %s have not category. Set \'0\'' % item['uniqID'])
-                record['category_id'] = 0
+            #if 'subsectionID' in item:
+            #    subsection = item['subsectionID']
+            #    category_id = self.mapping.get_category(str(subsection))
+            #    if category_id:
+            #        record['category_id'] = category_id
+             #   else:
+            #        print('WARNING! category # %s have not found in mapping. Set \'0\'' % subsection)
+            #        record['category_id'] = 0
+            #else:
+            #    print('WARNING! item # %s have not category. Set \'0\'' % item['uniqID'])
+            #    record['category_id'] = 0
             
             #if 'keywords' in item:
             #    record['keywords'] = item['keywords']
@@ -96,10 +97,31 @@ class ItemsWriterDB:
                 if field in item:                 
                     record[field] = item[field]
             
-            record['add_time'] = time.asctime()
+            time_now = time.asctime()
+            record['creation_time'] = time_now
+            record['update_time'] = time_now
+            record['mapping_id'] = ObjectId()
             
-            self.db.items.add_item(Item(record))
+            mapping_spec = {'_id':record['mapping_id'],
+                            'item_id':record['_id'],
+                            'mapping':{}
+                            }   
+
+            self.realm.db.items.add_item(Item(record))
+
+            if 'subsectionID' in item:
+                subsection = item['subsectionID']
+                category_id = self.mapping.get_category(str(subsection))
+                
+                category = self.realm.base_aspects_container.get_aspect_category('prom_ua', category_id)
+                
+                if category:
+                    mapping_spec['mapping']['prom_ua'] = category.category._id
+                else:
+                    print('WARNING! category # %s have not found in mapping. Set \'0\'' % subsection)
         
+            self.realm.db.items_mapping.add_mapping(ItemMapping(mapping_spec))
+                
         print ('Write items OK')
         
     def save_ref_mapping(self, filename):
