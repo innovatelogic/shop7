@@ -4,7 +4,7 @@ import common.db.instance
 from common.db.types.types import Category
 
 class BuilderDB():
-    ASPECT_ID = 'amazon'
+    ASPECT_ID = 'prom_ua'
     def __init__(self, specs, tree):
         self.specs = specs
         self.tree = tree

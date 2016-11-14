@@ -44,7 +44,8 @@ MongoDB
 			
 			db.user_groups.update({"_id":"57fe1cc492d3a52e906e1c7a"}, {$set:{"aspect_id":ObjectId("581f36a692d3a519b0171c19")}})
 	
-
+			db.base_aspects.aggregate({$match: {_id:'prom_ua'}}, {'$unwind':'$categories'}, {'$match': {"categories._id":ObjectId("58231d4092d3a534c87bc04d")} })
+			
 #########################################################################
 Eclipse IDE
 	* Install java VM. On Windows 64 install 64 bit version of java/ (jre-8u101-windows-x64.exe)

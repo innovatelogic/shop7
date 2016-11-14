@@ -114,10 +114,10 @@ class ItemMapping:
 	def __init__(self, spec):
 		self._id = spec['_id']
 		self.item_id = spec['item_id']
+		self.mapping = spec['mapping']
 		
-		self.mapping = []
-		for i in range(0, len(spec['mapping'])):
-			self.mapping[spec['mapping'][i]._id] = spec['mapping'][i].category_id
+		#for key, value in spec['mapping'].iteritems():
+		#	self.mapping[key] = value
 		pass
 	
 	def get(self):

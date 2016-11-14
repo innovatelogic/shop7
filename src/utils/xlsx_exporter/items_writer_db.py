@@ -14,7 +14,8 @@ class ItemsWriterDB:
         self.mapping = CategoryMapping(self.specs)
         self.mapping.init()
         self.image_map = {}
-               
+
+#----------------------------------------------------------------------------------------------               
     def write(self):
         print ('Start write items to database...')
         
@@ -81,17 +82,7 @@ class ItemsWriterDB:
             else:
                 print('WARNING! Item\'s # %s does not have amount. Set to default value 1' % item['uniqID'])
                 record['amount'] = 1
-                
-            #if 'groupID2' in item:
-            #    group = find_node_by_id(item['groupID2'], self.groups_root)
-            #    if group:
-            #        record['group_id'] = group._id
-            #    else:
-            #        print('WARNING! Item\'s # %s group ID not found set Root' % item['uniqID'])
-            #else:
-            #    print('WARNING! Item\'s # %s group ID not found set Root' % item['uniqID'])
-            #    record['group_id'] = self.groups_root._id
-                    
+
             for idx in range(0, Item.CHARACTERISTICS_MAX):
                 field = 'characteristicName' + str(idx)
                 if field in item:                 
@@ -107,23 +98,27 @@ class ItemsWriterDB:
                             'mapping':{}
                             }   
 
+
             self.realm.db.items.add_item(Item(record))
 
             if 'subsectionID' in item:
                 subsection = item['subsectionID']
                 category_id = self.mapping.get_category(str(subsection))
                 
-                category = self.realm.base_aspects_container.get_aspect_category('prom_ua', category_id)
+                node_category = self.realm.base_aspects_container.get_aspect_category('prom_ua', category_id)
                 
-                if category:
-                    mapping_spec['mapping']['prom_ua'] = category.category._id
+                if node_category:
+                    mapping_spec['mapping']['prom_ua'] = node_category.category._id
                 else:
                     print('WARNING! category # %s have not found in mapping. Set \'0\'' % subsection)
-        
-            self.realm.db.items_mapping.add_mapping(ItemMapping(mapping_spec))
+            
+            node_mapping = ItemMapping(mapping_spec)
+            
+            self.realm.db.items_mapping.add_mapping(node_mapping)
                 
         print ('Write items OK')
         
+#----------------------------------------------------------------------------------------------        
     def save_ref_mapping(self, filename):
         ''' save image mapping'''
         print("opening image mapping file:" + filename)
