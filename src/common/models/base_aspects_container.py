@@ -1,7 +1,8 @@
 
 class CategoryNode():
-    def __init__(self, category):
+    def __init__(self, category, parent):
         self.category = category
+        self.parent = parent
         self.childs = []
 
 class Aspect():
@@ -20,20 +21,21 @@ class BaseAspectsContainer():
     
     def load(self):
         self.load_aspect("prom_ua")
-        self.load_aspect("amazon")
+        #self.load_aspect("amazon")
         self.load_aspect("ebay")
     
     def load_aspect(self, aspect):
+        ''' create category tree'''
         print('Load aspect {}'.format(aspect))
         count = 0
         
-        root = CategoryNode(self.db_inst.base_aspects.get_root_category(aspect));
+        root_node = CategoryNode(self.db_inst.base_aspects.get_root_category(aspect), None);
         
-        if root.category:
-            self.aspects[aspect] = Aspect(aspect, root)
+        if root_node.category:
+            self.aspects[aspect] = Aspect(aspect, root_node)
             
             stack = []
-            stack.append(self.aspects[aspect].root)
+            stack.append(root_node)
             
             while (len(stack) > 0):
                 top = stack.pop(0)
@@ -42,13 +44,13 @@ class BaseAspectsContainer():
                 count += 1
 
                 for child in childs:
-                    node = CategoryNode(child)
+                    node = CategoryNode(child, top)
                     self.aspects[aspect].hashmap[str(node.category._id)] = node
                     top.childs.append(node)
                     stack.insert(0, node) 
 
         if count == 0:
-             print('aspect {} not loaded completely'.format(aspect))
+            print('aspect {} not loaded completely'.format(aspect))
         else:
             print('Load aspect model OK: {} loaded'.format(count))
         
@@ -86,9 +88,16 @@ class BaseAspectsContainer():
         return out
     
     def get_aspects(self):
+        ''' returns array of loaded aspects'''
         out = []
         for key in self.aspects:
             out.append(key)
+        return out
+    
+    def get_aspect(self, id):
+        out = None
+        if id in self.aspects:
+            out = self.aspects[id]
         return out
     
     def get_aspect_category(self, aspect, _id):
@@ -97,4 +106,17 @@ class BaseAspectsContainer():
             if _id in self.aspects[aspect].hashmap:
                 out = self.aspects[aspect].hashmap[_id]
         return out
-        
+    
+    def get_aspect_category_root(self, aspect):
+        out = None
+        if aspect in self.aspects:
+            out = self.aspects[aspect].root
+        return out
+    
+    def get_aspect_child_categories(self, aspect, parent_id):
+        out = []
+        if aspect in self.aspects:
+            node = self.aspects[aspect].hashmap[str(parent_id)]
+            for item in node.childs:
+                out.append(item)
+        return out

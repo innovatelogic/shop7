@@ -5,11 +5,11 @@ from groups_model import GroupsModel
 USER_TOKEN_START = 456890
 
 class UsersModel():
-    def __init__(self, db_instance):
+    def __init__(self, db_instance, groups_model):
         self.db_instance = db_instance
         self.userSessions = {}
         self.groupSessions = {}
-        self.groupsModel = GroupsModel(db_instance)
+        self.groups_model = groups_model
         
 #----------------------------------------------------------------------------------------------
     def authentificateUser(self, login, password):
@@ -38,7 +38,7 @@ class UsersModel():
                     self.userSessions[USER_TOKEN_START] = user_session
                     
                     #cache group info
-                    self.groupsModel.loadUserGroupSession(user.group_id, USER_TOKEN_START)
+                    self.groups_model.loadUserGroupSession(user.group_id, USER_TOKEN_START)
                     
                     ausPass = True
                 else:
@@ -80,7 +80,7 @@ class UsersModel():
             del self.userSessions[token]
             
             #release group info
-            self.groupsModel.releaseUserGroupSession(USER_TOKEN_START)
+            self.groups_model.releaseUserGroupSession(USER_TOKEN_START)
             
             out = True
         print(time.asctime(), "user {0} logout {1}".format(name, str(out)))
@@ -105,8 +105,8 @@ class UsersModel():
 
 #----------------------------------------------------------------------------------------------        
     def get_first_level_categories(self, token):
-        return self.groupsModel.get_first_level_categories(self.get_group_id_by_token(token))
+        return self.groups_model.get_first_level_categories(self.get_group_id_by_token(token))
 
 #----------------------------------------------------------------------------------------------  
     def get_child_categories(self, token, _id):
-        return self.groupsModel.get_child_categories(self.get_group_id_by_token(token), _id)
+        return self.groups_model.get_child_categories(self.get_group_id_by_token(token), _id)

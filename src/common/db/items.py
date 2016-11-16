@@ -38,6 +38,14 @@ class Items():
             items.append(Item(i))
         return items
     
+    def get_all_items(self):
+        '''retrieve all items from db'''
+        out = []
+        data = self.cat.find({})
+        for item in data:
+            out.append(Item(item))
+        return out
+    
     def drop(self):
         '''drop collection. rem in production'''
         self.cat.drop()

@@ -57,7 +57,26 @@ class Message_server_get_categiries_1st_lvl(Message):
         if dict['aspect'] == '':
             res = self.master.realm().users_model.get_first_level_categories(dict['token'])
         else:
-            res = self.master.realm().base_aspects_container.get_first_level_categories(dict['aspect'])
+            user_group_id = self.master.realm().users_model.get_group_id_by_token(dict['token'])
+            category_root = self.master.realm().base_aspects_container.get_aspect_category_root(dict['aspect'])
+            
+            res = []
+            res.append({'_id':str(category_root.category._id), 
+                        'parent_id': str(category_root.category.parent_id),
+                        'name':category_root.category.name, 
+                        'n_childs':str(len(category_root.childs))})
+            
+            childs = self.master.realm().base_aspects_container.get_aspect_child_categories(dict['aspect'], category_root.category._id)
+            
+            for child in childs:
+                if self.master.realm().category_group_items_cache.get_item_count(dict['aspect'], child.category._id, user_group_id) > 0:
+                    res.append({'_id':str(child.category._id), 
+                            'parent_id': str(child.category.parent_id),
+                            'name':child.category.name, 
+                            'n_childs':str(len(child.childs))})
+            
+            
+            #res = self.master.realm().base_aspects_container.get_first_level_categories(dict['aspect'])
         return res
 
 #----------------------------------------------------------------------------------------------       
@@ -67,11 +86,22 @@ class Message_server_get_category_childs(Message):
         
     def do_process(self, ch, method, props, body):
         dict = eval(body)
-        res = None
+        res = []
         if dict['aspect'] == '':
             res = self.master.realm().users_model.get_child_categories(dict['token'], dict['id'])
         else:
-            res = self.master.realm().base_aspects_container.get_child_categories(dict['aspect'], dict['id'])
+            user_group_id = self.master.realm().users_model.get_group_id_by_token(dict['token'])
+            category_root = self.master.realm().base_aspects_container.get_aspect_category_root(dict['aspect'])
+            
+            childs = self.master.realm().base_aspects_container.get_aspect_child_categories(dict['aspect'], dict['id'])
+            for child in childs:
+                if self.master.realm().category_group_items_cache.get_item_count(dict['aspect'], child.category._id, user_group_id) > 0:
+                    res.append({'_id':str(child.category._id), 
+                            'parent_id': str(child.category.parent_id),
+                            'name':child.category.name, 
+                            'n_childs':str(len(child.childs))})
+            
+            #res = self.master.realm().base_aspects_container.get_child_categories(dict['aspect'], dict['id'])
         return res
     
 #----------------------------------------------------------------------------------------------       

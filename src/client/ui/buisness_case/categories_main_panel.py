@@ -43,10 +43,15 @@ class CategoriesMainPanel(wx.Panel):
         
     def initPopup(self):
         self.popupmenu = wx.Menu()
-        print self.base_aspects
+        radios = []
         for aspect in self.base_aspects:
-            item = self.popupmenu.Append(-1, aspect)
-            self.Bind(wx.EVT_MENU, self.OnPopupItemSelected, item)
+            radio = wx.MenuItem(self.popupmenu, -1,text = aspect, kind = wx.ITEM_RADIO)
+            self.Bind(wx.EVT_MENU, self.OnPopupItemSelected, radio)
+            self.popupmenu.AppendItem(radio)
+            
+        self.popupmenu.AppendSeparator()
+        item_show_all = self.popupmenu.AppendCheckItem(-1, 'Show all tree')
+        self.Bind(wx.EVT_MENU, self.OnShowWholeTree, item_show_all)
         
     def callback_ToggleBaseAspect(self):
         self.SwitchPanel(EPanelCategory.EPanel_Base)
@@ -74,6 +79,9 @@ class CategoriesMainPanel(wx.Panel):
             if self.base_aspects[i] == text:
                 self.PopulateSecondaryList(i)
                 break
+            
+    def OnShowWholeTree(self):
+        print('[OnShowWholeTree]')
         
     def PopulateSecondaryList(self, index):
         if index >= 0 and index < len(self.base_aspects):

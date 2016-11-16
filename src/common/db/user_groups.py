@@ -51,6 +51,18 @@ class UserGroups():
           }
         }, upsert=False)
         
+    def get_all_groups(self):
+        ''' retreieve all user groups'''
+        data = self.cat.find({})
+        items = []
+        for i in data:
+            spec = {'_id': str(i['_id']), 'aspect_id':str(i['aspect_id'])}
+            spec['records'] = []
+            for key, value in i['records'].iteritems():
+                spec['records'].append(UserRecord(key, value))
+            items.append(UserGroup(spec))
+        return items
+        
     def drop(self):
         '''drop collection. rem in production'''
         self.cat.drop()

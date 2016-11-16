@@ -40,43 +40,6 @@ class DocumentViewPanel(wx.Panel):
         self.SetSizer(sizer)
         
         self.split1.SetSashPosition(200, True)
-
-        return
-    
-        self.bottompanel.left_tree = GroupsTreeView(self.ms_connection, 
-                                                    self.bottompanel, 1, wx.DefaultPosition, (250, -1),
-                                                    wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
-        
-        self.bottompanel.right = wx.Panel(self.bottompanel, wx.ID_ANY)
-        self.bottompanel.right.SetBackgroundColour((235, 235, 235))
-        
-        posDocHorSzr = wx.BoxSizer(wx.HORIZONTAL)
-        posDocHorSzr.Add(self.bottompanel.left_tree, 0, wx.EXPAND)
-        posDocHorSzr.Add(self.bottompanel.right, 1, wx.GROW)
-        self.bottompanel.SetSizer(posDocHorSzr)
-
-        self.list_ctrl = CheckListCtrl(self.bottompanel.right)
-        
-        #self.list_ctrl.InsertColumnInfo(0, info)
-        
-        #self.list_ctrl.InsertColumnInfo(1, info)
-        self.list_ctrl.InsertColumn(0, '')
-        self.list_ctrl.InsertColumn(1, 'Img')
-        self.list_ctrl.InsertColumn(2, 'Name')
-        self.list_ctrl.InsertColumn(3, 'Availability')
-        self.list_ctrl.InsertColumn(4, 'Amount')
-        self.list_ctrl.InsertColumn(5, 'Unit')
-        self.list_ctrl.InsertColumn(6, 'Price')
-        self.list_ctrl.InsertColumn(7, 'Currency')
-        self.list_ctrl.InsertColumn(8, 'Desc')
-        
-        self.list_ctrl.SetColumnWidth(0, 25)
-        self.list_ctrl.SetColumnWidth(1, 128)
-        self.list_ctrl.setResizeColumn(9)
-        
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self.list_ctrl, 0, wx.ALL|wx.EXPAND, 5)
-        self.bottompanel.right.SetSizer(sizer)
         
     def callback_user_category_selected(self, cat_id):
         self.rpanel.process_user_category_selection(cat_id)
