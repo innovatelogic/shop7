@@ -47,6 +47,9 @@ class DocumentViewPanel(wx.Panel):
     def callback_secondary_category_selected(self, aspect, cat_id):
         self.rpanel.process_category_selection(aspect, cat_id)
         
+    def callback_show_all_category_tree_selected(self, flag):
+        pass
+        
         
     def SetColumnImage(self, col, image):
          item = self.list_ctrl.GetColumn(col)
@@ -94,28 +97,3 @@ class DocumentViewPanel(wx.Panel):
             
             item = self.list_ctrl.GetItem(pos)
             self.list_ctrl.SetItemColumnImage(pos, 1, 2)
-            
-            #SetColumnImage(0,0)
-            #self.SetColumnImage(1,0)
-        ################################
-        #self.products = [Book("wxPython in Action", "Robin Dunn",
-        #                      "1932394621", "Manning"),
-        #                 Book("Hello World", "Warren and Carter Sande",
-        #                      "1933988495", "Manning")
-        #                 ]
- 
-        #self.dataOlv = ObjectListView(self.bottompanel.right, wx.ID_ANY, style=wx.LC_REPORT|wx.SUNKEN_BORDER)
-        #self.setBooks()
-        
-        # Allow the cell values to be edited when double-clicked
-        #self.dataOlv.cellEditMode = ObjectListView.CELLEDIT_SINGLECLICK
-        
-    #####################################    
-    #def setBooks(self, data=None):
-    #    self.dataOlv.SetColumns([
-   #        ColumnDefn("Title", "left", 220, "title"),
-    #        ColumnDefn("Author", "left", 200, "author"),
-    #        ColumnDefn("ISBN", "right", 100, "isbn"),            
-    #        ColumnDefn("Mfg", "left", 180, "mfg")
-    #    ])
-    #    self.dataOlv.SetObjects(self.products)

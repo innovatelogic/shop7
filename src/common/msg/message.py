@@ -111,6 +111,9 @@ class Message_server_get_items(Message):
         
     def do_process(self, ch, method, props, body):
         dict = eval(body)
+        print("[Message_server_get_items]");
+        self.master.realm().db.items_mapping.get_mappings_by_aspect_category('prom_ua', dict['category_id'])
+        
         return self.master.realm().items_cache_model.get_items(dict['token'], dict['category_id'], dict['offset'])
 
 #----------------------------------------------------------------------------------------------

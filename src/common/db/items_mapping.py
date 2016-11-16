@@ -33,6 +33,20 @@ class ItemsMapping():
     def update_mapping(self, item_id, mapping):
         pass
     
+    def get_mappings_by_aspect_category(self, aspect, category_id):
+        pipeline = [
+                {'$match': {}},
+                {'$unwind':'$mapping'},
+                {'$match': {"mapping.{}".format(aspect):category_id} },
+                #{ "$group": {'categories':{ _id:'$_id'}}}
+                ]
+            
+        cursor = self.cat.aggregate(pipeline)
+        records = list(cursor)
+        
+        for record in records:
+            print record
+            
     def drop(self):
         '''drop collection. rem in production'''
         self.cat.drop()

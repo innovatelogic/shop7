@@ -84,7 +84,6 @@ class BaseAspectsContainer():
                             'parent_id': str(item.category.parent_id),
                             'name':item.category.name, 
                             'n_childs':str(len(item.childs))})
-                
         return out
     
     def get_aspects(self):
