@@ -2,7 +2,6 @@ import wx
 import wx.lib.agw.gradientbutton as GB
 
 class ButtonPanel(wx.Panel):
-
     COLOR_DARK_BLUE_THEME = wx.Colour(34, 65, 96)
     COLOR_LIGHT_GRAY_THEME = wx.Colour(215, 215, 215)
     
@@ -19,7 +18,7 @@ class ButtonPanel(wx.Panel):
         
     def doLayout(self):
         self.base_aspect_button = GB.GradientButton(self, label="My aspect", pos = (0, self.BTN_POS_X), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
-        self.second_aspect_button = GB.GradientButton(self, label="Test", pos = (self.BTN_WIDTH, self.BTN_POS_X), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
+        self.second_aspect_button = GB.GradientButton(self, pos = (self.BTN_WIDTH, self.BTN_POS_X), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
 
         self.base_aspect_button.SetBaseColours(self.COLOR_DARK_BLUE_THEME, self.COLOR_LIGHT_GRAY_THEME)
         self.second_aspect_button.SetBaseColours(self.COLOR_DARK_BLUE_THEME, self.COLOR_LIGHT_GRAY_THEME)

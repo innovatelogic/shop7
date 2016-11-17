@@ -74,9 +74,6 @@ class Message_server_get_categiries_1st_lvl(Message):
                             'parent_id': str(child.category.parent_id),
                             'name':child.category.name, 
                             'n_childs':str(len(child.childs))})
-            
-            
-            #res = self.master.realm().base_aspects_container.get_first_level_categories(dict['aspect'])
         return res
 
 #----------------------------------------------------------------------------------------------       
@@ -122,7 +119,7 @@ class Message_server_get_items(Message):
             else:
                 print('[Message_server_get_items] failed get item {}'.format(mapping['item_id']))
 
-        return items  #return self.master.realm().items_cache_model.get_items(dict['token'], dict['category_id'], dict['offset'])
+        return items
 
 
 #----------------------------------------------------------------------------------------------

@@ -13,6 +13,7 @@ class UsersModel():
         
 #----------------------------------------------------------------------------------------------
     def authentificateUser(self, login, password):
+        '''comes from http request'''
         loginPass = False
         ausPass = False
         

@@ -32,10 +32,8 @@ class MasterServer:
         
         self.auth_handler.start()
         self.clients_connection.start()
-
-        #os.system("auth_server.cmd")
         
-        subprocess.Popen("auth_server.cmd", shell=True)
+        subprocess.Popen(self.specs['path']['auth_proc'], shell=True)
         
         reactor.run()
 

@@ -25,6 +25,7 @@ class NodeCache():
         return out
 
 class AspectCache():
+    ''' cache contain aspect's category <-> items count for fast access'''
     def __init__(self, realm, aspect, user_groups, items):
         self.cache = NodeCache()
         self.build_aspect_cache(realm, aspect, user_groups, items)
@@ -35,8 +36,6 @@ class AspectCache():
             for item in items:
                 mapping = realm.db.items_mapping.get_mapping(item.mapping_id)
                 if mapping:
-                    #print mapping.get()
-                    #print("{} == {}".format(key, mapping.mapping[aspect.name]))
                     if aspect.name in mapping.mapping:
                         if str(key) == str(mapping.mapping[aspect.name]): #item is mapped to current category
                             self.cache.add_mapping(key, item.user_group_id)
@@ -45,7 +44,6 @@ class AspectCache():
                             while parent:
                                 self.cache.add_mapping(parent.category._id, item.user_group_id)
                                 parent = parent.parent
-        
                 else:
                     print('[build_aspect_cache] Error no mapping found {}'.format(item.mapping_id))
         pass

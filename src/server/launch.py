@@ -1,14 +1,29 @@
 #!/usr/bin/env python
-import sys
+import os, sys
 import argparse
+import logging
+import time
 
 from os import path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
-
 from master_server import MasterServer
 
+def ensure_dir(f):
+    d = os.path.dirname(f)
+    if not os.path.exists(d):
+        print f
+        os.makedirs(d)
+        
+def init_logging(path_dir):
+    ensure_dir(path_dir)
+    log_filename  = time.strftime("ms_%d%m%y_%H-%M.log", time.localtime())
+    log_filename = path_dir + '/' + log_filename
+    print log_filename
+    logging.basicConfig(filename=log_filename,
+                        level=logging.DEBUG,
+                        format='%(asctime)s %(levelname)s %(threadName)-10s %(message)s')
+
 def main():
-    
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, help='server host')
     parser.add_argument('--db_name', help='database name')
@@ -57,6 +72,21 @@ def main():
         'port':args.dbport,
         'name':args.dbname
         }
+    
+    #directory mapping
+    proj_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+    
+    specs['path'] = {
+        'proj_dir':proj_dir,
+        'bin_dir':proj_dir+'\bin',
+        'logs_dir':proj_dir + '\logs',
+        'auth_proc':proj_dir+'\bin\"auth_server.cmd"',
+        }
+    
+    init_logging(specs['path']['logs_dir'])
+    
+    #print proj_dir
+    #print specs['path']['logs_dir']
     
     master = MasterServer(specs)
     
