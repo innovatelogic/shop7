@@ -13,5 +13,7 @@ class ItemsCacheModel():
             out.append(item.get())
         return out
         
+    def get_item(self, token, _id):
+        return self.db_instance.items.get_item(_id)
         
     

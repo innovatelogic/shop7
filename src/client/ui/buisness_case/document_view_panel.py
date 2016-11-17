@@ -28,6 +28,7 @@ class DocumentViewPanel(wx.Panel):
         self.lpanel = CategoriesMainPanel(self.realm,
                                           self.callback_user_category_selected,
                                           self.callback_secondary_category_selected,
+                                          self.callback_show_all_category_tree_selected,
                                           self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
         
         self.rpanel = ItemsMainPanel(self.realm, self.split1, wx.ID_ANY)
@@ -48,8 +49,7 @@ class DocumentViewPanel(wx.Panel):
         self.rpanel.process_category_selection(aspect, cat_id)
         
     def callback_show_all_category_tree_selected(self, flag):
-        pass
-        
+        print('callback_show_all_category_tree_selected {}'.format(flag))
         
     def SetColumnImage(self, col, image):
          item = self.list_ctrl.GetColumn(col)

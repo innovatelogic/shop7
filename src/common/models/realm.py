@@ -21,6 +21,10 @@ class Realm():
     
     def start(self):
         self.db.connect()
+        
+        #self.db.items_mapping.get_mappings_by_aspect_category('prom_ua', "5828f78f92d3a5038089d415")
+        #print('end')
+        
         self.base_aspects_container.load()
         self.category_group_items_cache.build_cache()
         

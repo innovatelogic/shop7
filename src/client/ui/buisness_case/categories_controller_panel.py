@@ -45,7 +45,7 @@ class CategoriesControllerPanel(wx.Panel):
     def __init__(self,
                 callback_ToggleBaseAspect, 
                 callback_ToggleSecondAspect,
-                callback_OnClickSelectSecondAspect,   
+                callback_OnClickSelectSecondAspect,
                 parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.callback_ToggleBaseAspect = callback_ToggleBaseAspect

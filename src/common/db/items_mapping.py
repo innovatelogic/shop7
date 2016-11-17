@@ -1,4 +1,5 @@
 from types.types import ItemMapping
+from bson.objectid import ObjectId
 
 ITEMS_MAPPING_NAME = 'items_mapping'
 
@@ -35,17 +36,12 @@ class ItemsMapping():
     
     def get_mappings_by_aspect_category(self, aspect, category_id):
         pipeline = [
-                {'$match': {}},
                 {'$unwind':'$mapping'},
-                {'$match': {"mapping.{}".format(aspect):category_id} },
-                #{ "$group": {'categories':{ _id:'$_id'}}}
+                {'$match': {"mapping.{}".format(aspect):ObjectId(category_id)} },
                 ]
             
         cursor = self.cat.aggregate(pipeline)
-        records = list(cursor)
-        
-        for record in records:
-            print record
+        return list(cursor)
             
     def drop(self):
         '''drop collection. rem in production'''
