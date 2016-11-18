@@ -40,6 +40,8 @@ def RunClient(app, specs, connection_info):
     if status['res']:
         realm = Realm(ms_connection, specs, eval(connection_info))
         
+        print realm.get_user_settings()
+        
         frame = DocumentFrame(None, realm)
         app.MainLoop() 
     

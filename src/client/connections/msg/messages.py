@@ -1,7 +1,8 @@
 import pika
 
 class Message():
-    def __init__(self, connection_info, channel, callback_queue, get, send):
+    def __init__(self, name, connection_info, channel, callback_queue, get, send):
+        self.opcode = name
         self.channel = channel
         self.connection_info = connection_info
         self.callback_queue = callback_queue
@@ -19,7 +20,10 @@ class Message():
             self.send_params.append(s)
             
     def send(self, params, corr_id):
-        params = self.update_params(params)
+        #self.update_params(params)
+        
+        params['opcode'] = self.opcode
+        params['token'] = self.connection_info['token']
         
         self.channel.basic_publish(exchange='',
                        routing_key=self.connection_info['queue'],
@@ -35,8 +39,6 @@ class Message_client_auth_activate(Message):
         Message.__init__(self, *args, **kwargs)
 
     def update_params(self, params):
-        params['opcode'] = 'auth_activate'
-        params['token'] = self.connection_info['token']
         return params
 #----------------------------------------------------------------------------------------------  
 class Message_client_logout(Message):
@@ -44,8 +46,6 @@ class Message_client_logout(Message):
         Message.__init__(self, *args, **kwargs)
 
     def update_params(self, params):
-        params['opcode'] = 'logout'
-        params['token'] = self.connection_info['token']
         return params
 
 #----------------------------------------------------------------------------------------------       
@@ -54,8 +54,6 @@ class Message_client_get_categiries_1st_lvl(Message):
         Message.__init__(self, *args, **kwargs)
         
     def update_params(self, params):
-        params['opcode'] = 'get_categiries_1st_lvl'
-        params['token'] = self.connection_info['token']
         return params
 
 #----------------------------------------------------------------------------------------------       
@@ -64,8 +62,6 @@ class Message_client_get_category_childs(Message):
         Message.__init__(self, *args, **kwargs)
         
     def update_params(self, params):
-        params['opcode'] = 'get_category_childs'
-        params['token'] = self.connection_info['token']
         return params
     
 #----------------------------------------------------------------------------------------------       
@@ -74,8 +70,6 @@ class Message_client_get_items(Message):
         Message.__init__(self, *args, **kwargs)
         
     def update_params(self, params):
-        params['opcode'] = 'get_items'
-        params['token'] = self.connection_info['token']
         return params
 
 #----------------------------------------------------------------------------------------------       
@@ -84,6 +78,11 @@ class Message_client_get_aspects(Message):
         Message.__init__(self, *args, **kwargs)
         
     def update_params(self, params):
-        params['opcode'] = 'get_aspects'
-        params['token'] = self.connection_info['token']
-        return params    
+        return params
+    
+class Message_client_get_user_settings(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+        
+    def update_params(self, params):
+        return params

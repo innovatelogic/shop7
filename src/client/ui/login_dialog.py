@@ -26,7 +26,6 @@ class LoginPanel(wx.Panel):
     
     def OnClickLogin(self, event):
         res, options = self.auth_connection.request(self.login.GetValue(), self.passw.GetValue(), self.anon.GetValue())
-        print res, options
         if res:
             self.GetParent().connection_info = options
             self.GetParent().Close(False)
@@ -36,8 +35,6 @@ class LoginPanel(wx.Panel):
         enable = cb.GetValue() == False
         self.login.Enable(enable)
         self.passw.Enable(enable)
-      
-        #print cb.GetLabel(),' is clicked', cb.GetValue()
       
 #############################################################################
 class LoginDialog(wx.Dialog):
@@ -62,11 +59,12 @@ class LoginDialog(wx.Dialog):
         rightpanel.SetBackgroundColour((0, 178, 54))
         
         self.Bind(wx.EVT_CLOSE, self.OnClose)
+        
         self.Fit()
+        self.Centre() 
     
     def OnClose(self, event):
         #print('In OnClose')
         self.auth_connection.stopConnection()
         self.on_close = True
         event.Skip()
-        pass

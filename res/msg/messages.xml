@@ -3,6 +3,10 @@
 		<client send="token" get="res"/>
 		<server get="token" send="res"/>
 	</msg>
+	<msg name="get_user_settings">
+		<client send="token" get="res"/>
+		<server get="token" send="res"/>
+	</msg>
 	<msg name="logout">
 		<client send="token" get="res"/>
 		<server get="token" send="res"/>
@@ -23,4 +27,5 @@
 		<client send="token" get="res"/>
 		<server get="token" send="res"/>
 	</msg>
+	
 </messages>

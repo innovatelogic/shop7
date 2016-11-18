@@ -1,4 +1,5 @@
 import pika
+#from wx.lib.pubsub.core import kwargs
 
 class Message():
     def __init__(self, master, get, send):
@@ -52,7 +53,7 @@ class Message_server_get_categiries_1st_lvl(Message):
         
     def do_process(self, ch, method, props, body):
         dict = eval(body)
-        
+        print dict
         res = None
         if dict['aspect'] == '':
             res = self.master.realm().users_model.get_first_level_categories(dict['token'])
@@ -129,3 +130,15 @@ class Message_server_get_aspects(Message):
         
     def do_process(self, ch, method, props, body):
         return self.master.realm().base_aspects_container.get_aspects()
+
+#----------------------------------------------------------------------------------------------  
+class Message_server_get_user_settings(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+        
+    def do_process(self, ch, method, props, body):
+        dict = eval(body)
+        settings = self.master.realm().users_model.get_user_settings(dict['token'])
+        if settings:
+            return settings.get()
+        return False

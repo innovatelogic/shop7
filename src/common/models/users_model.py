@@ -24,7 +24,6 @@ class UsersModel():
             print('[authentificateUser] user ok')
             if user.pwhs == password:
                 loginPass = True
-        
                 user_session = None
                 
                 _id = user._id
@@ -56,7 +55,7 @@ class UsersModel():
     def get_group_id_by_token(self, token):
         if self.userSessions.get(token):
             return self.userSessions[token].group_id
-        return 0
+        return -1
     
 #----------------------------------------------------------------------------------------------
     def activateUserAuth(self, token):
@@ -77,12 +76,9 @@ class UsersModel():
         user_session = self.userSessions.get(token)
         if user_session:
             name = user_session.name
-            
             del self.userSessions[token]
-            
             #release group info
             self.groups_model.releaseUserGroupSession(USER_TOKEN_START)
-            
             out = True
         print(time.asctime(), "user {0} logout {1}".format(name, str(out)))
         return out
@@ -111,3 +107,10 @@ class UsersModel():
 #----------------------------------------------------------------------------------------------  
     def get_child_categories(self, token, _id):
         return self.groups_model.get_child_categories(self.get_group_id_by_token(token), _id)
+    
+#----------------------------------------------------------------------------------------------    
+    def get_user_settings(self, token):
+        user_session = self.userSessions.get(token)
+        if user_session:
+            return user_session.settings;
+        return None

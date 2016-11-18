@@ -1,5 +1,6 @@
 import os, sys, time
 import subprocess
+import logging
 from pika.connection import ConnectionParameters
 from twisted.internet import protocol, reactor
 from pika.adapters.twisted_connection import TwistedProtocolConnection
@@ -18,7 +19,7 @@ class MasterServer:
         pass
     
     def run(self):
-        print(time.asctime(), "Master Server Starts")
+        logging.info("Master Server Starts")
         
         parameters = ConnectionParameters()
         cc = protocol.ClientCreator(reactor,
@@ -33,7 +34,7 @@ class MasterServer:
         self.auth_handler.start()
         self.clients_connection.start()
         
-        subprocess.Popen(self.specs['path']['auth_proc'], shell=True)
+        self.start_auth_server()
         
         reactor.run()
 
@@ -43,4 +44,7 @@ class MasterServer:
   
     def realm(self):
         return self.__realm
+    
+    def start_auth_server(self):
+        subprocess.Popen(self.specs['path']['auth_proc'], shell=True)
         

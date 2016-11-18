@@ -11,16 +11,15 @@ from master_server import MasterServer
 def ensure_dir(f):
     d = os.path.dirname(f)
     if not os.path.exists(d):
-        print f
         os.makedirs(d)
         
 def init_logging(path_dir):
     ensure_dir(path_dir)
     log_filename  = time.strftime("ms_%d%m%y_%H-%M.log", time.localtime())
     log_filename = path_dir + '/' + log_filename
-    print log_filename
     logging.basicConfig(filename=log_filename,
-                        level=logging.DEBUG,
+                        #level=logging.DEBUG,
+                        level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(threadName)-10s %(message)s')
 
 def main():
@@ -78,15 +77,12 @@ def main():
     
     specs['path'] = {
         'proj_dir':proj_dir,
-        'bin_dir':proj_dir+'\bin',
-        'logs_dir':proj_dir + '\logs',
-        'auth_proc':proj_dir+'\bin\"auth_server.cmd"',
+        'bin_dir':proj_dir+'\\bin',
+        'logs_dir':proj_dir + '\\logs',
+        'auth_proc':proj_dir+'\\bin\\auth_server.cmd',
         }
     
     init_logging(specs['path']['logs_dir'])
-    
-    #print proj_dir
-    #print specs['path']['logs_dir']
     
     master = MasterServer(specs)
     
