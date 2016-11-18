@@ -63,7 +63,7 @@ class Message_client_get_category_childs(Message):
         
     def update_params(self, params):
         return params
-    
+
 #----------------------------------------------------------------------------------------------       
 class Message_client_get_items(Message):
     def __init__(self, *args, **kwargs):
@@ -79,7 +79,8 @@ class Message_client_get_aspects(Message):
         
     def update_params(self, params):
         return params
-    
+
+#----------------------------------------------------------------------------------------------    
 class Message_client_get_user_settings(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)

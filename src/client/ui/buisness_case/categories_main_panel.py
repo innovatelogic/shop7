@@ -20,6 +20,9 @@ class CategoriesMainPanel(wx.Panel):
         
         self.doLayout()
         
+        user_settings = self.realm.get_user_settings()
+        print user_settings
+        
         self.bottompanel.PopulateBaseList()
         self.PopulateSecondaryList(0)
         

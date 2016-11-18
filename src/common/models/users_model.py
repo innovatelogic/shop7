@@ -76,9 +76,9 @@ class UsersModel():
         user_session = self.userSessions.get(token)
         if user_session:
             name = user_session.name
+            self.groups_model.releaseUserGroupSession(user_session.group_id)
             del self.userSessions[token]
-            #release group info
-            self.groups_model.releaseUserGroupSession(USER_TOKEN_START)
+           
             out = True
         print(time.asctime(), "user {0} logout {1}".format(name, str(out)))
         return out

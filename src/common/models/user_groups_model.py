@@ -13,9 +13,7 @@ class UserGroupsModel():
             print(time.asctime(), "load user group")
             new_group = self.db_instance.user_groups.get_user_group(group_id)
             aspect = self.db_instance.user_aspects.get_aspect(new_group.aspect_id)
-            
-            spec = {'group':new_group, 'aspect':aspect, 'refs':1}
-            self.userGroupSessions[group_id] = spec
+            self.userGroupSessions[group_id] = {'group':new_group, 'aspect':aspect, 'refs':1}
 
 #----------------------------------------------------------------------------------------------            
     def releaseUserGroupSession(self, group_id):
