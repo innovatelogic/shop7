@@ -1,8 +1,10 @@
-
-import wx
-import argparse
-import time
+import sys, argparse, time
 from threading import Event
+import wx
+
+from os import path
+sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+
 from ui.login_dialog import LoginDialog
 from ui.document_frame import DocumentFrame
 from connections.ms_connection import MSConnection
@@ -22,7 +24,6 @@ def StartLogin(specs):
     
     dlg.Destroy()  
     return [on_close, isLogin, dlg.connection_info]
-
 
 #----------------------------------------------------------------------------------------------
 def RunClient(app, specs, connection_info):

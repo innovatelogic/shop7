@@ -7,6 +7,10 @@
 		<client send="token" get="res"/>
 		<server get="token" send="res"/>
 	</msg>
+	<msg name="set_user_settings">
+		<client send="token;settings" get="res"/>
+		<server get="token;settings" send="res"/>
+	</msg>
 	<msg name="logout">
 		<client send="token" get="res"/>
 		<server get="token" send="res"/>

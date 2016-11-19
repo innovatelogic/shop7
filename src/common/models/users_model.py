@@ -114,3 +114,12 @@ class UsersModel():
         if user_session:
             return user_session.settings;
         return None
+    
+#----------------------------------------------------------------------------------------------    
+    def set_user_settings(self, token, spec):
+        out = False
+        user_session = self.userSessions.get(token)
+        if user_session:
+            user_session.settings.update(spec)
+            out = True
+        return out

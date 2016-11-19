@@ -9,6 +9,8 @@ class ButtonPanel(wx.Panel):
     BTN_HEIGHT = 35
     BTN_POS_X = 12
     
+    LABEL_MY_ASPECT = "My aspect"
+    
     def __init__(self, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.buttons = []
@@ -17,7 +19,7 @@ class ButtonPanel(wx.Panel):
         self.ToggleUp(self.base_aspect_button)
         
     def doLayout(self):
-        self.base_aspect_button = GB.GradientButton(self, label="My aspect", pos = (0, self.BTN_POS_X), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
+        self.base_aspect_button = GB.GradientButton(self, label=self.LABEL_MY_ASPECT, pos = (0, self.BTN_POS_X), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
         self.second_aspect_button = GB.GradientButton(self, pos = (self.BTN_WIDTH, self.BTN_POS_X), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
 
         self.base_aspect_button.SetBaseColours(self.COLOR_DARK_BLUE_THEME, self.COLOR_LIGHT_GRAY_THEME)

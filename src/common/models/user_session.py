@@ -9,7 +9,7 @@ class UserSession:
         self.id = id
         self.name = name
         self.group_id = group_id
-        self.settings = UserSettings({'active_base_aspect':'prom_ua', 'show_base_aspect_whole_tree':True})
+        self.settings = UserSettings({'active_base_aspect':'prom_ua', 'show_base_aspect_whole_tree':False})
         pass
     
     #-----------------------------------------------------------------------------------------

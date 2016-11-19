@@ -20,7 +20,6 @@ class Message():
             self.send_params.append(s)
             
     def send(self, params, corr_id):
-        #self.update_params(params)
         
         params['opcode'] = self.opcode
         params['token'] = self.connection_info['token']
@@ -38,52 +37,38 @@ class Message_client_auth_activate(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
 
-    def update_params(self, params):
-        return params
 #----------------------------------------------------------------------------------------------  
 class Message_client_logout(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
 
-    def update_params(self, params):
-        return params
-
 #----------------------------------------------------------------------------------------------       
 class Message_client_get_categiries_1st_lvl(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
-        
-    def update_params(self, params):
-        return params
 
 #----------------------------------------------------------------------------------------------       
 class Message_client_get_category_childs(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
-        
-    def update_params(self, params):
-        return params
 
 #----------------------------------------------------------------------------------------------       
 class Message_client_get_items(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
-        
-    def update_params(self, params):
-        return params
 
 #----------------------------------------------------------------------------------------------       
 class Message_client_get_aspects(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
-        
-    def update_params(self, params):
-        return params
 
 #----------------------------------------------------------------------------------------------    
 class Message_client_get_user_settings(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
-        
-    def update_params(self, params):
-        return params
+    
+#----------------------------------------------------------------------------------------------    
+class Message_client_set_user_settings(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+    

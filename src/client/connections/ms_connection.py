@@ -13,8 +13,7 @@ class MSConnection(threading.Thread):
                   'name':user.name,
                   'ms_host':self.specs['master']['host'],
                   'queue':self.specs['master']['ms_client_queue'],
-                  'queue_port':self.specs['master']['ms_queue_port']}
-'''
+                  'queue_port':self.specs['master']['ms_queue_port']} '''
 
     def __init__(self, connection_info, ready=None, *args, **kwargs):
         super(MSConnection, self).__init__(*args, **kwargs)
@@ -22,7 +21,6 @@ class MSConnection(threading.Thread):
         self.connection_info = connection_info
         self.connection = None
         self.channel = None
-        
     
     def run(self):
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.connection_info['ms_host'],
@@ -33,7 +31,6 @@ class MSConnection(threading.Thread):
         self.result = self.channel.queue_declare()
         self.callback_queue = self.result.method.queue
         self.queue_name = self.result.method.queue
-        #print self.result.method.queueame
         
         self.msg_client_cont = MessageClientContaier(self.connection_info, self.channel, self.callback_queue, '../res/msg/messages.xml')
 
@@ -47,15 +44,13 @@ class MSConnection(threading.Thread):
     def send_msg(self, name, params):
         self.response = None
         self.corr_id = str(uuid.uuid4())
-        
         self.msg_client_cont.send_msg(name, params, self.corr_id)
-        
+
         while self.response is None:
             self.connection.process_data_events()
-            
+
         return eval(self.response)
     
     def stop(self):
         self.connection.close()
-        pass
     

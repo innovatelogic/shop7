@@ -12,16 +12,19 @@ class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
         wx.ListCtrl.__init__(self, parent, -1, size=(-1, 800), style=wx.LC_REPORT | wx.SUNKEN_BORDER)
         CheckListCtrlMixin.__init__(self)
         ListCtrlAutoWidthMixin.__init__(self)
-        
+
+#----------------------------------------------------------------------------------------------        
     def OnCheckItem(self, index, flag):
         print(index, flag)
-                
+
+#----------------------------------------------------------------------------------------------                
 class DocumentViewPanel(wx.Panel):
     def __init__(self, realm, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.realm = realm
         self.doLayout()
-        
+
+#----------------------------------------------------------------------------------------------        
     def doLayout(self):
         self.split1 = wx.SplitterWindow(self, style = wx.SP_THIN_SASH)
         
@@ -41,14 +44,20 @@ class DocumentViewPanel(wx.Panel):
         self.SetSizer(sizer)
         
         self.split1.SetSashPosition(200, True)
-        
+
+#----------------------------------------------------------------------------------------------        
     def callback_user_category_selected(self, cat_id):
         self.rpanel.process_user_category_selection(cat_id)
-        
+
+#----------------------------------------------------------------------------------------------        
     def callback_secondary_category_selected(self, aspect, cat_id):
         self.rpanel.process_category_selection(aspect, cat_id)
-        
+
+#----------------------------------------------------------------------------------------------        
     def callback_show_all_category_tree_selected(self, flag):
+        user_settings = self.realm.get_user_settings()
+        user_settings.show_base_aspect_whole_tree = flag
+        self.realm.set_user_settings(user_settings)
         print('callback_show_all_category_tree_selected {}'.format(flag))
         
     def SetColumnImage(self, col, image):
@@ -64,14 +73,18 @@ class DocumentViewPanel(wx.Panel):
          item.SetImage(image)
          self.list_ctrl.SetColumn(col, item)
 
+#----------------------------------------------------------------------------------------------
     def ClearColumnImage(self, col):
         self.list_ctrl.SetColumnImage(col, -1)
-    
+
+#----------------------------------------------------------------------------------------------    
     def update_list(self, items):
         
         self.il = wx.ImageList(128, 128)
         
-        images=["../res/img/check_0.png", "../res/img/check_1.png", "../res/img/label_128.png"]
+        images=["../res/img/check_0.png",
+                "../res/img/check_1.png",
+                "../res/img/label_128.png"]
         for i in images:
             img = wx.Image(i, wx.BITMAP_TYPE_ANY)
             img = wx.BitmapFromImage(img)

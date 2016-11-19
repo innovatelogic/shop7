@@ -15,7 +15,6 @@ class CategoryTreesPanel(wx.Panel):
         self.realm = realm 
         self.callback_user_cat_selected = callback_user_cat_selected
         self.callback_secondary_cat_selected = callback_secondary_cat_selected
-        self.SetBackgroundColour((255, 0, 0))
         self.view_panels = []
         self.doLayout()
         self.aspect = ''
