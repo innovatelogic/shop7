@@ -2,12 +2,15 @@ import wx
 from items_controller_panel import ItemsControllerPanel
 from items_list_panel import ItemsListPanel
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class ItemsMainPanel(wx.Panel):
     def __init__(self, realm, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.realm = realm
         self.doLayout()
-        
+
+#----------------------------------------------------------------------------------------------
     def doLayout(self):
         self.toppanel = ItemsControllerPanel(self, wx.ID_ANY, size = (-1, 40), pos = (0, 0))
         self.bottompanel = ItemsListPanel(self.realm, self, wx.ID_ANY)
@@ -19,9 +22,11 @@ class ItemsMainPanel(wx.Panel):
         self.SetSizer(vsizer)
         self.Layout()
         
+#----------------------------------------------------------------------------------------------
     def process_user_category_selection(self, cat_id):
         print ('[process_user_selection]')
         
+#----------------------------------------------------------------------------------------------
     def process_category_selection(self, aspect, cat_id):
         items = self.realm.get_items(aspect, cat_id, 0, 50)
         self.bottompanel.update_list(items)

@@ -34,7 +34,7 @@ class UsersModel():
                     
                 if user_session == None:
                     ++USER_TOKEN_START
-                    user_session = UserSession(USER_TOKEN_START, user._id, user.name, user.group_id)
+                    user_session = UserSession(self.db_instance, USER_TOKEN_START, user._id, user.name, user.group_id)
                     self.userSessions[USER_TOKEN_START] = user_session
                     
                     #cache group info

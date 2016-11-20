@@ -1,15 +1,20 @@
+from bson.objectid import ObjectId
 from common.db.types.types import UserSettings
 
 class UserSession:
-    def __init__(self, token, id, name, group_id):
+    def __init__(self, db_instance, token, id, name, group_id):
         ''' creates when auth ok'''
+        self.db_instance = db_instance
         self.activated = False
         self.time_started = ''
         self.token = token
         self.id = id
         self.name = name
         self.group_id = group_id
-        self.settings = UserSettings({'active_base_aspect':'prom_ua', 'show_base_aspect_whole_tree':False})
+        self.settings = db_instance.user_settings.get_user_settings(self.id) #
+        if not self.settings:
+            self.settings = UserSettings({'_id':ObjectId(), 'user_id':id})
+            db_instance.user_settings.add_settings(self.settings)
         pass
     
     #-----------------------------------------------------------------------------------------

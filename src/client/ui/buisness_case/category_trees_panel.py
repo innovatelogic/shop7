@@ -6,6 +6,7 @@ class EPanelCategory:
     EPanel_Secondary = 1
     EPanel_MAX = 2
 
+#----------------------------------------------------------------------------------------------
 class CategoryTreesPanel(wx.Panel):
     def __init__(self, realm,
                   callback_user_cat_selected,
@@ -19,7 +20,8 @@ class CategoryTreesPanel(wx.Panel):
         self.doLayout()
         self.aspect = ''
         self.TogglePanel(EPanelCategory.EPanel_Base)
-        
+
+#----------------------------------------------------------------------------------------------
     def doLayout(self):
         self.base_tree = GroupsTreeView(self.realm, 
                                         self, 1, wx.DefaultPosition, (-1, -1),
@@ -41,24 +43,28 @@ class CategoryTreesPanel(wx.Panel):
         self.bind()
         
         self.Layout()
-        
+
+#----------------------------------------------------------------------------------------------
     def bind(self):
         self.base_tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.OnExpandingTreeNode_User)
         self.base_tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChangedTreeNode_User)
         self.secondary_tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.OnExpandingTreeNode_Secondary)
         self.secondary_tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChangedTreeNode_Secondary)
         
+#----------------------------------------------------------------------------------------------
     def PopulateBaseList(self):
         categories = self.realm.get_user_categiries_1st_lvl()
         self.base_tree.DeleteAllItems()
         self.base_tree.init_list(categories)
 
+#----------------------------------------------------------------------------------------------
     def PopulateSecondaryList(self, aspect):
         self.aspect = aspect
         categories = self.realm.get_categiries_1st_lvl(aspect)
         self.secondary_tree.DeleteAllItems()
         self.secondary_tree.init_list(categories)
-    
+        
+#----------------------------------------------------------------------------------------------
     def TogglePanel(self, index):
         out = None
         self.gridsizer.Clear()
@@ -73,21 +79,25 @@ class CategoryTreesPanel(wx.Panel):
         self.Layout()
         return out
     
+#----------------------------------------------------------------------------------------------
     def OnExpandingTreeNode_User(self, event):
         item = event.GetItem()
         categories = self.realm.get_user_category_childs(self.secondary_tree.GetPyData(item))
         self.base_tree.append_childs(categories, item)
-    
+
+#----------------------------------------------------------------------------------------------
     def OnSelChangedTreeNode_User(self, event):
         item =  event.GetItem()
         _id = self.secondary_tree.GetPyData(item)
         self.callback_user_cat_selected(_id)
-    
+
+#----------------------------------------------------------------------------------------------
     def OnExpandingTreeNode_Secondary(self, event):
         item = event.GetItem()
         categories = self.realm.get_category_childs(self.aspect, self.secondary_tree.GetPyData(item))
         self.secondary_tree.append_childs(categories, item)
-    
+
+#----------------------------------------------------------------------------------------------
     def OnSelChangedTreeNode_Secondary(self, event):
         item =  event.GetItem()
         _id = self.secondary_tree.GetPyData(item)

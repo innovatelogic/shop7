@@ -1,6 +1,8 @@
 import wx
 import wx.lib.agw.gradientbutton as GB
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class ButtonPanel(wx.Panel):
 
     COLOR_DARK_BLUE_THEME = wx.Colour(34, 65, 96)
@@ -19,12 +21,15 @@ class ButtonPanel(wx.Panel):
         self.edit_button = GB.GradientButton(self, label="Edit", pos = (self.BTN_WIDTH + self.SHIFT, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
         self.edit_button = GB.GradientButton(self, label="Del", pos = ((self.BTN_WIDTH + self.SHIFT) * 2, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class ItemsControllerPanel(wx.Panel):
     COLOR_LIGHT_GRAY_THEME = wx.Colour(215, 215, 215)
     def __init__(self, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.doLayout()
-        
+ 
+#----------------------------------------------------------------------------------------------
     def doLayout(self):
         gridsizer = wx.FlexGridSizer(cols=5, rows = 1)
         gridsizer.AddGrowableRow(0)

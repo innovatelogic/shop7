@@ -1,6 +1,7 @@
 import wx
 import wx.lib.agw.gradientbutton as GB
 
+#----------------------------------------------------------------------------------------------
 class ButtonPanel(wx.Panel):
     COLOR_DARK_BLUE_THEME = wx.Colour(34, 65, 96)
     COLOR_LIGHT_GRAY_THEME = wx.Colour(215, 215, 215)
@@ -40,7 +41,8 @@ class ButtonPanel(wx.Panel):
                 self.buttons[i].Move((pos[0], self.BTN_POS_X - 2))
             else:
                 self.buttons[i].Move((pos[0], self.BTN_POS_X))
-        
+
+#----------------------------------------------------------------------------------------------
 class CategoriesControllerPanel(wx.Panel):
     BTN_DROP_SIZE = 20
     def __init__(self,
@@ -79,24 +81,29 @@ class CategoriesControllerPanel(wx.Panel):
         
         self.Layout()
         
+#----------------------------------------------------------------------------------------------      
     def BindEvents(self):
         self.Bind(wx.EVT_BUTTON, self.OnClick_BaseAspect, self.btnpanel.base_aspect_button)
         self.Bind(wx.EVT_BUTTON, self.OnClick_SecondAspect, self.btnpanel.second_aspect_button)
         self.Bind(wx.EVT_BUTTON, self.OnClick_SelectSecondAspect, self.dropdown_btn)
         
+#----------------------------------------------------------------------------------------------        
     def OnClick_BaseAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.base_aspect_button)
         self.callback_ToggleBaseAspect()
-    
+        
+#----------------------------------------------------------------------------------------------
     def OnClick_SecondAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.second_aspect_button)
         self.callback_ToggleSecondAspect()
         
+#----------------------------------------------------------------------------------------------
     def OnClick_SelectSecondAspect(self, event):
         pos = self.dropdown_btn.GetScreenPosition()
         pos[0] += self.BTN_DROP_SIZE
         self.callback_OnClickSelectSecondAspect(pos)
         
+#----------------------------------------------------------------------------------------------
     def SetSecondAspectName(self, name):
         self.btnpanel.second_aspect_button.SetLabelText(name)
         self.btnpanel.second_aspect_button.Refresh()

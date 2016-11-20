@@ -2,6 +2,8 @@ import wx
 from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin
 from items_list_bottom_control_panel import ItemsListBottomControlPanel
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     def __init__(self, parent):
         wx.ListCtrl.__init__(self, parent, -1, size=(-1, -1), style=wx.LC_REPORT | wx.SUNKEN_BORDER)
@@ -11,13 +13,15 @@ class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     def OnCheckItem(self, index, flag):
         print(index, flag)
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class ItemsListPanel(wx.Panel):
     def __init__(self, realm, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.realm = realm
-        
         self.doLayout()
-        
+
+#----------------------------------------------------------------------------------------------
     def doLayout(self):
         self.toppanel = wx.Panel(self, wx.ID_ANY, size=(-1, 25))
         self.bottompanel = ItemsListBottomControlPanel(self, wx.ID_ANY, size=(-1, 30))
@@ -40,7 +44,8 @@ class ItemsListPanel(wx.Panel):
         self.SetSizer(gridsizer)
         
         self.Layout()
-        
+
+#----------------------------------------------------------------------------------------------
     def initListCtrl(self, parent):
         list_ctrl = CheckListCtrl(parent)
         
@@ -58,7 +63,8 @@ class ItemsListPanel(wx.Panel):
         list_ctrl.SetColumnWidth(1, 128)
         list_ctrl.setResizeColumn(9)
         return list_ctrl
-    
+
+#----------------------------------------------------------------------------------------------
     def update_list(self, items):
         
         self.il = wx.ImageList(128, 128)

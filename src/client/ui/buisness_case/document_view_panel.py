@@ -6,7 +6,7 @@ from ui.proportional_splitter import ProportionalSplitter
 from groups_tree_view import GroupsTreeView
 
 from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin
-        
+  
 class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     def __init__(self, parent):
         wx.ListCtrl.__init__(self, parent, -1, size=(-1, 800), style=wx.LC_REPORT | wx.SUNKEN_BORDER)
@@ -56,10 +56,11 @@ class DocumentViewPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------        
     def callback_show_all_category_tree_selected(self, flag):
         user_settings = self.realm.get_user_settings()
-        user_settings.show_base_aspect_whole_tree = flag
+        user_settings['options']['client']['ui']['cases']['show_base_aspect_whole_tree'] = flag
         self.realm.set_user_settings(user_settings)
         print('callback_show_all_category_tree_selected {}'.format(flag))
-        
+
+#----------------------------------------------------------------------------------------------        
     def SetColumnImage(self, col, image):
          item = self.list_ctrl.GetColumn(col)
          # preserve all other attributes too

@@ -60,12 +60,12 @@ class CategoriesMainPanel(wx.Panel):
         item_show_all = self.popupmenu.AppendCheckItem(-1, self.LABEL_SHOW_WHOLE_TREE)
         self.Bind(wx.EVT_MENU, self.OnShowAllCategoryTree, item_show_all)
         
-        self.popupmenu.Check(item_show_all.GetId(), user_settings.show_base_aspect_whole_tree)
+        self.popupmenu.Check(item_show_all.GetId(), user_settings['client']['ui']['cases']['show_base_aspect_whole_tree'])
 
 #----------------------------------------------------------------------------------------------        
     def initSecondaryAspectList(self):
         try:
-            idx = self.base_aspects.index(self.realm.get_user_settings().active_base_aspect)
+            idx = self.base_aspects.index(self.realm.get_user_settings()['client']['ui']['cases']['active_base_aspect'])
         except ValueError:
             idx = 0
         self.PopulateSecondaryList(idx)

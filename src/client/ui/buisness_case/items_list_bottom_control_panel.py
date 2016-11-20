@@ -1,11 +1,13 @@
 import wx
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class ItemsListBottomControlPanel(wx.Panel):
     def __init__(self, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        
         self.doLayout()
         
+#----------------------------------------------------------------------------------------------
     def doLayout(self):
         bmp_search = wx.Bitmap("../res/img/dropdown.png", wx.BITMAP_TYPE_ANY)
         self.left_btn = wx.BitmapButton(self, wx.NewId(), bitmap=bmp_search, size = (20, 20))

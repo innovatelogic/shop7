@@ -6,6 +6,7 @@ from categories import Categories
 from base_aspects import BaseAspects
 from user_aspects import UserAspects
 from items_mapping import ItemsMapping
+from user_settings import UserSettings
 
 class Instance():
 	''' incapsulate db management'''
@@ -14,6 +15,7 @@ class Instance():
 		self.connection = ConnectionDB(self.specs)
 		self.user_groups = UserGroups(self)
 		self.users = Users(self)
+		self.user_settings = UserSettings(self)
 		self.items = Items(self)
 		self.categories = Categories(self)
 		self.base_aspects = BaseAspects(self)
@@ -24,6 +26,7 @@ class Instance():
 		self.connection.connect()
 		self.user_groups.init()
 		self.users.init()
+		self.user_settings.init()
 		self.items.init()
 		self.categories.init()
 		self.base_aspects.init()

@@ -128,6 +128,7 @@ class ItemMapping:
 			}
 		return record
 
+#----------------------------------------------------------------------------------------------
 class UserAspect():
 	class Node():
 		def __init__(self, category):
@@ -162,20 +163,70 @@ class UserAspect():
 
 		return record
 
+#----------------------------------------------------------------------------------------------
 class UserSettings():
     def __init__(self, spec):
-        self.active_base_aspect = spec['active_base_aspect']
-        self.show_base_aspect_whole_tree = spec['show_base_aspect_whole_tree']
+		self._id = spec['_id']
+		self.user_id = spec['user_id']
+		self.update(spec)
         
     def update(self, spec):
-    	if 'active_base_aspect' in spec:
-    		self.active_base_aspect = spec['active_base_aspect']
-      	if 'show_base_aspect_whole_tree' in spec:
-      		self.show_base_aspect_whole_tree = spec['show_base_aspect_whole_tree']
-      		
+		self.options = {
+			'client':{
+				'ui':{
+					'cases':{
+						'active_base_aspect':'prom_ua',
+						'show_base_aspect_whole_tree':False,
+						'item_columns':{
+							'image': True,
+							'name': True,
+							'availability': True,
+							'amount': True,
+							'unit' : True,
+							'price' : True,
+							'currency' : True,
+							'desc' : True,
+							},
+						},
+					'clients':{},
+					'connect':{},
+					'settings':{},
+					'statistics':{},
+					'dashboard':{},
+					}
+				}
+		}
+		
+		if 'options' in spec and 'client' in spec['options'] and 'ui' in spec['options']['client'] and 'cases' in spec['options']['client']['ui']:
+			
+			if 'item_columns' in spec['options']['client']['ui']['cases']:
+				spec_columns = spec['options']['client']['ui']['cases']['item_columns']
+				
+				if 'image' in spec_columns:
+					self.options['options']['client']['ui']['cases']['item_columns']['image'] = spec_columns['image']
+				if 'name' in spec_columns:
+					self.options['options']['client']['ui']['cases']['item_columns']['name'] = spec_columns['name']
+				if 'availability' in spec_columns:
+					self.options['options']['client']['ui']['cases']['item_columns']['availability'] = spec_columns['availability']
+				if 'amount' in spec_columns:
+					self.options['options']['client']['ui']['cases']['item_columns']['amount'] = spec_columns['amount']	
+				if 'unit' in spec_columns:
+					self.options['options']['client']['ui']['cases']['item_columns']['unit'] = spec_columns['unit']
+				if 'price' in spec_columns:
+					self.options['options']['client']['ui']['cases']['item_columns']['price'] = spec_columns['price']
+				if 'desc' in spec_columns:
+					self.options['options']['client']['ui']['cases']['item_columns']['desc'] = spec_columns['desc']
+      	
+		      	if 'active_base_aspect' in spec['options']['client']['ui']['cases']:
+		      		self.options['options']['client']['ui']['cases']['active_base_aspect'] = spec['client']['ui']['cases']['active_base_aspect']
+		      		
+		      	if 'show_base_aspect_whole_tree' in spec['options']['client']['ui']['cases']:
+		      		self.options['options']['client']['ui']['cases']['show_base_aspect_whole_tree'] = spec['options']['client']['ui']['cases']['show_base_aspect_whole_tree']
+
     def get(self):
-        record = {
-            'active_base_aspect':self.active_base_aspect,
-            'show_base_aspect_whole_tree':self.show_base_aspect_whole_tree,
-            }
-        return record
+    	record = {
+			'_id':self._id,
+			'user_id':self.user_id,
+			'options':self.options,
+			}
+        return self.options
