@@ -9,19 +9,21 @@ class ItemsMainPanel(wx.Panel):
                  callback_add_item,
                  callback_edit_item,
                  callback_del_item,
-                 callback_column_check,
+                 callback_column_change,
                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.callback_add_item = callback_add_item
         self.callback_edit_item = callback_edit_item
         self.callback_del_item = callback_del_item
-        self.callback_column_check = callback_column_check
+        self.callback_column_change = callback_column_change
         self.realm = realm
         self.doLayout()
 
 #----------------------------------------------------------------------------------------------
     def doLayout(self):
-        self.toppanel = ItemsControllerPanel(self.realm, self, wx.ID_ANY, size = (-1, 40), pos = (0, 0))
+        self.toppanel = ItemsControllerPanel(self.realm,
+                                             self.callback_column_change,
+                                             self, wx.ID_ANY, size = (-1, 40), pos = (0, 0))
         self.bottompanel = ItemsListPanel(self.realm, self, wx.ID_ANY)
         
         vsizer = wx.BoxSizer(wx.VERTICAL)

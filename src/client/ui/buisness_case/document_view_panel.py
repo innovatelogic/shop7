@@ -77,8 +77,12 @@ class DocumentViewPanel(wx.Panel):
         pass
     
 #----------------------------------------------------------------------------------------------    
-    def callback_column_check(self):
-        pass
+    def callback_column_check(self, text, flag):
+        print( '{} {}'.format(text, flag))
+        user_settings = self.realm.get_user_settings()
+        if text in user_settings.options['client']['ui']['cases']['item_columns']:
+            user_settings.options['client']['ui']['cases']['item_columns'][text] = flag
+            self.realm.set_user_settings(user_settings)
     
 #----------------------------------------------------------------------------------------------        
     def SetColumnImage(self, col, image):

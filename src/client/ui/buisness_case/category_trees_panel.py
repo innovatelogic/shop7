@@ -39,9 +39,7 @@ class CategoryTreesPanel(wx.Panel):
         self.gridsizer.AddGrowableCol(0)
            
         self.SetSizer(self.gridsizer)
-        
         self.bind()
-        
         self.Layout()
 
 #----------------------------------------------------------------------------------------------

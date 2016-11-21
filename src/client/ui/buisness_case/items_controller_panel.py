@@ -27,9 +27,14 @@ class ButtonPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------
 class ItemsControllerPanel(wx.Panel):
     COLOR_LIGHT_GRAY_THEME = wx.Colour(215, 215, 215)
-    def __init__(self, realm, parent, *args, **kwargs):
+    IMAGE_DROPDOWN = "../res/img/dropdown.png"
+    COLUMN_LABEL="columns"
+    def __init__(self, realm, 
+                 callback_column_change,
+                 parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.realm = realm
+        self.callback_column_change = callback_column_change
         self.doLayout()
         self.initPopupMenu()
         self.bind()
@@ -49,10 +54,10 @@ class ItemsControllerPanel(wx.Panel):
         
         self.btnpanel = ButtonPanel(self, wx.ID_ANY, pos = (0, 0), size = (140, -1))
         self.inputTxt = wx.TextCtrl(self, wx.ID_ANY, '', size=(250, 25))
-        bmp_search = wx.Bitmap("../res/img/dropdown.png", wx.BITMAP_TYPE_ANY)
+        bmp_search = wx.Bitmap(self.IMAGE_DROPDOWN, wx.BITMAP_TYPE_ANY)
         self.search_btn = wx.BitmapButton(self, wx.NewId(), bitmap=bmp_search, size = (20, 20))
         self.columns_btn = wx.BitmapButton(self, wx.NewId(), bitmap=bmp_search, size = (20, 20))
-        self.columns_name = wx.StaticText(self, label="columns", pos=(10, 10))
+        self.columns_name = wx.StaticText(self, label=self.COLUMN_LABEL, pos=(10, 10))
         
         sizer_0.Add((40,-1), 1, wx.EXPAND) # this is a spacer
         sizer_0.Add(self.btnpanel, flag = wx.ALIGN_CENTER_VERTICAL)
@@ -91,8 +96,8 @@ class ItemsControllerPanel(wx.Panel):
         radios = []
         for key, value in user_settings.options['client']['ui']['cases']['item_columns'].iteritems():
             item = self.popupmenu.AppendCheckItem(-1, key)
-            #self.Bind(wx.EVT_MENU, self.OnPopupItemColumnSelected, item_show_all)
             self.popupmenu.Check(item.GetId(), value)
+            self.Bind(wx.EVT_MENU, self.OnPopupItemColumnSelected, item)
 
 #----------------------------------------------------------------------------------------------
     def OnShowPopup(self, pos):
@@ -106,10 +111,7 @@ class ItemsControllerPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------  
     def OnPopupItemColumnSelected(self, event):
         item = self.popupmenu.FindItemById(event.GetId())
-        text = item.GetText()
-        is_checked = item.IsChecked()
-        print text
-        print is_checked
+        self.callback_column_change(item.GetText(), item.IsChecked())
         
 #----------------------------------------------------------------------------------------------
     def OnClick_ColumnsCheck(self, event):
