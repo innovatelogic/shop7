@@ -27,7 +27,7 @@ class CategoryTreesPanel(wx.Panel):
                                         self, 1, wx.DefaultPosition, (-1, -1),
                                         wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
         
-        self.secondary_tree = self.sec_tree = GroupsTreeView(self.realm, 
+        self.secondary_tree = GroupsTreeView(self.realm, 
                                         self, 1, wx.DefaultPosition, (-1, -1),
                                         wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
         

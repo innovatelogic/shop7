@@ -4,7 +4,6 @@ import wx.lib.agw.gradientbutton as GB
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class ButtonPanel(wx.Panel):
-
     COLOR_DARK_BLUE_THEME = wx.Colour(34, 65, 96)
     
     BTN_WIDTH = 40
@@ -20,14 +19,20 @@ class ButtonPanel(wx.Panel):
         self.add_button = GB.GradientButton(self, label="Add", pos = (0, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
         self.edit_button = GB.GradientButton(self, label="Edit", pos = (self.BTN_WIDTH + self.SHIFT, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
         self.edit_button = GB.GradientButton(self, label="Del", pos = ((self.BTN_WIDTH + self.SHIFT) * 2, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
-
+    
+    def bind(self):
+        pass
+    
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class ItemsControllerPanel(wx.Panel):
     COLOR_LIGHT_GRAY_THEME = wx.Colour(215, 215, 215)
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, realm, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
+        self.realm = realm
         self.doLayout()
+        self.initPopupMenu()
+        self.bind()
  
 #----------------------------------------------------------------------------------------------
     def doLayout(self):
@@ -72,3 +77,43 @@ class ItemsControllerPanel(wx.Panel):
         gridsizer.Add(sizer_4, flag = wx.EXPAND)
         
         self.SetSizer(gridsizer)
+
+#----------------------------------------------------------------------------------------------
+    def bind(self):
+        self.Bind(wx.EVT_BUTTON, self.OnClick_ColumnsCheck, self.columns_btn)
+        pass
+    
+#----------------------------------------------------------------------------------------------
+    def initPopupMenu(self):
+        user_settings = self.realm.get_user_settings()
+        
+        self.popupmenu = wx.Menu()
+        radios = []
+        for key, value in user_settings.options['client']['ui']['cases']['item_columns'].iteritems():
+            item = self.popupmenu.AppendCheckItem(-1, key)
+            #self.Bind(wx.EVT_MENU, self.OnPopupItemColumnSelected, item_show_all)
+            self.popupmenu.Check(item.GetId(), value)
+
+#----------------------------------------------------------------------------------------------
+    def OnShowPopup(self, pos):
+        cl_pos = self.ScreenToClient(pos)
+        self.PopupMenu(self.popupmenu, cl_pos)
+        
+#----------------------------------------------------------------------------------------------
+    def OnPopupItemSelected(self, event):
+        pass
+
+#----------------------------------------------------------------------------------------------  
+    def OnPopupItemColumnSelected(self, event):
+        item = self.popupmenu.FindItemById(event.GetId())
+        text = item.GetText()
+        is_checked = item.IsChecked()
+        print text
+        print is_checked
+        
+#----------------------------------------------------------------------------------------------
+    def OnClick_ColumnsCheck(self, event):
+        pos = self.columns_btn.GetScreenPosition()
+        pos[0] += 20
+        cl_pos = self.ScreenToClient(pos)
+        self.PopupMenu(self.popupmenu, cl_pos)

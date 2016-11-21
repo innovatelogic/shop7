@@ -48,24 +48,25 @@ class CategoriesMainPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------        
     def initPopupMenu(self):
         user_settings = self.realm.get_user_settings()
-        
         self.popupmenu = wx.Menu()
         radios = []
         for aspect in self.base_aspects:
             radio = wx.MenuItem(self.popupmenu, -1, text = aspect, kind = wx.ITEM_RADIO)
-            self.Bind(wx.EVT_MENU, self.OnPopupItemSelected, radio)
             self.popupmenu.AppendItem(radio)
+            self.Bind(wx.EVT_MENU, self.OnPopupItemAspectSelected, radio)
             
         self.popupmenu.AppendSeparator()
         item_show_all = self.popupmenu.AppendCheckItem(-1, self.LABEL_SHOW_WHOLE_TREE)
         self.Bind(wx.EVT_MENU, self.OnShowAllCategoryTree, item_show_all)
         
-        self.popupmenu.Check(item_show_all.GetId(), user_settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'])
+        show_whoe_tree = user_settings.options['client']['ui']['cases']['show_base_aspect_whole_tree']
+        self.popupmenu.Check(item_show_all.GetId(), show_whoe_tree)
 
 #----------------------------------------------------------------------------------------------        
     def initSecondaryAspectList(self):
         try:
-            idx = self.base_aspects.index(self.realm.get_user_settings().options['client']['ui']['cases']['active_base_aspect'])
+            base_aspect = self.realm.get_user_settings().options['client']['ui']['cases']['active_base_aspect']
+            idx = self.base_aspects.index(base_aspect)
         except ValueError:
             idx = 0
         self.PopulateSecondaryList(idx)
@@ -100,7 +101,7 @@ class CategoriesMainPanel(wx.Panel):
         self.PopupMenu(self.popupmenu, cl_pos)
         
 #----------------------------------------------------------------------------------------------        
-    def OnPopupItemSelected(self, event):
+    def OnPopupItemAspectSelected(self, event):
         item = self.popupmenu.FindItemById(event.GetId())
         text = item.GetText()
         for i in range(len(self.base_aspects)):

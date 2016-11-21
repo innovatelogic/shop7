@@ -11,7 +11,8 @@ class ButtonPanel(wx.Panel):
     BTN_POS_X = 12
     
     LABEL_MY_ASPECT = "My aspect"
-    
+
+#----------------------------------------------------------------------------------------------    
     def __init__(self, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.buttons = []
@@ -19,6 +20,7 @@ class ButtonPanel(wx.Panel):
         
         self.ToggleUp(self.base_aspect_button)
         
+#----------------------------------------------------------------------------------------------        
     def doLayout(self):
         self.base_aspect_button = GB.GradientButton(self, label=self.LABEL_MY_ASPECT, pos = (0, self.BTN_POS_X), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
         self.second_aspect_button = GB.GradientButton(self, pos = (self.BTN_WIDTH, self.BTN_POS_X), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
@@ -33,7 +35,8 @@ class ButtonPanel(wx.Panel):
         self.buttons.append(self.second_aspect_button)
         
         self.Layout()
-        
+
+#----------------------------------------------------------------------------------------------        
     def ToggleUp(self, btn):
         for i in range(0, len(self.buttons)):
             pos = self.buttons[i].GetPosition()
@@ -57,6 +60,7 @@ class CategoriesControllerPanel(wx.Panel):
         self.doLayout()
         self.BindEvents()
         
+ #----------------------------------------------------------------------------------------------       
     def doLayout(self):
         gridsizer = wx.FlexGridSizer(cols=2, rows = 1)
         gridsizer.AddGrowableRow(0)

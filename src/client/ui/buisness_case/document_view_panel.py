@@ -34,7 +34,12 @@ class DocumentViewPanel(wx.Panel):
                                           self.callback_show_all_category_tree_selected,
                                           self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
         
-        self.rpanel = ItemsMainPanel(self.realm, self.split1, wx.ID_ANY)
+        self.rpanel = ItemsMainPanel(self.realm,
+                                    self.callback_add_item,
+                                    self.callback_edit_item,
+                                    self.callback_del_item,
+                                    self.callback_column_check,
+                                    self.split1, wx.ID_ANY)
         
         self.split1.SplitVertically(self.lpanel, self.rpanel)
         self.split1.SetSashGravity(0.25)
@@ -58,8 +63,23 @@ class DocumentViewPanel(wx.Panel):
         user_settings = self.realm.get_user_settings()
         user_settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] = flag
         self.realm.set_user_settings(user_settings)
-        print('callback_show_all_category_tree_selected {}'.format(flag))
 
+#----------------------------------------------------------------------------------------------    
+    def callback_add_item(self):
+        pass
+    
+#----------------------------------------------------------------------------------------------    
+    def callback_edit_item(self):
+        pass
+    
+#----------------------------------------------------------------------------------------------
+    def callback_del_item(self):
+        pass
+    
+#----------------------------------------------------------------------------------------------    
+    def callback_column_check(self):
+        pass
+    
 #----------------------------------------------------------------------------------------------        
     def SetColumnImage(self, col, image):
          item = self.list_ctrl.GetColumn(col)
