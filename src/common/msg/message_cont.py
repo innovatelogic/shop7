@@ -1,6 +1,7 @@
 import importlib
 from message import Message
 import xml.etree.ElementTree
+from bson.objectid import ObjectId
 
 class EAspect:
     EAspect_Client = 0

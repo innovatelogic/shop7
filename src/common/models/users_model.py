@@ -112,7 +112,7 @@ class UsersModel():
     def get_user_settings(self, token):
         user_session = self.userSessions.get(token)
         if user_session:
-            return user_session.settings;
+            return user_session.settings
         return None
     
 #----------------------------------------------------------------------------------------------    

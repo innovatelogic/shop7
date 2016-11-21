@@ -56,7 +56,7 @@ class DocumentViewPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------        
     def callback_show_all_category_tree_selected(self, flag):
         user_settings = self.realm.get_user_settings()
-        user_settings['options']['client']['ui']['cases']['show_base_aspect_whole_tree'] = flag
+        user_settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] = flag
         self.realm.set_user_settings(user_settings)
         print('callback_show_all_category_tree_selected {}'.format(flag))
 

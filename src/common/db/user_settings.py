@@ -2,7 +2,7 @@ from types.types import UserSettings
 
 USER_SETTINGS_CATEGORY_NAME = 'user_settings'
 
-class UserSettings():
+class UserSettingsDB():
     def __init__(self, instance):
         self.instance = instance
 
@@ -15,6 +15,7 @@ class UserSettings():
         '''retrieve data from db. return constructed UserSettings object'''
         data = self.cat.find_one({'user_id':user_id})
         if data:
+            data['_id'] = str(data['_id'])
             return UserSettings(data)
         return None
 

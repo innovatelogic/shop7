@@ -1,4 +1,5 @@
 
+#----------------------------------------------------------------------------------------------
 class Category():
 	def __init__(self, spec):
 		self._id = spec['_id']
@@ -13,6 +14,7 @@ class Category():
 			}
 		return record
 
+#----------------------------------------------------------------------------------------------
 class User():
 	def __init__(self, spec):
 		self._id = spec['_id']
@@ -33,6 +35,7 @@ class User():
 			}
 		return record
 
+#----------------------------------------------------------------------------------------------
 class UserRecord():
 	'''user id to rights correspondences. uses in construction spec for UserGroup'''
 	def __init__(self, _id, rights):
@@ -46,6 +49,7 @@ class UserRecord():
 			}
 		return record
 
+#----------------------------------------------------------------------------------------------
 class UserGroup():
 	def __init__(self, spec):
 		self._id = spec['_id']
@@ -61,7 +65,8 @@ class UserGroup():
 			'records':self.records,
 			}
 		return record
-		
+
+#----------------------------------------------------------------------------------------------		
 class Item():
 	CHARACTERISTICS_MAX = 16
 	CHARACTERISTIC_FIELD_NAME = 'characteristicName'
@@ -109,7 +114,8 @@ class Item():
 			record[field_name_numered] = self.characteristics[i]
 			
 		return record
-	
+
+#----------------------------------------------------------------------------------------------
 class ItemMapping:
 	def __init__(self, spec):
 		self._id = spec['_id']
@@ -203,25 +209,24 @@ class UserSettings():
 				spec_columns = spec['options']['client']['ui']['cases']['item_columns']
 				
 				if 'image' in spec_columns:
-					self.options['options']['client']['ui']['cases']['item_columns']['image'] = spec_columns['image']
+					self.options['client']['ui']['cases']['item_columns']['image'] = spec_columns['image']
 				if 'name' in spec_columns:
-					self.options['options']['client']['ui']['cases']['item_columns']['name'] = spec_columns['name']
+					self.options['client']['ui']['cases']['item_columns']['name'] = spec_columns['name']
 				if 'availability' in spec_columns:
-					self.options['options']['client']['ui']['cases']['item_columns']['availability'] = spec_columns['availability']
+					self.options['client']['ui']['cases']['item_columns']['availability'] = spec_columns['availability']
 				if 'amount' in spec_columns:
-					self.options['options']['client']['ui']['cases']['item_columns']['amount'] = spec_columns['amount']	
+					self.options['client']['ui']['cases']['item_columns']['amount'] = spec_columns['amount']	
 				if 'unit' in spec_columns:
-					self.options['options']['client']['ui']['cases']['item_columns']['unit'] = spec_columns['unit']
+					self.options['client']['ui']['cases']['item_columns']['unit'] = spec_columns['unit']
 				if 'price' in spec_columns:
-					self.options['options']['client']['ui']['cases']['item_columns']['price'] = spec_columns['price']
+					self.options['client']['ui']['cases']['item_columns']['price'] = spec_columns['price']
 				if 'desc' in spec_columns:
-					self.options['options']['client']['ui']['cases']['item_columns']['desc'] = spec_columns['desc']
+					self.options['client']['ui']['cases']['item_columns']['desc'] = spec_columns['desc']
       	
 		      	if 'active_base_aspect' in spec['options']['client']['ui']['cases']:
-		      		self.options['options']['client']['ui']['cases']['active_base_aspect'] = spec['client']['ui']['cases']['active_base_aspect']
-		      		
+		      		self.options['client']['ui']['cases']['active_base_aspect'] = spec['options']['client']['ui']['cases']['active_base_aspect']
 		      	if 'show_base_aspect_whole_tree' in spec['options']['client']['ui']['cases']:
-		      		self.options['options']['client']['ui']['cases']['show_base_aspect_whole_tree'] = spec['options']['client']['ui']['cases']['show_base_aspect_whole_tree']
+		      		self.options['client']['ui']['cases']['show_base_aspect_whole_tree'] = spec['options']['client']['ui']['cases']['show_base_aspect_whole_tree']
 
     def get(self):
     	record = {
@@ -229,4 +234,4 @@ class UserSettings():
 			'user_id':self.user_id,
 			'options':self.options,
 			}
-        return self.options
+        return record

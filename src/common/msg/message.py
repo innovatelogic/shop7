@@ -122,7 +122,6 @@ class Message_server_get_items(Message):
 
         return items
 
-
 #----------------------------------------------------------------------------------------------
 class Message_server_get_aspects(Message):
     def __init__(self, *args, **kwargs):
@@ -141,7 +140,7 @@ class Message_server_get_user_settings(Message):
         settings = self.master.realm().users_model.get_user_settings(dict['token'])
         if settings:
             return settings.get()
-        return False
+        return {}
     
 #----------------------------------------------------------------------------------------------  
 class Message_server_set_user_settings(Message):

@@ -43,7 +43,6 @@ class Realm():
     def get_user_settings(self):
         if self.user_settings_changed:
             dict = self.ms_connection().send_msg('get_user_settings', {})['res']
-            print dict
             self.user_settings = UserSettings(dict)
             self.user_settings_changed = False
         return self.user_settings
