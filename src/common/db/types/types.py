@@ -183,6 +183,7 @@ class UserSettings():
 					'cases':{
 						'active_base_aspect':'prom_ua',
 						'show_base_aspect_whole_tree':False,
+						'list_image_size':2,
 						'item_columns':{
 							'image': True,
 							'name': True,
@@ -220,6 +221,8 @@ class UserSettings():
 					self.options['client']['ui']['cases']['item_columns']['unit'] = spec_columns['unit']
 				if 'price' in spec_columns:
 					self.options['client']['ui']['cases']['item_columns']['price'] = spec_columns['price']
+				if 'currency' in spec_columns:
+					self.options['client']['ui']['cases']['item_columns']['currency'] = spec_columns['currency']
 				if 'desc' in spec_columns:
 					self.options['client']['ui']['cases']['item_columns']['desc'] = spec_columns['desc']
       	

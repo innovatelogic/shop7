@@ -39,6 +39,9 @@ class DocumentViewPanel(wx.Panel):
                                     self.callback_edit_item,
                                     self.callback_del_item,
                                     self.callback_column_check,
+                                    self.callback_page_inc,
+                                    self.callback_page_dec,
+                                    self.callback_page_select,
                                     self.split1, wx.ID_ANY)
         
         self.split1.SplitVertically(self.lpanel, self.rpanel)
@@ -78,11 +81,24 @@ class DocumentViewPanel(wx.Panel):
     
 #----------------------------------------------------------------------------------------------    
     def callback_column_check(self, text, flag):
-        print( '{} {}'.format(text, flag))
         user_settings = self.realm.get_user_settings()
         if text in user_settings.options['client']['ui']['cases']['item_columns']:
             user_settings.options['client']['ui']['cases']['item_columns'][text] = flag
             self.realm.set_user_settings(user_settings)
+
+#----------------------------------------------------------------------------------------------    
+    def callback_page_inc(self):
+        print('[callback_page_inc]')
+        pass
+
+#----------------------------------------------------------------------------------------------    
+    def callback_page_dec(self):
+        print('[callback_page_dec]')
+        pass
+    
+#----------------------------------------------------------------------------------------------
+    def callback_page_select(self, page_index):
+        pass
     
 #----------------------------------------------------------------------------------------------        
     def SetColumnImage(self, col, image):
