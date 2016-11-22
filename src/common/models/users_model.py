@@ -121,5 +121,6 @@ class UsersModel():
         user_session = self.userSessions.get(token)
         if user_session:
             user_session.settings.update(spec)
+            self.db_instance.user_settings.update_user_settings(user_session.settings)
             out = True
         return out

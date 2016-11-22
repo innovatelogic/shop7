@@ -23,4 +23,11 @@ class UserSettingsDB():
     def add_settings(self, settings):
         self.cat.insert(settings.get())
         
-        
+#----------------------------------------------------------------------------------------------        
+    def update_user_settings(self, settings):
+        self.cat.update_one({'user_id':settings.user_id}, {'$set': {'options' : settings.options}})
+
+#----------------------------------------------------------------------------------------------       
+    def drop(self):
+        '''drop collection. rem in production'''
+        self.cat.drop()        

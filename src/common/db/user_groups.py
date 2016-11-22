@@ -62,7 +62,8 @@ class UserGroups():
                 spec['records'].append(UserRecord(key, value))
             items.append(UserGroup(spec))
         return items
-        
+    
+ #----------------------------------------------------------------------------------------------       
     def drop(self):
         '''drop collection. rem in production'''
         self.cat.drop()
