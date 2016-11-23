@@ -49,11 +49,13 @@ class ButtonPanel(wx.Panel):
 class CategoriesControllerPanel(wx.Panel):
     BTN_DROP_SIZE = 20
     def __init__(self,
+                cases_controller,
                 callback_ToggleBaseAspect, 
                 callback_ToggleSecondAspect,
                 callback_OnClickSelectSecondAspect,
                 parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
+        self.cases_controller = cases_controller
         self.callback_ToggleBaseAspect = callback_ToggleBaseAspect
         self.callback_ToggleSecondAspect = callback_ToggleSecondAspect
         self.callback_OnClickSelectSecondAspect = callback_OnClickSelectSecondAspect
@@ -95,11 +97,13 @@ class CategoriesControllerPanel(wx.Panel):
     def OnClick_BaseAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.base_aspect_button)
         self.callback_ToggleBaseAspect()
+        self.doc_controller.toggleBaseAspect()
         
 #----------------------------------------------------------------------------------------------
     def OnClick_SecondAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.second_aspect_button)
         self.callback_ToggleSecondAspect()
+        self.doc_controller.toggleSecondAspect()
         
 #----------------------------------------------------------------------------------------------
     def OnClick_SelectSecondAspect(self, event):

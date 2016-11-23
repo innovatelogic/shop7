@@ -7,13 +7,14 @@ from groups_tree_view import GroupsTreeView
 class CategoriesMainPanel(wx.Panel):
     LABEL_SHOW_WHOLE_TREE = "Show all tree"
     def __init__(self,
-                 realm, 
+                 cases_controller,
                  callback_user_cat_selected,
                  callback_secondary_cat_selected,
                  callback_show_all_category_tree_selected,
                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.realm = realm
+        self.cases_controller = cases_controller
+        self.realm = cases_controller.realm()
         self.callback_user_cat_selected = callback_user_cat_selected
         self.callback_secondary_cat_selected = callback_secondary_cat_selected
         self.callback_show_all_category_tree_selected = callback_show_all_category_tree_selected
@@ -25,12 +26,13 @@ class CategoriesMainPanel(wx.Panel):
         
 #----------------------------------------------------------------------------------------------        
     def doLayout(self):
-        self.toppanel = CategoriesControllerPanel(self.callback_ToggleBaseAspect,
+        self.toppanel = CategoriesControllerPanel(self.cases_controller,
+                                                  self.callback_ToggleBaseAspect,
                                                   self.callback_ToggleSecondAspect,
                                                   self.callback_OnClickSelectSecondAspect,
                                                   self, wx.ID_ANY, size = (-1, 40), pos = (0, 0))
         
-        self.bottompanel = CategoryTreesPanel(self.realm, 
+        self.bottompanel = CategoryTreesPanel(self.cases_controller, 
                                               self.callback_user_cat_selected,
                                               self.callback_secondary_cat_selected,
                                               self, wx.ID_ANY)

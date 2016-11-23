@@ -19,22 +19,23 @@ class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
 
 #----------------------------------------------------------------------------------------------                
 class DocumentViewPanel(wx.Panel):
-    def __init__(self, realm, parent, *args, **kwargs):
+    def __init__(self, cases_controller, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.realm = realm
+        self.cases_controller = cases_controller
+        self.realm = self.cases_controller.realm()
         self.doLayout()
 
 #----------------------------------------------------------------------------------------------        
     def doLayout(self):
         self.split1 = wx.SplitterWindow(self, style = wx.SP_THIN_SASH)
         
-        self.lpanel = CategoriesMainPanel(self.realm,
+        self.lpanel = CategoriesMainPanel(self.cases_controller,
                                           self.callback_user_category_selected,
                                           self.callback_secondary_category_selected,
                                           self.callback_show_all_category_tree_selected,
                                           self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
         
-        self.rpanel = ItemsMainPanel(self.realm,
+        self.rpanel = ItemsMainPanel(self.cases_controller,
                                     self.callback_add_item,
                                     self.callback_edit_item,
                                     self.callback_del_item,

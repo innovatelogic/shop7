@@ -29,11 +29,13 @@ class ItemsControllerPanel(wx.Panel):
     COLOR_LIGHT_GRAY_THEME = wx.Colour(215, 215, 215)
     IMAGE_DROPDOWN = "../res/img/dropdown.png"
     COLUMN_LABEL="columns"
-    def __init__(self, realm, 
+    def __init__(self, 
+                 cases_controller, 
                  callback_column_change,
                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.realm = realm
+        self.cases_controller = cases_controller
+        self.realm = cases_controller.realm()
         self.callback_column_change = callback_column_change
         self.doLayout()
         self.initPopupMenu()

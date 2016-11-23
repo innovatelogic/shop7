@@ -3,6 +3,7 @@ from proportional_splitter import ProportionalSplitter
 from status_view_panel import StatusViewPanel
 from doc_control_panel import DocControlPanel
 from buisness_case.document_view_panel import DocumentViewPanel
+from buisness_case.buisness_case_controller import BuisnessCaseController
 
 TITLE_DLG = "Client"
 ONLINE_PANEL_HEIGHT = 50
@@ -64,7 +65,8 @@ class DocumentFrame(wx.Frame):
         self.bottompanel.SetSizer(posHorSzr)
         
         # toggle panels
-        self.cases_panel = DocumentViewPanel(self.realm, self.centerpanel, wx.ID_ANY, size = (-1, -1))
+        self.cases_controller = BuisnessCaseController(self.realm)
+        self.cases_panel = DocumentViewPanel(self.cases_controller, self.centerpanel, wx.ID_ANY, size = (-1, -1))
         self.clients_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
         self.connect_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
         self.settings_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))

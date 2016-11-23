@@ -8,12 +8,14 @@ class EPanelCategory:
 
 #----------------------------------------------------------------------------------------------
 class CategoryTreesPanel(wx.Panel):
-    def __init__(self, realm,
-                  callback_user_cat_selected,
-                  callback_secondary_cat_selected,
-                   parent, *args, **kwargs):
+    def __init__(self, 
+                    cases_controller,
+                    callback_user_cat_selected,
+                    callback_secondary_cat_selected,
+                    parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.realm = realm 
+        self.realm = cases_controller.realm()
+        self.cases_controller = cases_controller
         self.callback_user_cat_selected = callback_user_cat_selected
         self.callback_secondary_cat_selected = callback_secondary_cat_selected
         self.view_panels = []
@@ -23,12 +25,10 @@ class CategoryTreesPanel(wx.Panel):
 
 #----------------------------------------------------------------------------------------------
     def doLayout(self):
-        self.base_tree = GroupsTreeView(self.realm, 
-                                        self, 1, wx.DefaultPosition, (-1, -1),
+        self.base_tree = GroupsTreeView(self, 1, wx.DefaultPosition, (-1, -1),
                                         wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
         
-        self.secondary_tree = GroupsTreeView(self.realm, 
-                                        self, 1, wx.DefaultPosition, (-1, -1),
+        self.secondary_tree = GroupsTreeView(self, 1, wx.DefaultPosition, (-1, -1),
                                         wx.TR_HIDE_ROOT|wx.TR_HAS_BUTTONS|wx.TR_LINES_AT_ROOT)
         
         self.view_panels.append(self.base_tree)

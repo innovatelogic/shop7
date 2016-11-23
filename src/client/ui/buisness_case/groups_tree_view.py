@@ -3,7 +3,7 @@ import wx
 class GroupsTreeView(wx.TreeCtrl):
     '''Our customized TreeCtrl class
     '''
-    def __init__(self, realm, parent, id, position, size, style):
+    def __init__(self, parent, id, position, size, style):
         '''Initialize our tree
         '''
         wx.TreeCtrl.__init__(self, parent, id, position, size, style)
