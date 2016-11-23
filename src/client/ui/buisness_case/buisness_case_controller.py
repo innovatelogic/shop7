@@ -2,6 +2,11 @@
 class BuisnessCaseController():
     def __init__(self, realm):
         self.__realm = realm
+        self.view = None
+        
+#----------------------------------------------------------------------------------------------        
+    def setView(self, view):
+        self.view = view
 
 #----------------------------------------------------------------------------------------------        
     def realm(self):
@@ -62,7 +67,18 @@ class BuisnessCaseController():
     def toggleSecondAspect(self):
         pass
     
+#----------------------------------------------------------------------------------------------    
     def populate_base_list(self):
         pass
-        
-        
+
+#----------------------------------------------------------------------------------------------
+    def expandUserAspectCategory(self, category_id, item):
+        categories = self.__realm.get_user_category_childs(self.secondary_tree.GetPyData(item))
+        self.view.addChildCategoriesTreeUserAspect(category_id, categories, item)
+        pass
+    
+#----------------------------------------------------------------------------------------------
+    def expandBaseAspectCategory(self, aspect, category_id, item):
+        categories = self.__realm.get_category_childs(aspect, category_id)
+        self.view.addChildCategoriesTreeBaseAspect(category_id, categories, item)
+        pass        

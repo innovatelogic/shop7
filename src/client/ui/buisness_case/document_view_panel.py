@@ -22,6 +22,7 @@ class DocumentViewPanel(wx.Panel):
     def __init__(self, cases_controller, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.cases_controller = cases_controller
+        self.cases_controller.setView(self)
         self.realm = self.cases_controller.realm()
         self.doLayout()
 
@@ -40,9 +41,6 @@ class DocumentViewPanel(wx.Panel):
                                     self.callback_edit_item,
                                     self.callback_del_item,
                                     self.callback_column_check,
-                                    self.callback_page_inc,
-                                    self.callback_page_dec,
-                                    self.callback_page_select,
                                     self.split1, wx.ID_ANY)
         
         self.split1.SplitVertically(self.lpanel, self.rpanel)
@@ -87,20 +85,6 @@ class DocumentViewPanel(wx.Panel):
             user_settings.options['client']['ui']['cases']['item_columns'][text] = flag
             self.realm.set_user_settings(user_settings)
 
-#----------------------------------------------------------------------------------------------    
-    def callback_page_inc(self):
-        print('[callback_page_inc]')
-        pass
-
-#----------------------------------------------------------------------------------------------    
-    def callback_page_dec(self):
-        print('[callback_page_dec]')
-        pass
-    
-#----------------------------------------------------------------------------------------------
-    def callback_page_select(self, page_index):
-        pass
-    
 #----------------------------------------------------------------------------------------------        
     def SetColumnImage(self, col, image):
          item = self.list_ctrl.GetColumn(col)
@@ -152,3 +136,16 @@ class DocumentViewPanel(wx.Panel):
             
             item = self.list_ctrl.GetItem(pos)
             self.list_ctrl.SetItemColumnImage(pos, 1, 2)
+            
+#----------------------------------------------------------------------------------------------            
+    def addChildCategoriesTreeUserAspect(self, category_id, childs, item):
+        #item = self.lpanel.bottompanel.base_tree.GetItemPyData(wx.TreeItemData(category_id))
+        self.lpanel.bottompanel.base_tree.append_childs(childs, item)
+        pass
+    
+ #----------------------------------------------------------------------------------------------   
+    def addChildCategoriesTreeBaseAspect(self, category_id, childs, item):
+        #item = self.lpanel.bottompanel.secondary_tree.GetItemPyData(wx.TreeItemData(category_id))
+        self.lpanel.bottompanel.secondary_tree.append_childs(childs, item)
+        pass
+    

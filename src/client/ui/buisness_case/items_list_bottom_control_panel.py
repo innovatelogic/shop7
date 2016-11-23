@@ -7,16 +7,10 @@ import wx.lib.intctrl
 class ItemsListBottomControlPanel(wx.Panel):
     def __init__(self, 
                  cases_controller,
-                 callback_page_inc,
-                 callback_page_dec,
-                 callback_page_select,
-                parent, *args, **kwargs):
+                 parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.cases_controller = cases_controller
         self.realm = cases_controller.realm()
-        self.callback_page_inc = callback_page_inc
-        self.callback_page_dec = callback_page_dec
-        self.callback_page_select = callback_page_select
         self.doLayout()
         self.bind()
         
@@ -59,10 +53,8 @@ class ItemsListBottomControlPanel(wx.Panel):
 
 #----------------------------------------------------------------------------------------------    
     def OnClick_PageInc(self, event):
-        self.callback_page_inc()
         self.cases_controller.page_inc()
         
 #----------------------------------------------------------------------------------------------
     def OnClick_PageDec(self, event):
-        self.callback_page_dec()
         self.cases_controller.page_dec()

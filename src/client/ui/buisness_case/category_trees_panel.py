@@ -80,20 +80,22 @@ class CategoryTreesPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------
     def OnExpandingTreeNode_User(self, event):
         item = event.GetItem()
-        categories = self.realm.get_user_category_childs(self.secondary_tree.GetPyData(item))
-        self.base_tree.append_childs(categories, item)
+        self.cases_controller.expandUserAspectCategory(self.base_tree.GetPyData(item), item)
+        #categories = self.realm.get_user_category_childs(self.secondary_tree.GetPyData(item))
+        #self.base_tree.append_childs(categories, item)
 
 #----------------------------------------------------------------------------------------------
     def OnSelChangedTreeNode_User(self, event):
         item =  event.GetItem()
-        _id = self.secondary_tree.GetPyData(item)
+        _id = self.base_tree.GetPyData(item)
         self.callback_user_cat_selected(_id)
 
 #----------------------------------------------------------------------------------------------
     def OnExpandingTreeNode_Secondary(self, event):
         item = event.GetItem()
-        categories = self.realm.get_category_childs(self.aspect, self.secondary_tree.GetPyData(item))
-        self.secondary_tree.append_childs(categories, item)
+        self.cases_controller.expandBaseAspectCategory(self.aspect, self.secondary_tree.GetPyData(item), item)
+        #categories = self.realm.get_category_childs(self.aspect, self.secondary_tree.GetPyData(item))
+        #self.secondary_tree.append_childs(categories, item)
 
 #----------------------------------------------------------------------------------------------
     def OnSelChangedTreeNode_Secondary(self, event):

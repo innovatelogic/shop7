@@ -18,25 +18,16 @@ class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
 class ItemsListPanel(wx.Panel):
     def __init__(self, 
                  cases_controller,
-                 callback_page_inc,
-                 callback_page_dec,
-                 callback_page_select,
                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.realm = cases_controller.realm()
         self.cases_controller = cases_controller
-        self.callback_page_inc = callback_page_inc
-        self.callback_page_dec = callback_page_dec
-        self.callback_page_select = callback_page_select
         self.doLayout()
 
 #----------------------------------------------------------------------------------------------
     def doLayout(self):
         self.toppanel = wx.Panel(self, wx.ID_ANY, size=(-1, 25))
         self.bottompanel = ItemsListBottomControlPanel(self.cases_controller,
-                                                       self.callback_page_inc,
-                                                       self.callback_page_dec,
-                                                       self.callback_page_select,
                                                        self, wx.ID_ANY, size=(-1, 30))
       
         self.list_ctrl = self.initListCtrl(self.toppanel)

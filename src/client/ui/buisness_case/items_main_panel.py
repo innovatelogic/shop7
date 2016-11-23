@@ -11,9 +11,6 @@ class ItemsMainPanel(wx.Panel):
                  callback_edit_item,
                  callback_del_item,
                  callback_column_change,
-                 callback_page_inc,
-                 callback_page_dec,
-                 callback_page_select,
                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.cases_controller = cases_controller
@@ -21,9 +18,6 @@ class ItemsMainPanel(wx.Panel):
         self.callback_edit_item = callback_edit_item
         self.callback_del_item = callback_del_item
         self.callback_column_change = callback_column_change
-        self.callback_page_inc = callback_page_inc
-        self.callback_page_dec = callback_page_dec
-        self.callback_page_select = callback_page_select
         self.realm = cases_controller.realm()
         self.doLayout()
 
@@ -33,9 +27,6 @@ class ItemsMainPanel(wx.Panel):
                                              self.callback_column_change,
                                              self, wx.ID_ANY, size = (-1, 40), pos = (0, 0))
         self.bottompanel = ItemsListPanel(self.cases_controller,
-                                          self.callback_page_inc,
-                                          self.callback_page_dec,
-                                          self.callback_page_select,
                                           self, wx.ID_ANY)
         
         vsizer = wx.BoxSizer(wx.VERTICAL)

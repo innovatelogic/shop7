@@ -97,13 +97,13 @@ class CategoriesControllerPanel(wx.Panel):
     def OnClick_BaseAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.base_aspect_button)
         self.callback_ToggleBaseAspect()
-        self.doc_controller.toggleBaseAspect()
+        self.cases_controller.toggleBaseAspect()
         
 #----------------------------------------------------------------------------------------------
     def OnClick_SecondAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.second_aspect_button)
         self.callback_ToggleSecondAspect()
-        self.doc_controller.toggleSecondAspect()
+        self.cases_controller.toggleSecondAspect()
         
 #----------------------------------------------------------------------------------------------
     def OnClick_SelectSecondAspect(self, event):
