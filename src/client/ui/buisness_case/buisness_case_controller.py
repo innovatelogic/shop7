@@ -39,9 +39,19 @@ class BuisnessCaseController():
         print('[del_item]')
         pass
     
+    #----------------------------------------------------------------------------------------------        
+    def showAllCategoryTree(self, flag):
+        user_settings = self.__realm.get_user_settings()
+        user_settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] = flag
+        self.__realm.set_user_settings(user_settings)
+        
 #----------------------------------------------------------------------------------------------    
-    def column_check(self, text, flag):
-        print('[column_check]')
+    def itemColumnChange(self, text, flag):
+        print('[item_column_change]')
+        user_settings = self.__realm.get_user_settings()
+        if text in user_settings.options['client']['ui']['cases']['item_columns']:
+            user_settings.options['client']['ui']['cases']['item_columns'][text] = flag
+            self.__realm.set_user_settings(user_settings)
         pass
 
 #----------------------------------------------------------------------------------------------    

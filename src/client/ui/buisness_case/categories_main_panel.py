@@ -8,12 +8,10 @@ class CategoriesMainPanel(wx.Panel):
     LABEL_SHOW_WHOLE_TREE = "Show all tree"
     def __init__(self,
                  cases_controller,
-                 callback_show_all_category_tree_selected,
                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.cases_controller = cases_controller
         self.realm = cases_controller.realm()
-        self.callback_show_all_category_tree_selected = callback_show_all_category_tree_selected
         self.base_aspects = self.realm.get_aspects()
         self.active_aspect_idx = -1
         
@@ -81,11 +79,6 @@ class CategoriesMainPanel(wx.Panel):
         self.OnShowPopup(pos)
         pass
     
-#----------------------------------------------------------------------------------------------    
-    def callback_OnClickShowAllCategoryTree(self, flag):
-        #self.callback_show_all_category_tree_selected(flag)
-        pass
-    
 #----------------------------------------------------------------------------------------------        
     def SwitchPanel(self, index):
         self.bottompanel.TogglePanel(index)
@@ -107,7 +100,7 @@ class CategoriesMainPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------            
     def OnShowAllCategoryTree(self, event):
         item = self.popupmenu.FindItemById(event.GetId())
-        self.callback_show_all_category_tree_selected(item.IsChecked())
+        self.cases_controller.showAllCategoryTree(item.IsChecked())
         
 #----------------------------------------------------------------------------------------------            
     def PopulateSecondaryList(self, index):

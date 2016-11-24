@@ -31,12 +31,10 @@ class ItemsControllerPanel(wx.Panel):
     COLUMN_LABEL="columns"
     def __init__(self, 
                  cases_controller, 
-                 callback_column_change,
                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.cases_controller = cases_controller
         self.realm = cases_controller.realm()
-        self.callback_column_change = callback_column_change
         self.doLayout()
         self.initPopupMenu()
         self.bind()
@@ -113,7 +111,8 @@ class ItemsControllerPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------  
     def OnPopupItemColumnSelected(self, event):
         item = self.popupmenu.FindItemById(event.GetId())
-        self.callback_column_change(item.GetText(), item.IsChecked())
+        self.cases_controller.itemColumnChange(item.GetText(), item.IsChecked())
+        #self.callback_column_change(item.GetText(), item.IsChecked())
         
 #----------------------------------------------------------------------------------------------
     def OnClick_ColumnsCheck(self, event):

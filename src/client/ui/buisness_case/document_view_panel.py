@@ -30,16 +30,8 @@ class DocumentViewPanel(wx.Panel):
     def doLayout(self):
         self.split1 = wx.SplitterWindow(self, style = wx.SP_THIN_SASH)
         
-        self.lpanel = CategoriesMainPanel(self.cases_controller,
-                                          self.callback_show_all_category_tree_selected,
-                                          self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
-        
-        self.rpanel = ItemsMainPanel(self.cases_controller,
-                                    self.callback_add_item,
-                                    self.callback_edit_item,
-                                    self.callback_del_item,
-                                    self.callback_column_check,
-                                    self.split1, wx.ID_ANY)
+        self.lpanel = CategoriesMainPanel(self.cases_controller, self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
+        self.rpanel = ItemsMainPanel(self.cases_controller, self.split1, wx.ID_ANY)
         
         self.split1.SplitVertically(self.lpanel, self.rpanel)
         self.split1.SetSashGravity(0.25)
@@ -49,31 +41,6 @@ class DocumentViewPanel(wx.Panel):
         self.SetSizer(sizer)
         
         self.split1.SetSashPosition(200, True)
-
-#----------------------------------------------------------------------------------------------        
-    def callback_show_all_category_tree_selected(self, flag):
-        user_settings = self.realm.get_user_settings()
-        user_settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] = flag
-        self.realm.set_user_settings(user_settings)
-
-#----------------------------------------------------------------------------------------------    
-    def callback_add_item(self):
-        pass
-    
-#----------------------------------------------------------------------------------------------    
-    def callback_edit_item(self):
-        pass
-    
-#----------------------------------------------------------------------------------------------
-    def callback_del_item(self):
-        pass
-    
-#----------------------------------------------------------------------------------------------    
-    def callback_column_check(self, text, flag):
-        user_settings = self.realm.get_user_settings()
-        if text in user_settings.options['client']['ui']['cases']['item_columns']:
-            user_settings.options['client']['ui']['cases']['item_columns'][text] = flag
-            self.realm.set_user_settings(user_settings)
 
 #----------------------------------------------------------------------------------------------        
     def SetColumnImage(self, col, image):
