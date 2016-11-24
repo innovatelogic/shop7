@@ -8,15 +8,11 @@ class CategoriesMainPanel(wx.Panel):
     LABEL_SHOW_WHOLE_TREE = "Show all tree"
     def __init__(self,
                  cases_controller,
-                 callback_user_cat_selected,
-                 callback_secondary_cat_selected,
                  callback_show_all_category_tree_selected,
                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.cases_controller = cases_controller
         self.realm = cases_controller.realm()
-        self.callback_user_cat_selected = callback_user_cat_selected
-        self.callback_secondary_cat_selected = callback_secondary_cat_selected
         self.callback_show_all_category_tree_selected = callback_show_all_category_tree_selected
         self.base_aspects = self.realm.get_aspects()
         self.active_aspect_idx = -1
@@ -32,10 +28,7 @@ class CategoriesMainPanel(wx.Panel):
                                                   self.callback_OnClickSelectSecondAspect,
                                                   self, wx.ID_ANY, size = (-1, 40), pos = (0, 0))
         
-        self.bottompanel = CategoryTreesPanel(self.cases_controller, 
-                                              self.callback_user_cat_selected,
-                                              self.callback_secondary_cat_selected,
-                                              self, wx.ID_ANY)
+        self.bottompanel = CategoryTreesPanel(self.cases_controller, self, wx.ID_ANY)
         
         posCenterPanelVertSzr = wx.BoxSizer(wx.VERTICAL)
         posCenterPanelVertSzr.Add(self.toppanel, 0, wx.EXPAND)

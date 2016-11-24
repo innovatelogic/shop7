@@ -8,16 +8,10 @@ class EPanelCategory:
 
 #----------------------------------------------------------------------------------------------
 class CategoryTreesPanel(wx.Panel):
-    def __init__(self, 
-                    cases_controller,
-                    callback_user_cat_selected,
-                    callback_secondary_cat_selected,
-                    parent, *args, **kwargs):
+    def __init__(self, cases_controller, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.realm = cases_controller.realm()
         self.cases_controller = cases_controller
-        self.callback_user_cat_selected = callback_user_cat_selected
-        self.callback_secondary_cat_selected = callback_secondary_cat_selected
         self.view_panels = []
         self.doLayout()
         self.aspect = ''
@@ -81,14 +75,13 @@ class CategoryTreesPanel(wx.Panel):
     def OnExpandingTreeNode_User(self, event):
         item = event.GetItem()
         self.cases_controller.expandUserAspectCategory(self.base_tree.GetPyData(item), item)
-        #categories = self.realm.get_user_category_childs(self.secondary_tree.GetPyData(item))
-        #self.base_tree.append_childs(categories, item)
 
 #----------------------------------------------------------------------------------------------
     def OnSelChangedTreeNode_User(self, event):
         item =  event.GetItem()
-        _id = self.base_tree.GetPyData(item)
-        self.callback_user_cat_selected(_id)
+        #_id = self.base_tree.GetPyData(item)
+        #self.callback_user_cat_selected(_id)
+        self.cases_controller.categoryUserAspectSelected(self.base_tree.GetPyData(item))
 
 #----------------------------------------------------------------------------------------------
     def OnExpandingTreeNode_Secondary(self, event):
@@ -100,5 +93,4 @@ class CategoryTreesPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------
     def OnSelChangedTreeNode_Secondary(self, event):
         item =  event.GetItem()
-        _id = self.secondary_tree.GetPyData(item)
-        self.callback_secondary_cat_selected(self.aspect, _id)
+        self.cases_controller.categoryBaseAspectSelected(self.aspect, self.secondary_tree.GetPyData(item))

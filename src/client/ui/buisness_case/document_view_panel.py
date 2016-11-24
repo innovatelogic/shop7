@@ -31,8 +31,6 @@ class DocumentViewPanel(wx.Panel):
         self.split1 = wx.SplitterWindow(self, style = wx.SP_THIN_SASH)
         
         self.lpanel = CategoriesMainPanel(self.cases_controller,
-                                          self.callback_user_category_selected,
-                                          self.callback_secondary_category_selected,
                                           self.callback_show_all_category_tree_selected,
                                           self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
         
@@ -51,14 +49,6 @@ class DocumentViewPanel(wx.Panel):
         self.SetSizer(sizer)
         
         self.split1.SetSashPosition(200, True)
-
-#----------------------------------------------------------------------------------------------        
-    def callback_user_category_selected(self, cat_id):
-        self.rpanel.process_user_category_selection(cat_id)
-
-#----------------------------------------------------------------------------------------------        
-    def callback_secondary_category_selected(self, aspect, cat_id):
-        self.rpanel.process_category_selection(aspect, cat_id)
 
 #----------------------------------------------------------------------------------------------        
     def callback_show_all_category_tree_selected(self, flag):
@@ -137,15 +127,19 @@ class DocumentViewPanel(wx.Panel):
             item = self.list_ctrl.GetItem(pos)
             self.list_ctrl.SetItemColumnImage(pos, 1, 2)
             
-#----------------------------------------------------------------------------------------------            
+#----------------------------------------------------------------------------------------------
     def addChildCategoriesTreeUserAspect(self, category_id, childs, item):
         #item = self.lpanel.bottompanel.base_tree.GetItemPyData(wx.TreeItemData(category_id))
         self.lpanel.bottompanel.base_tree.append_childs(childs, item)
         pass
     
- #----------------------------------------------------------------------------------------------   
+#----------------------------------------------------------------------------------------------
     def addChildCategoriesTreeBaseAspect(self, category_id, childs, item):
         #item = self.lpanel.bottompanel.secondary_tree.GetItemPyData(wx.TreeItemData(category_id))
         self.lpanel.bottompanel.secondary_tree.append_childs(childs, item)
         pass
     
+#----------------------------------------------------------------------------------------------    
+    def fillItemsList(self, items):
+        self.rpanel.bottompanel.update_list(items)
+        pass

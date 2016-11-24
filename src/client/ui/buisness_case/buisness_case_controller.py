@@ -81,4 +81,15 @@ class BuisnessCaseController():
     def expandBaseAspectCategory(self, aspect, category_id, item):
         categories = self.__realm.get_category_childs(aspect, category_id)
         self.view.addChildCategoriesTreeBaseAspect(category_id, categories, item)
-        pass        
+        pass
+ 
+ #----------------------------------------------------------------------------------------------
+    def categoryUserAspectSelected(self, category_id):
+        print("[categoryUserAspectSelected]")
+        pass
+    
+ #----------------------------------------------------------------------------------------------   
+    def categoryBaseAspectSelected(self, aspect, category_id):
+        items = self.__realm.get_items(aspect, category_id, 0, 50)
+        self.view.fillItemsList(items)
+        pass
