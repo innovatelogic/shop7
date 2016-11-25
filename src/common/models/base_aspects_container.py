@@ -12,18 +12,23 @@ class Aspect():
         self.hashmap = {}
         if self.root:
             self.hashmap[str(self.root.category._id)] = self.root
-        
+
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------        
 class BaseAspectsContainer():
-    def __init__(self, db_inst):
+    def __init__(self, db_inst, cache):
         self.db_inst = db_inst
         self.aspects = {}
+        self.cache_ref = cache
         pass
-    
+
+#----------------------------------------------------------------------------------------------
     def load(self):
         self.load_aspect("prom_ua")
         #self.load_aspect("amazon")
         self.load_aspect("ebay")
-    
+
+#----------------------------------------------------------------------------------------------
     def load_aspect(self, aspect):
         ''' create category tree'''
         print('Load aspect {}'.format(aspect))
@@ -33,6 +38,7 @@ class BaseAspectsContainer():
         
         if root_node.category:
             self.aspects[aspect] = Aspect(aspect, root_node)
+            self.cache_ref.add_base_category(aspect, root_node.category._id) #cache
             
             stack = []
             stack.append(root_node)
@@ -46,6 +52,8 @@ class BaseAspectsContainer():
                 for child in childs:
                     node = CategoryNode(child, top)
                     self.aspects[aspect].hashmap[str(node.category._id)] = node
+                    self.cache_ref.add_base_category(aspect, node.category._id) #cache
+                    
                     top.childs.append(node)
                     stack.insert(0, node) 
 
@@ -53,7 +61,8 @@ class BaseAspectsContainer():
             print('aspect {} not loaded completely'.format(aspect))
         else:
             print('Load aspect model OK: {} loaded'.format(count))
-        
+            
+#----------------------------------------------------------------------------------------------
     def get_first_level_categories(self, aspect):
         ''' return categories by id. integer means how levels will return '''
         out = []
@@ -73,7 +82,8 @@ class BaseAspectsContainer():
                             'n_childs':str(len(item.childs))})
                 
         return out
-
+    
+#----------------------------------------------------------------------------------------------
     def get_child_categories(self, aspect, str_parent_id):
         out = []
         if self.aspects.get(aspect):
@@ -86,6 +96,7 @@ class BaseAspectsContainer():
                             'n_childs':str(len(item.childs))})
         return out
     
+#----------------------------------------------------------------------------------------------
     def get_aspects(self):
         ''' returns array of loaded aspects'''
         out = []
@@ -93,12 +104,14 @@ class BaseAspectsContainer():
             out.append(key)
         return out
     
+#----------------------------------------------------------------------------------------------
     def get_aspect(self, id):
         out = None
         if id in self.aspects:
             out = self.aspects[id]
         return out
     
+#----------------------------------------------------------------------------------------------
     def get_aspect_category(self, aspect, _id):
         out = None
         if self.aspects.get(aspect):
@@ -106,12 +119,14 @@ class BaseAspectsContainer():
                 out = self.aspects[aspect].hashmap[_id]
         return out
     
+#----------------------------------------------------------------------------------------------
     def get_aspect_category_root(self, aspect):
         out = None
         if aspect in self.aspects:
             out = self.aspects[aspect].root
         return out
-    
+
+#----------------------------------------------------------------------------------------------
     def get_aspect_child_categories(self, aspect, parent_id):
         out = []
         if aspect in self.aspects:

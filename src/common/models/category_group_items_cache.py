@@ -1,5 +1,5 @@
 
-
+#----------------------------------------------------------------------------------------------
 class NodeCache():
     def __init__(self):
         self.hashmap = {}
@@ -23,7 +23,8 @@ class NodeCache():
             if str(group_id) in self.hashmap[str(category_id)]:
                 out = self.hashmap[str(category_id)][str(group_id)]
         return out
-
+    
+#----------------------------------------------------------------------------------------------
 class AspectCache():
     ''' cache contain aspect's category <-> items count for fast access'''
     def __init__(self, realm, aspect, user_groups, items):
@@ -47,29 +48,92 @@ class AspectCache():
                 else:
                     print('[build_aspect_cache] Error no mapping found {}'.format(item.mapping_id))
         pass
-    
+
+#----------------------------------------------------------------------------------------------    
     def get_count(self, category_id, group_id):
         return self.cache.get_count(category_id, group_id)
 
+#----------------------------------------------------------------------------------------------
 class CategoryGroupItemsCache():
     def __init__(self, realm):
-        self.realm = realm
+        self.__realm = realm
         self.mapping = {}
+        self._mapping = {}
+        self._user_mapping = {}
         
-    def build_cache(self):
-        user_groups = self.realm.db.user_groups.get_all_groups()
-        items = self.realm.db.items.get_all_items()
-        
-        aspects = self.realm.base_aspects_container.get_aspects()
-        
-        for name in aspects:
-            aspect = self.realm.base_aspects_container.get_aspect(name)
-            if aspect:
-                self.mapping[name] = AspectCache(self.realm, aspect, user_groups, items)
-        pass
+#----------------------------------------------------------------------------------------------    
+    def realm(self):
+        return self.__realm
     
+#----------------------------------------------------------------------------------------------        
+    def build_cache(self):
+        #aspects = self.__realm.base_aspects_container.get_aspects()
+        
+        #for name in aspects:
+        #    aspect = self.__realm.base_aspects_container.get_aspect(name)
+        #    if aspect:
+        #        self.mapping[name] = AspectCache(self.__realm, aspect, user_groups, items)
+        
+        self.build(self.__realm.db.items.get_all_items(),
+                   self.__realm.db.user_groups.get_all_groups())
+    
+
+#----------------------------------------------------------------------------------------------    
+    def build(self, items, user_groups):
+        
+        base_aspects = self.__realm.base_aspects_container.get_aspects()
+        
+        for item in items:
+            mapping = self.__realm.db.items_mapping.get_mapping(item.mapping_id)
+            if mapping:
+                for key, value in mapping.mapping:
+                    b_mapped = False
+                    if key in base_aspects:
+                        self.inc_item_count_base_aspect(key, value, item.user_group_id)
+                        b_mapped = True
+                    else:
+                        self.inc_item_count_user_aspect(key, value)
+                        b_mapped = True
+                        
+                    if not b_mapped: # default mapping
+                        map_item_default_user_aspect(item)
+
+#----------------------------------------------------------------------------------------------
+    def add_base_category(self, aspect, category_id):
+        str_category_id = str(category_id)
+        
+        if not aspect in self._mapping:
+            self._mapping[aspect] = {}
+        if not str_category_id in self._mapping[aspect]:
+            self._mapping[aspect][str_category_id] = {}
+        pass
+
+#----------------------------------------------------------------------------------------------    
+    def add_user_category(self, group_id, category_id):
+        str_group_id = str(group_id)
+        str_category_id = str(category_id)
+        
+        if not str_group_id in self._user_mapping:
+            self._mapping[str_group_id] = {}
+        if not str_category_id in self.mapping[str_group_id]:
+            self._mapping[str_group_id][str_category_id] = 0 # zero count by default
+
+#----------------------------------------------------------------------------------------------
     def get_item_count(self, aspect, category_id, group_id):
         out = 0
         if aspect in self.mapping:
             out = self.mapping[aspect].get_count(category_id, group_id)
         return out
+    
+#----------------------------------------------------------------------------------------------    
+    def inc_item_count_base_aspect(self, aspect, category_id, group_id):
+        #self._mapping[aspect][category_id]
+        pass
+    
+#----------------------------------------------------------------------------------------------    
+    def inc_item_count_user_aspect(self, group_id, category_id):
+        pass
+    
+#----------------------------------------------------------------------------------------------    
+    def map_item_default_user_aspect(self, item):
+        pass

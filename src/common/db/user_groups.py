@@ -6,15 +6,20 @@ USER_GROUPS_CATEGORY_NAME = 'user_groups'
 class UserGroups():
     def __init__(self, instance):
         self.instance = instance
-        
+
+#----------------------------------------------------------------------------------------------        
     def init(self):
         self.cat = self.instance.connection.db[USER_GROUPS_CATEGORY_NAME]
-    
+
+#----------------------------------------------------------------------------------------------    
     def add_user_group(self, group):
         self.cat.insert(group.get())
-    
+
+#----------------------------------------------------------------------------------------------    
     def get_user_group(self, id):
-        '''retrieve data from db. form spec and constructs UserGroup object'''
+        '''retrieve data from db. form spec and constructs UserGroup object
+        return UserGroup object otherwise None
+        '''
         data = self.cat.find_one({'_id':id})
         if data:
             spec = {'_id': str(data['_id']), 'aspect_id':str(data['aspect_id'])}
@@ -23,9 +28,12 @@ class UserGroups():
                 spec['records'].append(UserRecord(key, value))
             return UserGroup(spec)
         return None
-    
+
+#----------------------------------------------------------------------------------------------    
     def remove_user_from_group(self, group_id, user_id):
-        '''remove user from group and delete group if no users left'''
+        '''remove user from group and delete group if no users left
+            return flag
+        '''
         out = False
         group = self.get_user_group(group_id)
         if group:
@@ -38,10 +46,12 @@ class UserGroups():
         else:
             print("UserGroups::remove_user_from_group {} no group found".format(group_id))
         return out
-    
+
+#----------------------------------------------------------------------------------------------    
     def remove_group(self, group_id):
         self.cat.remove({"_id":group_id})
-        
+
+#----------------------------------------------------------------------------------------------        
     def update_user_group(self, group):
         self.cat.update_one({
           '_id': group._id
@@ -51,8 +61,9 @@ class UserGroups():
           }
         }, upsert=False)
         
+#----------------------------------------------------------------------------------------------        
     def get_all_groups(self):
-        ''' retreieve all user groups'''
+        ''' retreieve all user groups. return array []'''
         data = self.cat.find({})
         items = []
         for i in data:
