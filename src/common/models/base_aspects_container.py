@@ -16,20 +16,19 @@ class Aspect():
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------        
 class BaseAspectsContainer():
-    def __init__(self, db_inst, cache):
+    def __init__(self, db_inst):
         self.db_inst = db_inst
         self.aspects = {}
-        self.cache_ref = cache
         pass
 
 #----------------------------------------------------------------------------------------------
-    def load(self):
-        self.load_aspect("prom_ua")
+    def load(self, cache_ref):
+        self.load_aspect("prom_ua", cache_ref)
         #self.load_aspect("amazon")
-        self.load_aspect("ebay")
+        self.load_aspect("ebay", cache_ref)
 
 #----------------------------------------------------------------------------------------------
-    def load_aspect(self, aspect):
+    def load_aspect(self, aspect, cache_ref):
         ''' create category tree'''
         print('Load aspect {}'.format(aspect))
         count = 0
@@ -38,7 +37,7 @@ class BaseAspectsContainer():
         
         if root_node.category:
             self.aspects[aspect] = Aspect(aspect, root_node)
-            self.cache_ref.add_base_category(aspect, root_node.category._id) #cache
+            cache_ref.add_base_category(aspect, root_node.category._id) #cache
             
             stack = []
             stack.append(root_node)
@@ -52,7 +51,7 @@ class BaseAspectsContainer():
                 for child in childs:
                     node = CategoryNode(child, top)
                     self.aspects[aspect].hashmap[str(node.category._id)] = node
-                    self.cache_ref.add_base_category(aspect, node.category._id) #cache
+                    cache_ref.add_base_category(aspect, node.category._id) #cache
                     
                     top.childs.append(node)
                     stack.insert(0, node) 

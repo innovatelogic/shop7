@@ -86,10 +86,11 @@ class CategoryGroupItemsCache():
         for item in items:
             mapping = self.__realm.db.items_mapping.get_mapping(item.mapping_id)
             if mapping:
-                for key, value in mapping.mapping:
+                for key, value in mapping.mapping.iteritems():
                     b_mapped = False
                     if key in base_aspects:
                         self.inc_item_count_base_aspect(key, value, item.user_group_id)
+
                         b_mapped = True
                     else:
                         self.inc_item_count_user_aspect(key, value)
@@ -102,10 +103,10 @@ class CategoryGroupItemsCache():
     def add_base_category(self, aspect, category_id):
         str_category_id = str(category_id)
         
-        if not aspect in self._mapping:
+        if aspect not in self._mapping:
             self._mapping[aspect] = {}
-        if not str_category_id in self._mapping[aspect]:
-            self._mapping[aspect][str_category_id] = {}
+        if category_id not in self._mapping[aspect]:
+            self._mapping[aspect][category_id] = {}
         pass
 
 #----------------------------------------------------------------------------------------------    
@@ -113,10 +114,10 @@ class CategoryGroupItemsCache():
         str_group_id = str(group_id)
         str_category_id = str(category_id)
         
-        if not str_group_id in self._user_mapping:
-            self._mapping[str_group_id] = {}
-        if not str_category_id in self.mapping[str_group_id]:
-            self._mapping[str_group_id][str_category_id] = 0 # zero count by default
+        if str_group_id not in self._user_mapping:
+            self._user_mapping[str_group_id] = {}
+        if str_category_id not in self._user_mapping[str_group_id]:
+            self._user_mapping[str_group_id][str_category_id] = 0 # zero count by default
 
 #----------------------------------------------------------------------------------------------
     def get_item_count(self, aspect, category_id, group_id):
@@ -127,11 +128,24 @@ class CategoryGroupItemsCache():
     
 #----------------------------------------------------------------------------------------------    
     def inc_item_count_base_aspect(self, aspect, category_id, group_id):
-        #self._mapping[aspect][category_id]
+        if str(group_id) not in self._mapping[aspect][category_id]:
+            self._mapping[aspect][category_id][str(group_id)] = 0
+        else:
+           self._mapping[aspect][category_id][str(group_id)] += 1
+        
+        category_node = self.__realm.base_aspects_container.get_aspect_category(aspect, str(category_id))
+        if category_node:
+            parent = category_node.parent
+            while parent:
+                self.inc_item_count_base_aspect(aspect, parent.category._id, group_id)
+                parent = parent.parent
+        else:
+            print('[inc_item_count_base_aspect] failed get category node') 
         pass
     
 #----------------------------------------------------------------------------------------------    
     def inc_item_count_user_aspect(self, group_id, category_id):
+        self._user_mapping[str(group_id)][str(category_id)] += 1
         pass
     
 #----------------------------------------------------------------------------------------------    

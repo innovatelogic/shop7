@@ -3,16 +3,15 @@ from bson.objectid import ObjectId
 from common.db.types.types import Category, UserAspect, User
 
 class UserAspectsContainer():
-    def __init__(self, db_inst, cache):
+    def __init__(self, db_inst):
         self.db_inst = db_inst
-        self.cache_ref = cache
         self.aspects = {}
         pass
     
 #----------------------------------------------------------------------------------------------    
-    def load(self):
+    def load(self, cache_ref):
         print('load user aspects')
-        user_groups = self.cache_ref.realm().db.user_groups.get_all_groups()
+        user_groups = cache_ref.realm().db.user_groups.get_all_groups()
         for group in user_groups:
             aspect = self.db_inst.user_aspects.get_aspect(group.aspect_id)
             
@@ -26,9 +25,7 @@ class UserAspectsContainer():
                 while len(stack):      
                     new_stack = []
                     for item in stack:
-                        pass
-                        #record['categories'].append(item.category.get())
-                        self.cache_ref.add_user_category(group._id, item.category._id)
+                        cache_ref.add_user_category(group._id, str(item.category._id))
             
                         for child in item.childs:
                             new_stack.append(child)
