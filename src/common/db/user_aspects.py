@@ -4,22 +4,27 @@ from bson.objectid import ObjectId
 USER_ASPECTS = 'user_aspects'
 CATEGORIES_NAME = "categories"
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class UserAspects():
     def __init__(self, instance):
         self.instance = instance
         pass
     
+#----------------------------------------------------------------------------------------------
     def init(self):
         self.cat = self.instance.connection.db[USER_ASPECTS]
         
+#----------------------------------------------------------------------------------------------
     def clear(self, group_id):
         self.cat.update_one({'group_id':group_id}, {'$set': {CATEGORIES_NAME : []}})
         
+#----------------------------------------------------------------------------------------------
     def get_aspect(self, _id):
         data = self.cat.find_one({'_id':ObjectId(_id)})
         if data:
             category_root = self.get_root_category(ObjectId(_id))
-            node_root = UserAspect.Node(category_root)
+            node_root = UserAspect.Node(category_root, None)
             
             hashmap = {}
             hashmap[str(category_root._id)] = node_root
@@ -33,20 +38,23 @@ class UserAspects():
                 childs = self.get_childs(ObjectId(_id), top.category)
 
                 for child in childs:
-                    node = UserAspect.Node(child)
+                    node = UserAspect.Node(child, top)
                     hashmap[str(child._id)] = node
                     top.childs.append(node)
                     stack.insert(0, node) 
             
             return UserAspect({'_id':data['_id'], 'group_id':data['group_id'], 'node_root':node_root, 'hashmap':hashmap})
         return None
-        
+    
+#----------------------------------------------------------------------------------------------        
     def add_aspect(self, aspect):
         self.cat.insert(aspect.get())
-           
+
+#----------------------------------------------------------------------------------------------
     def add_category(self, _id, category):
         self.cat.update_one({'_id':aspect}, {'$push': {CATEGORIES_NAME : category.get()}})
-        
+
+#----------------------------------------------------------------------------------------------
     def get_root_category(self, _id):
         data = self.cat.find_one({'_id':_id}, { CATEGORIES_NAME: { '$elemMatch' :  {'name':'root'} } })
         
@@ -54,6 +62,7 @@ class UserAspects():
             return Category(data['categories'][0])
         return None
     
+#----------------------------------------------------------------------------------------------
     def get_childs(self, _id, parent):
         out = []
         
@@ -78,6 +87,7 @@ class UserAspects():
                 
         return out
     
+#----------------------------------------------------------------------------------------------
     def drop(self):
         '''drop collection. rem in production'''
         self.cat.drop()

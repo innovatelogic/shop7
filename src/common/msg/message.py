@@ -98,8 +98,6 @@ class Message_server_get_category_childs(Message):
                             'parent_id': str(child.category.parent_id),
                             'name':child.category.name, 
                             'n_childs':str(len(child.childs))})
-            
-            #res = self.master.realm().base_aspects_container.get_child_categories(dict['aspect'], dict['id'])
         return res
     
 #----------------------------------------------------------------------------------------------       

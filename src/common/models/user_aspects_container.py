@@ -34,14 +34,24 @@ class UserAspectsContainer():
                 print('ERROR: user aspect already exist. try to reload')
         pass
     
-#----------------------------------------------------------------------------------------------    
-    def loadUserAspect(self, group_id):
-        pass
+#----------------------------------------------------------------------------------------------
+    def get_aspect_category(self, group_id, category_id):
+        out = None
+        if self.aspects.get(str(group_id)):
+            if str(category_id) in self.aspects[str(group_id)].hashmap:
+                out = self.aspects[str(group_id)].hashmap[str(category_id)]
+        return out
     
 #----------------------------------------------------------------------------------------------    
-    def unloadUserAspect(self):
-        pass
-    
+    def get_aspect_default_category(self, group_id):
+        out = None
+        if self.aspects.get(str(group_id)):
+            for child in self.aspects[str(group_id)].node_root.childs:
+                if child.category.name == 'All':
+                    out = child.category
+                    break
+        return out
+        
 #----------------------------------------------------------------------------------------------    
     def createUserAspect(self, group_id):
         '''creates default user aspect'''
@@ -54,5 +64,4 @@ class UserAspectsContainer():
         root_node.childs.append(all_node)
         
         user_aspect = UserAspect({'_id':ObjectId(), 'group_id':group_id, 'node_root':root_node})
-        
         self.db_inst.user_aspects.add_aspect(user_aspect)

@@ -137,10 +137,11 @@ class ItemMapping:
 #----------------------------------------------------------------------------------------------
 class UserAspect():
 	class Node():
-		def __init__(self, category):
+		def __init__(self, category, parent):
 			self.category = category
-			self.childs = []
-        
+			self.parent = parent
+			self.childs = [] # array of Nodes
+
 	def __init__(self, spec):
 		self._id = spec['_id']
 		self.group_id = spec['group_id']
