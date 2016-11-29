@@ -39,8 +39,10 @@ class CategoryTreesPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------
     def bind(self):
         self.base_tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.OnExpandingTreeNode_User)
+        self.base_tree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.OnCollapseTreeNode_User)
         self.base_tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChangedTreeNode_User)
         self.secondary_tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.OnExpandingTreeNode_Secondary)
+        self.secondary_tree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.OnCollapseTreeNode_Secondary)
         self.secondary_tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChangedTreeNode_Secondary)
         
 #----------------------------------------------------------------------------------------------
@@ -73,23 +75,32 @@ class CategoryTreesPanel(wx.Panel):
     
 #----------------------------------------------------------------------------------------------
     def OnExpandingTreeNode_User(self, event):
+        ''' binds to on node expand event'''
         item = event.GetItem()
         self.cases_controller.expandUserAspectCategory(self.base_tree.GetPyData(item), item)
 
+#----------------------------------------------------------------------------------------------        
+    def OnCollapseTreeNode_User(self, event):
+        ''' binds to on node collapse event'''
+        #item = event.GetItem()
+        #self.cases_controller.expandUserAspectCategory(self.base_tree.GetPyData(item), item)
+        pass
+        
 #----------------------------------------------------------------------------------------------
     def OnSelChangedTreeNode_User(self, event):
         item =  event.GetItem()
-        #_id = self.base_tree.GetPyData(item)
-        #self.callback_user_cat_selected(_id)
         self.cases_controller.categoryUserAspectSelected(self.base_tree.GetPyData(item))
 
 #----------------------------------------------------------------------------------------------
     def OnExpandingTreeNode_Secondary(self, event):
         item = event.GetItem()
         self.cases_controller.expandBaseAspectCategory(self.aspect, self.secondary_tree.GetPyData(item), item)
-        #categories = self.realm.get_category_childs(self.aspect, self.secondary_tree.GetPyData(item))
-        #self.secondary_tree.append_childs(categories, item)
 
+#----------------------------------------------------------------------------------------------        
+    def OnCollapseTreeNode_Secondary(self, event):
+        ''' binds to on node collapse event'''
+        self.secondary_tree.delete_childs(event.GetItem())
+        pass
 #----------------------------------------------------------------------------------------------
     def OnSelChangedTreeNode_Secondary(self, event):
         item =  event.GetItem()

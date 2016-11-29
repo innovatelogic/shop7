@@ -3,6 +3,8 @@ class BuisnessCaseController():
     def __init__(self, realm):
         self.__realm = realm
         self.view = None
+        self.items_offset = 0
+        self.items_per_page = 0
         
 #----------------------------------------------------------------------------------------------        
     def setView(self, view):
@@ -39,7 +41,7 @@ class BuisnessCaseController():
         print('[del_item]')
         pass
     
-    #----------------------------------------------------------------------------------------------        
+#----------------------------------------------------------------------------------------------        
     def showAllCategoryTree(self, flag):
         user_settings = self.__realm.get_user_settings()
         user_settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] = flag
@@ -93,7 +95,7 @@ class BuisnessCaseController():
         self.view.addChildCategoriesTreeBaseAspect(category_id, categories, item)
         pass
  
- #----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
     def categoryUserAspectSelected(self, category_id):
         print("[categoryUserAspectSelected]")
         pass
