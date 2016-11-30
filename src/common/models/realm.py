@@ -1,3 +1,4 @@
+from bson.objectid import ObjectId
 import common.db.instance
 from category_model import CategoryModel
 from users_model import UsersModel
@@ -36,6 +37,8 @@ class Realm():
     def get_categories_1st_lvl(self, token, aspect):
         ''' empty aspect means user aspect'''
         res = []
+        settings = self.users_model.get_user_settings(token)
+        
         if aspect == '':
             res = self.users_model.get_first_level_categories(token)
         else:
@@ -50,7 +53,7 @@ class Realm():
             childs = self.base_aspects_container.get_aspect_child_categories(aspect, category_root.category._id)
             
             for child in childs:
-                if self.category_group_items_cache.get_item_count(aspect, child.category._id, user_group_id) > 0:
+                if settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] or self.category_group_items_cache.get_item_count(aspect, child.category._id, user_group_id) > 0:
                     res.append({'_id':str(child.category._id), 
                             'parent_id': str(child.category.parent_id),
                             'name':child.category.name, 
@@ -61,19 +64,22 @@ class Realm():
     def get_category_childs(self, token, aspect, category_id):
         ''' empty aspect means user aspect'''
         res = []
+        
+        settings = self.users_model.get_user_settings(token)
+        
         if aspect == '':
             res = self.users_model.get_child_categories(token, category_id)
         else:
             user_group_id = self.users_model.get_group_id_by_token(token)
-            category_root = self.base_aspects_container.get_aspect_category_root(aspect)
             
             childs = self.base_aspects_container.get_aspect_child_categories(aspect, category_id)
             for child in childs:
-                if self.category_group_items_cache.get_item_count(aspect, child.category._id, user_group_id) > 0:
+                if settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] or self.category_group_items_cache.get_item_count(aspect, child.category._id, user_group_id) > 0:
                     res.append({'_id':str(child.category._id), 
                             'parent_id': str(child.category.parent_id),
                             'name':child.category.name, 
                             'n_childs':str(len(child.childs))})
+
         return res
     
 #----------------------------------------------------------------------------------------------    
@@ -87,4 +93,14 @@ class Realm():
                 items.append(item.get())
             else:
                 print('[Message_server_get_items] failed get item {}'.format(mapping['item_id']))
+                
+        out = []
+        self.category_group_items_cache.get_base_categories_list_items(aspect, ObjectId(category_id), self.users_model.get_group_id_by_token(token), 0, 10, out)
+        print out
         return items
+
+#----------------------------------------------------------------------------------------------    
+    def get_items_ex(self, token, aspect, category_id, offset, max_count):
+        ''' retrieve items using cache '''
+        
+        pass

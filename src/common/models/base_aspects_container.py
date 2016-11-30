@@ -49,12 +49,12 @@ class BaseAspectsContainer():
                 count += 1
 
                 for child in childs:
-                    node = CategoryNode(child, top)
-                    self.aspects[aspect].hashmap[str(node.category._id)] = node
-                    cache_ref.add_base_category(aspect, node.category._id) #cache
+                    child_node = CategoryNode(child, top)
+                    self.aspects[aspect].hashmap[str(child_node.category._id)] = child_node
+                    cache_ref.add_base_category(aspect, child_node.category._id) #cache
                     
-                    top.childs.append(node)
-                    stack.insert(0, node) 
+                    top.childs.append(child_node)
+                    stack.insert(0, child_node) 
 
         if count == 0:
             print('aspect {} not loaded completely'.format(aspect))
@@ -83,11 +83,11 @@ class BaseAspectsContainer():
         return out
     
 #----------------------------------------------------------------------------------------------
-    def get_child_categories(self, aspect, str_parent_id):
+    def get_child_categories(self, aspect, category_id):
         out = []
         if self.aspects.get(aspect):
             aspect = self.aspects[aspect]
-            node = aspect.hashmap[str_parent_id]
+            node = aspect.hashmap[category_id]
             for item in node.childs:
                 out.append({'_id':str(item.category._id), 
                             'parent_id': str(item.category.parent_id),
@@ -111,11 +111,11 @@ class BaseAspectsContainer():
         return out
     
 #----------------------------------------------------------------------------------------------
-    def get_aspect_category(self, aspect, _id):
+    def get_aspect_category(self, aspect, category_id):
         out = None
         if self.aspects.get(aspect):
-            if _id in self.aspects[aspect].hashmap:
-                out = self.aspects[aspect].hashmap[_id]
+            if category_id in self.aspects[aspect].hashmap:
+                out = self.aspects[aspect].hashmap[category_id]
         return out
     
 #----------------------------------------------------------------------------------------------
