@@ -25,7 +25,7 @@ class GroupsTreeView(wx.TreeCtrl):
             items_data.append(self.GetPyData(item))
             item, cookie = self.GetNextChild(parent_item, cookie)
             
-        for item in items[1:]:
+        for item in items:
             if item['_id'] not in items_data:
                 ch = self.AppendItem(parent_item, item['name'], -1, -1, wx.TreeItemData(item['_id']))
             
@@ -36,5 +36,6 @@ class GroupsTreeView(wx.TreeCtrl):
     def delete_childs(self, parent_item):
         item, cookie = self.GetFirstChild(parent_item)
         while item.IsOk():
-            self.DeleteChildren(item)
+            tmp = item
             item, cookie = self.GetNextChild(parent_item, cookie)
+            self.DeleteChildren(tmp)

@@ -79,7 +79,6 @@ class Realm():
                             'parent_id': str(child.category.parent_id),
                             'name':child.category.name, 
                             'n_childs':str(len(child.childs))})
-
         return res
     
 #----------------------------------------------------------------------------------------------    
