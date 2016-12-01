@@ -42,7 +42,7 @@ class BaseAspectsContainer():
             stack = []
             stack.append(root_node)
             
-            while (len(stack) > 0):
+            while len(stack):
                 top = stack.pop(0)
                 
                 childs = self.db_inst.base_aspects.get_childs(aspect, top.category)

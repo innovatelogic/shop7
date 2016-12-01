@@ -94,7 +94,7 @@ class Realm():
                 print('[Message_server_get_items] failed get item {}'.format(mapping['item_id']))
                 
         out = []
-        self.category_group_items_cache.get_base_categories_list_items(aspect, ObjectId(category_id), self.users_model.get_group_id_by_token(token), 0, 10, out)
+        self.category_group_items_cache._get_base_categories_list_items(aspect, ObjectId(category_id), self.users_model.get_group_id_by_token(token), 0, 10, out)
         print out
         return items
 

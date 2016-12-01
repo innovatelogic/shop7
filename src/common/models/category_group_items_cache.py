@@ -60,19 +60,35 @@ class CategoryGroupItemsCache():
         out = 0
         if aspect in self._mapping:
             if str(group_id) in self._mapping[aspect][category_id]:
-                out = self._mapping[aspect][category_id][group_id]
+                arr = self._mapping[aspect][category_id][group_id]
+                out = arr[0] + arr[1]
+        return out
+    
+    #----------------------------------------------------------------------------------------------
+    def get_category_items_count_self(self, aspect, category_id, group_id):
+        out = 0
+        if aspect in self._mapping:
+            if str(group_id) in self._mapping[aspect][category_id]:
+                arr = self._mapping[aspect][category_id][group_id]
+                out = arr[0]
         return out
     
 #----------------------------------------------------------------------------------------------    
     def inc_item_count_base_aspect(self, aspect, category_id, group_id):
+        base_node = True
         category_node = self.__realm.base_aspects_container.get_aspect_category(aspect, str(category_id))
         if category_node:
             while category_node:
                 if str(group_id) not in self._mapping[aspect][category_node.category._id]: # add group if not exist
-                    self._mapping[aspect][category_node.category._id][str(group_id)] = 0
-                
-                self._mapping[aspect][category_node.category._id][str(group_id)] += 1
+                    self._mapping[aspect][category_node.category._id][str(group_id)] = [0, 0] # first element : self items counter, 
+                                                                                              # second : self + descendants
+                if base_node:
+                    self._mapping[aspect][category_node.category._id][str(group_id)][0] += 1
+                    base_node = False
+                    
+                self._mapping[aspect][category_node.category._id][str(group_id)][1] += 1
                 category_node = category_node.parent
+                
         else:
             print('[inc_item_count_base_aspect] failed get category node') 
         pass
@@ -98,58 +114,49 @@ class CategoryGroupItemsCache():
         pass
     
 #----------------------------------------------------------------------------------------------    
-    def get_base_categories_leaves_items_range(self, aspect, category_id, group_id, offset, max_count):
+    def get_base_categories_leaves_items_range(self, aspect, category_id, group_id, _min, _max):
         ''' retrieve list of {leaf_category_id: {offset: count_items_get}} corresponds to request '''
-        
-        if max_count > 50:
-            max_count = 50
-        
         out_list = []
         
-        self.get_base_categories_list_items(self, aspect, category_id, group_id, offset, max_count, out_list)
+        if _max > _min:
+            if _max - _min > 50: # max 50 items
+                _max = _min + 50
+        
+            self._get_base_categories_list_items(self, aspect, category_id, group_id, offset, max_count, out_list)
         
         return out_list
     
-#----------------------------------------------------------------------------------------------
-    def get_base_categories_list_items(self, aspect, category_id, group_id, _min, _max, out_list):
-        
-        count = self.get_item_count(aspect, category_id, group_id)
-        if not self.is_overlap(0, count, _min, _max):
-             return # ranges do not overlap
-        
-        count_childs_n = 0
+#----------------------------------------------------------------------------------------------    
+    def _get_base_categories_list_items(self, aspect, category_id, group_id, _min, _max, out_list):
+        ''' traverse tree in straight order to retrieve list of categories contains range of items'''
         category_node = self.__realm.base_aspects_container.get_aspect_category(aspect, str(category_id))
         if category_node:
-            if len(category_node.childs):
-                for item_node in category_node.childs:
-                    
-                    count_node = self.get_item_count(aspect, item_node.category._id, group_id)
-                    
-                    if count_node > 0:
-                        loc_min = max(_min, count_childs_n) - count_childs_n
-                        loc_max = min(_max, count_node) - count_childs_n
-
-                        self.get_base_categories_list_items(aspect, item_node.category._id, group_id, loc_min, loc_max, out_list)
-                    
-                        count_childs_n += count_node
-                    
-                    if count_childs_n > _max:
-                        break
-            else:
-                # add leaf
-                new_min = max(0, _min)
-                new_max = min(count, _max)
+            stack = []
+            stack.append(category_node)
+            
+            count_n = 0
+            
+            while len(stack):
+                top = stack.pop(0)
                 
-                out_list.append({category_node.category._id : [new_min, new_max]})
-                pass
-    
-#----------------------------------------------------------------------------------------------    
-    def is_overlap(self, min1, max1, min2, max2):
-        if min1 > max1 or min2 > max2:
-            return False
-        
-        d1 = max1 - min1
-        d2 = max2 - min1
-        c = max(max1, max2) - min(min1, min2)
-        
-        return c < d1 + d2
+                count_self = self.get_category_items_count_self(aspect, top.category._id, group_id)
+                
+                if count_n + count_self > _min:
+                    
+                    count_get = min((count_n + count_self) - _min, _max - _min) #check _max cap
+                    
+                    offset = 0
+                    if _min < count_n:
+                        offset = count_self - count_get # offset from begin
+                    
+                    out_list.append({top.category._id : [count_get, offset]})
+                    
+                    _min = count_n + count_self
+                    
+                    if _min >= _max:
+                        break
+                    
+                count_n += count_self
+                
+                for child in reversed(top.childs):
+                    stack.insert(0, child)
