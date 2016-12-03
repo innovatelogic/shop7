@@ -27,6 +27,11 @@
 		<client send="token;category_id;offset" get="res"/>
 		<server get="token;category_id;offset" send="res"/>
 	</msg>
+	<msg name="get_category_info">
+		<client send="token;id;aspect" get="res"/>
+		<server get="token;id;aspect" send="res"/>
+	</msg>
+	
 	<msg name="get_aspects">
 		<client send="token" get="res"/>
 		<server get="token" send="res"/>

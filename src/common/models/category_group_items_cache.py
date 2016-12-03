@@ -50,25 +50,24 @@ class CategoryGroupItemsCache():
         str_group_id = str(group_id)
         str_category_id = str(category_id)
         
-        if str_group_id not in self._user_mapping:
-            self._user_mapping[str_group_id] = {}
-        if str_category_id not in self._user_mapping[str_group_id]:
-            self._user_mapping[str_group_id][str_category_id] = 0 # zero count by default
+        if group_id not in self._user_mapping:
+            self._user_mapping[group_id] = {}
+        if str_category_id not in self._user_mapping[group_id]:
+            self._user_mapping[group_id][category_id] = 0 # zero count by default
 
 #----------------------------------------------------------------------------------------------
     def get_item_count(self, aspect, category_id, group_id):
         out = 0
         if aspect in self._mapping:
-            if str(group_id) in self._mapping[aspect][category_id]:
-                arr = self._mapping[aspect][category_id][group_id]
-                out = arr[0] + arr[1]
+            if group_id in self._mapping[aspect][category_id]:
+                out = self._mapping[aspect][category_id][group_id][1]
         return out
     
     #----------------------------------------------------------------------------------------------
     def get_category_items_count_self(self, aspect, category_id, group_id):
         out = 0
         if aspect in self._mapping:
-            if str(group_id) in self._mapping[aspect][category_id]:
+            if group_id in self._mapping[aspect][category_id]:
                 arr = self._mapping[aspect][category_id][group_id]
                 out = arr[0]
         return out
@@ -79,14 +78,14 @@ class CategoryGroupItemsCache():
         category_node = self.__realm.base_aspects_container.get_aspect_category(aspect, str(category_id))
         if category_node:
             while category_node:
-                if str(group_id) not in self._mapping[aspect][category_node.category._id]: # add group if not exist
-                    self._mapping[aspect][category_node.category._id][str(group_id)] = [0, 0] # first element : self items counter, 
+                if group_id not in self._mapping[aspect][str(category_node.category._id)]: # add group if not exist
+                    self._mapping[aspect][str(category_node.category._id)][group_id] = [0, 0] # first element : self items counter, 
                                                                                               # second : self + descendants
                 if base_node:
-                    self._mapping[aspect][category_node.category._id][str(group_id)][0] += 1
+                    self._mapping[aspect][str(category_node.category._id)][group_id][0] += 1
                     base_node = False
                     
-                self._mapping[aspect][category_node.category._id][str(group_id)][1] += 1
+                self._mapping[aspect][str(category_node.category._id)][group_id][1] += 1
                 category_node = category_node.parent
                 
         else:
@@ -98,7 +97,7 @@ class CategoryGroupItemsCache():
         category_node = self.__realm.user_aspects_container.get_aspect_category(group_id, category_id)
         if category_node:
             while category_node:
-                self._user_mapping[str(group_id)][str(category_node.category._id)] += 1
+                self._user_mapping[group_id][str(category_node.category._id)] += 1
                 category_node = category_node.parent
         else:
             print('[inc_item_count_base_aspect] failed get category node') 
@@ -108,7 +107,7 @@ class CategoryGroupItemsCache():
     def map_item_default_user_aspect(self, group_id):
         default_category = self.__realm.user_aspects_container.get_aspect_default_category(group_id)
         if default_category:
-            self.inc_item_count_user_aspect(group_id, default_category._id)
+            self.inc_item_count_user_aspect(group_id, str(default_category._id))
         else:
             print('[map_item_default_user_aspect] failed get category node') 
         pass
@@ -139,7 +138,7 @@ class CategoryGroupItemsCache():
             while len(stack):
                 top = stack.pop(0)
                 
-                count_self = self.get_category_items_count_self(aspect, top.category._id, group_id)
+                count_self = self.get_category_items_count_self(aspect, str(top.category._id), group_id)
                 
                 if count_n + count_self > _min:
                     

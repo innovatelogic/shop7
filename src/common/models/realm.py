@@ -53,7 +53,7 @@ class Realm():
             childs = self.base_aspects_container.get_aspect_child_categories(aspect, category_root.category._id)
             
             for child in childs:
-                if settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] or self.category_group_items_cache.get_item_count(aspect, child.category._id, user_group_id) > 0:
+                if settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] or self.category_group_items_cache.get_item_count(aspect, str(child.category._id), user_group_id) > 0:
                     res.append({'_id':str(child.category._id), 
                             'parent_id': str(child.category.parent_id),
                             'name':child.category.name, 
@@ -74,7 +74,7 @@ class Realm():
             
             childs = self.base_aspects_container.get_aspect_child_categories(aspect, category_id)
             for child in childs:
-                if settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] or self.category_group_items_cache.get_item_count(aspect, child.category._id, user_group_id) > 0:
+                if settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] or self.category_group_items_cache.get_item_count(aspect, str(child.category._id), user_group_id) > 0:
                     res.append({'_id':str(child.category._id), 
                             'parent_id': str(child.category.parent_id),
                             'name':child.category.name, 
@@ -99,7 +99,8 @@ class Realm():
         return items
 
 #----------------------------------------------------------------------------------------------    
-    def get_items_ex(self, token, aspect, category_id, offset, max_count):
+    def get_category_info(self, token, aspect, category_id):
         ''' retrieve items using cache '''
-        
+        print('get_category_info')
+        return {'items_num':self.category_group_items_cache.get_item_count(aspect, category_id, self.users_model.get_group_id_by_token(token))}
         pass

@@ -101,3 +101,12 @@ class Message_server_set_user_settings(Message):
     def do_process(self, ch, method, props, body):
         dict = eval(body)
         return self.master.realm().users_model.set_user_settings(dict['token'], dict['settings'])
+    
+#----------------------------------------------------------------------------------------------
+class Message_server_get_category_info(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+        
+    def do_process(self, ch, method, props, body):
+        dict = eval(body)
+        return self.master.realm().get_category_info(dict['token'], dict['aspect'], dict['category_id'])

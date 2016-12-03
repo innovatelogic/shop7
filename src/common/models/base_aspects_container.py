@@ -37,7 +37,7 @@ class BaseAspectsContainer():
         
         if root_node.category:
             self.aspects[aspect] = Aspect(aspect, root_node)
-            cache_ref.add_base_category(aspect, root_node.category._id) #cache
+            cache_ref.add_base_category(aspect, str(root_node.category._id)) #cache
             
             stack = []
             stack.append(root_node)
@@ -51,7 +51,7 @@ class BaseAspectsContainer():
                 for child in childs:
                     child_node = CategoryNode(child, top)
                     self.aspects[aspect].hashmap[str(child_node.category._id)] = child_node
-                    cache_ref.add_base_category(aspect, child_node.category._id) #cache
+                    cache_ref.add_base_category(aspect, str(child_node.category._id)) #cache
                     
                     top.childs.append(child_node)
                     stack.insert(0, child_node) 

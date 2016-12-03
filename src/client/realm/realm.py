@@ -51,4 +51,6 @@ class Realm():
         self.user_settings_changed = True
         res = self.ms_connection().send_msg('set_user_settings', {'settings':settings.get()})['res']
         self.get_user_settings()
-    
+        
+    def get_category_info(self, aspect, category_id):
+        return self.ms_connection().send_msg('get_category_info', {'category_id':str(category_id), 'aspect':aspect})['res']

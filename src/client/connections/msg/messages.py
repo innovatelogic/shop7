@@ -11,6 +11,9 @@ class Message():
         self.__parse(get, send)
         pass
     
+    def opcode(self):
+        return type(self).__name__.replace("Message_", "")
+
     def __parse(self, get, send):
         arr = get.split(";")
         for s in arr:
@@ -32,43 +35,48 @@ class Message():
                                          ),
                       body=str(params))
 
-#----------------------------------------------------------------------------------------------  
+#----------------------------------------------------------------------------------------------
 class Message_client_auth_activate(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
 
-#----------------------------------------------------------------------------------------------  
+#----------------------------------------------------------------------------------------------
 class Message_client_logout(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
 
-#----------------------------------------------------------------------------------------------       
+#----------------------------------------------------------------------------------------------
 class Message_client_get_categiries_1st_lvl(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
 
-#----------------------------------------------------------------------------------------------       
+#----------------------------------------------------------------------------------------------
 class Message_client_get_category_childs(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
 
-#----------------------------------------------------------------------------------------------       
+#----------------------------------------------------------------------------------------------
 class Message_client_get_items(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
 
-#----------------------------------------------------------------------------------------------       
+#----------------------------------------------------------------------------------------------
 class Message_client_get_aspects(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
 
-#----------------------------------------------------------------------------------------------    
+#----------------------------------------------------------------------------------------------
 class Message_client_get_user_settings(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
     
-#----------------------------------------------------------------------------------------------    
+#----------------------------------------------------------------------------------------------
 class Message_client_set_user_settings(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+        
+#----------------------------------------------------------------------------------------------
+class Message_client_get_category_info(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
     

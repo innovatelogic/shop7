@@ -102,6 +102,9 @@ class BuisnessCaseController():
     
  #----------------------------------------------------------------------------------------------   
     def categoryBaseAspectSelected(self, aspect, category_id):
+        
+        print self.__realm.get_category_info(aspect, category_id)
+        
         items = self.__realm.get_items(aspect, category_id, 0, 50)
         self.view.fillItemsList(items)
         pass
