@@ -1,5 +1,7 @@
 import pika
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class Message():
     def __init__(self, name, connection_info, channel, callback_queue, get, send):
         self.opcode = name
@@ -11,8 +13,9 @@ class Message():
         self.__parse(get, send)
         pass
     
-    def opcode(self):
-        return type(self).__name__.replace("Message_", "")
+    @classmethod
+    def opcode(cls):
+        return cls.__name__.replace("Message_client_", "")
 
     def __parse(self, get, send):
         arr = get.split(";")

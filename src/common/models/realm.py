@@ -39,6 +39,8 @@ class Realm():
         res = []
         settings = self.users_model.get_user_settings(token)
         
+        b_show_base_aspect_whole_tree = settings.options['client']['ui']['cases']['show_base_aspect_whole_tree']
+        
         if aspect == '':
             res = self.users_model.get_first_level_categories(token)
         else:
@@ -53,11 +55,23 @@ class Realm():
             childs = self.base_aspects_container.get_aspect_child_categories(aspect, category_root.category._id)
             
             for child in childs:
-                if settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] or self.category_group_items_cache.get_item_count(aspect, str(child.category._id), user_group_id) > 0:
+                n_childs = self.category_group_items_cache.get_item_count(aspect, str(child.category._id), user_group_id)
+                n_self_childs = self.category_group_items_cache.get_category_items_count_self(aspect, str(child.category._id), user_group_id)
+                if b_show_base_aspect_whole_tree or n_childs > 0:
+                    
+                    n_show_childs = 0
+                    if b_show_base_aspect_whole_tree:
+                        n_show_childs = len(child.childs)
+                    else:   
+                        if n_self_childs == n_childs:
+                            n_show_childs = 0
+                        else:
+                            n_show_childs = 1
+                            
                     res.append({'_id':str(child.category._id), 
                             'parent_id': str(child.category.parent_id),
                             'name':child.category.name, 
-                            'n_childs':str(len(child.childs))})
+                            'n_childs':str(n_show_childs)})
         return res
 
 #----------------------------------------------------------------------------------------------    
@@ -66,6 +80,7 @@ class Realm():
         res = []
         
         settings = self.users_model.get_user_settings(token)
+        b_show_base_aspect_whole_tree = settings.options['client']['ui']['cases']['show_base_aspect_whole_tree']
         
         if aspect == '':
             res = self.users_model.get_child_categories(token, category_id)
@@ -74,11 +89,23 @@ class Realm():
             
             childs = self.base_aspects_container.get_aspect_child_categories(aspect, category_id)
             for child in childs:
-                if settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] or self.category_group_items_cache.get_item_count(aspect, str(child.category._id), user_group_id) > 0:
+                n_childs = self.category_group_items_cache.get_item_count(aspect, str(child.category._id), user_group_id)
+                n_self_childs = self.category_group_items_cache.get_category_items_count_self(aspect, str(child.category._id), user_group_id)
+                
+                if b_show_base_aspect_whole_tree or n_childs > 0:
+                    n_show_childs = 0
+                    if b_show_base_aspect_whole_tree:
+                        n_show_childs = len(child.childs)
+                    else:   
+                        if n_self_childs == n_childs:
+                            n_show_childs = 0
+                        else:
+                            n_show_childs = 1
+                
                     res.append({'_id':str(child.category._id), 
                             'parent_id': str(child.category.parent_id),
                             'name':child.category.name, 
-                            'n_childs':str(len(child.childs))})
+                            'n_childs':str(n_show_childs)})
         return res
     
 #----------------------------------------------------------------------------------------------    
@@ -101,6 +128,4 @@ class Realm():
 #----------------------------------------------------------------------------------------------    
     def get_category_info(self, token, aspect, category_id):
         ''' retrieve items using cache '''
-        print('get_category_info')
         return {'items_num':self.category_group_items_cache.get_item_count(aspect, category_id, self.users_model.get_group_id_by_token(token))}
-        pass

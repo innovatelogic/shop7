@@ -2,6 +2,9 @@
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class CategoryGroupItemsCache():
+    IDX_SELF_COUNTER = 0
+    IDX_COMMON_COUNTER = 1
+    
     def __init__(self, realm):
         self.__realm = realm
         self._mapping = {}
@@ -60,7 +63,7 @@ class CategoryGroupItemsCache():
         out = 0
         if aspect in self._mapping:
             if group_id in self._mapping[aspect][category_id]:
-                out = self._mapping[aspect][category_id][group_id][1]
+                out = self._mapping[aspect][category_id][group_id][self.IDX_COMMON_COUNTER]
         return out
     
     #----------------------------------------------------------------------------------------------
@@ -68,8 +71,7 @@ class CategoryGroupItemsCache():
         out = 0
         if aspect in self._mapping:
             if group_id in self._mapping[aspect][category_id]:
-                arr = self._mapping[aspect][category_id][group_id]
-                out = arr[0]
+                out = self._mapping[aspect][category_id][group_id][self.IDX_SELF_COUNTER]
         return out
     
 #----------------------------------------------------------------------------------------------    
@@ -82,10 +84,10 @@ class CategoryGroupItemsCache():
                     self._mapping[aspect][str(category_node.category._id)][group_id] = [0, 0] # first element : self items counter, 
                                                                                               # second : self + descendants
                 if base_node:
-                    self._mapping[aspect][str(category_node.category._id)][group_id][0] += 1
+                    self._mapping[aspect][str(category_node.category._id)][group_id][self.IDX_SELF_COUNTER] += 1
                     base_node = False
                     
-                self._mapping[aspect][str(category_node.category._id)][group_id][1] += 1
+                self._mapping[aspect][str(category_node.category._id)][group_id][self.IDX_COMMON_COUNTER] += 1
                 category_node = category_node.parent
                 
         else:
