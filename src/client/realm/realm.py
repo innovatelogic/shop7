@@ -2,7 +2,7 @@
 from connections.ms_connection import MSConnection
 from common.db.types.types import UserSettings
 from router import Router
-from items_controller import ItemsController
+from items_category_state import ItemsCategoryState
 from connections.msg.messages import Message_client_get_category_info
 from connections.msg.messages import Message_client_logout
 from connections.msg.messages import Message_client_get_categiries_1st_lvl
@@ -19,7 +19,7 @@ class Realm():
         self.connection_info = connection_info
         self.user_settings = None
         self.user_settings_changed = True
-        self.items_controller = ItemsController()
+        self.items_category_state = ItemsCategoryState()
 
 #----------------------------------------------------------------------------------------------        
     def ms_connection(self):
@@ -84,9 +84,9 @@ class Realm():
                                              {'category_id':str(category_id), 'aspect':aspect})['res']
 
 #----------------------------------------------------------------------------------------------
-    def set_items_category_controller(self, count, offset):
-        self.items_controller.set(count, offset)
+    def set_items_category_state(self, aspect, category_id, count, offset):
+        self.items_category_state.set(aspect, category_id, count, offset)
 
 #----------------------------------------------------------------------------------------------
-    def get_items_category_controller(self):
-        return self.items_controller
+    def get_items_category_state(self):
+        return self.items_category_state

@@ -108,7 +108,7 @@ class Realm():
                             'n_childs':str(n_show_childs)})
         return res
     
-#----------------------------------------------------------------------------------------------    
+#----------------------------------------------------------------------------------------------
     def get_items(self, token, aspect, category_id):
         items = []
         mappings = self.db.items_mapping.get_mappings_by_aspect_category(aspect, category_id)
@@ -125,7 +125,7 @@ class Realm():
         print out
         return items
 
-#----------------------------------------------------------------------------------------------    
+#----------------------------------------------------------------------------------------------
     def get_category_info(self, token, aspect, category_id):
         ''' retrieve items using cache '''
         return {'items_num':self.category_group_items_cache.get_item_count(aspect, category_id, self.users_model.get_group_id_by_token(token))}

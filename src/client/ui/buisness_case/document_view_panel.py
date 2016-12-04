@@ -110,3 +110,8 @@ class DocumentViewPanel(wx.Panel):
     def fillItemsList(self, items):
         self.rpanel.bottompanel.update_list(items)
         pass
+    
+#----------------------------------------------------------------------------------------------    
+    def initPageController(self, pageCount):
+        self.rpanel.bottompanel.bottompanel.initController(pageCount)
+        pass

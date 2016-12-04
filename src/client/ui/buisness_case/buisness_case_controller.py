@@ -1,5 +1,7 @@
 
 class BuisnessCaseController():
+    ITEMS_PER_PAGE = 5
+    
     def __init__(self, realm):
         self.__realm = realm
         self.view = None
@@ -100,12 +102,25 @@ class BuisnessCaseController():
         print("[categoryUserAspectSelected]")
         pass
     
- #----------------------------------------------------------------------------------------------   
+#----------------------------------------------------------------------------------------------
     def categoryBaseAspectSelected(self, aspect, category_id):
         
         info = self.__realm.get_category_info(aspect, category_id)
-        self.__realm.set_items_category_controller(info['items_num'], 0)
+        category_ctrl = self.__realm.get_items_category_state()
         
-        items = self.__realm.get_items(aspect, category_id, 0, 50)
-        self.view.fillItemsList(items)
+        if category_ctrl.getCategoryId() != category_id:
+            self.__realm.set_items_category_state(aspect, category_id, info['items_num'], 0)
+        
+            page_count = float(info['items_num']) / self.ITEMS_PER_PAGE
+            if page_count > int(page_count):
+                page_count = int(page_count) + 1
+            
+            self.view.initPageController(int(page_count))
+            self.updateItemsPage()
         pass
+
+#----------------------------------------------------------------------------------------------
+    def updateItemsPage(self):
+        category_ctrl = self.__realm.get_items_category_state()
+        items = self.__realm.get_items(category_ctrl.getAspect(), category_ctrl.getCategoryId(), 0, self.ITEMS_PER_PAGE)
+        self.view.fillItemsList(items)
