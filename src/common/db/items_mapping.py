@@ -41,7 +41,7 @@ class ItemsMapping():
         pass
     
 #----------------------------------------------------------------------------------------------
-    def get_mappings_by_aspect_category(self, aspect, category_id):
+    def get_mappings_by_aspect_category(self, aspect, category_id, offset, count):
         pipeline = [
                 {'$unwind':'$mapping'},
                 {'$match': {"mapping.{}".format(aspect):ObjectId(category_id)} },

@@ -54,9 +54,9 @@ class Realm():
                                              {'id':str(_id), 'aspect':''})['res']
 
 #----------------------------------------------------------------------------------------------
-    def get_items(self, aspect, _id, offset = 0, count = 50):
+    def get_items(self, aspect, category_id, offset = 0, count = 50):
         items = self.ms_connection().send_msg(Message_client_get_items.opcode(),
-                                               {'category_id':str(_id), 'offset':offset})
+                                               {'aspect':aspect, 'category_id':str(category_id), 'offset':offset, 'count':count})
         return items
 
 #----------------------------------------------------------------------------------------------

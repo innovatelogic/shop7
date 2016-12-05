@@ -150,7 +150,7 @@ class CategoryGroupItemsCache():
                     if _min < count_n:
                         offset = count_self - count_get # offset from begin
                     
-                    out_list.append({top.category._id : [count_get, offset]})
+                    out_list.append((top.category._id, count_get, offset))
                     
                     _min = count_n + count_self
                     

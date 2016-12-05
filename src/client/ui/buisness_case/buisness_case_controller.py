@@ -58,21 +58,6 @@ class BuisnessCaseController():
             self.__realm.set_user_settings(user_settings)
         pass
 
-#----------------------------------------------------------------------------------------------    
-    def page_inc(self):
-        print('[callback_page_inc]')
-        pass
-
-#----------------------------------------------------------------------------------------------    
-    def page_dec(self):
-        print('[callback_page_dec]')
-        pass
-    
-#----------------------------------------------------------------------------------------------
-    def page_select(self, page_index):
-        print('[page_select]')
-        pass
-
 #----------------------------------------------------------------------------------------------        
     def toggleBaseAspect(self):
         pass
@@ -104,23 +89,40 @@ class BuisnessCaseController():
     
 #----------------------------------------------------------------------------------------------
     def categoryBaseAspectSelected(self, aspect, category_id):
-        
+        ''' process user category selection'''
         info = self.__realm.get_category_info(aspect, category_id)
-        category_ctrl = self.__realm.get_items_category_state()
+        state = self.__realm.get_items_category_state()
         
-        if category_ctrl.getCategoryId() != category_id:
-            self.__realm.set_items_category_state(aspect, category_id, info['items_num'], 0)
-        
-            page_count = float(info['items_num']) / self.ITEMS_PER_PAGE
-            if page_count > int(page_count):
-                page_count = int(page_count) + 1
-            
-            self.view.initPageController(int(page_count))
+        if state.getCategoryId() != category_id:
+            state.set(aspect, category_id, info['items_num'], self.ITEMS_PER_PAGE)
+
+            self.view.initPageController(state)
             self.updateItemsPage()
         pass
 
 #----------------------------------------------------------------------------------------------
     def updateItemsPage(self):
-        category_ctrl = self.__realm.get_items_category_state()
-        items = self.__realm.get_items(category_ctrl.getAspect(), category_ctrl.getCategoryId(), 0, self.ITEMS_PER_PAGE)
+        state = self.__realm.get_items_category_state()
+        items = self.__realm.get_items(state.getAspect(), state.getCategoryId(), state.getOffset(), self.ITEMS_PER_PAGE)
         self.view.fillItemsList(items)
+        
+    #----------------------------------------------------------------------------------------------    
+    def page_inc(self):
+        state = self.__realm.get_items_category_state()
+        if state.inc_page():
+            self.view.updatePageController(state)
+            self.updateItemsPage()
+        pass
+
+#----------------------------------------------------------------------------------------------    
+    def page_dec(self):
+        state = self.__realm.get_items_category_state()
+        if state.dec_page():
+            self.view.updatePageController(state)
+            self.updateItemsPage()
+        pass
+    
+#----------------------------------------------------------------------------------------------
+    def page_select(self, page_index):
+        print('[page_select]')
+        pass

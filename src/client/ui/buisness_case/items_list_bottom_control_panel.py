@@ -7,15 +7,12 @@ import wx.lib.intctrl
 class ItemsListBottomControlPanel(wx.Panel):
     ICON_LEFT = "../res/img/left.png"
     ICON_RIGHT = "../res/img/right.png"
-    
+    PAGE_OF_FORMAT = " of {}"
     def __init__(self, 
                  cases_controller,
                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
-        self.currPage = 1
-        self.maxPage = 1
         self.cases_controller = cases_controller
-        self.realm = cases_controller.realm()
         self.doLayout()
         self.bind()
         
@@ -47,22 +44,26 @@ class ItemsListBottomControlPanel(wx.Panel):
         
         self.SetSizer(gridsizer)
         self.Layout()
-
-#----------------------------------------------------------------------------------------------
-    def initController(self, maxPage):
-        self.maxPage = maxPage
-        self.currPage = 1
-        self.label_count.SetLabel(" of {}".format(self.maxPage))
-        self.inputTxt.SetBounds(1, self.maxPage)
-        self.inputTxt.SetValue(1)
-
+        
 #----------------------------------------------------------------------------------------------
     def bind(self):
         self.Bind(wx.EVT_BUTTON, self.OnClick_PageInc, self.right_btn)
         self.Bind(wx.EVT_BUTTON, self.OnClick_PageDec, self.left_btn)
         #self.inputTxt.Bind(wx.EVT_TEXT_ENTER, self.onAction)
         pass
-
+    
+#----------------------------------------------------------------------------------------------
+    def initController(self, state):
+        START_PAGE = 1
+        self.inputTxt.SetBounds(START_PAGE, state.getPageCount())
+        self.updateController(state)
+        
+#----------------------------------------------------------------------------------------------
+    def updateController(self, state):
+        self.label_count.SetLabel(self.PAGE_OF_FORMAT.format(state.getPageCount()))
+        self.inputTxt.SetValue(state.getCurrPage())
+        pass
+    
 #----------------------------------------------------------------------------------------------
     def OnClick_PageInc(self, event):
         self.cases_controller.page_inc()

@@ -71,7 +71,7 @@ class Message_server_get_items(Message):
         
     def do_process(self, ch, method, props, body):
         dict = eval(body)
-        return self.master.realm().get_items(dict['token'], 'prom_ua', dict['category_id'])
+        return self.master.realm().get_items(dict['token'], dict['aspect'], dict['category_id'], dict['offset'], dict['count'])
 
 #----------------------------------------------------------------------------------------------
 class Message_server_get_aspects(Message):

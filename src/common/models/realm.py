@@ -109,20 +109,26 @@ class Realm():
         return res
     
 #----------------------------------------------------------------------------------------------
-    def get_items(self, token, aspect, category_id):
-        items = []
-        mappings = self.db.items_mapping.get_mappings_by_aspect_category(aspect, category_id)
+    def get_items(self, token, aspect, category_id, offset, count):
         
-        for mapping in mappings:
-            item = self.items_cache_model.get_item(token, mapping['item_id'])
-            if item:
-                items.append(item.get())
-            else:
-                print('[Message_server_get_items] failed get item {}'.format(mapping['item_id']))
+        ranges = []     
+        self.category_group_items_cache._get_base_categories_list_items(aspect, ObjectId(category_id), 
+                                                                        self.users_model.get_group_id_by_token(token),
+                                                                        offset, offset + count, ranges)
+        print ranges
+        
+        items = []
+        for range in ranges:
+            mappings = self.db.items_mapping.get_mappings_by_aspect_category(aspect, range[0], offset, count)
+            
+            for mapping in mappings:
+                item = self.items_cache_model.get_item(token, mapping['item_id'])
+                if item:
+                    items.append(item.get())
+                else:
+                    print('[Message_server_get_items] failed get item {}'.format(mapping['item_id']))
                 
-        out = []
-        self.category_group_items_cache._get_base_categories_list_items(aspect, ObjectId(category_id), self.users_model.get_group_id_by_token(token), 0, 10, out)
-        print out
+
         return items
 
 #----------------------------------------------------------------------------------------------

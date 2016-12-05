@@ -24,8 +24,8 @@
 		<server get="token;id;aspect" send="res"/>
 	</msg>
 	<msg name="get_items">
-		<client send="token;category_id;offset" get="res"/>
-		<server get="token;category_id;offset" send="res"/>
+		<client send="token;aspect,category_id;offset;count" get="res"/>
+		<server get="token;aspect,category_id;offset;count" send="res"/>
 	</msg>
 	<msg name="get_category_info">
 		<client send="token;id;aspect" get="res"/>

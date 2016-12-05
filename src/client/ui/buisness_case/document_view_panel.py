@@ -112,6 +112,11 @@ class DocumentViewPanel(wx.Panel):
         pass
     
 #----------------------------------------------------------------------------------------------    
-    def initPageController(self, pageCount):
-        self.rpanel.bottompanel.bottompanel.initController(pageCount)
+    def initPageController(self, state):
+        self.rpanel.bottompanel.bottompanel.initController(state)
+        pass
+    
+#----------------------------------------------------------------------------------------------  
+    def updatePageController(self, state):
+        self.rpanel.bottompanel.bottompanel.updateController(state)
         pass
