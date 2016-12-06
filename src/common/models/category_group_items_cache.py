@@ -21,14 +21,16 @@ class CategoryGroupItemsCache():
 
 #----------------------------------------------------------------------------------------------    
     def build(self, items, user_groups):
-        
+        ''' iterates through all items and assing counter to corresponding category node
+            and all ancestors
+        '''
         base_aspects = self.__realm.base_aspects_container.get_aspects()
         
         for item in items:
             mapping = self.__realm.db.items_mapping.get_mapping(item.mapping_id)
             if mapping:
                 b_mapped_usr_ctry = False
-                for key, value in mapping.mapping.iteritems():
+                for key, value in mapping.mapping.iteritems(): # key - aspect; value - category_id
                     if key in base_aspects:
                         self.inc_item_count_base_aspect(key, value, item.user_group_id)
                     else:
@@ -56,7 +58,7 @@ class CategoryGroupItemsCache():
         if group_id not in self._user_mapping:
             self._user_mapping[group_id] = {}
         if str_category_id not in self._user_mapping[group_id]:
-            self._user_mapping[group_id][category_id] = 0 # zero count by default
+            self._user_mapping[group_id][category_id] = [0, 0] # zero count by default
 
 #----------------------------------------------------------------------------------------------
     def get_item_count(self, aspect, category_id, group_id):
@@ -89,17 +91,20 @@ class CategoryGroupItemsCache():
                     
                 self._mapping[aspect][str(category_node.category._id)][group_id][self.IDX_COMMON_COUNTER] += 1
                 category_node = category_node.parent
-                
         else:
             print('[inc_item_count_base_aspect] failed get category node') 
         pass
     
 #----------------------------------------------------------------------------------------------    
-    def inc_item_count_user_aspect(self, group_id, category_id):       
+    def inc_item_count_user_aspect(self, group_id, category_id):   
+        base_node = True    
         category_node = self.__realm.user_aspects_container.get_aspect_category(group_id, category_id)
         if category_node:
             while category_node:
-                self._user_mapping[group_id][str(category_node.category._id)] += 1
+                if base_node:
+                    self._user_mapping[group_id][str(category_node.category._id)][self.IDX_SELF_COUNTER] += 1
+                    base_node = False
+                self._user_mapping[group_id][str(category_node.category._id)][self.IDX_COMMON_COUNTER] += 1
                 category_node = category_node.parent
         else:
             print('[inc_item_count_base_aspect] failed get category node') 
