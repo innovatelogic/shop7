@@ -41,10 +41,12 @@ class ItemsMapping():
         pass
     
 #----------------------------------------------------------------------------------------------
-    def get_mappings_by_aspect_category(self, aspect, category_id, offset, count):
+    def get_mappings_by_aspect_category(self, aspect, category_id, count, offset):
         pipeline = [
                 {'$unwind':'$mapping'},
                 {'$match': {"mapping.{}".format(aspect):ObjectId(category_id)} },
+                {'$skip':offset},
+                {'$limit':count},
                 ]
             
         cursor = self.cat.aggregate(pipeline)

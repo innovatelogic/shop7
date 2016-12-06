@@ -129,20 +129,22 @@ class CategoryGroupItemsCache():
     
 #----------------------------------------------------------------------------------------------    
     def _get_base_categories_list_items(self, aspect, category_id, group_id, _min, _max, out_list):
-        ''' traverse tree in straight order to retrieve list of categories contains range of items'''
+        ''' traverse tree in straight order to retrieve list of categories contains range of items
+        return array of tuples (category_id, count, offset) 
+        '''
         category_node = self.__realm.base_aspects_container.get_aspect_category(aspect, str(category_id))
         if category_node:
             stack = []
             stack.append(category_node)
             
-            count_n = 0
+            count_n = 0 # plain counter
             
             while len(stack):
                 top = stack.pop(0)
                 
                 count_self = self.get_category_items_count_self(aspect, str(top.category._id), group_id)
                 
-                if count_n + count_self > _min:
+                if count_n + count_self > _min: # check threshold overstep
                     
                     count_get = min((count_n + count_self) - _min, _max - _min) #check _max cap
                     
@@ -160,4 +162,5 @@ class CategoryGroupItemsCache():
                 count_n += count_self
                 
                 for child in reversed(top.childs):
-                    stack.insert(0, child)
+                    if self.get_item_count(aspect, str(child.category._id), group_id):
+                        stack.insert(0, child)
