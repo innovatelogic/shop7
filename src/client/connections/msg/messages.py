@@ -64,6 +64,11 @@ class Message_client_get_items(Message):
         Message.__init__(self, *args, **kwargs)
 
 #----------------------------------------------------------------------------------------------
+class Message_client_get_user_category_items(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+        
+#----------------------------------------------------------------------------------------------
 class Message_client_get_aspects(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
@@ -80,6 +85,11 @@ class Message_client_set_user_settings(Message):
         
 #----------------------------------------------------------------------------------------------
 class Message_client_get_category_info(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+        
+#----------------------------------------------------------------------------------------------
+class Message_client_get_user_category_info(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
     

@@ -68,13 +68,17 @@ class CategoryGroupItemsCache():
                 out = self._mapping[aspect][category_id][group_id][self.IDX_COMMON_COUNTER]
         return out
     
-    #----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
     def get_category_items_count_self(self, aspect, category_id, group_id):
         out = 0
         if aspect in self._mapping:
             if group_id in self._mapping[aspect][category_id]:
                 out = self._mapping[aspect][category_id][group_id][self.IDX_SELF_COUNTER]
         return out
+
+#----------------------------------------------------------------------------------------------   
+    def get_user_category_items_count(self, category_id, group_id):
+        return self._user_mapping[group_id][category_id][self.IDX_COMMON_COUNTER]
     
 #----------------------------------------------------------------------------------------------    
     def inc_item_count_base_aspect(self, aspect, category_id, group_id):

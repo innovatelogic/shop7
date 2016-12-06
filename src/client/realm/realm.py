@@ -11,6 +11,7 @@ from connections.msg.messages import Message_client_get_items
 from connections.msg.messages import Message_client_get_aspects
 from connections.msg.messages import Message_client_get_user_settings
 from connections.msg.messages import Message_client_set_user_settings
+from connections.msg.messages import Message_client_get_user_category_info
 
 class Realm():
     def __init__(self, ms_connection, specs, connection_info):
@@ -58,7 +59,13 @@ class Realm():
         items = self.ms_connection().send_msg(Message_client_get_items.opcode(),
                                                {'aspect':aspect, 'category_id':str(category_id), 'offset':offset, 'count':count})
         return items
-
+    
+#----------------------------------------------------------------------------------------------
+    def get_user_category_items(self, category_id, offset = 0, count = 50):
+        items = self.ms_connection().send_msg(Message_client_get_user_category_items.opcode(),
+                                               {'category_id':str(category_id), 'offset':offset, 'count':count})
+        return items
+        
 #----------------------------------------------------------------------------------------------
     def get_aspects(self):
         return self.ms_connection().send_msg(Message_client_get_aspects.opcode(), {})['res']
@@ -83,6 +90,11 @@ class Realm():
         return self.ms_connection().send_msg(Message_client_get_category_info.opcode(), 
                                              {'category_id':str(category_id), 'aspect':aspect})['res']
 
+#----------------------------------------------------------------------------------------------
+    def get_user_category_info(self, category_id):
+        return self.ms_connection().send_msg(Message_client_get_user_category_info.opcode(), 
+                                             {'category_id':str(category_id)})['res']
+                                             
 #----------------------------------------------------------------------------------------------
     def set_items_category_state(self, aspect, category_id, count, offset):
         self.items_category_state.set(aspect, category_id, count, offset)

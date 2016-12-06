@@ -74,6 +74,15 @@ class Message_server_get_items(Message):
         return self.master.realm().get_items(dict['token'], dict['aspect'], dict['category_id'], dict['offset'], dict['count'])
 
 #----------------------------------------------------------------------------------------------
+class Message_server_get_user_category_items(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+        
+    def do_process(self, ch, method, props, body):
+        dict = eval(body)
+        return self.master.realm().get_user_category_items(dict['token'], dict['category_id'], dict['offset'], dict['count'])
+    
+#----------------------------------------------------------------------------------------------
 class Message_server_get_aspects(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
@@ -110,3 +119,12 @@ class Message_server_get_category_info(Message):
     def do_process(self, ch, method, props, body):
         dict = eval(body)
         return self.master.realm().get_category_info(dict['token'], dict['aspect'], dict['category_id'])
+    
+#----------------------------------------------------------------------------------------------
+class Message_server_get_user_category_info(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)
+        
+    def do_process(self, ch, method, props, body):
+        dict = eval(body)
+        return self.master.realm().get_user_category_info(dict['token'], dict['category_id'])

@@ -115,9 +115,8 @@ class Realm():
         self.category_group_items_cache._get_base_categories_list_items(aspect, ObjectId(category_id), 
                                                                         self.users_model.get_group_id_by_token(token),
                                                                         offset, offset + count, ranges)
-        
-        print('{}-{}'.format(offset, offset + count))
-        print ranges
+        #print('{}-{}'.format(offset, offset + count))
+        #print ranges
         
         items = []
         for range in ranges:
@@ -133,6 +132,16 @@ class Realm():
         return items
 
 #----------------------------------------------------------------------------------------------
+    def get_user_category_items(self, category_id, offset, count):
+        items = []
+        return items
+    
+#----------------------------------------------------------------------------------------------
     def get_category_info(self, token, aspect, category_id):
         ''' retrieve items using cache '''
         return {'items_num':self.category_group_items_cache.get_item_count(aspect, category_id, self.users_model.get_group_id_by_token(token))}
+    
+#----------------------------------------------------------------------------------------------
+    def get_user_category_info(self, token, category_id):
+        ''' retrieve items count from user category using cache '''
+        return {'items_num':self.category_group_items_cache.get_user_category_items_count(category_id, self.users_model.get_group_id_by_token(token))}

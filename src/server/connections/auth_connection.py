@@ -8,7 +8,8 @@ class AuthConnection:
         self.master = master
         self.specs = specs
         self.client_creator = client_creator
-        
+    
+    #----------------------------------------------------------------------------------------------
     @defer.inlineCallbacks
     def run(self, connection):
         
@@ -29,15 +30,18 @@ class AuthConnection:
         l.start(0.01)
         
         print('Auth connection queue established')
-        
+    
+    #----------------------------------------------------------------------------------------------   
     def start(self):
         d = self.client_creator.connectTCP(self.specs['master']['host'], self.specs['master']['ms_queue_port'])
         d.addCallback(lambda protocol: protocol.ready)
         d.addCallback(self.run)
     
+    #----------------------------------------------------------------------------------------------
     def stop(self):
         pass
     
+    #----------------------------------------------------------------------------------------------
     @defer.inlineCallbacks
     def read(self, queue_object):
         ch,method,properties,body = yield queue_object.get()
@@ -47,6 +51,7 @@ class AuthConnection:
     
         #yield ch.basic_ack(delivery_tag=method.delivery_tag)
     
+    #----------------------------------------------------------------------------------------------
     def do_auth(self, ch, method, props, body):
         
         dict = eval(body)

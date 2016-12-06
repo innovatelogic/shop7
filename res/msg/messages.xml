@@ -24,12 +24,20 @@
 		<server get="token;id;aspect" send="res"/>
 	</msg>
 	<msg name="get_items">
-		<client send="token;aspect,category_id;offset;count" get="res"/>
-		<server get="token;aspect,category_id;offset;count" send="res"/>
+		<client send="token;aspect,;category_id;offset;count" get="res"/>
+		<server get="token;aspect;category_id;offset;count" send="res"/>
+	</msg>
+		<msg name="get_user_category_items">
+		<client send="token;category_id;offset;count" get="res"/>
+		<server get="token;category_id;offset;count" send="res"/>
 	</msg>
 	<msg name="get_category_info">
 		<client send="token;id;aspect" get="res"/>
 		<server get="token;id;aspect" send="res"/>
+	</msg>
+		<msg name="get_user_category_info">
+		<client send="token;id;" get="res"/>
+		<server get="token;id;" send="res"/>
 	</msg>
 	
 	<msg name="get_aspects">

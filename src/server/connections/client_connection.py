@@ -38,7 +38,8 @@ class ClientsConnection:
         d = self.client_creator.connectTCP(self.specs['master']['host'], self.specs['master']['ms_queue_port'])
         d.addCallback(lambda protocol: protocol.ready)
         d.addCallback(self.run)
-        
+    
+    #----------------------------------------------------------------------------------------------    
     def stop(self):
         pass
     
