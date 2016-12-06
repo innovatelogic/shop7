@@ -144,17 +144,18 @@ class CategoryGroupItemsCache():
                 
                 count_self = self.get_category_items_count_self(aspect, str(top.category._id), group_id)
                 
-                if count_n + count_self > _min: # check threshold overstep
+                count_next = count_n + count_self
+                if count_next > _min: # check threshold overstep
                     
-                    count_get = min((count_n + count_self) - _min, _max - _min) #check _max cap
+                    count_get = min((count_next) - _min, _max - _min) #check _max cap
                     
                     offset = 0
-                    if _min < count_n:
+                    if _min < count_next:
                         offset = count_self - count_get # offset from begin
                     
                     out_list.append((top.category._id, count_get, offset))
                     
-                    _min = count_n + count_self
+                    _min = count_next
                     
                     if _min >= _max:
                         break
