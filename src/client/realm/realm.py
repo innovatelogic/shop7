@@ -12,7 +12,7 @@ from connections.msg.messages import Message_client_get_aspects
 from connections.msg.messages import Message_client_get_user_settings
 from connections.msg.messages import Message_client_set_user_settings
 from connections.msg.messages import Message_client_get_user_category_info
-
+from connections.msg.messages import Message_client_get_user_category_items
 class Realm():
     def __init__(self, ms_connection, specs, connection_info):
         self.ms_connection_ = ms_connection

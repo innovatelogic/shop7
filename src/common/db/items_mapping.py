@@ -41,10 +41,15 @@ class ItemsMapping():
         pass
     
 #----------------------------------------------------------------------------------------------
-    def get_mappings_by_aspect_category(self, aspect, category_id, count, offset):
+    def get_mappings_by_aspect_category(self, group_id, aspect, category_id, count, offset):
         pipeline = [
                 {'$unwind':'$mapping'},
-                {'$match': {"mapping.{}".format(aspect):ObjectId(category_id)} },
+                {
+                    '$match': {
+                        '$and':[{"user_group_id":ObjectId(group_id)},
+                                {"mapping.{}".format(aspect):ObjectId(category_id)}]
+                        }
+                },
                 {'$skip':offset},
                 {'$limit':count},
                 ]
@@ -52,6 +57,22 @@ class ItemsMapping():
         cursor = self.cat.aggregate(pipeline)
         return list(cursor)
     
+#----------------------------------------------------------------------------------------------
+    def get_mappings_by_user_category(self, group_id, category_id, count, offset):
+        pipeline = [
+                {'$unwind':'$mapping'},
+                {
+                    '$match': {
+                        '$and':[{"user_group_id":ObjectId(group_id)},
+                                {"mapping.user":ObjectId(category_id)}]
+                        }
+                },
+                {'$skip':offset},
+                {'$limit':count},
+                ]
+            
+        cursor = self.cat.aggregate(pipeline)
+        return list(cursor)
 #----------------------------------------------------------------------------------------------
     def drop(self):
         '''drop collection. rem in production'''

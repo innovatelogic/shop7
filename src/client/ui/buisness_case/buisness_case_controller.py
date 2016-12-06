@@ -89,10 +89,11 @@ class BuisnessCaseController():
         info = self.__realm.get_user_category_info(category_id)
         state = self.__realm.get_items_category_state()
         
+        print category_id
         if state.getCategoryId() != category_id:
             state.set(self.USER_ASPECT_FLAG, category_id, info['items_num'], self.ITEMS_PER_PAGE)
             self.view.initPageController(state)
-            
+            self.updateItemsPage()
         print info
         pass
     
@@ -104,7 +105,6 @@ class BuisnessCaseController():
         
         if state.getCategoryId() != category_id:
             state.set(aspect, category_id, info['items_num'], self.ITEMS_PER_PAGE)
-
             self.view.initPageController(state)
             self.updateItemsPage()
         pass

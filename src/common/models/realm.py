@@ -110,17 +110,18 @@ class Realm():
     
 #----------------------------------------------------------------------------------------------
     def get_items(self, token, aspect, category_id, offset, count):
+        ranges = []
+        group_id = self.users_model.get_group_id_by_token(token)
         
-        ranges = []     
         self.category_group_items_cache._get_base_categories_list_items(aspect, ObjectId(category_id), 
-                                                                        self.users_model.get_group_id_by_token(token),
+                                                                        group_id,
                                                                         offset, offset + count, ranges)
         #print('{}-{}'.format(offset, offset + count))
         #print ranges
         
         items = []
         for range in ranges:
-            mappings = self.db.items_mapping.get_mappings_by_aspect_category(aspect, range[0], range[1], range[2])
+            mappings = self.db.items_mapping.get_mappings_by_aspect_category(group_id, aspect, range[0], range[1], range[2])
             
             for mapping in mappings:
                 item = self.items_cache_model.get_item(token, mapping['item_id'])
@@ -128,12 +129,28 @@ class Realm():
                     items.append(item.get())
                 else:
                     print('[Message_server_get_items] failed get item {}'.format(mapping['item_id']))
-                
         return items
 
 #----------------------------------------------------------------------------------------------
-    def get_user_category_items(self, category_id, offset, count):
+    def get_user_category_items(self, token, category_id, offset, count):
         items = []
+        ranges = []
+        
+        self.category_group_items_cache._get_user_categories_list_items(ObjectId(category_id), 
+                                                                        self.users_model.get_group_id_by_token(token),
+                                                                        offset, offset + count, ranges)
+        #print('{}-{}'.format(offset, offset + count))
+        #print ranges
+        
+        for range in ranges:
+            mappings = self.db.items_mapping.get_mappings_by_user_category(self.users_model.get_group_id_by_token(token), range[0], range[1], range[2])
+        
+            for mapping in mappings:
+                item = self.items_cache_model.get_item(token, mapping['item_id'])
+                if item:
+                    items.append(item.get())
+                else:
+                    print('[Message_server_get_items] failed get item {}'.format(mapping['item_id']))
         return items
     
 #----------------------------------------------------------------------------------------------

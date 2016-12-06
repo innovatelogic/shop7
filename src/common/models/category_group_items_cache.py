@@ -34,7 +34,7 @@ class CategoryGroupItemsCache():
                     if key in base_aspects:
                         self.inc_item_count_base_aspect(key, value, item.user_group_id)
                     else:
-                        self.inc_item_count_user_aspect(key, value)
+                        self.inc_item_count_user_aspect(item.user_group_id, value)
                         b_mapped_usr_ctry = True
 
                 if not b_mapped_usr_ctry: # default mapping
@@ -76,8 +76,12 @@ class CategoryGroupItemsCache():
                 out = self._mapping[aspect][category_id][group_id][self.IDX_SELF_COUNTER]
         return out
 
-#----------------------------------------------------------------------------------------------   
+#----------------------------------------------------------------------------------------------
     def get_user_category_items_count(self, category_id, group_id):
+        return self._user_mapping[group_id][category_id][self.IDX_COMMON_COUNTER]
+    
+#----------------------------------------------------------------------------------------------
+    def get_user_category_items_count_self(self, category_id, group_id):
         return self._user_mapping[group_id][category_id][self.IDX_COMMON_COUNTER]
     
 #----------------------------------------------------------------------------------------------    
@@ -111,7 +115,7 @@ class CategoryGroupItemsCache():
                 self._user_mapping[group_id][str(category_node.category._id)][self.IDX_COMMON_COUNTER] += 1
                 category_node = category_node.parent
         else:
-            print('[inc_item_count_base_aspect] failed get category node') 
+            print('[inc_item_count_base_aspect] failed get category node {}'.format(category_id)) 
         pass
     
 #----------------------------------------------------------------------------------------------    
@@ -138,7 +142,7 @@ class CategoryGroupItemsCache():
     
 #----------------------------------------------------------------------------------------------    
     def _get_base_categories_list_items(self, aspect, category_id, group_id, _min, _max, out_list):
-        ''' traverse tree in straight order to retrieve list of categories contains range of items
+        ''' traverse base tree in straight order to retrieve list of categories contains range of items
         return array of tuples (category_id, count, offset) 
         '''
         category_node = self.__realm.base_aspects_container.get_aspect_category(aspect, str(category_id))
@@ -155,22 +159,59 @@ class CategoryGroupItemsCache():
                 
                 count_next = count_n + count_self
                 if count_next > _min: # check threshold overstep
-                    
                     count_get = min((count_next) - _min, _max - _min) #check _max cap
-                    
                     offset = 0
-                    if _min < count_next:
-                        offset = count_self - count_get # offset from begin
+                    
+                    #if _min < count_next:
+                    offset = _min - count_n # offset from begin
                     
                     out_list.append((top.category._id, count_get, offset))
-                    
                     _min = count_next
                     
                     if _min >= _max:
                         break
                     
-                count_n += count_self
+                count_n = count_next
                 
                 for child in reversed(top.childs):
                     if self.get_item_count(aspect, str(child.category._id), group_id):
+                        stack.insert(0, child)
+                        
+                        
+#----------------------------------------------------------------------------------------------    
+    def _get_user_categories_list_items(self, category_id, group_id, _min, _max, out_list):
+        ''' traverse user tree in straight order to retrieve list of categories contains range of items
+            return array of tuples (category_id, count, offset) 
+        '''
+        category_node = self.__realm.user_aspects_container.get_aspect_category(group_id, str(category_id))
+        
+        if category_node:
+            stack = []
+            stack.append(category_node)
+            
+            count_n = 0 # plain counter
+            
+            while len(stack):
+                top = stack.pop(0)
+                
+                count_self = self.get_user_category_items_count_self(str(top.category._id), group_id)
+                count_next = count_n + count_self
+                
+                if count_next > _min: # check threshold overstep
+                    count_get = min((count_next) - _min, _max - _min) #check _max cap
+                    offset = 0
+                    
+                    #if _min < count_next:
+                    offset = _min - count_n # offset from begin
+                    
+                    out_list.append((top.category._id, count_get, offset))
+                    _min = count_next
+                    
+                    if _min >= _max:
+                        break
+                    
+                count_n = count_next
+                
+                for child in reversed(top.childs):
+                    if self.get_user_category_items_count(str(child.category._id), group_id):
                         stack.insert(0, child)
