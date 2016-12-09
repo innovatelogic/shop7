@@ -18,6 +18,7 @@ class EPanels:
     EPanel_Dashboard = 5
     EPanel_MAX = 6
 
+#----------------------------------------------------------------------------------------------
 class DocumentFrame(wx.Frame):
     
     COLOR_DARK_BLUE_THEME = wx.Colour(34, 65, 96)
@@ -31,14 +32,14 @@ class DocumentFrame(wx.Frame):
         self.InitInterface()
                 
         self.Show(True)
-        
+
+#----------------------------------------------------------------------------------------------
     def InitInterface(self):
         self.statusbar = self.CreateStatusBar()
-        
         self.doLayout();
-        
         self.BindEvents()
-        
+
+#----------------------------------------------------------------------------------------------
     def doLayout(self):
         self.toppanel = StatusViewPanel(self.realm, self, wx.ID_ANY, size = (self.GetSize().GetWidth(), ONLINE_PANEL_HEIGHT), pos = (0, 0))
         self.toppanel.SetBackgroundColour(self.COLOR_DARK_BLUE_THEME)
@@ -67,11 +68,11 @@ class DocumentFrame(wx.Frame):
         # toggle panels
         self.cases_panel = DocumentViewPanel(BuisnessCaseController(self.realm), self.centerpanel, wx.ID_ANY, size = (-1, -1))
         
-        self.clients_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
-        self.connect_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
-        self.settings_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
-        self.statistics_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
-        self.dashboard_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (center_panel_width, left_panel_height))
+        self.clients_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (-1, -1))
+        self.connect_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (-1, -1))
+        self.settings_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (-1, -1))
+        self.statistics_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (-1, -1))
+        self.dashboard_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (-1, -1))
         
         self.view_panels.append(self.cases_panel)
         self.view_panels.append(self.clients_panel)
@@ -89,8 +90,8 @@ class DocumentFrame(wx.Frame):
         self.centerpanel.SetSizer(self.gridsizer)
         
         self.Layout()
-        #self.cases_panel.Layout()
-        
+
+#----------------------------------------------------------------------------------------------
     def OnReSize(self, event):
             "Window has been resized, so we need to adjust the window."
             #self.centerpanel.Layout()
@@ -98,11 +99,13 @@ class DocumentFrame(wx.Frame):
             #for i in range(0, EPanels.EPanel_MAX):
             #    self.view_panels[i].SetSize(W, H)
             event.Skip()
-            
+
+#----------------------------------------------------------------------------------------------
     def OnLogOff(self):
         self.realm.logout()
         DocumentFrame.logout_flag = True
-    
+
+#----------------------------------------------------------------------------------------------
     def BindEvents(self):
         self.Bind(wx.EVT_SIZE, self.OnReSize)
         self.Bind(wx.EVT_BUTTON, self.OnClick_Cases, self.leftpanel.btn_cases)
@@ -111,7 +114,8 @@ class DocumentFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnClick_Settings, self.leftpanel.btn_settings)
         self.Bind(wx.EVT_BUTTON, self.OnClick_Statistics, self.leftpanel.btn_statistics)
         self.Bind(wx.EVT_BUTTON, self.OnClick_Dashboard, self.leftpanel.btn_dashboard)
-        
+
+#----------------------------------------------------------------------------------------------
     def TogglePanel(self, index):
         out = None
         self.gridsizer.Clear()
@@ -125,26 +129,32 @@ class DocumentFrame(wx.Frame):
                 self.view_panels[i].Hide()
         self.centerpanel.Layout()
         return out
-        
+
+#----------------------------------------------------------------------------------------------
     def OnClick_Cases(self, event):
         self.TogglePanel(EPanels.EPanel_Cases)
-        
+
+#----------------------------------------------------------------------------------------------
     def OnClick_Clients(self, event):
         panel = self.TogglePanel(EPanels.EPanel_Clients)
         panel.SetBackgroundColour((255, 0, 0))
-    
+
+#----------------------------------------------------------------------------------------------
     def OnClick_Connect(self, event):
         panel = self.TogglePanel(EPanels.EPanel_Connect)
         panel.SetBackgroundColour((0, 255, 0))
-    
+
+#----------------------------------------------------------------------------------------------
     def OnClick_Settings(self, event):
         panel = self.TogglePanel(EPanels.EPanel_Settings)
         panel.SetBackgroundColour((0, 255, 255))
-        
+
+#----------------------------------------------------------------------------------------------
     def OnClick_Statistics(self, event):
         panel = self.TogglePanel(EPanels.EPanel_Statistics)
         panel.SetBackgroundColour((0, 123, 255))
-        
+
+#----------------------------------------------------------------------------------------------
     def OnClick_Dashboard(self, event):
         panel = self.TogglePanel(EPanels.EPanel_Dashboard)
         panel.SetBackgroundColour((123, 123, 255))
