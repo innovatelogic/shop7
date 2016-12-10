@@ -8,7 +8,7 @@ class BuisnessCaseController():
         self.view = None
         self.items_offset = 0
         self.items_per_page = 0
-        
+
 #----------------------------------------------------------------------------------------------        
     def setView(self, view):
         self.view = view
@@ -16,7 +16,7 @@ class BuisnessCaseController():
 #----------------------------------------------------------------------------------------------        
     def realm(self):
         return self.__realm
-    
+
 #----------------------------------------------------------------------------------------------        
     def user_category_selected(self, cat_id):
         print('[user_category_selected]')
@@ -30,20 +30,20 @@ class BuisnessCaseController():
         print('[show_all_category_tree_selected]')
 
 #----------------------------------------------------------------------------------------------    
-    def add_item(self):
+    def addItem(self):
         print('[add_item]')
         pass
-    
+
 #----------------------------------------------------------------------------------------------    
-    def edit_item(self):
+    def editItem(self):
         print('[edit_item]')
         pass
-    
+
 #----------------------------------------------------------------------------------------------
-    def del_item(self):
+    def delItem(self):
         print('[del_item]')
         pass
-    
+
 #----------------------------------------------------------------------------------------------        
     def showAllCategoryTree(self, flag):
         user_settings = self.__realm.get_user_settings()

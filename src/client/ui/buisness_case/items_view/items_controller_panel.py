@@ -5,7 +5,6 @@ import wx.lib.agw.gradientbutton as GB
 #----------------------------------------------------------------------------------------------
 class ButtonPanel(wx.Panel):
     COLOR_DARK_BLUE_THEME = wx.Colour(34, 65, 96)
-    
     BTN_WIDTH = 40
     BTN_HEIGHT = 30
     SHIFT = 5
@@ -18,10 +17,7 @@ class ButtonPanel(wx.Panel):
     def doLayout(self):
         self.add_button = GB.GradientButton(self, label="Add", pos = (0, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
         self.edit_button = GB.GradientButton(self, label="Edit", pos = (self.BTN_WIDTH + self.SHIFT, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
-        self.edit_button = GB.GradientButton(self, label="Del", pos = ((self.BTN_WIDTH + self.SHIFT) * 2, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
-    
-    def bind(self):
-        pass
+        self.del_button = GB.GradientButton(self, label="Del", pos = ((self.BTN_WIDTH + self.SHIFT) * 2, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
     
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
@@ -86,6 +82,9 @@ class ItemsControllerPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------
     def bind(self):
         self.Bind(wx.EVT_BUTTON, self.OnClick_ColumnsCheck, self.columns_btn)
+        self.Bind(wx.EVT_BUTTON, self.OnClick_AddItem, self.btnpanel.add_button)
+        self.Bind(wx.EVT_BUTTON, self.OnClick_EditItem, self.btnpanel.edit_button)
+        self.Bind(wx.EVT_BUTTON, self.OnClick_DelItem, self.btnpanel.del_button)
         pass
     
 #----------------------------------------------------------------------------------------------
@@ -108,7 +107,7 @@ class ItemsControllerPanel(wx.Panel):
     def OnPopupItemSelected(self, event):
         pass
 
-#----------------------------------------------------------------------------------------------  
+#----------------------------------------------------------------------------------------------
     def OnPopupItemColumnSelected(self, event):
         item = self.popupmenu.FindItemById(event.GetId())
         self.cases_controller.itemColumnChange(item.GetText(), item.IsChecked())
@@ -119,3 +118,15 @@ class ItemsControllerPanel(wx.Panel):
         pos[0] += 20
         cl_pos = self.ScreenToClient(pos)
         self.PopupMenu(self.popupmenu, cl_pos)
+
+#----------------------------------------------------------------------------------------------
+    def OnClick_AddItem(self, event):
+        print("OnClick_AddItem")
+
+#----------------------------------------------------------------------------------------------
+    def OnClick_EditItem(self, event):
+        print("OnClick_EditItem")
+        
+#----------------------------------------------------------------------------------------------
+    def OnClick_DelItem(self, event):
+        print("OnClick_DelItem")

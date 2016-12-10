@@ -36,19 +36,6 @@ class DocumentViewPanel(wx.Panel):
         self.itemsViewPanel.SetBackgroundColour(wx.Colour(34, 1, 96))
         self.addItemPanel.SetBackgroundColour(wx.Colour(34, 165, 96))
         
-        #self.split1 = wx.SplitterWindow(self, style = wx.SP_THIN_SASH)
-        
-        #self.lpanel = CategoriesMainPanel(self.cases_controller, self.split1, wx.ID_ANY, size = (-1, -1), pos = (0, 0))
-        #self.rpanel = ItemsMainPanel(self.cases_controller, self.split1, wx.ID_ANY)
-        
-        #self.split1.SplitVertically(self.lpanel, self.rpanel)
-        #self.split1.SetSashGravity(0.25)
-        #self.split1.SetMinimumPaneSize(250)
-        #sizer = wx.BoxSizer(wx.VERTICAL)
-        #sizer.Add(self.split1, 1, wx.EXPAND)
-        #self.SetSizer(sizer)
-        #self.split1.SetSashPosition(200, True)
-        
         self.TogglePanel(EPanelsCases.EPanel_Items)
         
 #----------------------------------------------------------------------------------------------
