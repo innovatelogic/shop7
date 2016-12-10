@@ -46,7 +46,6 @@ class ItemsListPanel(wx.Panel):
         self.toppanel.SetSizer(list_gridsizer)
         
         self.SetSizer(gridsizer)
-        
         self.Layout()
 
 #----------------------------------------------------------------------------------------------
