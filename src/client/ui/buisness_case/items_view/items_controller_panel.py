@@ -121,12 +121,12 @@ class ItemsControllerPanel(wx.Panel):
 
 #----------------------------------------------------------------------------------------------
     def OnClick_AddItem(self, event):
-        print("OnClick_AddItem")
+        self.cases_controller.addItem()
 
 #----------------------------------------------------------------------------------------------
     def OnClick_EditItem(self, event):
-        print("OnClick_EditItem")
+        self.cases_controller.editItem()
         
 #----------------------------------------------------------------------------------------------
     def OnClick_DelItem(self, event):
-        print("OnClick_DelItem")
+        self.cases_controller.delItem()

@@ -75,7 +75,20 @@ class DocumentViewPanel(wx.Panel):
         self.itemsViewPanel.rpanel.bottompanel.bottompanel.initController(state)
         pass
     
-#----------------------------------------------------------------------------------------------  
+#----------------------------------------------------------------------------------------------
     def updatePageController(self, state):
         self.itemsViewPanel.rpanel.bottompanel.bottompanel.updateController(state)
+        pass
+    
+#----------------------------------------------------------------------------------------------
+    def addItem(self):
+        self.TogglePanel(EPanelsCases.EPanel_AddItem)
+        pass
+    
+#----------------------------------------------------------------------------------------------
+    def editItem(self):
+        pass
+
+#----------------------------------------------------------------------------------------------
+    def delItem(self):
         pass
