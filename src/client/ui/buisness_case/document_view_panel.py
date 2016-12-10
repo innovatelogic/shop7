@@ -1,8 +1,8 @@
 import wx
-from bson.objectid import ObjectId
-from ui.proportional_splitter import ProportionalSplitter
+#from bson.objectid import ObjectId
+#from ui.proportional_splitter import ProportionalSplitter
 from add_item.add_item_main_panel import AddItemMainPanel
-from items_view_panel import ItemsViewPanel
+from items_view.items_view_panel import ItemsViewPanel
 
 class EPanelsCases:
     EPanel_Items = 0
