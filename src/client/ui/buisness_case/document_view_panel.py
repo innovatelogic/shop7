@@ -1,9 +1,6 @@
 import wx
 from bson.objectid import ObjectId
-from categories_main_panel import CategoriesMainPanel
-from items_main_panel import ItemsMainPanel
 from ui.proportional_splitter import ProportionalSplitter
-from groups_tree_view import GroupsTreeView
 from add_item.add_item_main_panel import AddItemMainPanel
 from items_view_panel import ItemsViewPanel
 

@@ -1,6 +1,6 @@
 import wx
-from categories_main_panel import CategoriesMainPanel
-from items_main_panel import ItemsMainPanel
+from items_view.categories_main_panel import CategoriesMainPanel
+from items_view.items_main_panel import ItemsMainPanel
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
