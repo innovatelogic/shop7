@@ -1,12 +1,11 @@
 import wx
-import wx.lib.agw.gradientbutton as GB
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class ButtonPanel(wx.Panel):
     BTN_WIDTH = 50
     BTN_HEIGHT = 30
-    SHIFT = 5
+    SHIFT = 10
     
     def __init__(self, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
@@ -14,8 +13,8 @@ class ButtonPanel(wx.Panel):
         self.doLayout()
         
     def doLayout(self):
-        self.prev_button = wx.Button(self, label="Prev", pos = (0, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
-        self.next_button = wx.Button(self, label="Next", pos = (self.BTN_WIDTH + self.SHIFT, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
+        self.prev_button = wx.Button(self, label="<< Prev", pos = (0, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
+        self.next_button = wx.Button(self, label="Next >>", pos = (self.BTN_WIDTH + self.SHIFT, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
 
 #----------------------------------------------------------------------------------------------
 class AddItemBottomPanel(wx.Panel):
@@ -41,7 +40,7 @@ class AddItemBottomPanel(wx.Panel):
         sizer_0.Add((20,-1), 1, wx.EXPAND) # this is a spacer
 
         sizer_1.Add(self.btnpanel, flag = wx.ALIGN_CENTER_VERTICAL)
-        sizer_2.Add((10,-1), 1, wx.EXPAND) # this is a spacer
+        sizer_2.Add((100,-1), 1, wx.EXPAND) # this is a spacer
         
         gridsizer.Add(sizer_0, flag = wx.EXPAND) 
         gridsizer.Add(sizer_1, flag = wx.EXPAND) 

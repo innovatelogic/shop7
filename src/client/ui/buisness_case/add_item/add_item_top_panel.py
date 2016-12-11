@@ -1,10 +1,9 @@
 import wx
-import wx.lib.agw.gradientbutton as GB
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class ButtonPanel(wx.Panel):
-    BTN_WIDTH = 40
+    BTN_WIDTH = 60
     BTN_HEIGHT = 30
     SHIFT = 5
     
@@ -33,7 +32,7 @@ class AddItemTopPanel(wx.Panel):
         gridsizer.AddGrowableRow(0)
         gridsizer.AddGrowableCol(0)
 
-        self.btnpanel = ButtonPanel(self, wx.ID_ANY, pos = (0, 0), size = (40, -1))
+        self.btnpanel = ButtonPanel(self, wx.ID_ANY, pos = (0, 0), size = (60, -1))
         
         sizer_0 = wx.BoxSizer(wx.HORIZONTAL)
         sizer_1 = wx.BoxSizer(wx.HORIZONTAL)

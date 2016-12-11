@@ -1,6 +1,7 @@
 import wx
 from add_item_top_panel import AddItemTopPanel
 from add_item_bottom_panel import AddItemBottomPanel
+from add_item_center_panel import AddItemCenterPanel
 
 #----------------------------------------------------------------------------------------------
 class AddItemMainPanel(wx.Panel):
@@ -22,7 +23,7 @@ class AddItemMainPanel(wx.Panel):
         self.SetSizer(vsizer)
         self.Layout()
         
-        self.child_toppanel = wx.Panel(self.bottompanel, wx.ID_ANY, size=(-1, 25))
+        self.child_toppanel = AddItemCenterPanel(self.cases_controller, self.bottompanel, wx.ID_ANY, size=(-1, 25))
         self.child_bottompanel = AddItemBottomPanel(self.cases_controller, self.bottompanel, wx.ID_ANY, size = (-1, 30))
         
         gridsizer = wx.FlexGridSizer(cols=1, rows = 2)
