@@ -9,6 +9,8 @@ import cgi
 
 from ms_connection import MSConnection
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class HTTPAuthHandler(SimpleHTTPRequestHandler):
     def set_ms_connection(self, ms_connection):
         self.ms_connection = ms_connection
@@ -29,7 +31,8 @@ class HTTPAuthHandler(SimpleHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.end_headers()
         self.wfile.write(result)
-        
+
+#----------------------------------------------------------------------------------------------
 def MakeHandlerClassFromArgv(ms_connection):
     class CustomHandler(HTTPAuthHandler, object):
         def __init__(self, *args, **kwargs):

@@ -19,17 +19,11 @@ class AddItemMainPanel(wx.Panel):
         vsizer.Add(self.toppanel, 0, wx.EXPAND)
         vsizer.Add(self.bottompanel, 1, wx.GROW)
         
-        self.toppanel.SetBackgroundColour(wx.Colour(34, 0, 0))
-        self.bottompanel.SetBackgroundColour(wx.Colour(0, 0, 96))
-        
         self.SetSizer(vsizer)
         self.Layout()
         
         self.child_toppanel = wx.Panel(self.bottompanel, wx.ID_ANY, size=(-1, 25))
-        self.child_bottompanel = wx.Panel(self.bottompanel, wx.ID_ANY, size=(-1, 30)) #AddItemBottomPanel(self.cases_controller, self.bottompanel, wx.ID_ANY, size = (-1, 140))
-        
-        self.child_toppanel.SetBackgroundColour(wx.Colour(255, 0, 0))
-        self.child_bottompanel.SetBackgroundColour(wx.Colour(0, 255, 255))
+        self.child_bottompanel = AddItemBottomPanel(self.cases_controller, self.bottompanel, wx.ID_ANY, size = (-1, 30))
         
         gridsizer = wx.FlexGridSizer(cols=1, rows = 2)
         gridsizer.AddGrowableRow(0)

@@ -33,9 +33,6 @@ class DocumentViewPanel(wx.Panel):
         self.view_panels.append(self.itemsViewPanel)
         self.view_panels.append(self.addItemPanel)
         
-        self.itemsViewPanel.SetBackgroundColour(wx.Colour(34, 1, 96))
-        self.addItemPanel.SetBackgroundColour(wx.Colour(34, 165, 96))
-        
         self.TogglePanel(EPanelsCases.EPanel_Items)
         
 #----------------------------------------------------------------------------------------------
