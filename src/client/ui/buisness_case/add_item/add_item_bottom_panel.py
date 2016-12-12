@@ -2,6 +2,11 @@ import wx
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
+
+LABEL_NAME_PREV = "<< Prev"
+LABEL_NAME_NEXT = "Next >>"
+LABEL_NAME_FINISH = "Finish"
+
 class ButtonPanel(wx.Panel):
     BTN_WIDTH = 50
     BTN_HEIGHT = 30
@@ -63,4 +68,19 @@ class AddItemBottomPanel(wx.Panel):
         
 #----------------------------------------------------------------------------------------------
     def OnClick_Next(self, event):
-        self.cases_controller.getAddItemController().nextStep()    
+        self.cases_controller.getAddItemController().nextStep()
+
+#----------------------------------------------------------------------------------------------
+    def setPage(self, page):
+        if page == 0:
+            self.btnpanel.prev_button.Hide()
+            self.btnpanel.next_button.SetLabel(LABEL_NAME_NEXT)
+        elif page == 1:
+            self.btnpanel.prev_button.Show()
+            self.btnpanel.next_button.SetLabel(LABEL_NAME_NEXT)
+        elif page == 2:
+            self.btnpanel.prev_button.Show()
+            self.btnpanel.next_button.SetLabel(LABEL_NAME_FINISH)
+        else:
+            print('Error')
+        

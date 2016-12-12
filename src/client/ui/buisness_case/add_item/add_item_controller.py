@@ -1,20 +1,23 @@
 
 
 class AddItemController():
+	ZERO_PAGE = 0
+	MAX_PAGE = 3
 	def __init__(self, cases_controller):
 		self.cases_controller = cases_controller
-		self.__page = 0
+		self.__page = self.ZERO_PAGE
 
 #----------------------------------------------------------------------------------------------
 	def start(self):
 		print('start')
-		self.__page = 0
+		self.__page = self.ZERO_PAGE
 		self.cases_controller.getView().addItemSetPage(self.__page)
 		
 #----------------------------------------------------------------------------------------------
 	def finish(self, flag):
 		print('finish {}'.format(flag))
-
+		self.cases_controller.getView().addItemCancel()
+		
 #----------------------------------------------------------------------------------------------	
 	def page(self):
 		return self.__page
@@ -22,21 +25,22 @@ class AddItemController():
 #----------------------------------------------------------------------------------------------
 	def cancelAddItem(self):
 		print('canelAddItem')
-		self.cases_controller.getView().addItemCancel()
 		self.finish(False)
 		
 #----------------------------------------------------------------------------------------------
 	def prevStep(self):
-		print('prevStep')
 		self.__page -= 1
 		self.cases_controller.getView().addItemSetPage(self.__page)
 		
 #----------------------------------------------------------------------------------------------
 	def nextStep(self):
-		print('nextStep')
 		self.__page += 1
-		self.cases_controller.getView().addItemSetPage(self.__page)
 		
+		if self.__page == self.MAX_PAGE:
+			self.finish(True)
+		else:
+			self.cases_controller.getView().addItemSetPage(self.__page)
+
 #----------------------------------------------------------------------------------------------
 	def getPage(self):
-		return self.page
+		return self.__page

@@ -38,4 +38,15 @@ class AddItemMainPanel(wx.Panel):
 
 #----------------------------------------------------------------------------------------------
     def setPage(self, page):
+        
+        self.child_bottompanel.setPage(page)
+        
+        if page == 0:
+            pass
+        elif page == 1:
+            pass
+        elif page == 2:
+            pass
+        else:
+            print('Error')
         print('setPage: {}'.format(page))
