@@ -17,15 +17,17 @@ class ButtonPanel(wx.Panel):
         self.next_button = wx.Button(self, label="Next >>", pos = (self.BTN_WIDTH + self.SHIFT, 0), size = (self.BTN_WIDTH, self.BTN_HEIGHT))
 
 #----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class AddItemBottomPanel(wx.Panel):
     def __init__(self, 
                  cases_controller, 
                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.cases_controller = cases_controller
-        self.realm = cases_controller.realm()
         self.doLayout()
+        self.bind()
         
+#----------------------------------------------------------------------------------------------
     def doLayout(self):
         gridsizer = wx.FlexGridSizer(cols=3, rows = 1)
         gridsizer.AddGrowableRow(0)
@@ -48,3 +50,17 @@ class AddItemBottomPanel(wx.Panel):
         
         self.SetSizer(gridsizer)
         self.Layout()
+        
+#----------------------------------------------------------------------------------------------
+    def bind(self):
+        self.Bind(wx.EVT_BUTTON, self.OnClick_Prev, self.btnpanel.prev_button)
+        self.Bind(wx.EVT_BUTTON, self.OnClick_Next, self.btnpanel.next_button)
+        pass
+    
+#----------------------------------------------------------------------------------------------
+    def OnClick_Prev(self, event):
+        self.cases_controller.getAddItemController().prevStep()
+        
+#----------------------------------------------------------------------------------------------
+    def OnClick_Next(self, event):
+        self.cases_controller.getAddItemController().nextStep()    

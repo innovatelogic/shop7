@@ -80,7 +80,7 @@ class DocumentViewPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------
     def addItem(self):
         self.TogglePanel(EPanelsCases.EPanel_AddItem)
-        pass
+        return True
     
 #----------------------------------------------------------------------------------------------
     def editItem(self):
@@ -89,3 +89,19 @@ class DocumentViewPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------
     def delItem(self):
         pass
+    
+#----------------------------------------------------------------------------------------------
+    def addItemPrevPage(self):
+        pass    
+#----------------------------------------------------------------------------------------------
+    def addItemNextPage(self):
+        pass
+    
+#----------------------------------------------------------------------------------------------
+    def addItemCancel(self):
+        self.TogglePanel(EPanelsCases.EPanel_Items)
+        pass
+
+#----------------------------------------------------------------------------------------------
+    def addItemSetPage(self, page):
+        self.addItemPanel.setPage(page)

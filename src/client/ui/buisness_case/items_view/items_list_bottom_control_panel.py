@@ -2,6 +2,7 @@ import wx
 from wx.lib.masked import NumCtrl
 from wx.lib.intctrl import IntCtrl
 import wx.lib.intctrl
+
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class ItemsListBottomControlPanel(wx.Panel):

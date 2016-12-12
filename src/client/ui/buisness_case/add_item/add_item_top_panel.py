@@ -23,8 +23,8 @@ class AddItemTopPanel(wx.Panel):
                  parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
         self.cases_controller = cases_controller
-        self.realm = cases_controller.realm()
         self.doLayout()
+        self.bind()
 
 #----------------------------------------------------------------------------------------------
     def doLayout(self):
@@ -49,3 +49,11 @@ class AddItemTopPanel(wx.Panel):
         
         self.SetSizer(gridsizer)
         self.Layout()
+
+#----------------------------------------------------------------------------------------------
+    def bind(self):
+        self.Bind(wx.EVT_BUTTON, self.OnClick_Cancel, self.btnpanel.cancel_button)
+
+#---------------------------------------------------------------------------------------------- 
+    def OnClick_Cancel(self, event):
+        self.cases_controller.getAddItemController().cancelAddItem()

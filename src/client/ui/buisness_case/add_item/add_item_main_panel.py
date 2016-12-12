@@ -35,4 +35,7 @@ class AddItemMainPanel(wx.Panel):
         self.bottompanel.SetSizer(gridsizer)
         
         self.bottompanel.Layout()
-        
+
+#----------------------------------------------------------------------------------------------
+    def setPage(self, page):
+        print('setPage: {}'.format(page))

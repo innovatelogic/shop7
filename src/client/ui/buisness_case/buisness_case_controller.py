@@ -1,3 +1,4 @@
+from add_item.add_item_controller import AddItemController
 
 class BuisnessCaseController():
     ITEMS_PER_PAGE = 5
@@ -8,15 +9,24 @@ class BuisnessCaseController():
         self.view = None
         self.items_offset = 0
         self.items_per_page = 0
+        self.addItemController = AddItemController(self)
 
 #----------------------------------------------------------------------------------------------        
     def setView(self, view):
         self.view = view
 
-#----------------------------------------------------------------------------------------------        
+#----------------------------------------------------------------------------------------------
+    def getView(self):
+        return self.view
+
+#----------------------------------------------------------------------------------------------
     def realm(self):
         return self.__realm
-
+    
+#----------------------------------------------------------------------------------------------    
+    def getAddItemController(self):
+        return self.addItemController
+    
 #----------------------------------------------------------------------------------------------        
     def user_category_selected(self, cat_id):
         print('[user_category_selected]')
@@ -31,8 +41,11 @@ class BuisnessCaseController():
 
 #----------------------------------------------------------------------------------------------    
     def addItem(self):
-        self.view.addItem()
-        pass
+        res = False
+        if self.view.addItem():
+            self.getAddItemController().start()
+            res = True
+        return res
 
 #----------------------------------------------------------------------------------------------    
     def editItem(self):
