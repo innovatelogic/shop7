@@ -21,7 +21,7 @@ class MasterServer:
     def run(self):
         logging.info("Master Server Starts")
         
-        parameters = ConnectionParameters()
+        parameters = ConnectionParameters(heartbeat_interval=0)
         cc = protocol.ClientCreator(reactor,
                                     TwistedProtocolConnection,
                                     parameters)

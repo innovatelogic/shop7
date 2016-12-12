@@ -27,6 +27,8 @@ class AuthServer:
         print(time.asctime(), "Auth Server Starts - %s:%s" % (host_name, port_number))
         try:
             httpd.serve_forever()
+        except socket.timeout:
+            print('socket.timeout')
         except KeyboardInterrupt:
              pass
         httpd.server_close()

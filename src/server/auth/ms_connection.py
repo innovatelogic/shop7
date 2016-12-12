@@ -9,7 +9,10 @@ class MSConnection:
         pass
         
     def start(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.specs['ms']['host'], port=self.specs['ms']['ms_queue_port']))
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(
+            host=self.specs['ms']['host'], 
+            port=self.specs['ms']['ms_queue_port'],
+            heartbeat_interval=0))
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue=self.specs['ms']['ms_auth_queue'], auto_delete=True) #
         self.result = self.channel.queue_declare()
