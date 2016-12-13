@@ -40,6 +40,7 @@ class AddItemMainPanel(wx.Panel):
     def setPage(self, page):
         
         self.child_bottompanel.setPage(page)
+        self.child_toppanel.ToggleCenterPage(page)
         
         if page == 0:
             pass

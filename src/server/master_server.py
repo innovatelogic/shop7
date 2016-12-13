@@ -18,10 +18,12 @@ class MasterServer:
         self.__realm = Realm(self.specs)
         pass
     
+#----------------------------------------------------------------------------------------------
     def run(self):
         logging.info("Master Server Starts")
         
         parameters = ConnectionParameters(heartbeat_interval=0)
+        
         cc = protocol.ClientCreator(reactor,
                                     TwistedProtocolConnection,
                                     parameters)
@@ -41,10 +43,12 @@ class MasterServer:
         self.__realm.stop()
         
         print(time.asctime(), "Master Server Stops")
-  
+        
+#----------------------------------------------------------------------------------------------
     def realm(self):
         return self.__realm
-    
+
+#----------------------------------------------------------------------------------------------
     def start_auth_server(self):
         subprocess.Popen(self.specs['path']['auth_proc'], shell=True)
         
