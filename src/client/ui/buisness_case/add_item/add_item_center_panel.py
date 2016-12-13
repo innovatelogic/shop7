@@ -1,4 +1,5 @@
 import wx
+from add_item_page_0 import AddItemPage0
 
 #----------------------------------------------------------------------------------------------
 class AddItemCenterPanel(wx.Panel):
@@ -14,7 +15,7 @@ class AddItemCenterPanel(wx.Panel):
     def doLayout(self):
         self.SetBackgroundColour((255, 255, 255))
         
-        self.first_page_panel = wx.Panel(self, wx.ID_ANY, size = (-1, -1))
+        self.first_page_panel = AddItemPage0(self.cases_controller, self, wx.ID_ANY, size = (-1, -1))
         self.second_page_panel = wx.Panel(self, wx.ID_ANY, size = (-1, -1))
         self.third_page_panel = wx.Panel(self, wx.ID_ANY, size = (-1, -1))
         
