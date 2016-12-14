@@ -6,6 +6,7 @@ from os import path
 sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
 
 from base_file_reader import BaseFileReader
+from tree_loader import TreeLoader
 
 #----------------------------------------------------------------------------------------------
 def main():
@@ -57,11 +58,14 @@ def main():
 	try:
 		print("start script")
 		
-		base_file_reader = BaseFileReader(specs)
+		#base_file_reader = BaseFileReader(specs)
+		#base_file_reader.read()
+		#base_file_reader.save('test.xml')
 		
-		base_file_reader.read()
+		tree_loader = TreeLoader()
+		tree_loader.load(data_folder + data_filename)
 		
-		base_file_reader.save('test.xml')
+		print("end script")
 		
 	except Exception:
 		print(sys.exc_info()[0])

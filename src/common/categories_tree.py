@@ -1,8 +1,11 @@
 import io
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class CategoryNode():
-    def __init__(self, name, id):
+    def __init__(self, name, id, local = ''):
         self.name = name
+        self.local = local
         self.id = id
         self._id = None
         self.parent_id = None
@@ -19,7 +22,9 @@ class CategoryNode():
     def woffset(self, deep, f):
         for x in range(0, deep):
             f.write(unicode('  '))
-            
+
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class CategoryTree():
     def __init__(self):
         self.root = None

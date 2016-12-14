@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
  <node name="root">
-     <node local="" name="Clothing">
-         <node local="" name="Accessories">
+     <node local="_UA:Одяг;_RU:Одежда" name="Clothing">
+         <node local="_UA:Аксесуари;_RU:Аксессуары" name="Accessories">
              <node local="" name="Belts"/>
              <node local="" name="Cold Weather Accessories">
                  <node local="" name="Arm Warmers"/>

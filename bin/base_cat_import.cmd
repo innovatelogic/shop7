@@ -2,7 +2,7 @@
 
 call %~dp0/server_config.cmd
 
-set INPUT=%~dp0../data/base_aspect.txt
+set INPUT=%~dp0../data/base_aspect.xml
 set OUT=%~dp0../data/cache
 
 set NITEM=100

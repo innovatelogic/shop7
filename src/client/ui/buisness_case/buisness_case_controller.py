@@ -39,7 +39,7 @@ class BuisnessCaseController():
     def show_all_category_tree_selected(self, flag):
         print('[show_all_category_tree_selected]')
 
-#----------------------------------------------------------------------------------------------    
+#----------------------------------------------------------------------------------------------
     def addItem(self):
         res = False
         if self.view.addItem():
