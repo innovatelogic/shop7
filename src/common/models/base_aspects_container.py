@@ -162,3 +162,62 @@ class BaseAspectsContainer():
             f.write(unicode('{\n'))
             root.dump(f, 0)
             f.write(unicode('}\n'))
+            
+    #----------------------------------------------------------------------------------------------
+    def treeMerge(self, source_root, dest_root):
+        ''' merge two trees. assign diff from source to dest.
+            modify dest tree 
+        '''
+        stack_dest = []
+        stack_src = []
+        
+        stack_dest.append(dest_root)
+        stack_src.append(dest_root)
+        
+        while(stack_src):
+            print('----')
+            new_stack_src = []
+            new_stack_dst = []
+            
+            '''find common nodes in both spaces'''
+            common_ab = []
+            for src_node in stack_src:
+                for dst_node in stack_dest:
+                    if src_node.category.name == dst_node.category.name:
+                        common_ab.append(dst_node)
+                        ''' add dst children to next iteration '''
+                        for child in dst_node.childs:
+                            new_stack_dst.append(child)
+                            
+                ''' add source children to next iteration '''
+                for child in src_node.childs:
+                    new_stack_src.append(child)
+                    
+            for comm in common_ab:
+                print comm.category.name
+            
+            ''' add source's unique to destination space'''
+            for src_node in stack_src:
+                bAdd = False
+                for comm in common_ab:
+                    if comm.category.name == src_node.category.name:
+                        bAdd = True
+                if not bAdd:
+                    for dst in stack_dest:
+                        if src_node.parent.category.name == dst.parent.category.name:
+                            src_copy = CategoryNode(src_node.category, dst.parent)
+                            dst.parent.childs.append(src_copy)
+                            break
+            
+            '''remove disjoint nodes from dest's parent'''
+            for dst in stack_dest:
+                bRem = True
+                for comm in common_ab:
+                    if comm.category.name == dst.category.name:
+                        bRem = False 
+            if bRem:
+                dst.parent.childs.remove(dsst)
+                           
+            stack_src = new_stack_src
+            stack_dest = new_stack_dst
+            print('----')

@@ -44,11 +44,11 @@ class TreeLoader():
             
         print('processed {} categories'.format(count))
         
-        self.base_aspects_container.dump_category_tree(filename + '.tmp2', self.root)
-        
+        #self.base_aspects_container.dump_category_tree(filename + '.tmp2', self.root)
         pass
 
 #----------------------------------------------------------------------------------------------
-    def importTree(self, aspect):
-        self.base_aspects_container.load_aspect(aspect, None)
-        
+    def merge(self, source):
+        print('merge')
+        self.base_aspects_container.treeMerge(source, self.root)
+        self.base_aspects_container.dump_category_tree(self.specs['path']['data'] + 'merge.tmp', self.root)

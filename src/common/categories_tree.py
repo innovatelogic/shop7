@@ -1,4 +1,5 @@
 import io
+from __builtin__ import True
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
@@ -45,7 +46,8 @@ class CategoryTree():
                 stack.insert(0, child) 
 
         return None
-    
+
+#----------------------------------------------------------------------------------------------
 def dump_category_tree(filename, root):
     print("opening damp groups file:" + filename)
     with io.open(filename + '.dump', 'w', encoding='utf8') as f:
@@ -53,3 +55,4 @@ def dump_category_tree(filename, root):
         f.write(unicode('{\n'))
         root.dump(f, 0)
         f.write(unicode('}\n'))
+            

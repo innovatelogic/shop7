@@ -62,8 +62,13 @@ def main():
 		#base_file_reader.save('test.xml')
 		
 		tree_loader = TreeLoader(specs)
-		tree_loader.load(data_folder + data_filename)
-		tree_loader.importTree('__base')
+		tree_loader.load(data_folder + 'aspect_a.xml') #data_filename
+		
+		tree_loader2 = TreeLoader(specs)
+		tree_loader2.load(data_folder + 'aspect_b.xml') #data_filename
+		
+		tree_loader.merge(tree_loader2.root)
+		#tree_loader.importTree('__base')
 		
 		print("end script")
 		
