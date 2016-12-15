@@ -1,10 +1,26 @@
+import io
 
 class CategoryNode():
     def __init__(self, category, parent):
         self.category = category
         self.parent = parent
         self.childs = []
-
+        
+    def dump(self, f, deep):
+        ''' debug serialize '''
+        self.woffset(deep, f)
+        f.write(unicode(str(self.category.name) + '\n', 'utf8'))
+        
+        if self.childs:
+            for child in self.childs:
+                child.dump(f, deep + 1)
+            
+    def woffset(self, deep, f):
+        for x in range(0, deep):
+            f.write(unicode('  '))
+            
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------   
 class Aspect():
     def __init__(self, name, root):
         self.name = name
@@ -32,12 +48,14 @@ class BaseAspectsContainer():
         ''' create category tree'''
         print('Load aspect {}'.format(aspect))
         count = 0
-        
+
         root_node = CategoryNode(self.db_inst.base_aspects.get_root_category(aspect), None);
-        
+
         if root_node.category:
             self.aspects[aspect] = Aspect(aspect, root_node)
-            cache_ref.add_base_category(aspect, str(root_node.category._id)) #cache
+            
+            if cache_ref:
+                cache_ref.add_base_category(aspect, str(root_node.category._id)) #cache
             
             stack = []
             stack.append(root_node)
@@ -51,7 +69,9 @@ class BaseAspectsContainer():
                 for child in childs:
                     child_node = CategoryNode(child, top)
                     self.aspects[aspect].hashmap[str(child_node.category._id)] = child_node
-                    cache_ref.add_base_category(aspect, str(child_node.category._id)) #cache
+                    
+                    if cache_ref:
+                        cache_ref.add_base_category(aspect, str(child_node.category._id)) #cache
                     
                     top.childs.append(child_node)
                     stack.insert(0, child_node) 
@@ -133,3 +153,12 @@ class BaseAspectsContainer():
             for item in node.childs:
                 out.append(item)
         return out
+    
+    #----------------------------------------------------------------------------------------------
+    def dump_category_tree(self, filename, root):
+        print("opening damp groups file:" + filename)
+        with io.open(filename + '.dump', 'w', encoding='utf8') as f:
+            print("opening OK")
+            f.write(unicode('{\n'))
+            root.dump(f, 0)
+            f.write(unicode('}\n'))

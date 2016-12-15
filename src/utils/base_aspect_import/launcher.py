@@ -52,18 +52,18 @@ def main():
         'host':args.dbhost,
         'port':args.dbport,
         'name':args.dbname,
-        'dbdrop':args.dbdrop,
         }
 	
 	try:
 		print("start script")
-		
+
 		#base_file_reader = BaseFileReader(specs)
 		#base_file_reader.read()
 		#base_file_reader.save('test.xml')
 		
-		tree_loader = TreeLoader()
+		tree_loader = TreeLoader(specs)
 		tree_loader.load(data_folder + data_filename)
+		tree_loader.importTree('__base')
 		
 		print("end script")
 		

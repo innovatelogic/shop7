@@ -8,6 +8,8 @@ from user_aspects import UserAspects
 from items_mapping import ItemsMapping
 from user_settings import UserSettingsDB
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class Instance():
 	''' incapsulate db management'''
 	def __init__(self, specs):
@@ -22,6 +24,7 @@ class Instance():
 		self.user_aspects = UserAspects(self)
 		self.items_mapping = ItemsMapping(self)
 		
+#----------------------------------------------------------------------------------------------
 	def connect(self):
 		self.connection.connect()
 		self.user_groups.init()
@@ -32,7 +35,8 @@ class Instance():
 		self.base_aspects.init()
 		self.user_aspects.init()
 		self.items_mapping.init()
-		
+
+#----------------------------------------------------------------------------------------------
 	def disconnect(self):
 		self.connection.close()
 		pass

@@ -72,7 +72,7 @@ class CacheData():
         
         common.categories_tree.dump_category_tree(self.cahepath + '.tmp', self.tree.root)
         
-#----------------------------------------------------------------------------------------------           
+#----------------------------------------------------------------------------------------------  
     def buildTree(self, array):
         ''' build tree from flat structure array'''
         self.tree = CategoryTree()

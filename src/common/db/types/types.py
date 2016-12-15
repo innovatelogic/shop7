@@ -5,12 +5,16 @@ class Category():
 		self._id = spec['_id']
 		self.parent_id = spec['parent_id']
 		self.name = spec['name']
+		self.local = ''
+		if 'local' in self.local:
+			self.local = spec['local']
 		
 	def get(self):
 		record = {
 			'_id':self._id,
 			'parent_id':self.parent_id,
 			'name':self.name,
+			'local':self.local,
 			}
 		return record
 

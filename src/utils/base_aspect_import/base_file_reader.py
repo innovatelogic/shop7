@@ -33,7 +33,7 @@ class BaseFileReader():
         for word in words:
             node_to_add = self.pushNode(node_to_add, word)
             
-#----------------------------------------------------------------------------------------------        
+#----------------------------------------------------------------------------------------------
     def pushNode(self, node, name):
         childs = node.getElementsByTagName('node')
         for child in childs:
