@@ -7,15 +7,15 @@ from common.db.types.types import Category
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class TreeLoader():
-    def __init__(self, specs):
+    def __init__(self, specs, db):
         self.specs = specs
         self.root = None
-        self.db = common.db.instance.Instance(self.specs)
+        self.db = db
         self.base_aspects_container = BaseAspectsContainer(self.db)
-        self.db.connect()
         
 #----------------------------------------------------------------------------------------------
     def load(self, filename):
+        INVALID_ID = -1
         doc = minidom.parse(filename)
         root_node = doc.getElementsByTagName("node")[0]
         
@@ -34,8 +34,8 @@ class TreeLoader():
                     if child.nodeType == child.ELEMENT_NODE and child.localName == 'node':
                         name = child.getAttribute("name")
                         local = child.getAttribute("local")
-                        print name
-                        cat = CategoryNode(Category({'_id':0, 'parent_id':0, 'name':name, 'local':local}), node[1])
+                        
+                        cat = CategoryNode(Category({'_id':INVALID_ID, 'parent_id':INVALID_ID, 'name':name, 'local':local}), node[1])
                         node[1].childs.append(cat)
                         
                         new_stack.append((child, cat))
@@ -50,6 +50,9 @@ class TreeLoader():
 
 #----------------------------------------------------------------------------------------------
     def merge(self, source):
-        print('merge')
         self.base_aspects_container.treeMerge(source, self.root)
         self.base_aspects_container.dump_category_tree(self.specs['path']['data'] + 'merge.tmp', self.root)
+
+#----------------------------------------------------------------------------------------------  
+    def save(self, aspect):
+        self.base_aspects_container.save_aspect(aspect, self.root)

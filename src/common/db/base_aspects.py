@@ -16,10 +16,17 @@ class BaseAspects():
 
 #----------------------------------------------------------------------------------------------
     def add_category(self, aspect, category):
-        self.cat.update_one({'_id':aspect}, {'$push': {"categories" : category.get()}})
+        print ('add {}'.format(category.get()))
+        updateResult = self.cat.update_one({'_id':aspect}, {'$push': {"categories" : category.get()}})
+        print updateResult.acknowledged
+
+ #----------------------------------------------------------------------------------------------
+    def remove_category(self, aspect, category_id):
+        self.cat.remove({'_id':aspect}, {'$pull': {"categories" : {'_id':category_id}}})
         
 #----------------------------------------------------------------------------------------------
     def get_root_category(self, aspect):
+        ''' get root category node. None if not exist '''
         data = self.cat.find_one({'_id':aspect}, { "categories": { '$elemMatch' :  {'name':'root'} } })
         
         if data and data.get('categories') and len(data['categories']):
