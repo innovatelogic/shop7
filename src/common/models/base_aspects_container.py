@@ -172,7 +172,7 @@ class BaseAspectsContainer():
         stack_src = []
         
         stack_dest.append(dest_root)
-        stack_src.append(dest_root)
+        stack_src.append(source_root)
         
         while(stack_src):
             print('----')
@@ -215,9 +215,8 @@ class BaseAspectsContainer():
                 for comm in common_ab:
                     if comm.category.name == dst.category.name:
                         bRem = False 
-            if bRem:
-                dst.parent.childs.remove(dsst)
+                if bRem:
+                    dst.parent.childs.remove(dst)
                            
             stack_src = new_stack_src
             stack_dest = new_stack_dst
-            print('----')

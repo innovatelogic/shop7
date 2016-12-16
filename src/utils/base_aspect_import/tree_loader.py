@@ -28,23 +28,24 @@ class TreeLoader():
         while(stack):
             new_stack = []
             for node in stack:
-                childs = node[0].getElementsByTagName('node')
+                childs = node[0].childNodes # getElementsByTagName('node')
                 
                 for child in childs:
-                    name = child.getAttribute("name")
-                    local = child.getAttribute("local")
-                    
-                    cat = CategoryNode(Category({'_id':0, 'parent_id':0, 'name':name, 'local':local}), node[1])
-                    node[1].childs.append(cat)
-                    
-                    new_stack.append((child, cat))
-                    count += 1
+                    if child.nodeType == child.ELEMENT_NODE and child.localName == 'node':
+                        name = child.getAttribute("name")
+                        local = child.getAttribute("local")
+                        print name
+                        cat = CategoryNode(Category({'_id':0, 'parent_id':0, 'name':name, 'local':local}), node[1])
+                        node[1].childs.append(cat)
+                        
+                        new_stack.append((child, cat))
+                        count += 1
                     
             stack = new_stack
             
         print('processed {} categories'.format(count))
         
-        #self.base_aspects_container.dump_category_tree(filename + '.tmp2', self.root)
+        self.base_aspects_container.dump_category_tree(filename + '.tmp2', self.root)
         pass
 
 #----------------------------------------------------------------------------------------------
