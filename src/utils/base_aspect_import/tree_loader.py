@@ -19,7 +19,7 @@ class TreeLoader():
         doc = minidom.parse(filename)
         root_node = doc.getElementsByTagName("node")[0]
         
-        self.root = CategoryNode(Category({'_id':0, 'parent_id':0, 'name':'root', 'local':''}), None)
+        self.root = CategoryNode(Category({'_id':INVALID_ID, 'parent_id':None, 'name':'root', 'local':''}), None)
         
         stack = []
         stack.append((root_node, self.root))

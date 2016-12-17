@@ -70,10 +70,16 @@ def main():
 		tree_src.load(data_folder + 'aspect_src.xml') #data_filename
 		
 		tree_dst = TreeLoader(specs, db)
-		tree_dst.load(data_folder + 'aspect_dst.xml') #data_filename
+		tree_dst.base_aspects_container.load_aspect('basic', None) #data_filename
+
+		tree_dst.base_aspects_container.treeMerge(tree_src.root, tree_dst.base_aspects_container.aspects['basic'].root)
 		
-		tree_dst.merge(tree_src.root)
-		tree_dst.save('basic')
+		tree_dst.base_aspects_container.dump_category_tree(specs['path']['data'] + 'merge.tmp', tree_dst.base_aspects_container.aspects['basic'].root)
+		
+		tree_dst.base_aspects_container.save_aspect('basic', tree_dst.base_aspects_container.aspects['basic'].root)
+		
+		#tree_dst.merge(tree_src.root)
+		#tree_dst.save('basic')
 		
 		#tree_loader.importTree('__base')
 		
