@@ -16,13 +16,12 @@ class BaseAspects():
 
 #----------------------------------------------------------------------------------------------
     def add_category(self, aspect, category):
-        print ('add {}'.format(category.get()))
         updateResult = self.cat.update_one({'_id':aspect}, {'$push': {"categories" : category.get()}})
-        print updateResult.acknowledged
+        #print updateResult.acknowledged
 
  #----------------------------------------------------------------------------------------------
     def remove_category(self, aspect, category_id):
-        self.cat.remove({'_id':aspect}, {'$pull': {"categories" : {'_id':category_id}}})
+        self.cat.update({'_id':aspect}, {'$pull': {"categories" : {'_id':category_id}}})
         
 #----------------------------------------------------------------------------------------------
     def get_root_category(self, aspect):

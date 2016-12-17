@@ -1,7 +1,7 @@
 import os, sys, shutil, argparse
 import codecs, json, io
 from openpyxl import load_workbook
-
+from bson.objectid import ObjectId
 from os import path
 sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
 
@@ -9,6 +9,8 @@ from base_file_reader import BaseFileReader
 from tree_loader import TreeLoader
 import common.db.instance
 import common.connection_db
+from common.models.base_aspects_container import BaseAspectsContainer, CategoryNode
+from common.db.types.types import Category
 
 #----------------------------------------------------------------------------------------------
 def main():
@@ -66,17 +68,28 @@ def main():
 		db = common.db.instance.Instance(specs)
 		db.connect()
 		
+		#
+		#return
+		
+		ASPECT_ID = 'basic'
+	
 		tree_src = TreeLoader(specs, db)
 		tree_src.load(data_folder + 'aspect_src.xml') #data_filename
+		#tree_src.base_aspects_container.save_aspect('basic', tree_src.root)
 		
 		tree_dst = TreeLoader(specs, db)
-		tree_dst.base_aspects_container.load_aspect('basic', None) #data_filename
-
-		tree_dst.base_aspects_container.treeMerge(tree_src.root, tree_dst.base_aspects_container.aspects['basic'].root)
+		if not tree_dst.base_aspects_container.load_aspect(ASPECT_ID, None): #data_filename
+			db.base_aspects.clear(ASPECT_ID)
+			db.base_aspects.cat.insert({'_id':ASPECT_ID})
+			db.base_aspects.add_category(ASPECT_ID, Category({'_id':ObjectId(), 'parent_id':None, 'name':'root', 'local':''}))
+			tree_dst.base_aspects_container.load_aspect(ASPECT_ID, None)
 		
-		tree_dst.base_aspects_container.dump_category_tree(specs['path']['data'] + 'merge.tmp', tree_dst.base_aspects_container.aspects['basic'].root)
+		dst_root = tree_dst.base_aspects_container.aspects['basic'].root
+		tree_dst.base_aspects_container.treeMerge(tree_src.root, dst_root)
 		
-		tree_dst.base_aspects_container.save_aspect('basic', tree_dst.base_aspects_container.aspects['basic'].root)
+		tree_dst.base_aspects_container.dump_category_tree(specs['path']['data'] + 'merge.tmp', dst_root)
+		
+		tree_dst.base_aspects_container.save_aspect('basic', dst_root)
 		
 		#tree_dst.merge(tree_src.root)
 		#tree_dst.save('basic')
