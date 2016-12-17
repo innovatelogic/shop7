@@ -74,13 +74,14 @@ def main():
 		ASPECT_ID = 'basic'
 	
 		tree_src = TreeLoader(specs, db)
-		tree_src.load(data_folder + 'aspect_src.xml') #data_filename
+		tree_src.load(data_folder + 'base_aspect.xml') #data_filename
 		#tree_src.base_aspects_container.save_aspect('basic', tree_src.root)
 		
+		#db.base_aspects.clear(ASPECT_ID)
 		tree_dst = TreeLoader(specs, db)
 		if not tree_dst.base_aspects_container.load_aspect(ASPECT_ID, None): #data_filename
-			db.base_aspects.clear(ASPECT_ID)
-			db.base_aspects.cat.insert({'_id':ASPECT_ID})
+			#
+			#db.base_aspects.cat.insert({'_id':ASPECT_ID})
 			db.base_aspects.add_category(ASPECT_ID, Category({'_id':ObjectId(), 'parent_id':None, 'name':'root', 'local':''}))
 			tree_dst.base_aspects_container.load_aspect(ASPECT_ID, None)
 		
