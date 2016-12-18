@@ -5,6 +5,7 @@ from openpyxl.compat import range
 from openpyxl.cell import get_column_letter
 from common.categories_tree import CategoryTree, CategoryNode
 import common.connection_db
+from xml.dom.minidom import *
 
 XLSX_FILENAME='categories.xlsx'
 
@@ -69,10 +70,11 @@ class CacheData():
                 arr_groups.append(data)
             
         self.buildTree(arr_groups)
+        self.buildXMLTree(arr_groups)
         
         common.categories_tree.dump_category_tree(self.cahepath + '.tmp', self.tree.root)
         
-#----------------------------------------------------------------------------------------------  
+#----------------------------------------------------------------------------------------------
     def buildTree(self, array):
         ''' build tree from flat structure array'''
         self.tree = CategoryTree()
@@ -108,4 +110,71 @@ class CacheData():
                     node = CategoryNode(row['Cat3'], row['id'])
                     top.childs.append(node)
                 top = node
+
+#----------------------------------------------------------------------------------------------
+    def buildXMLTree(self, array):
+        print('buildXMLTree')
+        doc = Document()
+        root = doc.createElement('node')
+        root.setAttribute("name", "root")
+        doc.appendChild(root)
         
+        for row in array:
+            nodes =  []
+            if row.get('Cat0'):
+                nodes.append(row['Cat0'])
+            if row.get('Cat1'):
+                nodes.append(row['Cat1'])
+            if row.get('Cat2'):
+                nodes.append(row['Cat2'])            
+            if row.get('Cat3'):
+                nodes.append(row['Cat3'])
+                
+            self.addXML(nodes, row['id'], root, doc)
+            
+        out = self.specs['input']['path'] + 'tmp.tmp'
+        print('save to {}'.format(out))
+        doc.writexml(open(out, 'w'),
+                       indent=" ",
+                       addindent= "    ",
+                       newl='\n')
+        
+    #----------------------------------------------------------------------------------------------
+    def addXML(self, names, foreign_id, root, doc):
+        node_to_add = root
+        bAdded = False
+        
+        n_count = 0
+        for name in names:
+            bAdd = True
+            childs = node_to_add.childNodes
+            for child in childs:
+                if child.nodeType == child.ELEMENT_NODE and child.localName == 'node':
+                    if child.getAttribute("name") == name:
+                        node_to_add = child
+                        bAdd = False
+                        break
+                        
+            if bAdd:
+                str_foreign_id = ''
+                if n_count == len(names) - 1: # add foreign id to last trailing node
+                    str_foreign_id = str(foreign_id)
+                self.pushNode(node_to_add, name, str_foreign_id , doc)
+                bAdded = True
+            
+            n_count += 1
+            
+        if not bAdded:
+            print('ignore {}'.format(names))
+            
+    #----------------------------------------------------------------------------------------------
+    def pushNode(self, node, name, str_foreing_id, doc):
+        new_node = doc.createElement('node')
+        new_node.setAttribute("name", name)
+        new_node.setAttribute("local", "")
+        new_node.setAttribute("foreign_id", str_foreing_id)
+        node.appendChild(new_node)
+        
+#----------------------------------------------------------------------------------------------
+    def saveXML(self, filename):
+        pass

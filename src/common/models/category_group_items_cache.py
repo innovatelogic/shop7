@@ -71,9 +71,14 @@ class CategoryGroupItemsCache():
 #----------------------------------------------------------------------------------------------
     def get_category_items_count_self(self, aspect, category_id, group_id):
         out = 0
+        bRes = False
         if aspect in self._mapping:
-            if group_id in self._mapping[aspect][category_id]:
-                out = self._mapping[aspect][category_id][group_id][self.IDX_SELF_COUNTER]
+            if category_id in self._mapping[aspect]:
+                if group_id in self._mapping[aspect][category_id]:
+                    out = self._mapping[aspect][category_id][group_id][self.IDX_SELF_COUNTER]
+                    bRes = True
+        if not bRes:
+            print('[get_category_items_count_self] failed get data by param {} {} {}'.format(aspect, category_id, group_id))
         return out
 
 #----------------------------------------------------------------------------------------------

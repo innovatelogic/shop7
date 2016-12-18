@@ -121,7 +121,7 @@
              </node>
              <node foreign_id="" local="" name="Umbrellas"/>
              <node foreign_id="" local="_UA:;_RU:Кошельки, Органайзеры для ключей, денег" name="Wallets, Money &amp; Key Organizers">
-                 <node foreign_id="" local="_UA:;_RU:Бумажники"" name="Billfolds &amp; Wallets">
+                 <node foreign_id="" local="_UA:;_RU:Бумажники" name="Billfolds &amp; Wallets">
                      <node foreign_id="" local="_UA:;_RU:Бумажники" name="Bifolds"/>
                      <node foreign_id="" local="_UA:;_RU:Органайзеры для карточек" name="Card Cases"/>
                      <node foreign_id="" local="_UA:;_RU:Клипсы для денег" name="Money Clips"/>
