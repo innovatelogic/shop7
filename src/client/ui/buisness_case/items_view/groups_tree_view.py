@@ -34,8 +34,6 @@ class GroupsTreeView(wx.TreeCtrl):
                     
 #----------------------------------------------------------------------------------------------                    
     def delete_childs(self, parent_item):
-        item, cookie = self.GetFirstChild(parent_item)
-        while item.IsOk():
-            tmp = item
-            item, cookie = self.GetNextChild(parent_item, cookie)
-            self.DeleteChildren(tmp)
+        ''' Deletes all children of the given item (but not the item itself). '''
+        self.DeleteChildren(parent_item)
+            
