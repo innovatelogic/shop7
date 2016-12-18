@@ -1,257 +1,257 @@
 <?xml version="1.0" ?>
  <node name="root">
-     <node foreign_id="" local="" name="Clothing">
-         <node foreign_id="" local="" name="Accessories">
-             <node foreign_id="" local="" name="Belts"/>
-             <node foreign_id="" local="" name="Cold Weather Accessories">
-                 <node foreign_id="" local="" name="Arm Warmers"/>
-                 <node foreign_id="" local="" name="Ear Muffs"/>
-                 <node foreign_id="" local="" name="Fingerless Gloves"/>
-                 <node foreign_id="" local="" name="Gloves"/>
-                 <node foreign_id="" local="" name="Hats"/>
-                 <node foreign_id="" local="" name="Mittens &amp; Hand Muffs"/>
-                 <node foreign_id="" local="" name="Neck Warmers"/>
-                 <node foreign_id="" local="" name="Scarves"/>
-                 <node foreign_id="" local="" name="Sets"/>
+     <node foreign_id="" local="_UA:Одяг;_RU:Одежда" name="Clothing">
+         <node foreign_id="" local="_UA:Аксесуари;_RU:Аксессуары" name="Accessories">
+             <node foreign_id="" local="_UA:;_RU:Ремни" name="Belts"/>
+             <node foreign_id="" local="_UA:;_RU:Аксессуары для Холодной погоды" name="Cold Weather Accessories">
+                 <node foreign_id="" local="_UA:;_RU:Митенки" name="Arm Warmers"/>
+                 <node foreign_id="" local="_UA:;_RU:Наушники" name="Ear Muffs"/>
+                 <node foreign_id="" local="_UA:;_RU:Перчатки без пальцев" name="Fingerless Gloves"/>
+                 <node foreign_id="" local="_UA:;_RU:Перчатки" name="Gloves"/>
+                 <node foreign_id="" local="_UA:;_RU:Головные уборы" name="Hats"/>
+                 <node foreign_id="" local="_UA:;_RU:Рукавицы и Муфты" name="Mittens &amp; Hand Muffs"/>
+                 <node foreign_id="" local="_UA:;_RU:Бафы" name="Neck Warmers"/>
+                 <node foreign_id="" local="_UA:;_RU:Шарфы" name="Scarves"/>
+                 <node foreign_id="" local="_UA:;_RU:Наборы" name="Sets"/>
              </node>
-             <node foreign_id="" local="" name="Diaper Bags"/>
-             <node foreign_id="" local="" name="Eyewear &amp; Accessories">
-                 <node foreign_id="" local="" name="Cases"/>
-                 <node foreign_id="" local="" name="Chains &amp; Lanyards"/>
-                 <node foreign_id="" local="" name="Prescription Eyewear"/>
-                 <node foreign_id="" local="" name="Sunglasses"/>
+             <node foreign_id="" local="_UA:;_RU:Сумка для подгузников" name="Diaper Bags"/>
+             <node foreign_id="" local="_UA:;_RU: Очки и Аксессуары" name="Eyewear &amp; Accessories">
+                 <node foreign_id="" local="_UA:;_RU:Кейсы" name="Cases"/>
+                 <node foreign_id="" local="_UA:;_RU:Цепочки и Ремешки" name="Chains &amp; Lanyards"/>
+                 <node foreign_id="" local="_UA:;_RU:Предписание очки" name="Prescription Eyewear"/>
+                 <node foreign_id="" local="_UA:;_RU:Солнцезащитные очки" name="Sunglasses"/>
              </node>
-             <node foreign_id="" local="" name="Gloves"/>
-             <node foreign_id="" local="" name="Handbags">
-                 <node foreign_id="" local="" name="Baguettes"/>
-                 <node foreign_id="" local="" name="Bowling"/>
-                 <node foreign_id="" local="" name="Day Clutches"/>
-                 <node foreign_id="" local="" name="Evening Bags"/>
-                 <node foreign_id="" local="" name="Hobos"/>
-                 <node foreign_id="" local="" name="Totes"/>
-                 <node foreign_id="" local="" name="Wristlets"/>
+             <node foreign_id="" local="_UA:;_RU:Перчатки" name="Gloves"/>
+             <node foreign_id="" local="_UA:;_RU:Сумки ручные" name="Handbags">
+                 <node foreign_id="" local="_UA:;_RU:Сумки для Багетов" name="Baguettes"/>
+                 <node foreign_id="" local="_UA:;_RU:Сумки для Боулинга" name="Bowling"/>
+                 <node foreign_id="" local="_UA:;_RU:Клатчи" name="Day Clutches"/>
+                 <node foreign_id="" local="_UA:;_RU:Вечерние сумочки" name="Evening Bags"/>
+                 <node foreign_id="" local="_UA:;_RU:Сумка через плечо" name="Hobos"/>
+                 <node foreign_id="" local="_UA:;_RU:Сумка пакет" name="Totes"/>
+                 <node foreign_id="" local="_UA:;_RU:Сумочки клатч" name="Wristlets"/>
              </node>
-             <node foreign_id="" local="" name="Handkerchiefs"/>
-             <node foreign_id="" local="" name="Hats">
-                 <node foreign_id="" local="" name="Baseball Caps"/>
-                 <node foreign_id="" local="" name="Berets"/>
-                 <node foreign_id="" local="" name="Bowlers"/>
-                 <node foreign_id="" local="" name="Cowboy Hats"/>
-                 <node foreign_id="" local="" name="Derby Hats"/>
-                 <node foreign_id="" local="" name="Fedoras"/>
-                 <node foreign_id="" local="" name="Knit Caps &amp; Beanies"/>
-                 <node foreign_id="" local="" name="Newsboy Caps"/>
-                 <node foreign_id="" local="" name="Straw Hats"/>
-                 <node foreign_id="" local="" name="Sun Hats"/>
-                 <node foreign_id="" local="" name="Visors"/>
+             <node foreign_id="" local="_UA:;_RU:Носовые платки" name="Handkerchiefs"/>
+             <node foreign_id="" local="_UA:;_RU:Шапки" name="Hats">
+                 <node foreign_id="" local="_UA:;_RU:Бейсболки" name="Baseball Caps"/>
+                 <node foreign_id="" local="_UA:;_RU:Береты" name="Berets"/>
+                 <node foreign_id="" local="_UA:;_RU:Шляпы котелки" name="Bowlers"/>
+                 <node foreign_id="" local="_UA:;_RU:Ковбойские шляпы" name="Cowboy Hats"/>
+                 <node foreign_id="" local="_UA:;_RU:Шляпы женские" name="Derby Hats"/>
+                 <node foreign_id="" local="_UA:;_RU:Шляпы мужские" name="Fedoras"/>
+                 <node foreign_id="" local="_UA:;_RU:Въязаные шапки" name="Knit Caps &amp; Beanies"/>
+                 <node foreign_id="" local="_UA:;_RU:Кашкеты" name="Newsboy Caps"/>
+                 <node foreign_id="" local="_UA:;_RU:Соломенные шляпы" name="Straw Hats"/>
+                 <node foreign_id="" local="_UA:;_RU:Панамки" name="Sun Hats"/>
+                 <node foreign_id="" local="_UA:;_RU:Козырьки" name="Visors"/>
              </node>
-             <node foreign_id="" local="" name="Laptop Bags &amp; Cases">
-                 <node foreign_id="" local="" name="Checkpoint-friendly Laptop Cases"/>
-                 <node foreign_id="" local="" name="Hard Drive Cases"/>
-                 <node foreign_id="" local="" name="Laptop Backpacks"/>
-                 <node foreign_id="" local="" name="Laptop Messenger Bags"/>
-                 <node foreign_id="" local="" name="Laptop Sleeves &amp; Slipcases"/>
-                 <node foreign_id="" local="" name="Netbook Cases"/>
-                 <node foreign_id="" local="" name="Projector Cases"/>
-                 <node foreign_id="" local="" name="Rolling &amp; Wheeled Laptop Cases"/>
-                 <node foreign_id="" local="" name="Women's Laptop Bags"/>
+             <node foreign_id="" local="_UA:;_RU:Сумки для ноутбуков, Кейсы" name="Laptop Bags &amp; Cases">
+                 <node foreign_id="" local="_UA:;_RU:Сумки для ноутбуков (для путишествий)" name="Checkpoint-friendly Laptop Cases"/>
+                 <node foreign_id="" local="_UA:;_RU:Чехлы для жестких дисков" name="Hard Drive Cases"/>
+                 <node foreign_id="" local="_UA:;_RU:Рюкзаки для Ноутбуков" name="Laptop Backpacks"/>
+                 <node foreign_id="" local="_UA:;_RU:Сумки для мессенджеров" name="Laptop Messenger Bags"/>
+                 <node foreign_id="" local="_UA:;_RU:Папки для нотубков" name="Laptop Sleeves &amp; Slipcases"/>
+                 <node foreign_id="" local="_UA:;_RU:Чехлы для нетбуков" name="Netbook Cases"/>
+                 <node foreign_id="" local="_UA:;_RU:Чехлы для проекторов" name="Projector Cases"/>
+                 <node foreign_id="" local="_UA:;_RU:Сумки для ноутбуков на колесах" name="Rolling &amp; Wheeled Laptop Cases"/>
+                 <node foreign_id="" local="_UA:;_RU:Сумки для ноутбуков (женские)" name="Women's Laptop Bags"/>
              </node>
-             <node foreign_id="" local="" name="Luggage, Bags &amp; Travel">
-                 <node foreign_id="" local="" name="Bags &amp; Backpacks">
-                     <node foreign_id="" local="" name="Backpacks"/>
-                     <node foreign_id="" local="" name="Duffle Bags"/>
-                     <node foreign_id="" local="" name="Gym Bags"/>
-                     <node foreign_id="" local="" name="Messenger Bags"/>
+             <node foreign_id="" local="_UA:;_RU:Багаж, Сумки и Путишествия" name="Luggage, Bags &amp; Travel">
+                 <node foreign_id="" local="_UA:;_RU:Сумки и Рюкзаки" name="Bags &amp; Backpacks">
+                     <node foreign_id="" local="_UA:;_RU:Рюкзаки" name="Backpacks"/>
+                     <node foreign_id="" local="_UA:;_RU:Дорожные сумки" name="Duffle Bags"/>
+                     <node foreign_id="" local="_UA:;_RU:Сумки для спортзала" name="Gym Bags"/>
+                     <node foreign_id="" local="_UA:;_RU:Сумки почтальона" name="Messenger Bags"/>
                  </node>
-                 <node foreign_id="" local="" name="Briefcases"/>
-                 <node foreign_id="" local="" name="Luggage">
-                     <node foreign_id="" local="" name="Carry-Ons"/>
-                     <node foreign_id="" local="" name="Garment Bags"/>
-                     <node foreign_id="" local="" name="Hardside Luggage"/>
-                     <node foreign_id="" local="" name="Matching Sets"/>
-                     <node foreign_id="" local="" name="Rolling Luggage"/>
-                     <node foreign_id="" local="" name="Totes"/>
+                 <node foreign_id="" local="_UA:;_RU:Портфели" name="Briefcases"/>
+                 <node foreign_id="" local="_UA:;_RU:Багаж" name="Luggage">
+                     <node foreign_id="" local="_UA:;_RU:Сумки для ручной клади" name="Carry-Ons"/>
+                     <node foreign_id="" local="_UA:;_RU:Сумки для одежды" name="Garment Bags"/>
+                     <node foreign_id="" local="_UA:;_RU:Кейсы на колесах" name="Hardside Luggage"/>
+                     <node foreign_id="" local="_UA:;_RU:Наборы сумок" name="Matching Sets"/>
+                     <node foreign_id="" local="_UA:;_RU:Сумки на колесах" name="Rolling Luggage"/>
+                     <node foreign_id="" local="_UA:;_RU:Пакеты" name="Totes"/>
                  </node>
-                 <node foreign_id="" local="" name="Travel Accessories">
-                     <node foreign_id="" local="" name="Luggage Tags"/>
-                     <node foreign_id="" local="" name="Packing Cubes"/>
-                     <node foreign_id="" local="" name="Packing Folders"/>
-                     <node foreign_id="" local="" name="Shoe Bags"/>
+                 <node foreign_id="" local="_UA:;_RU:Аксессуары для путишествий" name="Travel Accessories">
+                     <node foreign_id="" local="_UA:;_RU:Ярлыки" name="Luggage Tags"/>
+                     <node foreign_id="" local="_UA:;_RU:Упоковочные кубы" name="Packing Cubes"/>
+                     <node foreign_id="" local="_UA:;_RU:Упаковочные папки" name="Packing Folders"/>
+                     <node foreign_id="" local="_UA:;_RU:Сумки для обуви" name="Shoe Bags"/>
                  </node>
              </node>
-             <node foreign_id="" local="" name="Scarves">
-                 <node foreign_id="" local="" name="Cashmere"/>
-                 <node foreign_id="" local="" name="Knit"/>
-                 <node foreign_id="" local="" name="Prints &amp; Patterns"/>
-                 <node foreign_id="" local="" name="Rectangular"/>
-                 <node foreign_id="" local="" name="Silk"/>
-                 <node foreign_id="" local="" name="Square"/>
-                 <node foreign_id="" local="" name="Wool"/>
+             <node foreign_id="" local="_UA:;_RU:Шарфы" name="Scarves">
+                 <node foreign_id="" local="_UA:;_RU:Кашемиревые" name="Cashmere"/>
+                 <node foreign_id="" local="_UA:;_RU:Въязаные" name="Knit"/>
+                 <node foreign_id="" local="_UA:;_RU:С узорами" name="Prints &amp; Patterns"/>
+                 <node foreign_id="" local="_UA:;_RU:Квадратные" name="Rectangular"/>
+                 <node foreign_id="" local="_UA:;_RU:Шелковые" name="Silk"/>
+                 <node foreign_id="" local="_UA:;_RU:Круглые" name="Square"/>
+                 <node foreign_id="" local="_UA:;_RU:Шерстяные" name="Wool"/>
              </node>
-             <node foreign_id="" local="" name="Sports Fan Accessories">
-                 <node foreign_id="" local="" name="Backpacks &amp; Bags">
-                     <node foreign_id="" local="" name="Backpacks"/>
-                     <node foreign_id="" local="" name="Duffle Bags"/>
-                     <node foreign_id="" local="" name="Tote Bags"/>
+             <node foreign_id="" local="_UA:;_RU:Аксессуары для спорта и отдыха" name="Sports Fan Accessories">
+                 <node foreign_id="" local="_UA:;_RU:Рюкзаки и Сумки" name="Backpacks &amp; Bags">
+                     <node foreign_id="" local="_UA:;_RU:Рюкзаки" name="Backpacks"/>
+                     <node foreign_id="" local="_UA:;_RU:Вещевые мешки" name="Duffle Bags"/>
+                     <node foreign_id="" local="_UA:;_RU:Пакеты" name="Tote Bags"/>
                  </node>
-                 <node foreign_id="" local="" name="Belts"/>
-                 <node foreign_id="" local="" name="Cold Weather Accessories">
-                     <node foreign_id="" local="" name="Gloves"/>
-                     <node foreign_id="" local="" name="Hats"/>
-                     <node foreign_id="" local="" name="Scarves"/>
+                 <node foreign_id="" local="_UA:;_RU:Пояса" name="Belts"/>
+                 <node foreign_id="" local="_UA:;_RU:Аксессуары для холодной погоды" name="Cold Weather Accessories">
+                     <node foreign_id="" local="_UA:;_RU:Очки" name="Gloves"/>
+                     <node foreign_id="" local="_UA:;_RU:Шапки" name="Hats"/>
+                     <node foreign_id="" local="_UA:;_RU:Шарфы" name="Scarves"/>
                  </node>
-                 <node foreign_id="" local="" name="Handbags"/>
-                 <node foreign_id="" local="" name="Hats &amp; Caps">
-                     <node foreign_id="" local="" name="Baseball Caps"/>
-                     <node foreign_id="" local="" name="Hard Hats"/>
-                     <node foreign_id="" local="" name="Knit Caps"/>
-                     <node foreign_id="" local="" name="Visors"/>
+                 <node foreign_id="" local="_UA:;_RU:Ручные сумки" name="Handbags"/>
+                 <node foreign_id="" local="_UA:;_RU:Шапки и Кепки" name="Hats &amp; Caps">
+                     <node foreign_id="" local="_UA:;_RU:Бейсболки" name="Baseball Caps"/>
+                     <node foreign_id="" local="_UA:;_RU:Каски защитные" name="Hard Hats"/>
+                     <node foreign_id="" local="_UA:;_RU:Вязаные шапки" name="Knit Caps"/>
+                     <node foreign_id="" local="_UA:;_RU:Козырьки" name="Visors"/>
                  </node>
-                 <node foreign_id="" local="" name="Keychains"/>
-                 <node foreign_id="" local="" name="Neck Ties"/>
-                 <node foreign_id="" local="" name="Sunglasses"/>
-                 <node foreign_id="" local="" name="Umbrellas"/>
-                 <node foreign_id="" local="" name="Wallets"/>
+                 <node foreign_id="" local="_UA:;_RU:Брелки" name="Keychains"/>
+                 <node foreign_id="" local="_UA:;_RU:Шейные повязки" name="Neck Ties"/>
+                 <node foreign_id="" local="_UA:;_RU:Солнцезащитные очки" name="Sunglasses"/>
+                 <node foreign_id="" local="_UA:;_RU:Зонтики" name="Umbrellas"/>
+                 <node foreign_id="" local="_UA:;_RU:Кошельки" name="Wallets"/>
              </node>
-             <node foreign_id="" local="" name="Suspenders"/>
-             <node foreign_id="" local="" name="Ties &amp; Cummerbunds">
-                 <node foreign_id="" local="" name="Bow Ties"/>
-                 <node foreign_id="" local="" name="Cummerbunds"/>
-                 <node foreign_id="" local="" name="Neckties"/>
+             <node foreign_id="" local="_UA:;_RU:Подтяжки" name="Suspenders"/>
+             <node foreign_id="" local="_UA:;_RU:Галстуки и Камербанды" name="Ties &amp; Cummerbunds">
+                 <node foreign_id="" local="_UA:;_RU:Бабочки" name="Bow Ties"/>
+                 <node foreign_id="" local="_UA:;_RU:Камербанд" name="Cummerbunds"/>
+                 <node foreign_id="" local="_UA:;_RU:Галстуки" name="Neckties"/>
              </node>
              <node foreign_id="" local="" name="Umbrellas"/>
-             <node foreign_id="" local="" name="Wallets, Money &amp; Key Organizers">
-                 <node foreign_id="" local="" name="Billfolds &amp; Wallets">
-                     <node foreign_id="" local="" name="Bifolds"/>
-                     <node foreign_id="" local="" name="Card Cases"/>
-                     <node foreign_id="" local="" name="Money Clips"/>
-                     <node foreign_id="" local="" name="Trifolds"/>
+             <node foreign_id="" local="_UA:;_RU:Кошельки, Органайзеры для ключей, денег" name="Wallets, Money &amp; Key Organizers">
+                 <node foreign_id="" local="_UA:;_RU:Бумажники"" name="Billfolds &amp; Wallets">
+                     <node foreign_id="" local="_UA:;_RU:Бумажники" name="Bifolds"/>
+                     <node foreign_id="" local="_UA:;_RU:Органайзеры для карточек" name="Card Cases"/>
+                     <node foreign_id="" local="_UA:;_RU:Клипсы для денег" name="Money Clips"/>
+                     <node foreign_id="" local="_UA:;_RU:Кошельки 3-х секционные" name="Trifolds"/>
                  </node>
-                 <node foreign_id="" local="" name="Checkbook Covers"/>
-                 <node foreign_id="" local="" name="Coin Purses"/>
-                 <node foreign_id="" local="" name="Credit Card Holders"/>
-                 <node foreign_id="" local="" name="ID Cases"/>
-                 <node foreign_id="" local="" name="Key Rings &amp; Fobs"/>
+                 <node foreign_id="" local="_UA:;_RU:Сумочки для чековой книжки" name="Checkbook Covers"/>
+                 <node foreign_id="" local="_UA:;_RU:Кошельки для мелочи" name="Coin Purses"/>
+                 <node foreign_id="" local="_UA:;_RU:Кошелек для кредиток" name="Credit Card Holders"/>
+                 <node foreign_id="" local="_UA:;_RU:Чехлы для ID Карт" name="ID Cases"/>
+                 <node foreign_id="" local="_UA:;_RU:Кольца для ключей" name="Key Rings &amp; Fobs"/>
                  <node foreign_id="" local="" name="Money Clips"/>
-                 <node foreign_id="" local="" name="Passport Holders"/>
-                 <node foreign_id="" local="" name="Travel Wallets"/>
+                 <node foreign_id="" local="_UA:;_RU:Обложки для паспорта" name="Passport Holders"/>
+                 <node foreign_id="" local="_UA:;_RU:Кошельки туристические" name="Travel Wallets"/>
              </node>
              <node foreign_id="" local="" name="Wraps, Stoles &amp; Pashminas"/>
          </node>
          <node foreign_id="" local="" name="Juniors'">
              <node foreign_id="" local="" name="Active">
-                 <node foreign_id="" local="" name="Shorts"/>
-                 <node foreign_id="" local="" name="Skirts, Skorts &amp; Dresses"/>
-                 <node foreign_id="" local="" name="Sweatshirts, Pants &amp; Suits"/>
-                 <node foreign_id="" local="" name="Tops"/>
+                 <node foreign_id="" local="_UA:;_RU:Шорты" name="Shorts"/>
+                 <node foreign_id="" local="_UA:;_RU:Юбки и Платья" name="Skirts, Skorts &amp; Dresses"/>
+                 <node foreign_id="" local="_UA:;_RU:Толстовки, Штаны и костюмы" name="Sweatshirts, Pants &amp; Suits"/>
+                 <node foreign_id="" local="_UA:;_RU:Топы" name="Tops"/>
              </node>
-             <node foreign_id="" local="" name="Coats &amp; Jackets"/>
-             <node foreign_id="" local="" name="Dresses">
-                 <node foreign_id="" local="" name="Baby Doll"/>
-                 <node foreign_id="" local="" name="Prom &amp; Party"/>
-                 <node foreign_id="" local="" name="Sundresses"/>
-                 <node foreign_id="" local="" name="Tank Dresses"/>
+             <node foreign_id="" local="_UA:;_RU:Пальто и Куртки" name="Coats &amp; Jackets"/>
+             <node foreign_id="" local="_UA:;_RU:Платья" name="Dresses">
+                 <node foreign_id="" local="_UA:;_RU:Для кукол" name="Baby Doll"/>
+                 <node foreign_id="" local="_UA:;_RU:Для вечеринок" name="Prom &amp; Party"/>
+                 <node foreign_id="" local="_UA:;_RU:Сарафаны" name="Sundresses"/>
+                 <node foreign_id="" local="_UA:;_RU:Облегающие платья" name="Tank Dresses"/>
              </node>
-             <node foreign_id="" local="" name="Hoodies &amp; Loungewear">
-                 <node foreign_id="" local="" name="Hoodies"/>
-                 <node foreign_id="" local="" name="Pants"/>
+             <node foreign_id="" local="_UA:;_RU:Толстовки и домашняя одежда" name="Hoodies &amp; Loungewear">
+                 <node foreign_id="" local="_UA:;_RU:Толстовки" name="Hoodies"/>
+                 <node foreign_id="" local="_UA:;_RU:Штаны" name="Pants"/>
              </node>
-             <node foreign_id="" local="" name="Jeans"/>
-             <node foreign_id="" local="" name="Pants">
+             <node foreign_id="" local="_UA:;_RU:Джинсы" name="Jeans"/>
+             <node foreign_id="" local="_UA:;_RU:Штаны" name="Pants">
                  <node foreign_id="" local="" name="Cropped &amp; Capris"/>
                  <node foreign_id="" local="" name="Khakis &amp; Chinos"/>
              </node>
-             <node foreign_id="" local="" name="Shirts, Blouses &amp; Polos">
-                 <node foreign_id="" local="" name="Blouses"/>
-                 <node foreign_id="" local="" name="Polos"/>
+             <node foreign_id="" local="_UA:;_RU:Рубашки, Блузки и Футболки поло" name="Shirts, Blouses &amp; Polos">
+                 <node foreign_id="" local="_UA:;_RU:Блузки" name="Blouses"/>
+                 <node foreign_id="" local="_UA:;_RU:Футболки поло" name="Polos"/>
              </node>
-             <node foreign_id="" local="" name="Shorts"/>
-             <node foreign_id="" local="" name="Skirts"/>
-             <node foreign_id="" local="" name="Sleepwear &amp; Robes">
-                 <node foreign_id="" local="" name="Pajamas">
-                     <node foreign_id="" local="" name="Pajama Bottoms"/>
-                     <node foreign_id="" local="" name="Pajama Sets"/>
+             <node foreign_id="" local="_UA:;_RU:Шорты" name="Shorts"/>
+             <node foreign_id="" local="_UA:;_RU:Юбки" name="Skirts"/>
+             <node foreign_id="" local="_UA:;_RU:Одежда для сна" name="Sleepwear &amp; Robes">
+                 <node foreign_id="" local="_UA:;_RU:Пижамы" name="Pajamas">
+                     <node foreign_id="" local="_UA:;_RU:Верх пижамы" name="Pajama Bottoms"/>
+                     <node foreign_id="" local="_UA:;_RU:Комплекты пижамы" name="Pajama Sets"/>
                  </node>
-                 <node foreign_id="" local="" name="Sleep Shirts &amp; Nightgowns"/>
+                 <node foreign_id="" local="_UA:;_RU:Рубашки для сна" name="Sleep Shirts &amp; Nightgowns"/>
              </node>
-             <node foreign_id="" local="" name="Suit Jackets &amp; Blazers"/>
-             <node foreign_id="" local="" name="Sweaters"/>
-             <node foreign_id="" local="" name="Swim">
-                 <node foreign_id="" local="" name="Bikinis"/>
-                 <node foreign_id="" local="" name="Board Shorts"/>
-                 <node foreign_id="" local="" name="Cover-Ups"/>
-                 <node foreign_id="" local="" name="One Pieces"/>
-                 <node foreign_id="" local="" name="Racing"/>
-                 <node foreign_id="" local="" name="Rash Guards"/>
-                 <node foreign_id="" local="" name="Separates"/>
-                 <node foreign_id="" local="" name="Tankinis"/>
+             <node foreign_id="" local="_UA:;_RU:Пиджаки" name="Suit Jackets &amp; Blazers"/>
+             <node foreign_id="" local="_UA:;_RU:Свитера" name="Sweaters"/>
+             <node foreign_id="" local="_UA:;_RU:Одежда для плавания" name="Swim">
+                 <node foreign_id="" local="_UA:;_RU:Купальники Бикини" name="Bikinis"/>
+                 <node foreign_id="" local="_UA:;_RU:Шорты пляжные" name="Board Shorts"/>
+                 <node foreign_id="" local="_UA:;_RU:Накидки пляжные" name="Cover-Ups"/>
+                 <node foreign_id="" local="_UA:;_RU:Сдельные купальники" name="One Pieces"/>
+                 <node foreign_id="" local="_UA:;_RU:Спортивные купальники" name="Racing"/>
+                 <node foreign_id="" local="_UA:;_RU:Футболки для плавания" name="Rash Guards"/>
+                 <node foreign_id="" local="_UA:;_RU:Раздельные купальники" name="Separates"/>
+                 <node foreign_id="" local="_UA:;_RU:Танкини" name="Tankinis"/>
              </node>
-             <node foreign_id="" local="" name="Tees"/>
-             <node foreign_id="" local="" name="Vests"/>
+             <node foreign_id="" local="_UA:;_RU:Футболки" name="Tees"/>
+             <node foreign_id="" local="_UA:;_RU:Жилеты" name="Vests"/>
          </node>
-         <node foreign_id="" local="" name="Kids' &amp; Baby">
-             <node foreign_id="" local="" name="Baby Boys (0-24 Months)">
-                 <node foreign_id="" local="" name="Bloomers"/>
-                 <node foreign_id="" local="" name="Body Suits"/>
-                 <node foreign_id="" local="" name="Clothing Sets"/>
-                 <node foreign_id="" local="" name="Coats &amp; Jackets"/>
-                 <node foreign_id="" local="" name="Layette Sets"/>
-                 <node foreign_id="" local="" name="Overalls"/>
-                 <node foreign_id="" local="" name="Pants"/>
-                 <node foreign_id="" local="" name="Rompers"/>
-                 <node foreign_id="" local="" name="Shirts"/>
-                 <node foreign_id="" local="" name="Shorts"/>
-                 <node foreign_id="" local="" name="Sleepwear"/>
-                 <node foreign_id="" local="" name="Snowsuits"/>
-                 <node foreign_id="" local="" name="Socks"/>
-                 <node foreign_id="" local="" name="Sports Fan Apparel"/>
-                 <node foreign_id="" local="" name="Suits"/>
-                 <node foreign_id="" local="" name="Sweaters"/>
-                 <node foreign_id="" local="" name="Sweatpants"/>
-                 <node foreign_id="" local="" name="Sweatshirts"/>
-                 <node foreign_id="" local="" name="Swim">
+         <node foreign_id="" local="_UA:;_RU:Дети и новорожденные" name="Kids' &amp; Baby">
+             <node foreign_id="" local="_UA:;_RU:Мальчики (0-24 месяца)" name="Baby Boys (0-24 Months)">
+                 <node foreign_id="" local="_UA:;_RU:Пантолоны" name="Bloomers"/>
+                 <node foreign_id="" local="_UA:;_RU:Боди" name="Body Suits"/>
+                 <node foreign_id="" local="_UA:;_RU:Наборы одежды" name="Clothing Sets"/>
+                 <node foreign_id="" local="_UA:;_RU:Пальто и Куртки" name="Coats &amp; Jackets"/>
+                 <node foreign_id="" local="_UA:;_RU:Наборы для новорожденных" name="Layette Sets"/>
+                 <node foreign_id="" local="_UA:;_RU:Комбинезоны" name="Overalls"/>
+                 <node foreign_id="" local="_UA:;_RU:Штаны" name="Pants"/>
+                 <node foreign_id="" local="_UA:;_RU:Комбинизон с шортами" name="Rompers"/>
+                 <node foreign_id="" local="_UA:;_RU:Рубашки" name="Shirts"/>
+                 <node foreign_id="" local="_UA:;_RU:Шорты" name="Shorts"/>
+                 <node foreign_id="" local="_UA:;_RU:Одежда для Сна" name="Sleepwear"/>
+                 <node foreign_id="" local="_UA:;_RU:Зимние костюмы" name="Snowsuits"/>
+                 <node foreign_id="" local="_UA:;_RU:Носки" name="Socks"/>
+                 <node foreign_id="" local="_UA:;_RU:Спортивная одежда" name="Sports Fan Apparel"/>
+                 <node foreign_id="" local="_UA:;_RU:Костюмы" name="Suits"/>
+                 <node foreign_id="" local="_UA:;_RU:Свитера" name="Sweaters"/>
+                 <node foreign_id="" local="_UA:;_RU:Спортивные штаны" name="Sweatpants"/>
+                 <node foreign_id="" local="_UA:;_RU:Спортивные кофты" name="Sweatshirts"/>
+                 <node foreign_id="" local="_UA:;_RU:Одежда для плавания" name="Swim">
                      <node foreign_id="" local="" name="Rash Guards &amp; UV Swimwear"/>
-                     <node foreign_id="" local="" name="Swim Diapers"/>
-                     <node foreign_id="" local="" name="Trunks &amp; Shorts"/>
+                     <node foreign_id="" local="_UA:;_RU:Плавки" name="Swim Diapers"/>
+                     <node foreign_id="" local="_UA:;_RU:Шорты плавальные" name="Trunks &amp; Shorts"/>
                  </node>
-                 <node foreign_id="" local="" name="Underwear"/>
+                 <node foreign_id="" local="_UA:;_RU:Нижнее белье" name="Underwear"/>
              </node>
              <node foreign_id="" local="" name="Baby Girls (0-24 Months)">
-                 <node foreign_id="" local="" name="Bloomers"/>
-                 <node foreign_id="" local="" name="Body Suits"/>
-                 <node foreign_id="" local="" name="Christening Gowns"/>
-                 <node foreign_id="" local="" name="Clothing Sets"/>
-                 <node foreign_id="" local="" name="Coats &amp; Jackets"/>
-                 <node foreign_id="" local="" name="Dresses &amp; Jumpers"/>
-                 <node foreign_id="" local="" name="Layette Sets"/>
-                 <node foreign_id="" local="" name="Overalls &amp; Shortalls"/>
-                 <node foreign_id="" local="" name="Pants"/>
-                 <node foreign_id="" local="" name="Rompers"/>
-                 <node foreign_id="" local="" name="Shirts"/>
-                 <node foreign_id="" local="" name="Shorts"/>
-                 <node foreign_id="" local="" name="Skirts"/>
-                 <node foreign_id="" local="" name="Sleepwear"/>
-                 <node foreign_id="" local="" name="Snowsuits"/>
-                 <node foreign_id="" local="" name="Socks &amp; Tights">
-                     <node foreign_id="" local="" name="Socks"/>
-                     <node foreign_id="" local="" name="Tights"/>
+                 <node foreign_id="" local="_UA:;_RU:Пантолоны" name="Bloomers"/>
+                 <node foreign_id="" local="_UA:;_RU:Боди" name="Body Suits"/>
+                 <node foreign_id="" local="_UA:;_RU:Одежда для крещения" name="Christening Gowns"/>
+                 <node foreign_id="" local="_UA:;_RU:Наборы одежды" name="Clothing Sets"/>
+                 <node foreign_id="" local="_UA:;_RU:Пальто и Куртки" name="Coats &amp; Jackets"/>
+                 <node foreign_id="" local="_UA:;_RU:Платья и Джамперы" name="Dresses &amp; Jumpers"/>
+                 <node foreign_id="" local="_UA:;_RU:Наборы для новорожденных" name="Layette Sets"/>
+                 <node foreign_id="" local="_UA:;_RU:Комбинизоны" name="Overalls &amp; Shortalls"/>
+                 <node foreign_id="" local="_UA:;_RU:Штаны" name="Pants"/>
+                 <node foreign_id="" local="_UA:;_RU:Комбинезон с шортами" name="Rompers"/>
+                 <node foreign_id="" local="_UA:;_RU:Рубашки" name="Shirts"/>
+                 <node foreign_id="" local="_UA:;_RU:Шорты" name="Shorts"/>
+                 <node foreign_id="" local="_UA:;_RU:Юбки" name="Skirts"/>
+                 <node foreign_id="" local="_UA:;_RU:Одежда для Сна" name="Sleepwear"/>
+                 <node foreign_id="" local="_UA:;_RU:Зимние костюмы" name="Snowsuits"/>
+                 <node foreign_id="" local="_UA:;_RU:Носки и Колготы" name="Socks &amp; Tights">
+                     <node foreign_id="" local="_UA:;_RU:Носки" name="Socks"/>
+                     <node foreign_id="" local="_UA:;_RU:Колготы" name="Tights"/>
                  </node>
-                 <node foreign_id="" local="" name="Sports Fan Apparel"/>
-                 <node foreign_id="" local="" name="Sweaters"/>
-                 <node foreign_id="" local="" name="Sweatpants"/>
-                 <node foreign_id="" local="" name="Sweatshirts"/>
-                 <node foreign_id="" local="" name="Swim">
-                     <node foreign_id="" local="" name="Cover-Ups"/>
-                     <node foreign_id="" local="" name="One-Piece Swimsuits"/>
-                     <node foreign_id="" local="" name="Rash Guards &amp; UV Swimwear"/>
-                     <node foreign_id="" local="" name="Swim Diapers"/>
-                     <node foreign_id="" local="" name="Two-Piece Swimsuits"/>
+                 <node foreign_id="" local="_UA:;_RU:Спортивная одежда" name="Sports Fan Apparel"/>
+                 <node foreign_id="" local="_UA:;_RU:Свитера" name="Sweaters"/>
+                 <node foreign_id="" local="_UA:;_RU:Спортивные штаны" name="Sweatpants"/>
+                 <node foreign_id="" local="_UA:;_RU:Спортивные кофты" name="Sweatshirts"/>
+                 <node foreign_id="" local="_UA:;_RU:Одежда для плавания" name="Swim">
+                     <node foreign_id="" local="_UA:;_RU:Парео" name="Cover-Ups"/>
+                     <node foreign_id="" local="_UA:;_RU:Сдельные купальники" name="One-Piece Swimsuits"/>
+                     <node foreign_id="" local="_UA:;_RU:Футболки плавальные" name="Rash Guards &amp; UV Swimwear"/>
+                     <node foreign_id="" local="_UA:;_RU:Плавки" name="Swim Diapers"/>
+                     <node foreign_id="" local="_UA:;_RU:Раздельные купальники" name="Two-Piece Swimsuits"/>
                  </node>
-                 <node foreign_id="" local="" name="Underwear"/>
+                 <node foreign_id="" local="_UA:;_RU:Нижнее белье" name="Underwear"/>
              </node>
-             <node foreign_id="" local="" name="Boys (2-20)">
-                 <node foreign_id="" local="" name="Active">
-                     <node foreign_id="" local="" name="Pants"/>
+             <node foreign_id="" local="_UA:;_RU:Одежда для мальчиков (2-20 мес)" name="Boys (2-20)">
+                 <node foreign_id="" local="_UA:;_RU:Активные" name="Active">
+                     <node foreign_id="" local="_UA:;_RU:Штаны" name="Pants"/>
                      <node foreign_id="" local="" name="Shirts"/>
                      <node foreign_id="" local="" name="Shorts"/>
                      <node foreign_id="" local="" name="Sweaters"/>
