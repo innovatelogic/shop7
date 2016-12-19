@@ -9,7 +9,7 @@ from base_file_reader import BaseFileReader
 from tree_loader import TreeLoader
 import common.db.instance
 import common.connection_db
-from common.models.base_aspects_container import BaseAspectsContainer, CategoryNode
+from common.models.base_aspects_container import BaseAspectsContainer, CategoryNode, BaseAspectHelper
 from common.db.types.types import Category
 
 #----------------------------------------------------------------------------------------------
@@ -64,20 +64,29 @@ def main():
 		#base_file_reader = BaseFileReader(specs)
 		#base_file_reader.read()
 		#base_file_reader.save('test.xml')
-		
+		#return
+	
 		db = common.db.instance.Instance(specs)
 		db.connect()
 		
-		#
-		#return
-		
 		ASPECT_ID = 'basic'
-	
+		
 		tree_src = TreeLoader(specs, db)
+		
 		tree_src.load(data_folder + 'base_aspect.xml') #data_filename
-		#tree_src.base_aspects_container.save_aspect('basic', tree_src.root)
+		
+		BaseAspectHelper.dump_category_tree(specs['path']['data'] + 'basic.tmp', tree_src.root)
 		
 		#db.base_aspects.clear(ASPECT_ID)
+		bRes = db.base_aspects.isAspectExist(ASPECT_ID)
+		print bRes
+		print('clear')
+		db.base_aspects.clear(ASPECT_ID)
+		bRes = db.base_aspects.isAspectExist(ASPECT_ID)
+		print bRes
+		
+		#
+		
 		tree_dst = TreeLoader(specs, db)
 		if not tree_dst.base_aspects_container.load_aspect(ASPECT_ID, None): #data_filename
 			#
@@ -86,11 +95,13 @@ def main():
 			tree_dst.base_aspects_container.load_aspect(ASPECT_ID, None)
 		
 		dst_root = tree_dst.base_aspects_container.aspects['basic'].root
-		tree_dst.base_aspects_container.treeMerge(tree_src.root, dst_root)
 		
-		tree_dst.base_aspects_container.dump_category_tree(specs['path']['data'] + 'merge.tmp', dst_root)
+		return
+		BaseAspectHelper.treeMerge(tree_src.root, dst_root)
 		
-		tree_dst.base_aspects_container.save_aspect('basic', dst_root)
+		BaseAspectHelper.dump_category_tree(specs['path']['data'] + 'merge.tmp', dst_root)
+		
+		BaseAspectHelper.save_aspect(db, 'basic', dst_root)
 		
 		#tree_dst.merge(tree_src.root)
 		#tree_dst.save('basic')

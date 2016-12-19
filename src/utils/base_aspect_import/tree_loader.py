@@ -2,8 +2,9 @@ from xml.dom import minidom
 from xml.dom.minidom import *
 import common.db.instance
 import common.connection_db
-from common.models.base_aspects_container import BaseAspectsContainer, CategoryNode
+from common.models.base_aspects_container import BaseAspectsContainer, CategoryNode, BaseAspectHelper
 from common.db.types.types import Category
+
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class TreeLoader():
@@ -45,14 +46,14 @@ class TreeLoader():
             
         print('processed {} categories'.format(count))
         
-        self.base_aspects_container.dump_category_tree(filename + '.tmp2', self.root)
+        BaseAspectHelper.dump_category_tree(filename + '.tmp2', self.root)
         pass
 
 #----------------------------------------------------------------------------------------------
     def merge(self, source):
-        self.base_aspects_container.treeMerge(source, self.root)
-        self.base_aspects_container.dump_category_tree(self.specs['path']['data'] + 'merge.tmp', self.root)
+        BaseAspectHelper.treeMerge(source, self.root)
+        BaseAspectHelper.dump_category_tree(self.specs['path']['data'] + 'merge.tmp', self.root)
 
 #----------------------------------------------------------------------------------------------  
     def save(self, aspect):
-        self.base_aspects_container.save_aspect(aspect, self.root)
+        BaseAspectHelper.save_aspect(aspect, self.root)

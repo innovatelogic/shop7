@@ -13,7 +13,12 @@ class BaseAspects():
 #----------------------------------------------------------------------------------------------
     def clear(self, aspect):
         self.cat.update_one({'_id':aspect}, {'$set': {"categories" : []}})
-
+        
+#----------------------------------------------------------------------------------------------
+    def isAspectExist(self, aspect):
+        cursor = self.cat.find({ '_id': aspect}).limit(1)
+        return cursor.count() > 0
+        
 #----------------------------------------------------------------------------------------------
     def add_category(self, aspect, category):
         updateResult = self.cat.update_one({'_id':aspect}, {'$push': {"categories" : category.get()}})

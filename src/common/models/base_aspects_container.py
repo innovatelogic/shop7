@@ -90,89 +90,7 @@ class BaseAspectsContainer():
             bResult = True
         return bResult
         
-#----------------------------------------------------------------------------------------------  
-    def save_aspect(self, aspect, src_root):
-        ''' assign src_root to db. remove difference from db tree.
-            not consistent with cache. offline use only
-         '''
-        print('save_aspect')
-        stack_db = []
-        stack_src = []
-        stack_prev_dest = []
-        
-        db_root = self.db_inst.base_aspects.get_root_category(aspect)
-        
-        if not db_root:
-            print('{} root not exist. create new'.format(aspect))
-            db_root = Category({'_id': ObjectId(), 'parent_id': None, 'name':'root'})
-            self.db_inst.base_aspects.cat.insert({'_id':aspect})
-            self.db_inst.base_aspects.add_category(aspect, db_root)
-            
-        stack_src.append(src_root)
-        stack_db.append(db_root)
-        
-        while(stack_src or stack_db):
-            print('-----')
-            new_stack_src = []
-            new_stack_dst = []
-            new_prev_dst = []
-            
-            common_names = []
-            for src_node in stack_src:
-                #print src_node.category.name
-                for dst_node in stack_db:
-                    #print ('dst_node {}'.format(dst_node.name))
-                    if src_node.category.name == dst_node.name:
-                        common_names.append(dst_node.name)
-                        new_prev_dst.append(src_node)
-                        ''' add dst children to next iteration '''
-                        db_childs = self.db_inst.base_aspects.get_childs(aspect, dst_node)
-                        for child in db_childs:
-                            #print ('dst child add {}'.format(child.name))
-                            new_stack_dst.append(child)
-                            
-                ''' add source children to next iteration '''
-                for child in src_node.childs:
-                    new_stack_src.append(child)
-                    #print ('src child add {}'.format(child.category.name))
-                    
-            #print('comm {}'.format(common_names))     
-            
-            ''' add source's unique to destination space'''
-            for src_node in stack_src:
-                bExist = False
-                for name in common_names:
-                    if name == src_node.category.name:
-                        bExist = True
-                        
-                if not bExist:
-                    for dst_prev in stack_prev_dest:
-                        #print('id: {} : {} parent_name {}'.format(src_node.parent.category._id, dst_prev.parent_id, dst_prev.name))
-                        if src_node.parent.category._id == dst_prev.category._id:
-                            ''' add to db'''
-                            self.db_inst.base_aspects.add_category(aspect, src_node.category)
-                            new_prev_dst.append(src_node)
-                            
-                            #print('add category {}'.format(src_node.category.name))
-                            break
-            
-            '''remove disjoint nodes from dest's parent'''
-            for dst in stack_db:
-                #print('to rem category {}'.format(dst.name))
-                bRem = True
-                for comm in common_names:
-                    if comm == dst.name:
-                        bRem = False 
-                if bRem:
-                    self.removeCategory(self.db_inst, aspect, dst)
-                    #self.db_inst.base_aspects.remove_category(aspect, dst._id)
-                    #print('rem category {}'.format(dst.name))
 
-            stack_prev_dest = new_prev_dst
-            stack_src = new_stack_src
-            stack_db = new_stack_dst
-
-        pass
     
 #----------------------------------------------------------------------------------------------
     def get_first_level_categories(self, aspect):
@@ -244,33 +162,21 @@ class BaseAspectsContainer():
             for item in node.childs:
                 out.append(item)
         return out
-    
-    #----------------------------------------------------------------------------------------------
-    def dump_category_tree(self, filename, root):
+            
+#----------------------------------------------------------------------------------------------
+class BaseAspectHelper():
+    @staticmethod
+    def dump_category_tree(filename, root):
         print("opening damp groups file:" + filename)
         with io.open(filename + '.dump', 'w', encoding='utf8') as f:
             print("opening OK")
             f.write(unicode('{\n'))
             root.dump(f, 0)
             f.write(unicode('}\n'))
-            
-    #----------------------------------------------------------------------------------------------        
-    def removeCategory(self, db, aspect, category):
-        ''' removes category from db '''
-        stack = []
-        stack.append(category)
-        
-        while stack:
-            new_stack = []
-            for node in stack:
-                db_childs = db.base_aspects.get_childs(aspect, node)
-                for child in db_childs:
-                    new_stack.append(child)
-                db.base_aspects.remove_category(aspect, node._id)
-            stack = new_stack
-            
+                
     #----------------------------------------------------------------------------------------------
-    def treeMerge(self, source_root, dest_root):
+    @staticmethod
+    def treeMerge(source_root, dest_root):
         ''' merge two trees. assign diff from source to dest.
             modify dest tree.
             not consistent with cache. offline only
@@ -345,3 +251,103 @@ class BaseAspectsContainer():
             stack_src = new_stack_src
             stack_dest = new_stack_dst
             
+    #----------------------------------------------------------------------------------------------
+    @staticmethod
+    def save_aspect(db, aspect, src_root):
+        ''' assign src_root to db. remove difference from db tree.
+            not consistent with cache. offline use only
+         '''
+        print('save_aspect')
+        stack_db = []
+        stack_src = []
+        stack_prev_dest = []
+        
+        db_root = db.base_aspects.get_root_category(aspect)
+        
+        if not db_root:
+            print('{} root not exist. create new'.format(aspect))
+            db_root = Category({'_id': ObjectId(), 'parent_id': None, 'name':'root'})
+            db.base_aspects.cat.insert({'_id':aspect})
+            db.base_aspects.add_category(aspect, db_root)
+            
+        stack_src.append(src_root)
+        stack_db.append(db_root)
+        
+        while(stack_src or stack_db):
+            print('-----')
+            new_stack_src = []
+            new_stack_dst = []
+            new_prev_dst = []
+            
+            common_names = []
+            for src_node in stack_src:
+                #print src_node.category.name
+                for dst_node in stack_db:
+                    #print ('dst_node {}'.format(dst_node.name))
+                    if src_node.category.name == dst_node.name:
+                        common_names.append(dst_node.name)
+                        new_prev_dst.append(src_node)
+                        ''' add dst children to next iteration '''
+                        db_childs = db.base_aspects.get_childs(aspect, dst_node)
+                        for child in db_childs:
+                            #print ('dst child add {}'.format(child.name))
+                            new_stack_dst.append(child)
+                            
+                ''' add source children to next iteration '''
+                for child in src_node.childs:
+                    new_stack_src.append(child)
+                    #print ('src child add {}'.format(child.category.name))
+                    
+            #print('comm {}'.format(common_names))     
+            
+            ''' add source's unique to destination space'''
+            for src_node in stack_src:
+                bExist = False
+                for name in common_names:
+                    if name == src_node.category.name:
+                        bExist = True
+                        
+                if not bExist:
+                    for dst_prev in stack_prev_dest:
+                        #print('id: {} : {} parent_name {}'.format(src_node.parent.category._id, dst_prev.parent_id, dst_prev.name))
+                        if src_node.parent.category._id == dst_prev.category._id:
+                            ''' add to db'''
+                            db.base_aspects.add_category(aspect, src_node.category)
+                            new_prev_dst.append(src_node)
+                            
+                            #print('add category {}'.format(src_node.category.name))
+                            break
+            
+            '''remove disjoint nodes from dest's parent'''
+            for dst in stack_db:
+                #print('to rem category {}'.format(dst.name))
+                bRem = True
+                for comm in common_names:
+                    if comm == dst.name:
+                        bRem = False 
+                if bRem:
+                    self.removeCategory(db, aspect, dst)
+                    #self.db_inst.base_aspects.remove_category(aspect, dst._id)
+                    #print('rem category {}'.format(dst.name))
+
+            stack_prev_dest = new_prev_dst
+            stack_src = new_stack_src
+            stack_db = new_stack_dst
+
+        pass
+    
+    #----------------------------------------------------------------------------------------------
+    @staticmethod
+    def removeCategory(db, aspect, category):
+        ''' removes category from db '''
+        stack = []
+        stack.append(category)
+        
+        while stack:
+            new_stack = []
+            for node in stack:
+                db_childs = db.base_aspects.get_childs(aspect, node)
+                for child in db_childs:
+                    new_stack.append(child)
+                db.base_aspects.remove_category(aspect, node._id)
+            stack = new_stack
