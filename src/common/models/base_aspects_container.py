@@ -1,6 +1,9 @@
 import io
+from xml.dom import minidom
+from xml.dom.minidom import *
 from bson.objectid import ObjectId
 from common.db.types.types import Category
+from pyexpat import ExpatError
 
 #----------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------- 
@@ -144,9 +147,14 @@ class BaseAspectHelper():
             modify dest tree.
             not consistent with cache. offline only
         '''
+        print('[treeMerge]')
         stack_dest = []
         stack_src = []
         stack_prev_dest = []
+        
+        total_cat_added = 0
+        total_cat_updated = 0
+        total_cat_removed = 0
         
         stack_src.append(source_root)
         stack_dest.append(dest_root)
@@ -157,15 +165,21 @@ class BaseAspectHelper():
             new_stack_dst = []
             new_prev_dst = []
             
+            cat_added = 0
+            cat_updated = 0
+            cat_removed = 0
+            
             '''find common nodes in both spaces'''
             common_ab = []
             for src_node in stack_src:
                 for dst_node in stack_dest:
                     if src_node.category.name == dst_node.category.name:
+                        BaseAspectHelper.UpdateCategory(dst_node.category, src_node.category)
                         common_ab.append(dst_node)
                         new_prev_dst.append(dst_node)
-                        ''' add dst children to next iteration '''
-                        for child in dst_node.childs:
+                        cat_updated += 1
+                        
+                        for child in dst_node.childs: # add dst children to next iteration
                             new_stack_dst.append(child)
                             #print('add new_stack_dst {}'.format(child.category.name))
                             
@@ -196,6 +210,7 @@ class BaseAspectHelper():
                             src_copy = CategoryNode(src_node.category, dst_prev)
                             dst_prev.childs.append(src_copy)
                             new_prev_dst.append(src_copy)
+                            cat_added += 1
                             break
             
             '''remove disjoint nodes from dest's parent'''
@@ -207,12 +222,20 @@ class BaseAspectHelper():
                         bRem = False 
                         #print('{} common'.format(dst.category.name))
                 if bRem:
-                    
                     dst.parent.childs.remove(dst)
+                    cat_removed += BaseAspectHelper.countChild(dst.category)
+            
+            print ('updated:{}  removed:{}  added:{}'.format(cat_updated, cat_removed, cat_added))
+
+            total_cat_added += cat_added
+            total_cat_updated += cat_updated
+            total_cat_removed += cat_removed
             
             stack_prev_dest = new_prev_dst
             stack_src = new_stack_src
             stack_dest = new_stack_dst
+            
+        print ('Total: updated:{}  removed:{}  added:{}'.format(total_cat_updated, total_cat_removed, total_cat_added))
             
     #----------------------------------------------------------------------------------------------
     @staticmethod
@@ -224,6 +247,10 @@ class BaseAspectHelper():
         stack_db = []
         stack_src = []
         stack_prev_dest = []
+        
+        total_cat_added = 0
+        total_cat_updated = 0
+        total_cat_removed = 0
         
         db_root = db.base_aspects.get_root_category(aspect)
         
@@ -242,18 +269,22 @@ class BaseAspectHelper():
             new_stack_dst = []
             new_prev_dst = []
             
+            cat_added = 0
+            cat_updated = 0
+            cat_removed = 0
+            
             common_names = []
             for src_node in stack_src:
-                #print src_node.category.name
                 for dst_node in stack_db:
-                    #print ('dst_node {}'.format(dst_node.name))
                     if src_node.category.name == dst_node.name:
                         common_names.append(dst_node.name)
                         new_prev_dst.append(src_node)
-                        ''' add dst children to next iteration '''
-                        db_childs = db.base_aspects.get_childs(aspect, dst_node)
+                        
+                        db.base_aspects.updateCategory(aspect, dst_node)
+                        cat_updated += 1
+                        
+                        db_childs = db.base_aspects.get_childs(aspect, dst_node) # add dst children to next iteration
                         for child in db_childs:
-                            #print ('dst child add {}'.format(child.name))
                             new_stack_dst.append(child)
                             
                 ''' add source children to next iteration '''
@@ -272,31 +303,34 @@ class BaseAspectHelper():
                         
                 if not bExist:
                     for dst_prev in stack_prev_dest:
-                        #print('id: {} : {} parent_name {}'.format(src_node.parent.category._id, dst_prev.parent_id, dst_prev.name))
                         if src_node.parent.category._id == dst_prev.category._id:
-                            ''' add to db'''
-                            db.base_aspects.add_category(aspect, src_node.category)
+                            db.base_aspects.add_category(aspect, src_node.category) # add to db
                             new_prev_dst.append(src_node)
-                            
+                            cat_added += 1
                             #print('add category {}'.format(src_node.category.name))
                             break
             
             '''remove disjoint nodes from dest's parent'''
             for dst in stack_db:
-                #print('to rem category {}'.format(dst.name))
                 bRem = True
                 for comm in common_names:
                     if comm == dst.name:
                         bRem = False 
                 if bRem:
-                    self.removeCategory(db, aspect, dst)
-                    #self.db_inst.base_aspects.remove_category(aspect, dst._id)
-                    #print('rem category {}'.format(dst.name))
-
+                    cat_removed += self.removeCategory(db, aspect, dst)
+                    
+            print ('updated:{}  removed:{}  added:{}'.format(cat_updated, cat_removed, cat_added))
+            
+            total_cat_added += cat_added
+            total_cat_updated += cat_updated
+            total_cat_removed += cat_removed
+            
             stack_prev_dest = new_prev_dst
             stack_src = new_stack_src
             stack_db = new_stack_dst
-
+        
+        print ('Total: updated:{}  removed:{}  added:{}'.format(total_cat_updated, total_cat_removed, total_cat_added))
+        
         pass
     
     #----------------------------------------------------------------------------------------------
@@ -306,6 +340,7 @@ class BaseAspectHelper():
         stack = []
         stack.append(category)
         
+        count = 0
         while stack:
             new_stack = []
             for node in stack:
@@ -313,9 +348,25 @@ class BaseAspectHelper():
                 for child in db_childs:
                     new_stack.append(child)
                 db.base_aspects.remove_category(aspect, node._id)
+                count += 1
             stack = new_stack
-            
-            
+        return count + 1
+   
+    #----------------------------------------------------------------------------------------------
+    @staticmethod
+    def countChild(db, aspect, category):
+        ''' count's all child + 1 '''
+        stack = []
+        stack.append(category)
+        
+        count = 0
+        while stack:
+            top = stack.pop(0)
+            count += 1
+            for child in top.childs:
+                stack.append(child)
+        return count + 1
+    
     #----------------------------------------------------------------------------------------------
     @staticmethod
     def load_aspect(aspect, db, cache_ref):
@@ -336,6 +387,7 @@ class BaseAspectHelper():
             stack = []
             stack.append(root_node)
             
+            print('start load')
             while len(stack):
                 top = stack.pop(0)
                 
@@ -351,10 +403,71 @@ class BaseAspectHelper():
                     
                     top.childs.append(child_node)
                     stack.insert(0, child_node) 
-
+            print('end load')
         if count == 0:
             print('aspect {} not loaded completely'.format(aspect))
         else:
             print('Load aspect model OK: {} loaded'.format(count))
-
+            
         return aspect_out
+    
+    #----------------------------------------------------------------------------------------------
+    @staticmethod
+    def loadFromXML(filename):
+        ''' load tree of categories from xml fixed format. return root node
+            do not fill db related fields
+        '''
+        print('[loadFromXML] {}'.format(filename))
+        
+        INVALID_ID = -1
+        root = []
+        default_name = ''
+        try:
+            doc = minidom.parse(filename)
+            root_node = doc.getElementsByTagName("node")[0]
+        
+            root = CategoryNode(Category({'_id':INVALID_ID, 'parent_id':None, 'name':'root', 'local':''}), None)
+            
+            stack = []
+            stack.append((root_node, root))
+            count = 1
+            
+            while(stack):
+                new_stack = []
+                for node in stack:
+                    childs = node[0].childNodes
+                    
+                    for child in childs:
+                        if child.nodeType == child.ELEMENT_NODE and child.localName == 'node':
+                            name = child.getAttribute("name")
+                            
+                            local = ''
+                            if child.hasAttribute('local'):
+                                local = child.getAttribute("local")
+                            
+                            foreign_id = ''
+                            if child.hasAttribute('foreign_id'):
+                                foreign_id = child.getAttribute("foreign_id")
+                                
+                            if child.hasAttribute('default'):
+                                default_name = name
+                                
+                            cat = CategoryNode(Category({'_id':INVALID_ID, 'parent_id':INVALID_ID, 'name':name, 'local':local, 'foreign_id':foreign_id}), node[1])
+                            node[1].childs.append(cat)
+                            
+                            new_stack.append((child, cat))
+                            count += 1
+                stack = new_stack
+                
+            print('processed {} categories'.format(count))
+        except ExpatError as e:
+            print(str(e))
+        
+        #BaseAspectHelper.dump_category_tree(filename + '.tmp2', root)
+        return [root, default_name]
+    
+    #----------------------------------------------------------------------------------------------
+    @staticmethod
+    def UpdateCategory(dst_cat, src_cat):
+        dst_cat.local = src_cat.local
+        dst_cat.foreign_id = src_cat.foreign_id

@@ -71,23 +71,21 @@ def main():
 		
 		ASPECT_ID = 'basic'
 		
-		tree_src = TreeLoader(specs, db)
+		#tree_src = TreeLoader(specs, db)
 		
-		tree_src.load(data_folder + 'base_aspect.xml') #data_filename
+		aspect_src = BaseAspectHelper.loadFromXML(data_folder + 'base_aspect.xml') #data_filename
 		
-		BaseAspectHelper.dump_category_tree(specs['path']['data'] + 'basic.tmp', tree_src.root)
-		
+		BaseAspectHelper.dump_category_tree(specs['path']['data'] + 'basic.tmp', aspect_src[0])
+
 		#db.base_aspects.clear(ASPECT_ID)
-		bRes = db.base_aspects.isAspectExist(ASPECT_ID)
-		print bRes
-		print('clear')
-		db.base_aspects.clear(ASPECT_ID)
+		#bRes = db.base_aspects.isAspectExist(ASPECT_ID)
+		#print bRes
+		#print('clear')
+		#db.base_aspects.clear(ASPECT_ID)
 		#bRes = 
-		print bRes
-		
+		#print bRes
+		#return
 		#
-		
-		tree_dst = TreeLoader(specs, db)
 		
 		if not db.base_aspects.isAspectExist(ASPECT_ID):
 			db.base_aspects.cat.insert({'_id':ASPECT_ID})
@@ -98,20 +96,14 @@ def main():
 			print('no aspect loaded. create root')
 			db.base_aspects.add_category(ASPECT_ID, Category({'_id':ObjectId(), 'parent_id':None, 'name':'root', 'local':''}))
 			aspect_dst = BaseAspectHelper.load_aspect(ASPECT_ID, db, None)
-		
-		#dst_root = tree_dst.base_aspects_container.aspects['basic'].root
-		
-		#return
-		BaseAspectHelper.treeMerge(tree_src.root, aspect_dst.root)
+
+		BaseAspectHelper.treeMerge(aspect_src[0], aspect_dst.root)
 		
 		BaseAspectHelper.dump_category_tree(specs['path']['data'] + 'merge.tmp', aspect_dst.root)
 		
 		BaseAspectHelper.save_aspect(db, 'basic', aspect_dst.root)
 		
-		#tree_dst.merge(tree_src.root)
-		#tree_dst.save('basic')
-		
-		#tree_loader.importTree('__base')
+		db.base_aspects.setDefaultCategoryName(aspect_src[1])
 		
 		print("end script")
 		

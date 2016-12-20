@@ -61,8 +61,7 @@ class BaseFileReader():
         new_node.setAttribute("local", "")
         new_node.setAttribute("foreign_id", "")
         node.appendChild(new_node)
-       
-    
+
 #----------------------------------------------------------------------------------------------
     def save(self, filename):
         out = self.specs['path']['out'] + filename

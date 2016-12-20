@@ -23,6 +23,16 @@ class BaseAspects():
     def add_category(self, aspect, category):
         updateResult = self.cat.update_one({'_id':aspect}, {'$push': {"categories" : category.get()}})
         #print updateResult.acknowledged
+        
+#----------------------------------------------------------------------------------------------
+    def updateCategory(self, aspect, category):
+        updateResult = self.cat.update_one(
+            {'_id':aspect, "categories._id":category._id}, {'$set': {"local" : category.local, 'foreign_id':category.foreign_id}}
+            )
+    
+#----------------------------------------------------------------------------------------------
+    def setDefaultCategoryName(self, aspect, name):
+        self.cat.update_one({'_id':aspect}, {'$set': {"default" : name}})
 
  #----------------------------------------------------------------------------------------------
     def remove_category(self, aspect, category_id):
