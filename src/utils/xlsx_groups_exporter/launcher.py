@@ -51,6 +51,7 @@ def main():
         cache = CacheData(specs)
         cache.generate()
         
+        return
         builder = BuilderDB(specs, cache.tree)
         builder.build()
         

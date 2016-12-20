@@ -15,6 +15,10 @@ class Category():
 		if 'foreign_id' in spec:
 			self.foreign_id = spec['foreign_id']
 		
+		self.controller_name = ''
+		if 'controller_name' in spec:
+			self.controller_name = spec['controller_name']
+		
 	def get(self):
 		record = {
 			'_id':self._id,
@@ -22,6 +26,7 @@ class Category():
 			'name':self.name,
 			'local':self.local,
 			'foreign_id':self.foreign_id,
+			'controller_name':self.controller_name,
 			}
 		return record
 

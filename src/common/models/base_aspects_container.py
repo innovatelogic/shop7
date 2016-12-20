@@ -43,55 +43,18 @@ class BaseAspectsContainer():
 
 #----------------------------------------------------------------------------------------------
     def load(self, cache_ref):
-        self.load_aspect("basic", cache_ref)
-        self.load_aspect("prom_ua", cache_ref)
-        #self.load_aspect("amazon")
-        self.load_aspect("ebay", cache_ref)
-
-#----------------------------------------------------------------------------------------------
-    def load_aspect(self, aspect, cache_ref):
-        ''' create category tree'''
-        print('Load aspect {}'.format(aspect))
+        aspect = BaseAspectHelper.load_aspect("basic", self.db_inst, cache_ref)
+        if aspect:
+            self.aspects['basic'] = aspect
         
-        bResult = False
-        
-        count = 0
-        root_node = CategoryNode(self.db_inst.base_aspects.get_root_category(aspect), None)
-
-        if root_node.category:
-            self.aspects[aspect] = Aspect(aspect, root_node)
+        aspect = BaseAspectHelper.load_aspect("prom_ua", self.db_inst, cache_ref)
+        if aspect:
+            self.aspects['prom_ua'] = aspect
             
-            if cache_ref:
-                cache_ref.add_base_category(aspect, str(root_node.category._id)) #cache
-            
-            stack = []
-            stack.append(root_node)
-            
-            while len(stack):
-                top = stack.pop(0)
-                
-                childs = self.db_inst.base_aspects.get_childs(aspect, top.category)
-                count += 1
+        aspect = BaseAspectHelper.load_aspect("ebay", self.db_inst, cache_ref)
+        if aspect:
+            self.aspects['ebay'] = aspect
 
-                for child in childs:
-                    child_node = CategoryNode(child, top)
-                    self.aspects[aspect].hashmap[str(child_node.category._id)] = child_node
-                    
-                    if cache_ref:
-                        cache_ref.add_base_category(aspect, str(child_node.category._id)) #cache
-                    
-                    top.childs.append(child_node)
-                    stack.insert(0, child_node) 
-
-        if count == 0:
-            print('aspect {} not loaded completely'.format(aspect))
-        else:
-            print('Load aspect model OK: {} loaded'.format(count))
-            bResult = True
-        return bResult
-        
-
-    
 #----------------------------------------------------------------------------------------------
     def get_first_level_categories(self, aspect):
         ''' return categories by id. integer means how levels will return '''
@@ -351,3 +314,47 @@ class BaseAspectHelper():
                     new_stack.append(child)
                 db.base_aspects.remove_category(aspect, node._id)
             stack = new_stack
+            
+            
+    #----------------------------------------------------------------------------------------------
+    @staticmethod
+    def load_aspect(aspect, db, cache_ref):
+        ''' create category tree'''
+        print('Load aspect {}'.format(aspect))
+        
+        aspect_out = None
+        
+        count = 0
+        root_node = CategoryNode(db.base_aspects.get_root_category(aspect), None)
+
+        if root_node.category:
+            aspect_out = Aspect(aspect, root_node)
+            
+            if cache_ref:
+                cache_ref.add_base_category(aspect, str(root_node.category._id)) #cache
+            
+            stack = []
+            stack.append(root_node)
+            
+            while len(stack):
+                top = stack.pop(0)
+                
+                childs = db.base_aspects.get_childs(aspect, top.category)
+                count += 1
+
+                for child in childs:
+                    child_node = CategoryNode(child, top)
+                    aspect_out.hashmap[str(child_node.category._id)] = child_node
+                    
+                    if cache_ref:
+                        cache_ref.add_base_category(aspect, str(child_node.category._id)) #cache
+                    
+                    top.childs.append(child_node)
+                    stack.insert(0, child_node) 
+
+        if count == 0:
+            print('aspect {} not loaded completely'.format(aspect))
+        else:
+            print('Load aspect model OK: {} loaded'.format(count))
+
+        return aspect_out
