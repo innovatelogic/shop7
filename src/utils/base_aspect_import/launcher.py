@@ -103,7 +103,7 @@ def main():
 		
 		BaseAspectHelper.save_aspect(db, 'basic', aspect_dst.root)
 		
-		db.base_aspects.setDefaultCategoryName(aspect_src[1])
+		db.base_aspects.setDefaultCategoryName(ASPECT_ID, aspect_src[1])
 		
 		print("end script")
 		

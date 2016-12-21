@@ -173,11 +173,12 @@ class BaseAspectHelper():
             common_ab = []
             for src_node in stack_src:
                 for dst_node in stack_dest:
-                    if src_node.category.name == dst_node.category.name:
+                    if BaseAspectHelper.GetCategoryFullName(src_node) == BaseAspectHelper.GetCategoryFullName(dst_node):
                         BaseAspectHelper.UpdateCategory(dst_node.category, src_node.category)
+                        cat_updated += 1
+                        
                         common_ab.append(dst_node)
                         new_prev_dst.append(dst_node)
-                        cat_updated += 1
                         
                         for child in dst_node.childs: # add dst children to next iteration
                             new_stack_dst.append(child)
@@ -194,15 +195,15 @@ class BaseAspectHelper():
             for src_node in stack_src:
                 bAdd = False
                 for comm in common_ab:
-                    if comm.category.name == src_node.category.name:
+                    if BaseAspectHelper.GetCategoryFullName(comm) == BaseAspectHelper.GetCategoryFullName(src_node):
                         bAdd = True
+                        break
+                    
                 if not bAdd:
-                    #print('add {}'.format(src_node.category.name))
                     for dst_prev in stack_prev_dest:
-                        #print('chk {}'.format(dst_prev.category.name))
-                        if src_node.parent.category.name == dst_prev.category.name:
-                            '''check id's invalid assign new '''
-                            if src_node.category._id == -1:
+                        if BaseAspectHelper.GetCategoryFullName(src_node.parent) == BaseAspectHelper.GetCategoryFullName(dst_prev):
+
+                            if src_node.category._id == -1: # check id's invalid assign new
                                 src_node.category._id = ObjectId()
                             if src_node.category.parent_id == -1:
                                 src_node.category.parent_id = dst_prev.category._id
@@ -218,7 +219,7 @@ class BaseAspectHelper():
                 #print('to rem {}'.format(dst.category.name))
                 bRem = True
                 for comm in common_ab:
-                    if comm.category.name == dst.category.name:
+                    if BaseAspectHelper.GetCategoryFullName(comm) == BaseAspectHelper.GetCategoryFullName(dst):
                         bRem = False 
                         #print('{} common'.format(dst.category.name))
                 if bRem:
@@ -273,11 +274,11 @@ class BaseAspectHelper():
             cat_updated = 0
             cat_removed = 0
             
-            common_names = []
+            common_ab = []
             for src_node in stack_src:
                 for dst_node in stack_db:
-                    if src_node.category.name == dst_node.name:
-                        common_names.append(dst_node.name)
+                    if src_node.category._id == dst_node._id:
+                        common_ab.append(dst_node)
                         new_prev_dst.append(src_node)
                         
                         db.base_aspects.updateCategory(aspect, dst_node)
@@ -297,8 +298,8 @@ class BaseAspectHelper():
             ''' add source's unique to destination space'''
             for src_node in stack_src:
                 bExist = False
-                for name in common_names:
-                    if name == src_node.category.name:
+                for cat in common_ab:
+                    if cat._id == src_node.category._id:
                         bExist = True
                         
                 if not bExist:
@@ -313,8 +314,8 @@ class BaseAspectHelper():
             '''remove disjoint nodes from dest's parent'''
             for dst in stack_db:
                 bRem = True
-                for comm in common_names:
-                    if comm == dst.name:
+                for cat in common_ab:
+                    if cat._id == dst._id:
                         bRem = False 
                 if bRem:
                     cat_removed += self.removeCategory(db, aspect, dst)
@@ -471,3 +472,13 @@ class BaseAspectHelper():
     def UpdateCategory(dst_cat, src_cat):
         dst_cat.local = src_cat.local
         dst_cat.foreign_id = src_cat.foreign_id
+        
+    #----------------------------------------------------------------------------------------------    
+    @staticmethod    
+    def GetCategoryFullName(category_node):
+        full_name = category_node.category.name
+        parent = category_node.parent
+        while parent:
+            full_name = parent.category.name + '/' + full_name
+            parent = parent.parent
+        return full_name
