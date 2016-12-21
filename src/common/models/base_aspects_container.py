@@ -183,7 +183,8 @@ class BaseAspectHelper():
                         for child in dst_node.childs: # add dst children to next iteration
                             new_stack_dst.append(child)
                             #print('add new_stack_dst {}'.format(child.category.name))
-                            
+                        break
+                        
                 ''' add source children to next iteration '''
                 for child in src_node.childs:
                     new_stack_src.append(child)
@@ -287,7 +288,8 @@ class BaseAspectHelper():
                         db_childs = db.base_aspects.get_childs(aspect, dst_node) # add dst children to next iteration
                         for child in db_childs:
                             new_stack_dst.append(child)
-                            
+                        break
+                       
                 ''' add source children to next iteration '''
                 for child in src_node.childs:
                     new_stack_src.append(child)

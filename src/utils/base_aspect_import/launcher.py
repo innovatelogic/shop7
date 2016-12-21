@@ -78,12 +78,6 @@ def main():
 		BaseAspectHelper.dump_category_tree(specs['path']['data'] + 'basic.tmp', aspect_src[0])
 
 		#db.base_aspects.clear(ASPECT_ID)
-		#bRes = db.base_aspects.isAspectExist(ASPECT_ID)
-		#print bRes
-		#print('clear')
-		#db.base_aspects.clear(ASPECT_ID)
-		#bRes = 
-		#print bRes
 		#return
 		#
 		
