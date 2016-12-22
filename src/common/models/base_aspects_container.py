@@ -357,7 +357,7 @@ class BaseAspectHelper():
    
     #----------------------------------------------------------------------------------------------
     @staticmethod
-    def countChild(db, aspect, category):
+    def countChild(db, category):
         ''' count's all child + 1 '''
         stack = []
         stack.append(category)

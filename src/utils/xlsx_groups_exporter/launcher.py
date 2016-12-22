@@ -17,6 +17,8 @@ def main():
     parser.add_argument('--dbhost', type=str, help='database host name')
     parser.add_argument('--dbport', type=str, help='database port')
     parser.add_argument('--dbname', type=str, help='database name')
+    parser.add_argument('--aspect', type=str, help='aspect import')
+    
     args = parser.parse_args()
     
     specs = dict()
@@ -26,6 +28,9 @@ def main():
     
     if not hasattr(args, 'out'):
         raise Exception('no [out] attribute')
+    
+    if not hasattr(args, 'aspect'):
+        raise Exception('no [aspect] attribute')
     
     data_folder = path.dirname(path.abspath(args.input)) + '/'
     data_filename = path.basename(args.input)
@@ -45,6 +50,8 @@ def main():
         'name':args.dbname,
         }
     
+    specs['opt'] = {'aspect':args.aspect}
+    
     try:
         print("Script started")
         
@@ -52,8 +59,8 @@ def main():
         cache.generate()
         
         return
-        builder = BuilderDB(specs, cache.tree)
-        builder.build()
+        #builder = BuilderDB(specs, cache.tree)
+        #builder.build()
         
         print("Script finished")
         
@@ -61,7 +68,7 @@ def main():
         print(sys.exc_info()[0])
         print(sys.exc_info()[1]) 
         
-    return 1
+    return 0
 
 if __name__== "__main__":
     main()

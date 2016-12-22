@@ -13,6 +13,8 @@ class BaseAspects():
 #----------------------------------------------------------------------------------------------
     def clear(self, aspect):
         self.cat.update_one({'_id':aspect}, {'$set': {"categories" : []}})
+        #self.cat.update_one({'_id':aspect}, {'$unset': {"foreign_id" : None}})
+        #self.cat.update_one({'_id':aspect}, {'$unset': {"local" : None}})
         
 #----------------------------------------------------------------------------------------------
     def isAspectExist(self, aspect):
@@ -27,7 +29,7 @@ class BaseAspects():
 #----------------------------------------------------------------------------------------------
     def updateCategory(self, aspect, category):
         updateResult = self.cat.update_one(
-            {'_id':aspect, "categories._id":category._id}, {'$set': {"local" : category.local, 'foreign_id':category.foreign_id}}
+            {'_id':aspect, "categories._id":category._id}, {'$set': {"categories.$.local" : category.local, 'categories.$.foreign_id':category.foreign_id}}
             )
     
 #----------------------------------------------------------------------------------------------

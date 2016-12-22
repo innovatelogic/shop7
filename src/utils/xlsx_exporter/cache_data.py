@@ -13,7 +13,8 @@ class CacheData:
         timestr = time.strftime("%Y%m%d-%H%M%S")
         self.groups_cache_filename = self.specs['path']['out'] + 'cache_groups_' + self.specs['user']['login'] + '_' + timestr + '.json'
         self.items_cache_filename = self.specs['path']['out'] + 'cache_items_' + self.specs['user']['login'] + '_' + timestr + '.json'
-        
+
+#----------------------------------------------------------------------------------------------
     def cache(self):
         
         filename = self.specs['path']['data'] + self.specs['path']['filename']
@@ -22,12 +23,12 @@ class CacheData:
                 
         wb = load_workbook(filename)
 
-        print wb.get_sheet_names()
+        #print wb.get_sheet_names()
         
-        groups_cache = cache_groups.CacheGroupsDB(self.groups_cache_filename, wb.get_sheet_by_name(SHEET_GROUPS))
-        groups_cache.generate()
+        #groups_cache = cache_groups.CacheGroupsDB(self.groups_cache_filename, wb.get_sheet_by_name(SHEET_GROUPS))
+        #groups_cache.generate()
     
-        items_cache = cache_items.CacheItemsDB(self.items_cache_filename, wb.get_sheet_by_name(SHEET_ITEMS))
+        items_cache = cache_items.CacheItemsDB(self.specs, self.items_cache_filename, wb.get_sheet_by_name(SHEET_ITEMS))
         items_cache.generate()
         
         print 'cache OK'

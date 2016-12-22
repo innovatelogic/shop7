@@ -8,7 +8,6 @@ class BaseFileReader():
         self.doc = Document()
         self.root = self.doc.createElement('node')
         self.root.setAttribute("name", "root")
-        
         self.doc.appendChild(self.root)
         pass
 
@@ -37,7 +36,6 @@ class BaseFileReader():
         bAdded = False
         
         for word in words:
-            #print word
             bAdd = True
             childs = node_to_add.childNodes # getElementsByTagName('node')
             for child in childs:

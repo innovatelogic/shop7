@@ -131,8 +131,8 @@ class CacheData():
                 nodes.append(row['Cat3'])
                 
             self.addXML(nodes, row['id'], root, doc)
-            
-        out = self.specs['input']['path'] + 'tmp.tmp'
+        
+        out = self.specs['input']['out'] + self.specs['opt']['aspect'] + '.xml'
         print('save to {}'.format(out))
         doc.writexml(open(out, 'w'),
                        indent=" ",
@@ -174,7 +174,3 @@ class CacheData():
         new_node.setAttribute("local", "")
         new_node.setAttribute("foreign_id", str_foreing_id)
         node.appendChild(new_node)
-        
-#----------------------------------------------------------------------------------------------
-    def saveXML(self, filename):
-        pass

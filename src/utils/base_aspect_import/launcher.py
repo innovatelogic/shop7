@@ -26,6 +26,7 @@ def main():
 	parser.add_argument('--dbport', type=str, help='database port')
 	parser.add_argument('--dbname', type=str, help='database name')
 	parser.add_argument('--dbdrop', action='store_true', help='drop data for current user')
+	parser.add_argument('--aspect', type=str, help='aspect import')
 	
 	args = parser.parse_args()
 		
@@ -43,7 +44,7 @@ def main():
 	print('data folder:', data_folder)
 	print('data filename:', data_filename)
 	print('out folder', out_path)
-
+	
 	specs = dict()
 	
 	specs['path'] = {
@@ -58,6 +59,8 @@ def main():
         'name':args.dbname,
         }
 	
+	specs['opt'] = {'aspect':args.aspect}
+	
 	try:
 		print("start script")
 
@@ -69,15 +72,13 @@ def main():
 		db = common.db.instance.Instance(specs)
 		db.connect()
 		
-		ASPECT_ID = 'basic'
+		ASPECT_ID = specs['opt']['aspect']
 		
-		#tree_src = TreeLoader(specs, db)
+		aspect_src = BaseAspectHelper.loadFromXML(data_folder + data_filename)
 		
-		aspect_src = BaseAspectHelper.loadFromXML(data_folder + 'base_aspect.xml') #data_filename
-		
-		BaseAspectHelper.dump_category_tree(specs['path']['data'] + 'basic.tmp', aspect_src[0])
+		BaseAspectHelper.dump_category_tree(specs['path']['data'] + data_filename, aspect_src[0])
 
-		#db.base_aspects.clear(ASPECT_ID)
+		db.base_aspects.clear(ASPECT_ID)
 		#return
 		#
 		
@@ -95,7 +96,7 @@ def main():
 		
 		BaseAspectHelper.dump_category_tree(specs['path']['data'] + 'merge.tmp', aspect_dst.root)
 		
-		BaseAspectHelper.save_aspect(db, 'basic', aspect_dst.root)
+		BaseAspectHelper.save_aspect(db, ASPECT_ID, aspect_dst.root)
 		
 		db.base_aspects.setDefaultCategoryName(ASPECT_ID, aspect_src[1])
 		

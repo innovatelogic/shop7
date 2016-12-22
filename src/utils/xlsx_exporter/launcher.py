@@ -28,6 +28,7 @@ def main():
 	parser.add_argument('--dbdrop', action='store_true', help='drop data for current user')
 	parser.add_argument('--mapping', type=str, help='path to categories mapping file')
 	parser.add_argument('--nitem', type=int, help='number of items to exoprt. -1 all')
+	parser.add_argument('--aspect', type=str, help='aspect to exoprt.')
 	
 	args = parser.parse_args()
 	
@@ -76,6 +77,7 @@ def main():
         }
 	
 	specs['opt'] = {
+		'aspect':args.aspect,
 		'nitem':args.nitem,
 		}
 	
@@ -83,14 +85,7 @@ def main():
 		print("start script")
 		
 		cache = cache_data.CacheData(specs)
-		
-		build_cache = False
-
-		if hasattr(args, 'all') or hasattr(args, 'cache'):
-			build_cache = True
-			
-		if build_cache:	
-			cache.cache()
+		cache.cache()
 	
 		#build database
 		builder = builder_db.BuilderDB(specs, cache)

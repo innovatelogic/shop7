@@ -1,6 +1,6 @@
 @echo off
 
-call %~dp0/server_config.cmd
+call %~dp0/config/server_config.cmd
 
 set PYTHON="%python%"
 set SCRIPT=""-u %~dp0/../src/server/launch.py --host %MASTER_SERVER_HOST% --res %RES%""

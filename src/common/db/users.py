@@ -7,10 +7,12 @@ USERS_CATEGORY_NAME = 'users'
 class Users():
     def __init__(self, instance):
         self.instance = instance
-        
+
+#----------------------------------------------------------------------------------------------
     def init(self):
         self.cat = self.instance.connection.db[USERS_CATEGORY_NAME]
-        
+
+#----------------------------------------------------------------------------------------------
     def add_user(self, spec, group_id, rights):
         '''add new user. if group_id = None create new user group with user admin rights 
            otherwise group_id and rights should be set
@@ -60,7 +62,8 @@ class Users():
             print('[Users::add_user] user %s already exist'%spec['email'])
         
         return out
-    
+
+#----------------------------------------------------------------------------------------------
     def remove_user(self, id):
         ''' removes user by id. cause modifying user group and remove it if necessary'''
         out = False
@@ -73,16 +76,26 @@ class Users():
         else:
             print("[Users::del_user] user {} dont exist".format(id))
         return out
-    
+
+#----------------------------------------------------------------------------------------------
     def modify_user(self, id, spec):
         pass
-        
+
+#----------------------------------------------------------------------------------------------
+    def getUserById(self, _id):
+        data = self.cat.find_one({'_id':_id})
+        if data:
+            return User(data)
+        return None
+
+#----------------------------------------------------------------------------------------------
     def get_user_by_name(self, login):
         data = self.cat.find_one({'email':login})
         if data:
             return User(data)
         return None
-    
+
+#----------------------------------------------------------------------------------------------
     def drop(self):
         '''drop collection. rem in production'''
         self.cat.drop()

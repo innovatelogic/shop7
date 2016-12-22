@@ -32,9 +32,9 @@ class ItemsWriterDB:
                 num += 1
             
             record = {'name':item['name'],
-                      '_id':ObjectId(),
-                      'user_id':self.user._id,
-                      'user_group_id':self.user.group_id
+                      #'_id':ObjectId(),
+                      #'user_id':self.user._id,
+                      #'user_group_id':self.user.group_id
                       }
             
             #if 'subsectionID' in item:
@@ -98,8 +98,12 @@ class ItemsWriterDB:
                             'mapping':{}
                             }   
 
-
-            self.realm.db.items.add_item(Item(record))
+            #self.realm.db.items.add_item(Item(record))
+            self.realm.addItem(self.user._id,
+                               self.specs['opt']['aspect'],
+                               item['subsectionID'],
+                               record)
+            continue
 
             if 'subsectionID' in item:
                 subsection = item['subsectionID']
@@ -114,7 +118,7 @@ class ItemsWriterDB:
             
             node_mapping = ItemMapping(mapping_spec)
             
-            self.realm.db.items_mapping.add_mapping(node_mapping)
+            #self.realm.db.items_mapping.add_mapping(node_mapping)
                 
         print ('Write items OK')
         

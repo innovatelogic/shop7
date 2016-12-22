@@ -4,11 +4,14 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.compat import range
 from openpyxl.cell import get_column_letter
 
+#----------------------------------------------------------------------------------------------
 class CacheItemsDB:
-	def __init__(self, filename, sheet):
+	def __init__(self, specs, filename, sheet):
 		self.filename = filename
 		self.sheet = sheet
+		self.specs = specs
 		
+#----------------------------------------------------------------------------------------------
 	def generate(self):
 		print("generate items cache...")
 		
@@ -25,11 +28,12 @@ class CacheItemsDB:
 				row_dict = {}
 				for cell in row:
 					self.store_cell(cell, row_dict)
-				
+					
 				str_json = json.dumps(row_dict, sort_keys=False, ensure_ascii=False).encode('utf8')
 				f.write(unicode(str_json + '\n', 'utf8'))
 		print("items cache OK")
-		
+
+#----------------------------------------------------------------------------------------------
 	def store_cell(self, cell, dict):
 		if (cell.value != None):
 			if cell.column == 'B':
@@ -91,8 +95,5 @@ class CacheItemsDB:
 			elif cell.column == 'AU':
 				dict['characteristicName6'] = cell.value				
 			elif cell.column == 'AW':
-				dict['characteristicValue6'] = cell.value				
-				
-				
-				
-				
+				dict['characteristicValue6'] = cell.value
+	

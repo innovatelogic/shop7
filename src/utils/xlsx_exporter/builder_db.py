@@ -20,8 +20,8 @@ class BuilderDB:
 		
 		self.realm.start()
 		
-		groups = common.group_tree_generator.GroupTreeGenerator(self.filename_groups_cache)
-		groups.generate()
+		#groups = common.group_tree_generator.GroupTreeGenerator(self.filename_groups_cache)
+		#groups.generate()
 
 		# retrieve user form database
 		user = self.realm.db.users.get_user_by_name(self.specs['user']['login'])
@@ -29,8 +29,8 @@ class BuilderDB:
 		if user:
 			print("get user {} OK".format(self.specs['user']['login']))
 			
-			self.realm.db.items.drop()
-			self.realm.db.items_mapping.drop()
+			#self.realm.db.items.drop()
+			#self.realm.db.items_mapping.drop()
 			
 			#groups_db = groups_writer_db.GroupsWriterDB(groups.root, self.db)
 			#groups_db.write()

@@ -156,9 +156,28 @@ class Realm():
 #----------------------------------------------------------------------------------------------
     def get_category_info(self, token, aspect, category_id):
         ''' retrieve items using cache '''
+        print('get_category_info {} {}'.format(aspect, category_id))
         return {'items_num':self.category_group_items_cache.get_item_count(aspect, category_id, self.users_model.get_group_id_by_token(token))}
     
 #----------------------------------------------------------------------------------------------
     def get_user_category_info(self, token, category_id):
         ''' retrieve items count from user category using cache '''
         return {'items_num':self.category_group_items_cache.get_user_category_items_count(category_id, self.users_model.get_group_id_by_token(token))}
+
+#----------------------------------------------------------------------------------------------
+    def addItem(self, 
+                user_id,
+                aspect,
+                foreign_id,
+                spec
+                ):
+        ''' add item to base. update runtime cache and mappings'''
+        out = None
+        user = self.realm.db.users.getUserById(user_id)
+        if user:
+            pass
+        else:
+            print('[addItem] failed get user: return None')
+        
+        return out
+        
