@@ -7,6 +7,7 @@ from items_cache_model import ItemsCacheModel
 from base_aspects_container import BaseAspectsContainer
 from user_aspects_container import UserAspectsContainer
 from category_group_items_cache import CategoryGroupItemsCache
+from base_mapping import BaseMapping
 
 class Realm():
     def __init__(self, specs):
@@ -18,6 +19,7 @@ class Realm():
         self.category_group_items_cache = CategoryGroupItemsCache(self)
         self.base_aspects_container = BaseAspectsContainer(self.db)
         self.user_aspects_container = UserAspectsContainer(self.db)
+        self.base_mapping = BaseMapping(self)
         pass
 
 #----------------------------------------------------------------------------------------------
@@ -28,6 +30,7 @@ class Realm():
         self.user_aspects_container.load(self.category_group_items_cache)
         
         self.category_group_items_cache.build_cache()
+        self.base_mapping.load(self.specs['path']['data_dir'] + 'mapping.xml')
 
 #----------------------------------------------------------------------------------------------
     def stop(self):
@@ -167,8 +170,8 @@ class Realm():
 #----------------------------------------------------------------------------------------------
     def addItem(self, 
                 user_id,
-                aspect,
-                foreign_id,
+                user_mapping,
+                base_mapping,
                 spec
                 ):
         ''' add item to base. update runtime cache and mappings'''
@@ -180,4 +183,10 @@ class Realm():
             print('[addItem] failed get user: return None')
         
         return out
-        
+
+#----------------------------------------------------------------------------------------------
+    def getBaseCategoryByPath(self, aspect, path_list):
+        ''' Retrieve category by path. 
+        @param path_list array on node names started from most top. root may be omitted.
+        '''
+        return self.base_aspects_container.getBaseCategoryByPath(aspect, path_list)

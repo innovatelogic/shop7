@@ -10,6 +10,7 @@ import cache_groups
 import builder_db
 import cache_data
 
+#----------------------------------------------------------------------------------------------
 def main():
 	reload(sys)
 	
@@ -95,7 +96,8 @@ def main():
 		print(sys.exc_info()[0])
 		print(sys.exc_info()[1]) 
 		
-	return 1
-	
+	return 0
+
+#----------------------------------------------------------------------------------------------
 if __name__== "__main__":
 	main()

@@ -79,6 +79,7 @@ def main():
         'proj_dir':proj_dir,
         'bin_dir':proj_dir+'\\bin',
         'logs_dir':proj_dir + '\\logs',
+        'data_dir':proj_dir + '\\data\\',
         'auth_proc':proj_dir+'\\bin\\auth_server.cmd',
         }
     

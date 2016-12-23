@@ -13,6 +13,15 @@ class CategoryNode():
         self.parent = parent
         self.childs = []
         
+    def getChildByName(self, name):
+        out = None
+        if self.childs:
+            for child in self.childs:
+                if child.category.name == name:
+                    out = child
+                    break
+        return out
+
     def dump(self, f, deep):
         ''' debug serialize '''
         self.woffset(deep, f)
@@ -128,7 +137,22 @@ class BaseAspectsContainer():
             for item in node.childs:
                 out.append(item)
         return out
-            
+
+#----------------------------------------------------------------------------------------------
+    def getBaseCategoryByPath(self, aspect, path_list):
+        out = None
+        if aspect in self.aspects and len(path_list):
+            out = self.aspects[aspect].root
+            if path_list[0] == 'root':
+                path_list.pop(0)
+                
+            for name in path_list:
+                out = out.getChildByName(name)
+                if out == None:
+                    break
+        return out
+        
+#----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class BaseAspectHelper():
     @staticmethod
