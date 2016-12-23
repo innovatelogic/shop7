@@ -142,30 +142,25 @@ class CacheData():
     #----------------------------------------------------------------------------------------------
     def addXML(self, names, foreign_id, root, doc):
         node_to_add = root
-        bAdded = False
         
         n_count = 0
         for name in names:
-            bAdd = True
+            bAdded = False
             childs = node_to_add.childNodes
             for child in childs:
                 if child.nodeType == child.ELEMENT_NODE and child.localName == 'node':
                     if child.getAttribute("name") == name:
                         node_to_add = child
-                        bAdd = False
+                        bAdded = True
                         break
                         
-            if bAdd:
+            if not bAdded:
                 str_foreign_id = ''
                 if n_count == len(names) - 1: # add foreign id to last trailing node
                     str_foreign_id = str(foreign_id)
-                self.pushNode(node_to_add, name, str_foreign_id , doc)
-                bAdded = True
+                node_to_add = self.pushNode(node_to_add, name, str_foreign_id , doc)
             
             n_count += 1
-            
-        if not bAdded:
-            print('ignore {}'.format(names))
             
     #----------------------------------------------------------------------------------------------
     def pushNode(self, node, name, str_foreing_id, doc):
@@ -174,3 +169,4 @@ class CacheData():
         new_node.setAttribute("local", "")
         new_node.setAttribute("foreign_id", str_foreing_id)
         node.appendChild(new_node)
+        return new_node
