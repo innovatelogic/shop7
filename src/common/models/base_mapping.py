@@ -3,6 +3,16 @@ from xml.dom.minidom import *
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
+TAG_MAPPING = 'mappings'
+TAG_MAP = 'map'
+TAG_CATEGORY = 'category'
+
+#----------------------------------------------------------------------------------------------
+class MappingNode():
+    def __init__(self, mapping_dict):
+        self.mapping = mapping_dict
+
+#----------------------------------------------------------------------------------------------
 class BaseMapping():
     def __init__(self, realm):
         self.realm = realm
@@ -12,32 +22,41 @@ class BaseMapping():
 
 #----------------------------------------------------------------------------------------------
     def load(self, filename):
-        print('base mapping load {}'.format(filename))
+        print('stary load base mapping {}'.format(filename))
         
         doc = minidom.parse(filename)
-        root_node = doc.getElementsByTagName("mappings")[0]
+        root_node = doc.getElementsByTagName(TAG_MAPPING)[0]
         
         for child in root_node.childNodes:
-            if child.nodeType == child.ELEMENT_NODE and child.localName == 'map':
+            if child.nodeType == child.ELEMENT_NODE and child.localName == TAG_MAP:
                 self.__load_mapping(child)
-        pass
+        print('mapping loaded')
 
 #----------------------------------------------------------------------------------------------
     def __load_mapping(self, node):
-        node_mapping = []
+        node_mapping = {}
+        n_count = 0
         for child in node.childNodes:
-            if child.nodeType == child.ELEMENT_NODE and child.localName == 'category':
+            if child.nodeType == child.ELEMENT_NODE and child.localName == TAG_CATEGORY:
                 if child.hasAttribute("aspect") and child.hasAttribute('path'):
                     aspect = child.getAttribute("aspect")
                     path = child.getAttribute("path")
                     
-                    path_list = path.split('%')
-                    category_node = self.realm.getBaseCategoryByPath(aspect, path_list)
+                    if aspect not in node_mapping:
+                        category_node = self.realm.getBaseCategoryByPath(aspect, path.split('%'))
                     
-                    if category_node:
-                        node_mapping.append(category_node.category._id)
-                        print('Add mapping {}'.format(category_node.category.name))
-                    else:
-                        print('mapping failed get category {}'.format(path))
+                        if category_node:
+                            node_mapping[aspect] = category_node.category._id
+                        else:
+                            print('mapping failed get category')
+                    n_count += 1
                     
-                pass
+        if len(node_mapping) and len(node_mapping) == n_count:
+            self.mapping.append(MappingNode(node_mapping))
+            
+            for key, value in node_mapping.iteritems():
+                if key not in self.mapping:
+                    self.mapping_keys[key] = {}
+                self.mapping_keys[key][value] = self.mapping[len(self.mapping) - 1]
+        else:    
+            print('error load mapping')
