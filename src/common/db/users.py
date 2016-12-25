@@ -1,9 +1,11 @@
-from types.types import User, UserRecord, UserGroup
+from types.types import User, UserRecord, UserGroup, UserMapping
 from user_groups import UserGroups
 from bson.objectid import ObjectId
 
 USERS_CATEGORY_NAME = 'users'
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class Users():
     def __init__(self, instance):
         self.instance = instance
@@ -13,7 +15,7 @@ class Users():
         self.cat = self.instance.connection.db[USERS_CATEGORY_NAME]
 
 #----------------------------------------------------------------------------------------------
-    def add_user(self, spec, group_id, rights):
+    def addUser(self, user_spec, group_id, rights):
         '''add new user. if group_id = None create new user group with user admin rights 
            otherwise group_id and rights should be set
            @return boolean value'''
@@ -21,12 +23,12 @@ class Users():
         UNIQUE_FIELD_NAME = 'email'
         
         out = False
-        if not self.get_user_by_name(spec[UNIQUE_FIELD_NAME]):
+        if not self.get_user_by_name(user_spec[UNIQUE_FIELD_NAME]):
             if group_id:
                 group = self.instance.user_groups.get_user_group(group_id)
                 if group:
-                    spec['_id'] = ObjectId()
-                    spec['group_id'] = group._id
+                    user_spec['_id'] = ObjectId()
+                    user_spec['group_id'] = group._id
                     
                     new_user = User(spec)
                     self.cat.insert(new_user.get())
@@ -38,21 +40,31 @@ class Users():
                     print('[Users::add_user] failed get group %s'%str(group_id))
             else:
                 # no group_id, create group and assign user to it
+                user_id = str(ObjectId())
+                group_id = str(ObjectId())
+                user_mapping_id = str(ObjectId())
                 
-                  
-                user_spec['_id'] = str(ObjectId())
-                user_spec['group_id'] = str(ObjectId())
+                user_spec['_id'] = user_id
+                user_spec['group_id'] = group_id
+
+                mapping_spec = {}
+                mapping_spec['_id'] = user_mapping_id
+                mapping_spec['group_id'] = group_id
+                mapping_spec['mapping'] = []
                 
-                spec_group = {'_id':str(spec['group_id'])}             
+                spec_group = {'_id':group_id, 'user_mapping_id':user_mapping_id}          
                 spec_group['records'] = []
                 spec_group['records'].append(UserRecord(user_spec['_id'], rights))
                 
-                new_group = UserGroup(spec_group)
+                userAspect = self.instance.user_aspects.createUserAspect(group_id)
+                spec_group['aspect_id'] = userAspect._id
                 
-                # TODO check spec valid?
-                new_user = User(user_spec)
+                new_group = UserGroup(spec_group)
+                new_user = User(user_spec) # TODO check spec valid?
+                new_mapping = UserMapping(mapping_spec)
                 
                 self.instance.user_groups.add_user_group(new_group)
+                self.instance.group_category_mapping.addMapping(new_mapping)
                 self.cat.insert(new_user.get())
                 
                 out = True

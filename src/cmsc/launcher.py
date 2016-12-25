@@ -46,6 +46,21 @@ class Opt():
 def createNewUserWithGroup(params):
 	print('Create New user With New group')
 	spec = {}
+	
+	print('enter user email (login)')
+	spec['email'] = raw_input().strip().lower()
+	
+	print('enter user name')
+	spec['name'] = raw_input().strip().lower()
+	
+	print('enter password')
+	spec['pwhsh'] = raw_input().strip().lower()
+	
+	print('enter user phone')
+	spec['phone'] = raw_input().strip().lower()
+	
+	params.users.addUser(spec, None, 'all')
+	
 	return 1
 
 #----------------------------------------------------------------------------------------------

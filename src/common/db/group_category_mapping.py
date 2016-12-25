@@ -20,7 +20,8 @@ class GroupCategoryMapping():
         pass
 
 #----------------------------------------------------------------------------------------------
-    def addMapping(self, map_dict):
+    def addMapping(self, userMapping):
+        self.cat.insert(userMapping.get())
         pass
         
         

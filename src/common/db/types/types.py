@@ -39,7 +39,6 @@ class User():
 		self.email = spec['email']
 		self.pwhs = spec['pwhsh']
 		self.phone = spec['phone']
-		
 	def get(self):
 		record = {
 			'_id':self._id,
@@ -76,7 +75,6 @@ class UserGroup():
 		self.records = {}
 		for i in range(0, len(spec['records'])):
 			self.records[spec['records'][i]._id] = spec['records'][i].rights
-
 	def get(self):
 		record = {
 			'_id':self._id,
@@ -269,12 +267,14 @@ class UserMapping():
 	 '''
 	def __init__(self, spec):
 		self._id = spec['_id']
+		self.group_id = spec['group_id']
 		self.mapping = spec['mapping']
 		pass
 	
 	def get(self):
 		record = {
 			'_id':self._id,
+			'group_id':self.group_id,
 			'mapping':self.mapping,
 			}
 		return record
