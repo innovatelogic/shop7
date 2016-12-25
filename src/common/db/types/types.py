@@ -70,14 +70,18 @@ class UserGroup():
 	def __init__(self, spec):
 		self._id = spec['_id']
 		self.aspect_id = spec['aspect_id']
+		self.user_mapping_id = None
+		if 'user_mapping_id' in spec:
+			self.user_mapping_id = spec['user_mapping_id']
 		self.records = {}
 		for i in range(0, len(spec['records'])):
 			self.records[spec['records'][i]._id] = spec['records'][i].rights
-		
+
 	def get(self):
 		record = {
 			'_id':self._id,
 			'aspect_id':self.aspect_id,
+			'user_mapping_id':self.user_mapping_id,
 			'records':self.records,
 			}
 		return record
@@ -198,7 +202,7 @@ class UserSettings():
 			'client':{
 				'ui':{
 					'cases':{
-						'active_base_aspect':'prom_ua',
+						'active_base_aspect':'basic',
 						'show_base_aspect_whole_tree':False,
 						'list_image_size':2,
 						'item_columns':{
@@ -217,6 +221,8 @@ class UserSettings():
 					'settings':{},
 					'statistics':{},
 					'dashboard':{},
+					'languages':{['EN', 'UA', 'RU']},
+					'curr_lang':'EN'
 					}
 				}
 		}
@@ -255,3 +261,20 @@ class UserSettings():
 			'options':self.options,
 			}
         return record
+
+#----------------------------------------------------------------------------------------------
+class UserMapping():
+	''' link user category with base category
+		data format { str(user_category_id) : {'base_aspect_name' : category_id, ...} }
+	 '''
+	def __init__(self, spec):
+		self._id = spec['_id']
+		self.mapping = spec['mapping']
+		pass
+	
+	def get(self):
+		record = {
+			'_id':self._id,
+			'mapping':self.mapping,
+			}
+		return record

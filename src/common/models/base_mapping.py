@@ -1,17 +1,11 @@
 from xml.dom import minidom
 from xml.dom.minidom import *
 
-#----------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------
 TAG_MAPPING = 'mappings'
 TAG_MAP = 'map'
 TAG_CATEGORY = 'category'
 
 #----------------------------------------------------------------------------------------------
-class MappingNode():
-    def __init__(self, mapping_dict):
-        self.mapping = mapping_dict
-
 #----------------------------------------------------------------------------------------------
 class BaseMapping():
     def __init__(self, realm):
@@ -52,7 +46,7 @@ class BaseMapping():
                     n_count += 1
                     
         if len(node_mapping) and len(node_mapping) == n_count:
-            self.mapping.append(MappingNode(node_mapping))
+            self.mapping.append(node_mapping)
             
             for key, value in node_mapping.iteritems():
                 if key not in self.mapping:

@@ -7,6 +7,7 @@ from base_aspects import BaseAspects
 from user_aspects import UserAspects
 from items_mapping import ItemsMapping
 from user_settings import UserSettingsDB
+from group_category_mapping import GroupCategoryMapping
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
@@ -23,6 +24,7 @@ class Instance():
 		self.base_aspects = BaseAspects(self)
 		self.user_aspects = UserAspects(self)
 		self.items_mapping = ItemsMapping(self)
+		self.group_category_mapping = GroupCategoryMapping(self)
 		
 #----------------------------------------------------------------------------------------------
 	def connect(self):
@@ -35,6 +37,7 @@ class Instance():
 		self.base_aspects.init()
 		self.user_aspects.init()
 		self.items_mapping.init()
+		self.group_category_mapping.init()
 
 #----------------------------------------------------------------------------------------------
 	def disconnect(self):

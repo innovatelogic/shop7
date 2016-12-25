@@ -2,6 +2,8 @@
 from bson.objectid import ObjectId
 from common.db.types.types import Category, UserAspect, User
 
+DEFAULT_CATEGORY_NAME = 'All'
+
 class UserAspectsContainer():
     def __init__(self, db_inst):
         self.db_inst = db_inst
@@ -47,21 +49,26 @@ class UserAspectsContainer():
         out = None
         if self.aspects.get(str(group_id)):
             for child in self.aspects[str(group_id)].node_root.childs:
-                if child.category.name == 'All':
+                if child.category.name == DEFAULT_CATEGORY_NAME:
                     out = child.category
                     break
         return out
-        
+
 #----------------------------------------------------------------------------------------------    
     def createUserAspect(self, group_id):
-        '''creates default user aspect'''
+        '''creates default user aspect
+            @param group_id - ObjectId type
+            @return: userAspect object of UserAspect type
+        '''
         root_category =  Category({'_id': ObjectId(), 'parent_id': None, 'name':'root'})
-        root_node = UserAspect.Node(root_category)
+        all_category =  Category({'_id': ObjectId(), 'parent_id': root_category._id, 'name':DEFAULT_CATEGORY_NAME})
         
-        all_category =  Category({'_id': ObjectId(), 'parent_id': root_category._id, 'name':'All'})
+        root_node = UserAspect.Node(root_category)
         all_node = UserAspect.Node(all_category)
         
         root_node.childs.append(all_node)
         
         user_aspect = UserAspect({'_id':ObjectId(), 'group_id':group_id, 'node_root':root_node})
         self.db_inst.user_aspects.add_aspect(user_aspect)
+        
+        return user_aspect

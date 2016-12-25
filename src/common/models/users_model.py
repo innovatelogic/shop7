@@ -4,6 +4,8 @@ from groups_model import GroupsModel
 
 USER_TOKEN_START = 456890
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class UsersModel():
     def __init__(self, db_instance, groups_model):
         self.db_instance = db_instance
@@ -21,7 +23,6 @@ class UsersModel():
         user = self.db_instance.users.get_user_by_name(login)
         
         if user:
-            print('[authentificateUser] user ok')
             if user.pwhs == password:
                 loginPass = True
                 user_session = None
@@ -37,9 +38,7 @@ class UsersModel():
                     user_session = UserSession(self.db_instance, USER_TOKEN_START, user._id, user.name, user.group_id)
                     self.userSessions[USER_TOKEN_START] = user_session
                     
-                    #cache group info
-                    self.groups_model.loadUserGroupSession(user.group_id, USER_TOKEN_START)
-                    
+                    self.groups_model.loadUserGroupSession(user.group_id, USER_TOKEN_START) #cache group info
                     ausPass = True
                 else:
                     print(time.asctime(), "user try to %s re-authentificate" % login)
@@ -48,7 +47,9 @@ class UsersModel():
                 print(time.asctime(), "user %s authentificate OK" % login)
             else:
                 print(time.asctime(), "user %s authentificate FAILED" % login)
-        
+        else:
+            print('user {} not found'.format(login))
+            
         return [loginPass and ausPass, user_session]
     
 #----------------------------------------------------------------------------------------------

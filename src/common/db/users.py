@@ -16,7 +16,8 @@ class Users():
     def add_user(self, spec, group_id, rights):
         '''add new user. if group_id = None create new user group with user admin rights 
            otherwise group_id and rights should be set
-           return boolean value'''
+           @return boolean value'''
+        
         UNIQUE_FIELD_NAME = 'email'
         
         out = False
@@ -28,39 +29,36 @@ class Users():
                     spec['group_id'] = group._id
                     
                     new_user = User(spec)
-                    
                     self.cat.insert(new_user.get())
                     
                     group.records[str(spec['_id'])] = rights
-                    
                     self.instance.user_groups.update_user_group(group)
                     
                 else:
                     print('[Users::add_user] failed get group %s'%str(group_id))
             else:
-                # no group_id, create group and assign user to it    
-                new_user_id = ObjectId()
-                new_group_id = ObjectId()
+                # no group_id, create group and assign user to it
                 
-                spec['_id'] = str(new_user_id)
-                spec['group_id'] = str(new_group_id)
+                  
+                user_spec['_id'] = str(ObjectId())
+                user_spec['group_id'] = str(ObjectId())
                 
-                spec_group = {'_id':str(new_group_id)}             
+                spec_group = {'_id':str(spec['group_id'])}             
                 spec_group['records'] = []
-                spec_group['records'].append(UserRecord(spec['_id'], rights))
+                spec_group['records'].append(UserRecord(user_spec['_id'], rights))
                 
                 new_group = UserGroup(spec_group)
                 
                 # TODO check spec valid?
-                new_user = User(spec)
+                new_user = User(user_spec)
                 
                 self.instance.user_groups.add_user_group(new_group)
                 self.cat.insert(new_user.get())
                 
                 out = True
         else:
-            print('[Users::add_user] user %s already exist'%spec['email'])
-        
+            print('[Users::add_user] user {} already exist'.format(user_spec['email']))
+            
         return out
 
 #----------------------------------------------------------------------------------------------
