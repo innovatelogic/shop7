@@ -48,7 +48,6 @@ class CategoryModel():
         out = [] 
         return out
 
-
 #----------------------------------------------------------------------------------------------  
     def get_childs(self, str_parent_id):
         out = []

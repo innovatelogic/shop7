@@ -80,7 +80,6 @@ def main():
 
 		db.base_aspects.clear(ASPECT_ID)
 		#return
-		#
 		
 		if not db.base_aspects.isAspectExist(ASPECT_ID):
 			db.base_aspects.cat.insert({'_id':ASPECT_ID})

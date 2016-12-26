@@ -54,21 +54,3 @@ class UserAspectsContainer():
                     break
         return out
 
-#----------------------------------------------------------------------------------------------    
-    def createUserAspect(self, group_id):
-        '''creates default user aspect
-            @param group_id - ObjectId type
-            @return: userAspect object of UserAspect type
-        '''
-        root_category =  Category({'_id': ObjectId(), 'parent_id': None, 'name':'root'})
-        all_category =  Category({'_id': ObjectId(), 'parent_id': root_category._id, 'name':DEFAULT_CATEGORY_NAME})
-        
-        root_node = UserAspect.Node(root_category)
-        all_node = UserAspect.Node(all_category)
-        
-        root_node.childs.append(all_node)
-        
-        user_aspect = UserAspect({'_id':ObjectId(), 'group_id':group_id, 'node_root':root_node})
-        self.db_inst.user_aspects.add_aspect(user_aspect)
-        
-        return user_aspect

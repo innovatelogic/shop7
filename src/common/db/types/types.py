@@ -72,18 +72,27 @@ class UserGroup():
 		self.user_mapping_id = None
 		if 'user_mapping_id' in spec:
 			self.user_mapping_id = spec['user_mapping_id']
-		self.records = {}
+
+		self.records = {} #{ user_id : rights }
 		for i in range(0, len(spec['records'])):
 			self.records[spec['records'][i]._id] = spec['records'][i].rights
+
 	def get(self):
 		record = {
 			'_id':self._id,
 			'aspect_id':self.aspect_id,
 			'user_mapping_id':self.user_mapping_id,
-			'records':self.records,
+			'records':self.records, #{ user_id : rights }
 			}
 		return record
-
+	
+	def addUserRecord(self, user_id, rights):
+		if str(user_id) not in self.records:
+			self.records[str(user_id)] = rights
+		else:
+			self.records[str(user_id)] = rights
+			print('user already exist in group')
+			
 #----------------------------------------------------------------------------------------------		
 class Item():
 	CHARACTERISTICS_MAX = 16

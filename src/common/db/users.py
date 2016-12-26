@@ -15,7 +15,7 @@ class Users():
         self.cat = self.instance.connection.db[USERS_CATEGORY_NAME]
 
 #----------------------------------------------------------------------------------------------
-    def addUser(self, user_spec, group_id, rights):
+    def addUser(self, user_spec, group, rights):
         '''add new user. if group_id = None create new user group with user admin rights 
            otherwise group_id and rights should be set
            @return boolean value'''
@@ -24,20 +24,23 @@ class Users():
         
         out = False
         if not self.get_user_by_name(user_spec[UNIQUE_FIELD_NAME]):
-            if group_id:
-                group = self.instance.user_groups.get_user_group(group_id)
+            if group:
+                group = self.instance.user_groups.get_user_group(group._id)
                 if group:
+                    
                     user_spec['_id'] = ObjectId()
                     user_spec['group_id'] = group._id
                     
-                    new_user = User(spec)
+                    new_user = User(user_spec)
                     self.cat.insert(new_user.get())
                     
-                    group.records[str(spec['_id'])] = rights
+                    group.addUserRecord(new_user._id, rights)
+                    print('red')
                     self.instance.user_groups.update_user_group(group)
                     
+                    out = True
                 else:
-                    print('[Users::add_user] failed get group %s'%str(group_id))
+                    print('[Users::addUser] failed get group %s'%str(group_id))
             else:
                 # no group_id, create group and assign user to it
                 user_id = str(ObjectId())
@@ -69,7 +72,7 @@ class Users():
                 
                 out = True
         else:
-            print('[Users::add_user] user {} already exist'.format(user_spec['email']))
+            print('[Users::addUser] user {} already exist'.format(user_spec['email']))
             
         return out
 
@@ -84,7 +87,7 @@ class Users():
             self.cat.remove({"_id": data['_id']})
             out = True
         else:
-            print("[Users::del_user] user {} dont exist".format(id))
+            print("[Users::remove_user] user {} does'nt exist".format(id))
         return out
 
 #----------------------------------------------------------------------------------------------

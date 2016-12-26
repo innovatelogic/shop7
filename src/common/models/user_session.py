@@ -15,7 +15,6 @@ class UserSession:
         if not self.settings:
             self.settings = UserSettings({'_id':ObjectId(), 'user_id':id})
             db_instance.user_settings.add_settings(self.settings)
-        print self.settings.get()
         pass
     
     #-----------------------------------------------------------------------------------------

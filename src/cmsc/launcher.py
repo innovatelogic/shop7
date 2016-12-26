@@ -66,6 +66,30 @@ def createNewUserWithGroup(params):
 #----------------------------------------------------------------------------------------------
 def createNewUserWithinExistedGroup(params):
 	print('Create New user within existed group')
+	
+	print('enter group id')
+	group_id = raw_input().strip().lower()
+	
+	user_group = params.user_groups.get_user_group(group_id)
+	if user_group:
+		spec = {}
+	
+		print('enter user email (login)')
+		spec['email'] = raw_input().strip().lower()
+	
+		print('enter user name')
+		spec['name'] = raw_input().strip().lower()
+	
+		print('enter password')
+		spec['pwhsh'] = raw_input().strip().lower()
+	
+		print('enter user phone')
+		spec['phone'] = raw_input().strip().lower()
+	
+		params.users.addUser(spec, user_group, 'all')
+	else:
+		print('invalid user group')
+
 	return 1
 
 #----------------------------------------------------------------------------------------------
