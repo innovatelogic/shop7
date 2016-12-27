@@ -1,4 +1,5 @@
 from types.types import UserSettings
+from bson.objectid import ObjectId
 
 USER_SETTINGS_CATEGORY_NAME = 'user_settings'
 
@@ -28,6 +29,14 @@ class UserSettingsDB():
 #----------------------------------------------------------------------------------------------
     def update_user_settings(self, settings):
         self.cat.update_one({'user_id':settings.user_id}, {'$set': {'options' : settings.options}})
+        
+#----------------------------------------------------------------------------------------------
+    def createUserSettings(self, user):
+        out = False
+        if user and self.get_user_settings(user._id) == None:
+            self.add_settings(UserSettings({'_id':ObjectId(), 'user_id':user._id}))
+            out = True
+        return out
 
 #----------------------------------------------------------------------------------------------
     def drop(self):

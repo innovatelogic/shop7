@@ -30,3 +30,7 @@ class Opt():
             
             if not flag:
                 print('invalid input')
+    
+    @staticmethod
+    def input():
+        return raw_input().strip().lower()

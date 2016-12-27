@@ -11,16 +11,16 @@ def createNewUserWithGroup(params):
     spec = {}
     
     print('enter user email (login)')
-    spec['email'] = raw_input().strip().lower()
+    spec['email'] = Opt.input()
     
     print('enter user name')
-    spec['name'] = raw_input().strip().lower()
+    spec['name'] = Opt.input()
     
     print('enter password')
-    spec['pwhsh'] = raw_input().strip().lower()
+    spec['pwhsh'] = Opt.input()
     
     print('enter user phone')
-    spec['phone'] = raw_input().strip().lower()
+    spec['phone'] = Opt.input()
     
     params.users.addUser(spec, None, 'all')
     
@@ -31,23 +31,23 @@ def createNewUserWithinExistedGroup(params):
     print('Create New user within existed group')
     
     print('enter group id')
-    group_id = raw_input().strip().lower()
+    group_id = Opt.input()
     
     user_group = params.user_groups.get_user_group(group_id)
     if user_group:
         spec = {}
     
         print('enter user email (login)')
-        spec['email'] = raw_input().strip().lower()
+        spec['email'] = Opt.input()
     
         print('enter user name')
-        spec['name'] = raw_input().strip().lower()
+        spec['name'] = Opt.input()
     
         print('enter password')
-        spec['pwhsh'] = raw_input().strip().lower()
+        spec['pwhsh'] = Opt.input()
     
         print('enter user phone')
-        spec['phone'] = raw_input().strip().lower()
+        spec['phone'] = Opt.input()
     
         params.users.addUser(spec, user_group, 'all')
     else:
@@ -56,8 +56,31 @@ def createNewUserWithinExistedGroup(params):
     return 1
 
 #----------------------------------------------------------------------------------------------
+def deleteUser(params):
+    spec = {}
+    print('enter user email (login)')
+    spec['email'] = Opt.input()
+    
+    user = params.users.get_user_by_name(spec['email'])
+    if user:
+        params.users.removeUser(user)
+    else:
+        print('Non valid user')
+    
+    return 1
+
+#----------------------------------------------------------------------------------------------
+def deleteUserGroup(params):
+    spec = {}
+    print('enter group id')
+    spec['_id'] = Opt.input()
+    return 1
+
+#----------------------------------------------------------------------------------------------
 def operateUserManagement(params):
     opt = Opt({'1':('create New user with New group', createNewUserWithGroup, (params)),
-               '2':('create New user within existed group', createNewUserWithinExistedGroup, (params))})
+               '2':('create New user within existed group', createNewUserWithinExistedGroup, (params)),
+               '3':('remove user', deleteUser, (params)),
+               '4':('remove user group', deleteUserGroup, (params))})
     opt.run()
     return 0

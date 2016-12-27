@@ -16,5 +16,6 @@ def operateDB(params):
     
     print('red')
     opt = Opt({'1':('users management', opt_operate_users.operateUserManagement, db), 
-               '2':('categories management', None)})
+               '2':('categories management', None),
+               '3':('drop db', None)})
     opt.run()

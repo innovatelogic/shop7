@@ -228,7 +228,6 @@ class UserSettings():
 					'settings':{},
 					'statistics':{},
 					'dashboard':{},
-					'languages':{['EN', 'UA', 'RU']},
 					'curr_lang':'EN'
 					}
 				}

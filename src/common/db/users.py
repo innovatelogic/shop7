@@ -18,7 +18,7 @@ class Users():
     def addUser(self, user_spec, group, rights):
         '''add new user. if group_id = None create new user group with user admin rights 
            otherwise group_id and rights should be set
-           @return boolean value'''
+           @return boolean value True if success otherwise False'''
         
         UNIQUE_FIELD_NAME = 'email'
         
@@ -27,22 +27,24 @@ class Users():
             if group:
                 group = self.instance.user_groups.get_user_group(group._id)
                 if group:
+                    user_id = str(ObjectId())
                     
-                    user_spec['_id'] = ObjectId()
+                    user_spec['_id'] = user_id
                     user_spec['group_id'] = group._id
                     
                     new_user = User(user_spec)
                     self.cat.insert(new_user.get())
                     
                     group.addUserRecord(new_user._id, rights)
-                    print('red')
+                    
+                    self.instance.user_settings.createUserSettings(new_user)
                     self.instance.user_groups.update_user_group(group)
                     
                     out = True
                 else:
                     print('[Users::addUser] failed get group %s'%str(group_id))
-            else:
-                # no group_id, create group and assign user to it
+            else: # no specified group_id, create group and assign user to it
+                
                 user_id = str(ObjectId())
                 group_id = str(ObjectId())
                 user_mapping_id = str(ObjectId())
@@ -66,6 +68,7 @@ class Users():
                 new_user = User(user_spec) # TODO check spec valid?
                 new_mapping = UserMapping(mapping_spec)
                 
+                self.instance.user_settings.createUserSettings(new_user)
                 self.instance.user_groups.add_user_group(new_group)
                 self.instance.group_category_mapping.addMapping(new_mapping)
                 self.cat.insert(new_user.get())
@@ -77,7 +80,7 @@ class Users():
         return out
 
 #----------------------------------------------------------------------------------------------
-    def remove_user(self, id):
+    def removeUser(self, id):
         ''' removes user by id. cause modifying user group and remove it if necessary'''
         out = False
         data = self.cat.find_one({'_id':id})
