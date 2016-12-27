@@ -94,6 +94,9 @@ class UserGroups():
             
             self.instance.user_aspects.removeUserAspect(group)
             
+            for key, value in group.records.iteritems():
+                self.instance.users.removeUserById(key)
+                
             self.cat.remove({"_id":group._id})
         return out
 

@@ -2,7 +2,7 @@ import os, sys, shutil, argparse
 from os import path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
-from opt import Opt
+from opt import Opt, variant
 import opt_operate_db
 		
 #----------------------------------------------------------------------------------------------
@@ -28,7 +28,8 @@ def main():
 	try:
 		print("cmsc starting ...")
 		
-		opt = Opt({'1':('operate db', opt_operate_db.operateDB, specs), '2':('connect to MS', None)})
+		opt = Opt([variant('1', 'operate db', opt_operate_db.operateDB, specs), 
+				   variant('2', 'connect to MS')])
 		opt.run()
 		
 		print("end script")

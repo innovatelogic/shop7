@@ -15,7 +15,8 @@ class UserSettingsDB():
 
 #----------------------------------------------------------------------------------------------
     def getUserSettings(self, user_id):
-        '''retrieve data from db. return constructed UserSettings object'''
+        '''retrieve data from db.
+         @return constructed UserSettings object'''
         data = self.cat.find_one({'user_id':user_id})
         if data:
             data['_id'] = str(data['_id'])

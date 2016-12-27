@@ -3,7 +3,7 @@ import common.db.instance
 import common.connection_db
 from common.models.base_aspects_container import BaseAspectsContainer, CategoryNode, BaseAspectHelper
 from common.db.types.types import Category
-from opt import Opt
+from opt import Opt, variant
 
 #----------------------------------------------------------------------------------------------            
 def createNewUserWithGroup(params):
@@ -73,14 +73,21 @@ def deleteUser(params):
 def deleteUserGroup(params):
     spec = {}
     print('enter group id')
-    spec['_id'] = Opt.input()
+    group_id = Opt.input()
+    
+    user_group = params.user_groups.get_user_group(group_id)
+    if user_group:
+        params.user_groups.removeGroup(user_group)
+    else:
+        print('invalid user group')
+        
     return 1
 
 #----------------------------------------------------------------------------------------------
 def operateUserManagement(params):
-    opt = Opt({'1':('create New user with New group', createNewUserWithGroup, (params)),
-               '2':('create New user within existed group', createNewUserWithinExistedGroup, (params)),
-               '3':('remove user', deleteUser, (params)),
-               '4':('remove user group', deleteUserGroup, (params))})
+    opt = Opt([variant('1','create New user with New group', createNewUserWithGroup, params),
+               variant('2', 'create New user within existed group', createNewUserWithinExistedGroup, params),
+               variant('3', 'remove user', deleteUser, params),
+               variant('4', 'remove user group', deleteUserGroup, params)])
     opt.run()
     return 0

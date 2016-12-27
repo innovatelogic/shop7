@@ -1,5 +1,24 @@
 
 #----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+class variant():
+    def __init__(self, key, desc, func = None, params = None):
+        self.key = key
+        self.desc = desc
+        self.func = func
+        self.params = params
+        
+    def prnt(self):
+        print('{} - {}'.format(self.key, self.desc))
+    
+    def run(self):
+        res = 1
+        if self.func:
+            res = self.func(self.params)
+        return res
+    
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class Opt():
     ''' options incapsulator opt input {'str(option)': (str(desc), func, params), ... } '''
     def __init__(self, opt):
@@ -7,8 +26,8 @@ class Opt():
         
     def optPrint(self):
         print('>>')
-        for key, value in self.opt.iteritems():
-            print('{} - {}'.format(key, value[0]))
+        for opt in self.opt:
+            opt.prnt()
         print('q - quit')
         
     def run(self):
@@ -16,13 +35,10 @@ class Opt():
             self.optPrint()
             flag = False
             line = raw_input().strip().lower()
-            for key, value in self.opt.iteritems():
-                if line == key:
-                    if value[1]:
-                        if value[1](value[2]) == 1: 
-                            return
-                    else:
-                        print('invalid operation')
+            for opt in self.opt:
+                if line == opt.key:
+                    if opt.run() == 1:
+                        return
                     flag = True
                     
             if line == 'q':

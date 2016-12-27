@@ -26,3 +26,9 @@ class Categories():
             for record in records:
                 out.append(Category(record))
         return out
+    
+    #----------------------------------------------------------------------------------------------
+    def drop(self):
+        '''drop collection. rem in production'''
+        #self.cat.drop()
+        pass

@@ -43,4 +43,16 @@ class Instance():
 	def disconnect(self):
 		self.connection.close()
 		pass
+	
+#----------------------------------------------------------------------------------------------
+	def drop(self):
+		self.user_groups.drop()
+		self.users.drop()
+		self.user_settings.drop()
+		self.items.drop()
+		self.categories.drop()
+		self.base_aspects.drop()
+		self.user_aspects.drop()
+		self.items_mapping.drop()
+		self.group_category_mapping.drop()
 		

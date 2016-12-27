@@ -30,4 +30,7 @@ class GroupCategoryMapping():
         self.cat.insert(userMapping.get())
         pass
         
-        
+#----------------------------------------------------------------------------------------------
+    def drop(self):
+        '''drop collection. rem in production'''
+        self.cat.drop()    

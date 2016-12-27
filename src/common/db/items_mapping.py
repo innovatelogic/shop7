@@ -73,6 +73,7 @@ class ItemsMapping():
             
         cursor = self.cat.aggregate(pipeline)
         return list(cursor)
+
 #----------------------------------------------------------------------------------------------
     def drop(self):
         '''drop collection. rem in production'''

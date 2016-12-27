@@ -121,3 +121,8 @@ class UserAspects():
             self.cat.remove({"group_id":group._id})
             out = True
         return out
+    
+#----------------------------------------------------------------------------------------------
+    def drop(self):
+        '''drop collection. rem in production'''
+        self.cat.drop()

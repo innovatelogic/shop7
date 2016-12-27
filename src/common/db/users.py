@@ -63,6 +63,14 @@ class Users():
         return out
 
 #----------------------------------------------------------------------------------------------
+    def removeUserById(self, user_id):
+        out = False
+        user = self.getUserById(user_id)
+        if user:
+            out = self.removeUser(user)
+        return out
+       
+#----------------------------------------------------------------------------------------------
     def removeUser(self, user_object, clear_all_if_empty_group = False):
         ''' removes user by id. cause modifying user group and remove it if necessary'''
         out = False

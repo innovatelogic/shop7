@@ -71,7 +71,7 @@ class BaseAspects():
                 if record and record.get('categories') and len(record['categories']):
                     #print record['categories']
                     out.append(Category(record['categories']))
-                
+                    
         return out
 
 #----------------------------------------------------------------------------------------------
