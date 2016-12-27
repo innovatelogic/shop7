@@ -1,4 +1,4 @@
-from types.types import UserGroup, UserRecord
+from types.types import UserGroup, UserRecord, UserMapping
 from bson.objectid import ObjectId
 
 USER_GROUPS_CATEGORY_NAME = 'user_groups'
@@ -58,6 +58,45 @@ class UserGroups():
     def remove_group(self, group_id):
         self.cat.remove({"_id":group_id})
 
+#----------------------------------------------------------------------------------------------
+    def createUserGroup(self):
+        ''' creates empty user group and store in db
+        @return UserGroup object
+        '''
+        group_id = str(ObjectId())
+        user_mapping_id = str(ObjectId())
+        
+        userAspect = self.instance.user_aspects.createUserAspect(group_id)
+        
+        mapping_spec = {}
+        mapping_spec['_id'] = user_mapping_id
+        mapping_spec['group_id'] = group_id
+        mapping_spec['mapping'] = []
+                
+        spec_group = {'_id':group_id, 'user_mapping_id':user_mapping_id, 'aspect_id':userAspect._id}          
+        spec_group['records'] = []
+        
+        new_group = UserGroup(spec_group)
+        new_mapping = UserMapping(mapping_spec)
+        
+        self.instance.user_groups.add_user_group(new_group)
+        self.instance.group_category_mapping.addMapping(new_mapping)
+        
+        return new_group
+
+#----------------------------------------------------------------------------------------------
+    def removeGroup(self, group):
+        out = False
+        if group:
+            mapping = self.instance.group_category_mapping.getMapping(group)
+            if mapping:
+                self.instance.group_category_mapping.removeMapping(mapping)
+            
+            self.instance.user_aspects.removeUserAspect(group)
+            
+            self.cat.remove({"_id":group._id})
+        return out
+
 #----------------------------------------------------------------------------------------------        
     def update_user_group(self, group):
         self.cat.update_one({
@@ -90,26 +129,32 @@ class UserGroups():
     def moveUser(self, user, group, rights):
         ''' move user to group
             if user in other group remove from previous group
-            if last user removed from group all subsequent records will be removed
+            save both groups
             @param user to add
             @param group to add
             @return: True if operation success otherwise False
         '''
         out = False
         if user and group:
-            if group._id != user.group_id:
-                self.remove_user_from_group(group._id, user._id)
+            if user.group_id != None and group._id != user.group_id:
+                prev_group = self.get_user_group(user.group_id)
+                if prev_group:
+                    prev_group.removeUserRecord(user._id)
+                    self.update_user_group(prev_group)
         
             group.addUserRecord(user._id, rights)
+            self.update_user_group(group)
             out = True
         return out
 
 #----------------------------------------------------------------------------------------------
     def removeUserFromGroup(self, user, group):
-        group = self.get_user_group(user.group_id)
-        if group and user:
-            self.remove_user_from_group(group._id, user._id)
-        pass
+        res = False
+        if user and group:
+            if group.removeUserRecord(user._id):
+                self.update_user_group(group)
+                res = True
+        return res
 
 #----------------------------------------------------------------------------------------------       
     def drop(self):

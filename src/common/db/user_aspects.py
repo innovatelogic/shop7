@@ -93,7 +93,7 @@ class UserAspects():
         self.cat.drop()
         
         
-#----------------------------------------------------------------------------------------------    
+#----------------------------------------------------------------------------------------------
     def createUserAspect(self, group_id):
         '''creates default user aspect
             @param group_id - ObjectId type
@@ -113,3 +113,11 @@ class UserAspects():
         self.add_aspect(user_aspect)
         
         return user_aspect
+
+#----------------------------------------------------------------------------------------------
+    def removeUserAspect(self, group):
+        out = False
+        if group:
+            self.cat.remove({"group_id":group._id})
+            out = True
+        return out

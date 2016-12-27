@@ -97,7 +97,7 @@ class Message_server_get_user_settings(Message):
         
     def do_process(self, ch, method, props, body):
         dict = eval(body)
-        settings = self.master.realm().users_model.get_user_settings(dict['token'])
+        settings = self.master.realm().users_model.getUserSettings(dict['token'])
         if settings:
             return settings.get()
         return {}

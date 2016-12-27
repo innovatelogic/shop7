@@ -59,14 +59,14 @@ class BuisnessCaseController():
 
 #----------------------------------------------------------------------------------------------        
     def showAllCategoryTree(self, flag):
-        user_settings = self.__realm.get_user_settings()
+        user_settings = self.__realm.getUserSettings()
         user_settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] = flag
         self.__realm.set_user_settings(user_settings)
         
 #----------------------------------------------------------------------------------------------    
     def itemColumnChange(self, text, flag):
         print('[item_column_change]')
-        user_settings = self.__realm.get_user_settings()
+        user_settings = self.__realm.getUserSettings()
         if text in user_settings.options['client']['ui']['cases']['item_columns']:
             user_settings.options['client']['ui']['cases']['item_columns'][text] = flag
             self.__realm.set_user_settings(user_settings)
@@ -113,6 +113,7 @@ class BuisnessCaseController():
 #----------------------------------------------------------------------------------------------
     def categoryBaseAspectSelected(self, aspect, category_id):
         ''' process user category selection'''
+        print('categoryBaseAspectSelected {} {}'.format(aspect, category_id))
         info = self.__realm.get_category_info(aspect, category_id)
         state = self.__realm.get_items_category_state()
         

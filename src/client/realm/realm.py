@@ -72,7 +72,7 @@ class Realm():
         return self.ms_connection().send_msg(Message_client_get_aspects.opcode(), {})['res']
 
 #----------------------------------------------------------------------------------------------
-    def get_user_settings(self):
+    def getUserSettings(self):
         if self.user_settings_changed:
             dict = self.ms_connection().send_msg(Message_client_get_user_settings.opcode(), {})['res']
             self.user_settings = UserSettings(dict)
@@ -84,7 +84,7 @@ class Realm():
         self.user_settings_changed = True
         res = self.ms_connection().send_msg(Message_client_set_user_settings.opcode(),
                                             {'settings':settings.get()})['res']
-        self.get_user_settings()
+        self.getUserSettings()
 
 #----------------------------------------------------------------------------------------------
     def get_category_info(self, aspect, category_id):

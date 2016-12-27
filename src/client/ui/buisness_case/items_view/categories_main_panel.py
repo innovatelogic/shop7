@@ -40,7 +40,7 @@ class CategoriesMainPanel(wx.Panel):
         
 #----------------------------------------------------------------------------------------------        
     def initPopupMenu(self):
-        user_settings = self.realm.get_user_settings()
+        user_settings = self.realm.getUserSettings()
         self.popupmenu = wx.Menu()
         radios = []
         for aspect in self.base_aspects:
@@ -58,7 +58,7 @@ class CategoriesMainPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------        
     def initSecondaryAspectList(self):
         try:
-            base_aspect = self.realm.get_user_settings().options['client']['ui']['cases']['active_base_aspect']
+            base_aspect = self.realm.getUserSettings().options['client']['ui']['cases']['active_base_aspect']
             idx = self.base_aspects.index(base_aspect)
         except ValueError:
             idx = 0

@@ -11,13 +11,19 @@ class GroupCategoryMapping():
         self.cat = self.instance.connection.db[USER_GROUPS_MAPPING_NAME]
         
 #----------------------------------------------------------------------------------------------
-    def getMapping(self, group_id):
-        out = []
-        return out
+    def getMapping(self, group):
+        data = self.cat.find_one({'_id':group._id})
+        if data:
+            return UserMapping(data)
+        return None
     
 #----------------------------------------------------------------------------------------------
-    def removeMapping(self, mapping_id):
-        pass
+    def removeMapping(self, userMapping):
+        out = False
+        if userMapping:
+            self.cat.remove({"_id":userMapping._id})
+            out = True
+        return out
 
 #----------------------------------------------------------------------------------------------
     def addMapping(self, userMapping):

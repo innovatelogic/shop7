@@ -45,34 +45,17 @@ class Users():
                     print('[Users::addUser] failed get group %s'%str(group_id))
             else: # no specified group_id, create group and assign user to it
                 
-                user_id = str(ObjectId())
-                group_id = str(ObjectId())
-                user_mapping_id = str(ObjectId())
+                new_group = self.instance.user_groups.createUserGroup()
                 
-                user_spec['_id'] = user_id
-                user_spec['group_id'] = group_id
-
-                mapping_spec = {}
-                mapping_spec['_id'] = user_mapping_id
-                mapping_spec['group_id'] = group_id
-                mapping_spec['mapping'] = []
+                user_spec['_id'] = str(ObjectId())
+                user_spec['group_id'] = new_group._id
                 
-                spec_group = {'_id':group_id, 'user_mapping_id':user_mapping_id}          
-                spec_group['records'] = []
-                spec_group['records'].append(UserRecord(user_spec['_id'], rights))
-                
-                userAspect = self.instance.user_aspects.createUserAspect(group_id)
-                spec_group['aspect_id'] = userAspect._id
-                
-                new_group = UserGroup(spec_group)
                 new_user = User(user_spec) # TODO check spec valid?
-                new_mapping = UserMapping(mapping_spec)
                 
                 self.instance.user_settings.createUserSettings(new_user)
-                self.instance.user_groups.add_user_group(new_group)
-                self.instance.group_category_mapping.addMapping(new_mapping)
-                self.cat.insert(new_user.get())
+                self.instance.user_groups.moveUser(new_user, new_group, rights)
                 
+                self.cat.insert(new_user.get())
                 out = True
         else:
             print('[Users::addUser] user {} already exist'.format(user_spec['email']))
@@ -80,15 +63,31 @@ class Users():
         return out
 
 #----------------------------------------------------------------------------------------------
-    def removeUser(self, id):
+    def removeUser(self, user_object, clear_all_if_empty_group = False):
         ''' removes user by id. cause modifying user group and remove it if necessary'''
         out = False
-        data = self.cat.find_one({'_id':id})
         
-        if data:
-            res = self.instance.user_groups.remove_user_from_group(data['group_id'], data['_id'])
-            self.cat.remove({"_id": data['_id']})
-            out = True
+        user = self.getUserById(user_object._id)
+        if user:
+            group = self.instance.user_groups.get_user_group(user.group_id)
+            if group:
+                print('red')
+                self.instance.user_groups.removeUserFromGroup(user, group)
+                
+                user_settings = self.instance.user_settings.getUserSettings(user._id)
+                if user_settings:
+                    self.instance.user_settings.removeUserSettings(user_settings)
+                
+                if group.usersNum() == 0 and clear_all_if_empty_group:
+                    self.instance.user_groups.removeGroup(group)
+                else:
+                    self.instance.user_groups.update_user_group(group)
+                    
+                self.cat.remove({"_id": user._id})
+
+                out = True
+            else:
+                print('[Users::removeUser] invalid group')
         else:
             print("[Users::remove_user] user {} does'nt exist".format(id))
         return out

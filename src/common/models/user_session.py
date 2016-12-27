@@ -11,7 +11,7 @@ class UserSession:
         self.id = id
         self.name = name
         self.group_id = group_id
-        self.settings = db_instance.user_settings.get_user_settings(self.id)
+        self.settings = db_instance.user_settings.getUserSettings(self.id)
         if not self.settings:
             self.settings = UserSettings({'_id':ObjectId(), 'user_id':id})
             db_instance.user_settings.add_settings(self.settings)

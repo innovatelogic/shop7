@@ -14,7 +14,7 @@ class UserSettingsDB():
         self.cat = self.instance.connection.db[USER_SETTINGS_CATEGORY_NAME]
 
 #----------------------------------------------------------------------------------------------
-    def get_user_settings(self, user_id):
+    def getUserSettings(self, user_id):
         '''retrieve data from db. return constructed UserSettings object'''
         data = self.cat.find_one({'user_id':user_id})
         if data:
@@ -25,6 +25,18 @@ class UserSettingsDB():
 #----------------------------------------------------------------------------------------------
     def add_settings(self, settings):
         self.cat.insert(settings.get())
+
+#----------------------------------------------------------------------------------------------
+    def removeUserSettings(self, settings):
+        '''
+        @param settings: UserSettings object
+        @return True if removed otherwise False 
+         '''
+        out = False
+        if settings:
+            self.cat.remove({"_id":settings._id})
+            out = True
+        return out
         
 #----------------------------------------------------------------------------------------------
     def update_user_settings(self, settings):
@@ -33,7 +45,7 @@ class UserSettingsDB():
 #----------------------------------------------------------------------------------------------
     def createUserSettings(self, user):
         out = False
-        if user and self.get_user_settings(user._id) == None:
+        if user and self.getUserSettings(user._id) == None:
             self.add_settings(UserSettings({'_id':ObjectId(), 'user_id':user._id}))
             out = True
         return out

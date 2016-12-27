@@ -89,7 +89,7 @@ class ItemsControllerPanel(wx.Panel):
     
 #----------------------------------------------------------------------------------------------
     def initPopupMenu(self):
-        user_settings = self.realm.get_user_settings()
+        user_settings = self.realm.getUserSettings()
         
         self.popupmenu = wx.Menu()
         radios = []

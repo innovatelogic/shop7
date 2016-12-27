@@ -92,7 +92,14 @@ class UserGroup():
 		else:
 			self.records[str(user_id)] = rights
 			print('user already exist in group')
-			
+	
+	def removeUserRecord(self, user_id):
+		out = self.records.pop(str(user_id), None)
+		return out != None
+	
+	def usersNum(self):
+		return len(self.records)
+	
 #----------------------------------------------------------------------------------------------		
 class Item():
 	CHARACTERISTICS_MAX = 16

@@ -40,7 +40,7 @@ class Realm():
     def get_categories_1st_lvl(self, token, aspect):
         ''' empty aspect means user aspect'''
         res = []
-        settings = self.users_model.get_user_settings(token)
+        settings = self.users_model.getUserSettings(token)
         
         b_show_base_aspect_whole_tree = settings.options['client']['ui']['cases']['show_base_aspect_whole_tree']
         
@@ -82,7 +82,7 @@ class Realm():
         ''' empty aspect means user aspect'''
         res = []
         
-        settings = self.users_model.get_user_settings(token)
+        settings = self.users_model.getUserSettings(token)
         b_show_base_aspect_whole_tree = settings.options['client']['ui']['cases']['show_base_aspect_whole_tree']
         
         if aspect == '':

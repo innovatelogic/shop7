@@ -110,7 +110,7 @@ class UsersModel():
         return self.groups_model.get_child_categories(self.get_group_id_by_token(token), _id)
     
 #----------------------------------------------------------------------------------------------    
-    def get_user_settings(self, token):
+    def getUserSettings(self, token):
         user_session = self.userSessions.get(token)
         if user_session:
             return user_session.settings
