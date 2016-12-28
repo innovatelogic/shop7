@@ -19,7 +19,7 @@ class UserSettingsDB():
          @return constructed UserSettings object'''
         data = self.cat.find_one({'user_id':user_id})
         if data:
-            data['_id'] = str(data['_id'])
+            #data['_id'] = str(data['_id'])
             return UserSettings(data)
         return None
 

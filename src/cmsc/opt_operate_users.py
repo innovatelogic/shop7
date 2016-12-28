@@ -57,16 +57,14 @@ def createNewUserWithinExistedGroup(params):
 
 #----------------------------------------------------------------------------------------------
 def deleteUser(params):
-    spec = {}
     print('enter user email (login)')
-    spec['email'] = Opt.input()
+    name = Opt.input()
     
-    user = params.users.get_user_by_name(spec['email'])
+    user = params.users.get_user_by_name(name)
     if user:
         params.users.removeUser(user)
     else:
-        print('Non valid user')
-    
+        print('invalid user name')
     return 1
 
 #----------------------------------------------------------------------------------------------

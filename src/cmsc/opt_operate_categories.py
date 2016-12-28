@@ -55,6 +55,27 @@ def clearBaseAspect(params_tup):
             
 #----------------------------------------------------------------------------------------------
 def createUserCategory(paramd_tup):
+    print('input user name')
+    user_name = Opt.input()
+    
+    db = params_tup[1]
+    user = db.users.get_user_by_name(user_name)
+    if user:
+        user_group = db.user_groups.get_user_group(user.group_id)
+        if user_group:
+            aspect = db.user_aspects.get_aspect(user.aspect_id)
+            if aspect:
+                print('input parent category id')
+                parent_id = Opt.input()
+        
+            else:
+                print('failed to get user aspect')
+        else:
+            print('fail get user group')
+        
+        
+    else:
+        print('invalid user name')
     return 1
 
 #----------------------------------------------------------------------------------------------

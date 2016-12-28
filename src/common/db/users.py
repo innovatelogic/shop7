@@ -84,14 +84,15 @@ class Users():
                 user_settings = self.instance.user_settings.getUserSettings(user._id)
                 if user_settings:
                     self.instance.user_settings.removeUserSettings(user_settings)
-                
+                else:
+                    print('failed to remove user settings')
+                    
                 if group.usersNum() == 0 and clear_all_if_empty_group:
                     self.instance.user_groups.removeGroup(group)
                 else:
                     self.instance.user_groups.update_user_group(group)
                     
                 self.cat.remove({"_id": user._id})
-
                 out = True
             else:
                 print('[Users::removeUser] invalid group')

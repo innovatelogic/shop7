@@ -91,6 +91,8 @@ class UserGroups():
             mapping = self.instance.group_category_mapping.getMapping(group)
             if mapping:
                 self.instance.group_category_mapping.removeMapping(mapping)
+            else:
+                print('[removeGroup] failed to get mapping')
             
             self.instance.user_aspects.removeUserAspect(group)
             
