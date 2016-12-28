@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+ <node name="root">
+    <node local="" name="A">
+		<node local="" name="B">
+		<node local="" name="T"/>
+		</node>
+		<node local="" name="F">
+		</node>
+		<node local="" name="K">
+		</node>
+		<node local="" name="E">
+		<node local="" name="M"/>
+		</node>
+	</node>
+
+ </node>

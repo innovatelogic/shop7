@@ -92,7 +92,6 @@ class UserAspects():
         '''drop collection. rem in production'''
         self.cat.drop()
         
-        
 #----------------------------------------------------------------------------------------------
     def createUserAspect(self, group_id):
         '''creates default user aspect

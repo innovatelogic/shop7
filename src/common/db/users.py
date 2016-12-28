@@ -79,7 +79,6 @@ class Users():
         if user:
             group = self.instance.user_groups.get_user_group(user.group_id)
             if group:
-                print('red')
                 self.instance.user_groups.removeUserFromGroup(user, group)
                 
                 user_settings = self.instance.user_settings.getUserSettings(user._id)

@@ -15,7 +15,19 @@ class BaseAspects():
         self.cat.update_one({'_id':aspect}, {'$set': {"categories" : []}})
         #self.cat.update_one({'_id':aspect}, {'$unset': {"foreign_id" : None}})
         #self.cat.update_one({'_id':aspect}, {'$unset': {"local" : None}})
-        
+
+#----------------------------------------------------------------------------------------------
+    def removeAspect(self, aspect_name):
+        '''
+        @param aspect_name: used as id
+        @return True if removed otherwise False 
+         '''
+        out = False
+        if aspect_name:
+            self.cat.remove({"_id":aspect_name})
+            out = True
+        return out
+    
 #----------------------------------------------------------------------------------------------
     def isAspectExist(self, aspect):
         cursor = self.cat.find({ '_id': aspect}).limit(1)

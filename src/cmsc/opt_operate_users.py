@@ -80,7 +80,6 @@ def deleteUserGroup(params):
         params.user_groups.removeGroup(user_group)
     else:
         print('invalid user group')
-        
     return 1
 
 #----------------------------------------------------------------------------------------------

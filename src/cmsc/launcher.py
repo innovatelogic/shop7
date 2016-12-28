@@ -16,6 +16,8 @@ def main():
 	parser.add_argument('--dbport', type=str, help='database port')
 	parser.add_argument('--dbname', type=str, help='database name')
 	
+	parser.add_argument('--input', type=str, help='input data folder')
+	
 	args = parser.parse_args()
 
 	specs = {}
@@ -25,11 +27,20 @@ def main():
         'name':args.dbname,
         }
 	
+	data_folder = path.abspath(args.input) + '/'
+	
+	specs['path'] = {
+		'data':data_folder,
+    }
+	
 	try:
 		print("cmsc starting ...")
 		
+		print('data folder:', data_folder)
+		
 		opt = Opt([variant('1', 'operate db', opt_operate_db.operateDB, specs), 
-				   variant('2', 'connect to MS')])
+				   variant('2', 'connect to MS'),
+				   variant('3', 'run UT')])
 		opt.run()
 		
 		print("end script")

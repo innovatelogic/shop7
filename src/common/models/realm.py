@@ -13,7 +13,7 @@ class Realm():
     def __init__(self, specs):
         self.specs = specs
         self.db = common.db.instance.Instance(self.specs)
-        self.category_model = CategoryModel(self.db)
+        #self.category_model = CategoryModel(self.db)
         self.users_model = UsersModel(self.db, UserGroupsModel(self.db))
         self.items_cache_model = ItemsCacheModel(self.db)
         self.category_group_items_cache = CategoryGroupItemsCache(self)

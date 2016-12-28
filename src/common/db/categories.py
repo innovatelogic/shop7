@@ -30,5 +30,5 @@ class Categories():
     #----------------------------------------------------------------------------------------------
     def drop(self):
         '''drop collection. rem in production'''
-        #self.cat.drop()
+        self.cat.drop()
         pass
