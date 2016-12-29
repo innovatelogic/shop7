@@ -54,7 +54,7 @@ def clearBaseAspect(params_tup):
             db.base_aspects.removeAspect(aspect_name)
             
 #----------------------------------------------------------------------------------------------
-def createUserCategory(paramd_tup):
+def createUserCategory(params_tup):
     print('input user name')
     user_name = Opt.input()
     
@@ -63,11 +63,17 @@ def createUserCategory(paramd_tup):
     if user:
         user_group = db.user_groups.get_user_group(user.group_id)
         if user_group:
-            aspect = db.user_aspects.get_aspect(user.aspect_id)
+            aspect = db.user_aspects.get_aspect(user_group.aspect_id)
             if aspect:
                 print('input parent category id')
                 parent_id = Opt.input()
         
+                parent_node = aspect.getCategoryNodeById(parent_id)
+                if parent_node:
+                    print('parent_node ok')
+                else:
+                    print('failed to get user parent_node')
+                
             else:
                 print('failed to get user aspect')
         else:

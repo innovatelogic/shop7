@@ -21,6 +21,7 @@ class UserAspects():
         
 #----------------------------------------------------------------------------------------------
     def get_aspect(self, _id):
+        out = None
         data = self.cat.find_one({'_id':ObjectId(_id)})
         if data:
             category_root = self.get_root_category(ObjectId(_id))
@@ -43,8 +44,8 @@ class UserAspects():
                     top.childs.append(node)
                     stack.insert(0, node) 
             
-            return UserAspect({'_id':data['_id'], 'group_id':data['group_id'], 'node_root':node_root, 'hashmap':hashmap})
-        return None
+            out = UserAspect({'_id':data['_id'], 'group_id':data['group_id'], 'node_root':node_root, 'hashmap':hashmap})
+        return out
     
 #----------------------------------------------------------------------------------------------        
     def add_aspect(self, aspect):

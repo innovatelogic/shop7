@@ -22,7 +22,6 @@ class GroupCategoryMapping():
     def removeMapping(self, userMapping):
         out = False
         if userMapping:
-            print('removing user mapping {}'.format(userMapping._id))
             self.cat.remove({"_id":userMapping._id})
             out = True
         return out

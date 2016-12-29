@@ -19,7 +19,7 @@ def operateDB(specs):
     db = common.db.instance.Instance(specs)
     db.connect()
     
-    opt = Opt([variant('1','users management', opt_operate_users.operateUserManagement, db), 
+    opt = Opt([variant('1','users/group management', opt_operate_users.operateUserManagement, db), 
                variant('2','categories management', opt_operate_categories.operateCategories, (specs, db)),
                variant('3','drop db', dropDB, db)])
     opt.run()

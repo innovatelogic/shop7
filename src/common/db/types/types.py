@@ -179,8 +179,8 @@ class UserAspect():
 	def __init__(self, spec):
 		self._id = spec['_id']
 		self.group_id = spec['group_id']
-		self.node_root = spec['node_root']
-		self.hashmap = spec['hashmap']
+		self.node_root = spec['node_root'] # runtime only data serialize as category field
+		self.hashmap = spec['hashmap'] # runtime only data for fast localize
 		
 	def get(self):
 		record = {
@@ -203,7 +203,17 @@ class UserAspect():
 			stack = new_stack
 
 		return record
-
+	
+	def getCategoryNodeById(self, _id):
+		''' find category with specified _id in tree
+		@param _id category id
+		@return: Node if found otherwise None
+		'''
+		out = None
+		if str(_id) in self.hashmap:
+			out = self.hashmap[str(_id)]
+		return out
+			
 #----------------------------------------------------------------------------------------------
 class UserSettings():
     def __init__(self, spec):
