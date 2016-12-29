@@ -36,7 +36,7 @@ class UserAspects():
             while (len(stack) > 0):
                 top = stack.pop(0)
                 
-                childs = self.get_childs(ObjectId(_id), top.category)
+                childs = self.get_childs(ObjectId(_id), top.category) # array of Category's
 
                 for child in childs:
                     node = UserAspect.Node(child, top)
@@ -52,9 +52,12 @@ class UserAspects():
         self.cat.insert(aspect.get())
 
 #----------------------------------------------------------------------------------------------
-    def add_category(self, _id, category):
-        self.cat.update_one({'_id':aspect}, {'$push': {CATEGORIES_NAME : category.get()}})
-
+    def add_category(self, aspect_id, category):
+        self.cat.update_one({'_id':aspect_id}, {'$push': {CATEGORIES_NAME : category.get()}})
+        
+#----------------------------------------------------------------------------------------------
+    def remove_category(self, aspect_id, category_id):
+        self.cat.update({'_id':aspect_id}, {'$pull': {CATEGORIES_NAME : {'_id':category_id}}})
 #----------------------------------------------------------------------------------------------
     def get_root_category(self, _id):
         data = self.cat.find_one({'_id':_id}, { CATEGORIES_NAME: { '$elemMatch' :  {'name':'root'} } })
@@ -121,6 +124,27 @@ class UserAspects():
             self.cat.remove({"group_id":group._id})
             out = True
         return out
+    
+    #----------------------------------------------------------------------------------------------
+    def removeCategory(self, aspect_id, category):
+        ''' removes category from db 
+        @return: count of removed categories
+        '''
+        if category.name != 'root' and category.name != 'All':
+            stack = []
+            stack.append(category)
+            
+            count = 0
+            while stack:
+                new_stack = []
+                for node in stack:
+                    db_childs = self.get_childs(aspect_id, node)
+                    for child in db_childs:
+                        new_stack.append(child)
+                    self.remove_category(aspect_id, node._id)
+                    count += 1
+                stack = new_stack
+            return count
     
 #----------------------------------------------------------------------------------------------
     def drop(self):

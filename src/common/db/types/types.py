@@ -172,6 +172,9 @@ class ItemMapping:
 class UserAspect():
 	class Node():
 		def __init__(self, category, parent):
+			''' 
+			@param category - Category type
+			@param parent - Node type '''
 			self.category = category
 			self.parent = parent
 			self.childs = [] # array of Nodes
@@ -213,7 +216,40 @@ class UserAspect():
 		if str(_id) in self.hashmap:
 			out = self.hashmap[str(_id)]
 		return out
-			
+	
+	def addChildCategory(self, parent_node, category):
+		''' adds child category node in Runtime. 
+			Do not save to db. use separate storage function for this purpose.
+			@warning: Do not add if category with parent_id do not exist.
+					  or category with equal name present in same hierarchy level.
+					  Do not allow category with name 'All'
+			@param parent_id - of parent category node
+			@param category_node - newly created node of Node type
+			@return True if operation sucess. False otherwise '''
+		res = False
+		parent_node = self.getCategoryNodeById(parent_node.category._id)
+		if parent_node and category and category.name != 'All':
+			bFind = False
+			for child in parent_node.childs:
+				if child.category.name == category.name:
+					bFind = True
+					break
+			if not bFind:
+				parent_node.childs.append(UserAspect.Node(category, parent_node))
+				res = True
+		return res
+	
+	def removeCategory(self, cateory_node):
+		res = False
+		category_node = self.getCategoryNodeById(cateory_node.category._id)
+		if category_node:
+			if category_node.category.name != 'root' or category_node.category.name != 'All':
+				parent_node = self.getCategoryNodeById(cateory_node.parent.category._id)
+				if parent_node:
+					parent_node.childs.remove(category_node)
+					res = True
+		return res
+		
 #----------------------------------------------------------------------------------------------
 class UserSettings():
     def __init__(self, spec):
@@ -245,7 +281,7 @@ class UserSettings():
 					'settings':{},
 					'statistics':{},
 					'dashboard':{},
-					'curr_lang':'EN'
+					'curr_lang':{'EN':1, 'UA':0, 'RU':0},
 					}
 				}
 		}

@@ -11,10 +11,10 @@ class UserGroupsModel():
             self.userGroupSessions[group_id]['refs'] += 1
         else:
             print(time.asctime(), "load user group")
-            new_group = self.db.user_groups.get_user_group(group_id)
-            aspect = self.db.user_aspects.get_aspect(new_group.aspect_id)
-            mapping = self.db.group_category_mapping.getMappings(group_id)
-            self.userGroupSessions[group_id] = {'group':new_group, 'aspect':aspect, 'mapping':mapping, 'refs':1}
+            group = self.db.user_groups.get_user_group(group_id)
+            aspect = self.db.user_aspects.get_aspect(group.aspect_id)
+            mapping = self.db.group_category_mapping.getMapping(group)
+            self.userGroupSessions[group_id] = {'group':group, 'aspect':aspect, 'mapping':mapping, 'refs':1}
 
 #----------------------------------------------------------------------------------------------            
     def releaseUserGroupSession(self, group_id):
