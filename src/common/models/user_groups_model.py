@@ -5,7 +5,7 @@ class UserGroupsModel():
         self.db = db
         self.userGroupSessions = {}
 
-#----------------------------------------------------------------------------------------------    
+#----------------------------------------------------------------------------------------------
     def loadUserGroupSession(self, group_id, token):
         if self.userGroupSessions.get(group_id):
             self.userGroupSessions[group_id]['refs'] += 1
@@ -13,7 +13,7 @@ class UserGroupsModel():
             print(time.asctime(), "load user group")
             group = self.db.user_groups.get_user_group(group_id)
             aspect = self.db.user_aspects.get_aspect(group.aspect_id)
-            mapping = self.db.group_category_mapping.getMapping(group)
+            mapping = self.db.group_category_mapping.loadUserMapping(group)
             self.userGroupSessions[group_id] = {'group':group, 'aspect':aspect, 'mapping':mapping, 'refs':1}
 
 #----------------------------------------------------------------------------------------------            

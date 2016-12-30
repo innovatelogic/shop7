@@ -30,6 +30,22 @@ class GroupCategoryMapping():
     def addMapping(self, userMapping):
         self.cat.insert(userMapping.get())
         pass
+    
+#----------------------------------------------------------------------------------------------
+    def loadUserMapping(self, group):
+        return self.getMapping(group)
+
+#----------------------------------------------------------------------------------------------
+    def addUserMappingCategory(self, user, user_category, aspect_name, category):
+        pass
+
+#----------------------------------------------------------------------------------------------
+    def removeUserMapping(self, user, user_category, aspect_name, category):
+        pass
+    
+#----------------------------------------------------------------------------------------------
+    def clearUserMapping(self, user, user_category):
+        pass
         
 #----------------------------------------------------------------------------------------------
     def drop(self):

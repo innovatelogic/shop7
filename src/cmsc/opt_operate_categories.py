@@ -122,6 +122,9 @@ def removeUserCategory(params_tup):
             print('fail get user group')
     else:
         print('invalid user name')
+
+#----------------------------------------------------------------------------------------------
+def createUserMapping(params_tup):
     pass
 
 #----------------------------------------------------------------------------------------------
@@ -130,7 +133,7 @@ def operateCategories(params_tup):
                variant('2', 'clear base aspect', clearBaseAspect, params_tup),
                variant('3', 'create user category', createUserCategory, params_tup),
                variant('4', 'remove user category', removeUserCategory, params_tup),
-               variant('5', 'create user mapping'),
+               variant('5', 'create user mapping', createUserMapping, params_tup),
                variant('6', 'remove user mapping'),
                variant('7', 'clear user mapping')])
     opt.run()

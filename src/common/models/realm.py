@@ -1,6 +1,5 @@
 from bson.objectid import ObjectId
 import common.db.instance
-from category_model import CategoryModel
 from users_model import UsersModel
 from user_groups_model import UserGroupsModel
 from items_cache_model import ItemsCacheModel
@@ -9,11 +8,12 @@ from user_aspects_container import UserAspectsContainer
 from category_group_items_cache import CategoryGroupItemsCache
 from base_mapping import BaseMapping
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class Realm():
     def __init__(self, specs):
         self.specs = specs
         self.db = common.db.instance.Instance(self.specs)
-        #self.category_model = CategoryModel(self.db)
         self.users_model = UsersModel(self.db, UserGroupsModel(self.db))
         self.items_cache_model = ItemsCacheModel(self.db)
         self.category_group_items_cache = CategoryGroupItemsCache(self)
@@ -118,10 +118,7 @@ class Realm():
         
         self.category_group_items_cache._get_base_categories_list_items(aspect, ObjectId(category_id), 
                                                                         group_id,
-                                                                        offset, offset + count, ranges)
-        #print('{}-{}'.format(offset, offset + count))
-        #print ranges
-        
+                                                                        offset, offset + count, ranges)       
         items = []
         for range in ranges:
             mappings = self.db.items_mapping.get_mappings_by_aspect_category(group_id, aspect, range[0], range[1], range[2])
@@ -141,10 +138,7 @@ class Realm():
         
         self.category_group_items_cache._get_user_categories_list_items(ObjectId(category_id), 
                                                                         self.users_model.get_group_id_by_token(token),
-                                                                        offset, offset + count, ranges)
-        #print('{}-{}'.format(offset, offset + count))
-        #print ranges
-        
+                                                                        offset, offset + count, ranges)        
         for range in ranges:
             mappings = self.db.items_mapping.get_mappings_by_user_category(self.users_model.get_group_id_by_token(token), range[0], range[1], range[2])
         

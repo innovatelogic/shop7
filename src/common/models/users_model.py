@@ -9,9 +9,9 @@ USER_TOKEN_START = 456890
 class UsersModel():
     def __init__(self, db_instance, groups_model):
         self.db_instance = db_instance
+        self.groups_model = groups_model
         self.userSessions = {}
         self.groupSessions = {}
-        self.groups_model = groups_model
         
 #----------------------------------------------------------------------------------------------
     def authentificateUser(self, login, password):

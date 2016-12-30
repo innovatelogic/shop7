@@ -4,13 +4,15 @@ from xml.dom.minidom import *
 TAG_MAPPING = 'mappings'
 TAG_MAP = 'map'
 TAG_CATEGORY = 'category'
+TAG_ASPECT = "aspect"
+TAG_PATH = 'path'
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class BaseMapping():
     def __init__(self, realm):
         self.realm = realm
-        self.mapping = []
+        self.mapping = []  # [{aspect_name_0: category_id, aspect_name_1: category_id, ...}, ...]
         self.mapping_keys = {}
         pass
 
@@ -32,9 +34,9 @@ class BaseMapping():
         n_count = 0
         for child in node.childNodes:
             if child.nodeType == child.ELEMENT_NODE and child.localName == TAG_CATEGORY:
-                if child.hasAttribute("aspect") and child.hasAttribute('path'):
-                    aspect = child.getAttribute("aspect")
-                    path = child.getAttribute("path")
+                if child.hasAttribute(TAG_ASPECT) and child.hasAttribute(TAG_PATH):
+                    aspect = child.getAttribute(TAG_ASPECT)
+                    path = child.getAttribute(TAG_PATH)
                     
                     if aspect not in node_mapping:
                         category_node = self.realm.getBaseCategoryByPath(aspect, path.split('%'))
