@@ -44,7 +44,16 @@ class Aspect():
         self.hashmap = {}
         if self.root:
             self.hashmap[str(self.root.category._id)] = self.root
-
+        
+    def getCategoryNodeById(self, _id):
+        ''' find category with specified _id in tree
+        @param _id category id
+        @return: Node if found otherwise None
+        '''
+        out = None
+        if str(_id) in self.hashmap:
+            out = self.hashmap[str(_id)]
+        return out
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------        
 class BaseAspectsContainer():

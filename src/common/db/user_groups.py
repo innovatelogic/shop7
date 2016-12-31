@@ -71,7 +71,7 @@ class UserGroups():
         mapping_spec = {}
         mapping_spec['_id'] = user_mapping_id
         mapping_spec['group_id'] = group_id
-        mapping_spec['mapping'] = []
+        mapping_spec['mapping'] = {}
                 
         spec_group = {'_id':group_id, 'user_mapping_id':user_mapping_id, 'aspect_id':userAspect._id}          
         spec_group['records'] = []

@@ -86,7 +86,6 @@ def createUserCategory(params_tup):
                 print('failed to get user aspect')
         else:
             print('fail get user group')
-
     else:
         print('invalid user name')
     return 1
@@ -125,16 +124,116 @@ def removeUserCategory(params_tup):
 
 #----------------------------------------------------------------------------------------------
 def createUserMapping(params_tup):
+    print('input user name')
+    user_name = Opt.input()
+    
+    db = params_tup[1]
+    user = db.users.get_user_by_name(user_name)
+    if user:
+        user_group = db.user_groups.get_user_group(user.group_id)
+        if user_group:
+            user_aspect = db.user_aspects.get_aspect(user_group.aspect_id)
+            if user_aspect:
+                print('input user category id')
+                category_id = Opt.input()
+                
+                user_category_node = user_aspect.getCategoryNodeById(category_id)
+                if user_category_node:
+                    print('input base aspect name')
+                    aspect_name = Opt.input()
+                    
+                    if db.base_aspects.isAspectExist(aspect_name):
+                        aspect_dst = BaseAspectHelper.load_aspect(aspect_name, db, None)
+                        
+                        print('input category id')
+                        base_category_id = Opt.input()
+                        
+                        base_category_node = aspect_dst.getCategoryNodeById(base_category_id)
+                        
+                        if base_category_node:
+                            mapping = db.group_category_mapping.getMapping(user_group)
+                            if mapping and db.group_category_mapping.addUserMappingCategory(mapping, 
+                                                                                            user_category_node.category, 
+                                                                                            aspect_name, base_category_node.category):
+                                db.group_category_mapping.updateUserMapping(mapping)
+                                print('mapping added ok')
+                            else:
+                                print('mapping added fail')  
+                        else:
+                            print('failed to get base aspect category')
+                    else:
+                        print('aspect does not exist')
+                else:
+                    print('failed to get user category')
+            else:
+                print('failed to get user aspect')
+        else:
+            print('fail get user group')
+    else:
+        print('invalid user name')            
     pass
 
+#----------------------------------------------------------------------------------------------
+def removeUserMapping(params_tup):
+    print('input user name')
+    user_name = Opt.input()
+
+    db = params_tup[1]
+    user = db.users.get_user_by_name(user_name)
+    if user:
+        user_group = db.user_groups.get_user_group(user.group_id)
+        if user_group:
+            user_aspect = db.user_aspects.get_aspect(user_group.aspect_id)
+            if user_aspect:
+                print('input user category id')
+                category_id = Opt.input()
+                
+                user_category_node = user_aspect.getCategoryNodeById(category_id)
+                if user_category_node:
+                    print('input base aspect name')
+                    aspect_name = Opt.input()
+
+                    mapping = db.group_category_mapping.getMapping(user_group)
+                    db.group_category_mapping.removeUserMappingCategory(mapping, user_category_node.category, aspect_name)
+                    db.group_category_mapping.updateUserMapping(mapping)
+                else:
+                    print('failed to get user category')
+            else:
+                print('failed to get user aspect')
+        else:
+            print('fail get user group')
+    else:
+        print('invalid user name')
+        
+#----------------------------------------------------------------------------------------------
+def clearUserMapping(params_tup):
+    print('input user name')
+    user_name = Opt.input()
+
+    db = params_tup[1]
+    user = db.users.get_user_by_name(user_name)
+    if user:
+        user_group = db.user_groups.get_user_group(user.group_id)
+        if user_group:
+            user_aspect = db.user_aspects.get_aspect(user_group.aspect_id)
+            if user_aspect:
+                mapping = db.group_category_mapping.getMapping(user_group)
+                db.group_category_mapping.clearUserMapping(mapping)
+                db.group_category_mapping.updateUserMapping(mapping)
+            else:
+                print('failed to get user aspect')
+        else:
+            print('fail get user group')
+    else:
+        print('invalid user name')             
 #----------------------------------------------------------------------------------------------
 def operateCategories(params_tup):
     opt = Opt([variant('1', 'import base aspect', importBaseAspect, params_tup),
                variant('2', 'clear base aspect', clearBaseAspect, params_tup),
                variant('3', 'create user category', createUserCategory, params_tup),
                variant('4', 'remove user category', removeUserCategory, params_tup),
-               variant('5', 'create user mapping', createUserMapping, params_tup),
-               variant('6', 'remove user mapping'),
-               variant('7', 'clear user mapping')])
+               variant('5', 'add user mapping', createUserMapping, params_tup),
+               variant('6', 'remove user mapping', removeUserMapping, params_tup),
+               variant('7', 'clear user mapping', clearUserMapping, params_tup)])
     opt.run()
     return 0
