@@ -4,6 +4,7 @@ import common.connection_db
 from opt import Opt, variant
 import opt_operate_users
 import opt_operate_categories
+import opt_operate_items
 
 #----------------------------------------------------------------------------------------------
 def dropDB(params):
@@ -15,11 +16,12 @@ def dropDB(params):
     return 1
 
 #----------------------------------------------------------------------------------------------
-def operateDB(specs):
+def operate(specs):
     db = common.db.instance.Instance(specs)
     db.connect()
     
-    opt = Opt([variant('1','users/group management', opt_operate_users.operateUserManagement, db), 
-               variant('2','categories management', opt_operate_categories.operateCategories, (specs, db)),
-               variant('3','drop db', dropDB, db)])
+    opt = Opt([variant('1','users/group management', opt_operate_users.operate, db), 
+               variant('2','categories management', opt_operate_categories.operate, (specs, db)),
+               variant('3','items management', opt_operate_items.operate, (specs, db)),
+               variant('4','drop db', dropDB, db)])
     opt.run()

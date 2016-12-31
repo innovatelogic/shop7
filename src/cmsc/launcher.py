@@ -38,7 +38,7 @@ def main():
 		
 		print('data folder:', data_folder)
 		
-		opt = Opt([variant('1', 'operate db', opt_operate_db.operateDB, specs), 
+		opt = Opt([variant('1', 'operate db', opt_operate_db.operate, specs), 
 				   variant('2', 'connect to MS'),
 				   variant('3', 'run UT')])
 		opt.run()

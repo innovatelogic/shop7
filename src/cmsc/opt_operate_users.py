@@ -81,7 +81,7 @@ def deleteUserGroup(params):
     return 1
 
 #----------------------------------------------------------------------------------------------
-def operateUserManagement(params):
+def operate(params):
     opt = Opt([variant('1','create New user with New group', createNewUserWithGroup, params),
                variant('2', 'create New user within existed group', createNewUserWithinExistedGroup, params),
                variant('3', 'remove user', deleteUser, params),
