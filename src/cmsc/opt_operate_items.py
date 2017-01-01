@@ -1,15 +1,32 @@
 import common.db.instance
-import common.connection_db
+import common.plugins.import_prom_ua.importer
 from opt import Opt, variant
 
 #----------------------------------------------------------------------------------------------
-def importUserItemsPromUA(params):
-    print('import items from prom_ua')
+def importUserItemsPromUA(params):    
+    print('enter user email (login)')
+    user_name = Opt.input()
+    
+    db = params_tup[1]
+    user = db.users.get_user_by_name(user_name)
+    if user:
+        user_group = db.user_groups.get_user_group(user.group_id)
+        if user_group:
+            print('input items filename (xlsx)')
+            items_filename = Opt.input()
+            
+             
+            pass
+        else:
+            print('fail get user group')
+    else:
+        print('invalid user name')
+            
     return 1
 
 #----------------------------------------------------------------------------------------------
 def importUserCategoryWithItemsPromUA(params):
-    print('import items from prom_ua')
+    print('import items from prom_ua (with user categories)')
     return 1
 
 #----------------------------------------------------------------------------------------------

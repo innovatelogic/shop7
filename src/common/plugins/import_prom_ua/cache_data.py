@@ -1,11 +1,12 @@
 import codecs, json, io, time
 from openpyxl import load_workbook
 import cache_items
-import cache_groups
 
 SHEET_GROUPS = 'Export Groups Sheet'
 SHEET_ITEMS = 'Export Products Sheet'
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class CacheData:
     def __init__(self, specs):
         self.specs = specs
