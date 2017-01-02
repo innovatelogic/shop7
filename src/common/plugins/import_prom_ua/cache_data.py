@@ -15,7 +15,6 @@ class CacheData:
         self.filename = filename
         
         timestr = time.strftime("%Y%m%d-%H%M%S")
-        self.groups_cache_filename = self.specs['path']['data'] + 'cache_groups_' + user.name + '_' + timestr + '.json'
         self.items_cache_filename = self.specs['path']['data'] + 'cache_items_' + user.name + '_' + timestr + '.json'
         
         print(self.items_cache_filename)
@@ -33,6 +32,6 @@ class CacheData:
         groups_cache.generate()
         
         items_cache = cache_items.CacheItemsDB(self.specs, self.items_cache_filename, wb.get_sheet_by_name(SHEET_ITEMS))
-        items_cache.generate(groups_cache.aspect)
+        items_cache.generate(groups_cache.group_key_hash)
         
         print 'cache OK'

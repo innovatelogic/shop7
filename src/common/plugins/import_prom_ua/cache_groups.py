@@ -16,6 +16,7 @@ class CacheGroupsDB:
 		root_category = Category({'_id': -1, 'parent_id': None, 'name':'root'})
 		root_category_node = CategoryNode(root_category, None)
 		self.aspect = Aspect('', root_category_node)
+		self.group_key_hash = {}
 
 #----------------------------------------------------------------------------------------------
 	def generate(self):
@@ -44,10 +45,10 @@ class CacheGroupsDB:
 				else:
 					parent_node = self.aspect.root
 
-				new_node = CategoryNode(Category({'_id': dict['GroupNumber'], 'parent_id': None, 'name':dict['GroupName']}), parent_node)
-				parent_node.childs.append(new_node)
-				self.aspect.hashmap[str(dict['GroupNumber'])] = new_node
-
+				node = self.addCategoryImpl(Category({'_id': dict['GroupNumber'], 'parent_id': None, 'name':dict['GroupName']}), parent_node)
+				if 'GroupID' in dict:
+					self.group_key_hash[str(dict['GroupID'])] = node
+				
 #----------------------------------------------------------------------------------------------
 	def store_cell(self, cell, dict):
 		if (cell.value != None):
@@ -55,17 +56,24 @@ class CacheGroupsDB:
 				dict['GroupNumber'] = str(cell.value)
 			elif cell.column == 'B':
 				dict['GroupName'] = str(cell.value)
-			#elif cell.column == 'C':
-			#	dict['GroupID'] = cell.value
+			elif cell.column == 'C':
+				dict['GroupID'] = str(cell.value)
 			elif cell.column == 'D' and cell.value:
 				dict['GroupParentNumber'] = str(cell.value)
-			#elif cell.column == 'E':
-			#	dict['GroupParentID'] = cell.value
-			
+			elif cell.column == 'E' and cell.value:
+				dict['GroupParentID'] = cell.value
+				
+#----------------------------------------------------------------------------------------------			
+	def addCategoryImpl(self, category, parent_node):
+		new_node = CategoryNode(category, parent_node)
+		parent_node.childs.append(new_node)
+		self.aspect.hashmap[str(category._id)] = new_node
+		return new_node
+	
 #----------------------------------------------------------------------------------------------		
 	def loadById(self, str_id):
 		parent_node = None
-		print('red')
+
 		row_count = self.sheet.max_row - 1
 		max_column = self.sheet.max_column
 		
@@ -87,9 +95,8 @@ class CacheGroupsDB:
 				else:
 					parent_node = self.aspect.root
 
-				new_node = CategoryNode(Category({'_id': dict['GroupNumber'], 'parent_id': None, 'name':dict['GroupName']}), parent_node)
-				parent_node.childs.append(new_node)
-				self.aspect.hashmap[str(dict['GroupNumber'])] = new_node
+				node = self.addCategoryImpl(Category({'_id': dict['GroupNumber'], 'parent_id': None, 'name':dict['GroupName']}), parent_node)
+				if 'GroupID' in dict:
+					self.group_key_hash[str(dict['GroupID'])] = node
 				
-		print('green')
 		return parent_node

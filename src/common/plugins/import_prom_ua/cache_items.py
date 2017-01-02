@@ -3,6 +3,7 @@ import codecs, json, io
 from openpyxl import Workbook, load_workbook
 from openpyxl.compat import range
 from openpyxl.cell import get_column_letter
+from common.models.base_aspects_container import BaseAspectHelper
 
 #----------------------------------------------------------------------------------------------
 class CacheItemsDB:
@@ -12,9 +13,9 @@ class CacheItemsDB:
 		self.specs = specs
 		
 #----------------------------------------------------------------------------------------------
-	def generate(self, aspect):
+	def generate(self, group_key_hash):
 		print("generate items cache...")
-		
+
 		row_count = self.sheet.max_row - 1
 		max_column = self.sheet.max_column
 		
@@ -28,6 +29,10 @@ class CacheItemsDB:
 				row_dict = {}
 				for cell in row:
 					self.store_cell(cell, row_dict)
+				
+				if 'groupID2' in row_dict:
+					if str(row_dict['groupID2']) in group_key_hash:
+						row_dict['user_category'] = BaseAspectHelper.GetCategoryFullName(group_key_hash[str(row_dict['groupID2'])])
 					
 				str_json = json.dumps(row_dict, sort_keys=False, ensure_ascii=False).encode('utf8')
 				f.write(unicode(str_json + '\n', 'utf8'))
@@ -67,7 +72,7 @@ class CacheItemsDB:
 			elif cell.column == 'V':
 				dict['subsectionID'] = cell.value					
 			elif cell.column == 'W':
-				dict['groupID2'] = cell.value					
+				dict['groupID2'] = str(cell.value)				
 			elif cell.column == 'AC':
 				dict['characteristicName0'] = cell.value					
 			elif cell.column == 'AE':
