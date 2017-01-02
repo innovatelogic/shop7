@@ -178,6 +178,14 @@ class UserAspect():
 			self.category = category
 			self.parent = parent
 			self.childs = [] # array of Nodes
+			
+		def getChildByName(self, name):
+			out = None
+			for child in self.childs:
+				if name == child.category.name:
+					out = child
+					break
+			return out
 
 	def __init__(self, spec):
 		self._id = spec['_id']
@@ -216,7 +224,7 @@ class UserAspect():
 		if str(_id) in self.hashmap:
 			out = self.hashmap[str(_id)]
 		return out
-	
+		
 	def addChildCategory(self, parent_node, category):
 		''' adds child category node in Runtime. 
 			Do not save to db. use separate storage function for this purpose.
@@ -238,7 +246,7 @@ class UserAspect():
 				parent_node.childs.append(UserAspect.Node(category, parent_node))
 				res = True
 		return res
-	
+		
 	def removeCategory(self, cateory_node):
 		res = False
 		category_node = self.getCategoryNodeById(cateory_node.category._id)

@@ -74,6 +74,7 @@ def createUserCategory(params_tup):
                     new_name = Opt.input()
 
                     new_category = Category({'_id': ObjectId(), 'parent_id': parent_node.category._id, 'name':new_name})
+                    
                     if user_aspect.addChildCategory(parent_node, new_category):
                         db.user_aspects.add_category(user_aspect._id, new_category)
                     else:

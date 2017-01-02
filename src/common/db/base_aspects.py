@@ -13,8 +13,6 @@ class BaseAspects():
 #----------------------------------------------------------------------------------------------
     def clear(self, aspect):
         self.cat.update_one({'_id':aspect}, {'$set': {"categories" : []}})
-        #self.cat.update_one({'_id':aspect}, {'$unset': {"foreign_id" : None}})
-        #self.cat.update_one({'_id':aspect}, {'$unset': {"local" : None}})
 
 #----------------------------------------------------------------------------------------------
     def removeAspect(self, aspect_name):
@@ -47,6 +45,14 @@ class BaseAspects():
 #----------------------------------------------------------------------------------------------
     def setDefaultCategoryName(self, aspect, name):
         self.cat.update_one({'_id':aspect}, {'$set': {"default" : name}})
+        
+#----------------------------------------------------------------------------------------------
+    def getDefaultCategoryName(self):
+        out = ''
+        data = self.cat.find_one({'_id':aspect})
+        if 'default' in data:
+            out = data['default']
+        return out
 
  #----------------------------------------------------------------------------------------------
     def remove_category(self, aspect, category_id):

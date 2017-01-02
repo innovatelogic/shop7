@@ -6,6 +6,9 @@ class CategoryNode():
         self.parent = parent
         self.childs = []
         
+    def addChild(self, child_node):
+        self.childs.append(child_node)
+        
     def getChildByName(self, name):
         out = None
         if self.childs:
@@ -47,3 +50,7 @@ class Aspect():
         if str(_id) in self.hashmap:
             out = self.hashmap[str(_id)]
         return out
+    
+    def addChild(self, parent_node, child_node):
+        parent_node.addChild(child_node)
+        self.hashmap[str(child_node.category._id)] = child_node

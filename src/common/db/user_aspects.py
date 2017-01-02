@@ -58,6 +58,7 @@ class UserAspects():
 #----------------------------------------------------------------------------------------------
     def remove_category(self, aspect_id, category_id):
         self.cat.update({'_id':aspect_id}, {'$pull': {CATEGORIES_NAME : {'_id':category_id}}})
+        
 #----------------------------------------------------------------------------------------------
     def get_root_category(self, _id):
         data = self.cat.find_one({'_id':_id}, { CATEGORIES_NAME: { '$elemMatch' :  {'name':'root'} } })
@@ -82,12 +83,9 @@ class UserAspects():
             
             records = list(cursor)
             
-            #records = self.cat.find({'_id':aspect}, { "categories": { '$elemMatch' : {'parent_id':parent._id} } })
-            #print records
             for record in records:
                 if record and record.get(CATEGORIES_NAME) and len(record[CATEGORIES_NAME]):
-                    #print record['categories']
-                    out.append(Category(record[CATEGORIES_NAME]))
+                   out.append(Category(record[CATEGORIES_NAME]))
                 
         return out
     
