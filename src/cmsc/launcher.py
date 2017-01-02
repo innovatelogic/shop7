@@ -15,7 +15,6 @@ def main():
 	parser.add_argument('--dbhost', type=str, help='database host name')
 	parser.add_argument('--dbport', type=str, help='database port')
 	parser.add_argument('--dbname', type=str, help='database name')
-	
 	parser.add_argument('--input', type=str, help='input data folder')
 	
 	args = parser.parse_args()

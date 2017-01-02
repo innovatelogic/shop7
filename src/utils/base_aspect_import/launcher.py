@@ -8,7 +8,6 @@ sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
 from base_file_reader import BaseFileReader
 from tree_loader import TreeLoader
 import common.db.instance
-import common.connection_db
 from common.models.base_aspects_container import BaseAspectsContainer, CategoryNode, BaseAspectHelper
 from common.db.types.types import Category
 

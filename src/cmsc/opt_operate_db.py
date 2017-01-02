@@ -1,6 +1,5 @@
 
 import common.db.instance
-import common.connection_db
 from opt import Opt, variant
 import opt_operate_users
 import opt_operate_categories

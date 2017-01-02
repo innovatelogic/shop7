@@ -3,12 +3,65 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
 from openpyxl.compat import range
 from openpyxl.cell import get_column_letter
-from common.categories_tree import CategoryTree, CategoryNode
-import common.connection_db
 from xml.dom.minidom import *
 
 XLSX_FILENAME='categories.xlsx'
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+class CategoryNode():
+    def __init__(self, name, id, local = ''):
+        self.name = name
+        self.local = local
+        self.id = id
+        self._id = None
+        self.parent_id = None
+        self.childs = []
+        
+    def dump(self, f, deep):
+        self.woffset(deep, f)
+        f.write(unicode(str(self.name) + '\n', 'utf8'))
+        
+        if self.childs:
+            for child in self.childs:
+                child.dump(f, deep + 1)
+            
+    def woffset(self, deep, f):
+        for x in range(0, deep):
+            f.write(unicode('  '))
+
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+class CategoryTree():
+    def __init__(self):
+        self.root = None
+        
+    def find_by_name(self, name):
+        '''find category by name'''
+        stack = []
+        
+        stack.append(self.root)
+        
+        while (len(stack) > 0):
+            top = stack.pop(0)
+            
+            if (top.name == name):
+                return top
+            
+            for child in top.childs:
+                stack.insert(0, child) 
+
+        return None
+
+#----------------------------------------------------------------------------------------------
+def dump_category_tree(filename, root):
+    print("opening damp groups file:" + filename)
+    with io.open(filename + '.dump', 'w', encoding='utf8') as f:
+        print("opening OK")
+        f.write(unicode('{\n'))
+        root.dump(f, 0)
+        f.write(unicode('}\n'))
+        
 #----------------------------------------------------------------------------------------------
 class CacheData():
     def __init__(self, specs):
@@ -72,7 +125,7 @@ class CacheData():
         self.buildTree(arr_groups)
         self.buildXMLTree(arr_groups)
         
-        common.categories_tree.dump_category_tree(self.cahepath + '.tmp', self.tree.root)
+        dump_category_tree(self.cahepath + '.tmp', self.tree.root)
         
 #----------------------------------------------------------------------------------------------
     def buildTree(self, array):

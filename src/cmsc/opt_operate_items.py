@@ -3,7 +3,7 @@ import common.plugins.import_prom_ua.importer
 from opt import Opt, variant
 
 #----------------------------------------------------------------------------------------------
-def importUserItemsPromUA(params):    
+def importUserItemsPromUA(params_tup):    
     print('enter user email (login)')
     user_name = Opt.input()
     
@@ -15,7 +15,8 @@ def importUserItemsPromUA(params):
             print('input items filename (xlsx)')
             items_filename = Opt.input()
             
-             
+            importer = common.plugins.import_prom_ua.importer.Importer(params_tup[0], items_filename, user, db)
+            importer.run()
             pass
         else:
             print('fail get user group')

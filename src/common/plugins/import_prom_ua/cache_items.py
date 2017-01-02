@@ -12,7 +12,7 @@ class CacheItemsDB:
 		self.specs = specs
 		
 #----------------------------------------------------------------------------------------------
-	def generate(self):
+	def generate(self, aspect):
 		print("generate items cache...")
 		
 		row_count = self.sheet.max_row - 1

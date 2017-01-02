@@ -21,10 +21,6 @@ class BuilderDB():
         '''write to db and generate mapping file'''
         self.connect()
         
-        #categories_db.insert({'_id':"prom_ua"})
-        #categories_db.insert({'_id':"amazon"})
-        #categories_db.insert({'_id':"ebay"})
-        
         self.db.base_aspects.clear(self.ASPECT_ID)
             
         mapping = dict()
