@@ -16,9 +16,6 @@ class CacheData:
         
         timestr = time.strftime("%Y%m%d-%H%M%S")
         self.items_cache_filename = self.specs['path']['data'] + 'cache_items_' + user.name + '_' + timestr + '.json'
-        
-        print(self.items_cache_filename)
-        print(self.groups_cache_filename)
 
 #----------------------------------------------------------------------------------------------
     def cache(self):

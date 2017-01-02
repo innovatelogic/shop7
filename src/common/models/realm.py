@@ -164,9 +164,10 @@ class Realm():
 #----------------------------------------------------------------------------------------------
     def addItem(self, 
                 user_id,
-                user_mapping,
-                base_mapping,
-                spec
+                spec,
+                user_category_id,
+                base_category_id,
+                dict_base_category_ids
                 ):
         ''' add item to base. update runtime cache and mappings'''
         out = None

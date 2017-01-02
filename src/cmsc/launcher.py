@@ -30,6 +30,7 @@ def main():
 	
 	specs['path'] = {
 		'data':data_folder,
+		'data_dir':data_folder,
     }
 	
 	try:
