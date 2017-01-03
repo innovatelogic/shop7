@@ -235,7 +235,7 @@ class UserAspect():
 			@param category_node - newly created node of Node type
 			@return True if operation sucess. False otherwise '''
 		res = False
-		parent_node = self.getCategoryNodeById(parent_node.category._id)
+		#parent_node = self.getCategoryNodeById(parent_node.category._id)
 		if parent_node and category and category.name != 'All':
 			bFind = False
 			for child in parent_node.childs:
@@ -243,7 +243,9 @@ class UserAspect():
 					bFind = True
 					break
 			if not bFind:
-				parent_node.childs.append(UserAspect.Node(category, parent_node))
+				node = UserAspect.Node(category, parent_node)
+				parent_node.childs.append(node)
+				self.hashmap[str(category._id)] = node
 				res = True
 		return res
 		

@@ -101,26 +101,33 @@ class Importer():
         
         user_category_node = self.realm.user_aspects_container.get_aspect_default_category(self.user_aspect)
         
-        if 'user_category' in record:
-            str_ = record['user_category'].replace('root/', '')
-            
+        if 'user_category' in item:
+            str_ = item['user_category'].replace('root/', '')
+            print('>>')
             category_words = str_.split('/')
-            parent_node = self.user_aspect.node_root
-            for word in category_words:
-                if word == 'root':
-                    continue
-                node = parent_node.getChildByName(word)
+            user_category_node = self.user_aspect.node_root
+            
+            for name in category_words:
+
+                node = user_category_node.getChildByName(name)
+
                 if node:
                     user_category_node = node
-                else:
-                    new_category = Category({'_id': ObjectId(), 'parent_id': parent_node.category._id, 'name':new_name})
+                    continue
+                
+                parent_id = None
+                if user_category_node.parent:
+                    parent_id = user_category_node.parent.category._id
                     
-                    if self.user_aspect.addChildCategory(parent_node, new_category):
-                        self.db.user_aspects.add_category(self.user_aspect._id, new_category)
-                        
-                        user_category_node = parent_node.getChildByName(word)
-                    else:
-                        print('faied to add category break')
+                new_category = Category({'_id': ObjectId(), 'parent_id': parent_id, 'name':name})
+                    
+                if self.user_aspect.addChildCategory(user_category_node, new_category):
+                    self.db.user_aspects.add_category(self.user_aspect._id, new_category)
+                else:
+                    print('faild add')   
+                user_category_node = user_category_node.getChildByName(name)
+                if not user_category_node:
+                    print(item['uniqID'])
         #
         #prom_ua_category =
         
