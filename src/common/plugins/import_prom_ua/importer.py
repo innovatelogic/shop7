@@ -103,7 +103,6 @@ class Importer():
         
         if 'user_category' in item:
             str_ = item['user_category'].replace('root/', '')
-            print('>>')
             category_words = str_.split('/')
             user_category_node = self.user_aspect.node_root
             
@@ -124,10 +123,14 @@ class Importer():
                 if self.user_aspect.addChildCategory(user_category_node, new_category):
                     self.db.user_aspects.add_category(self.user_aspect._id, new_category)
                 else:
-                    print('faild add')   
+                    print('fail add')
+                    break
+                    
                 user_category_node = user_category_node.getChildByName(name)
                 if not user_category_node:
                     print(item['uniqID'])
+                    user_category_node = self.realm.user_aspects_container.get_aspect_default_category(self.user_aspect)
+                    break
         #
         #prom_ua_category =
         

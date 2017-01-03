@@ -86,7 +86,7 @@ class BuisnessCaseController():
 
 #----------------------------------------------------------------------------------------------
     def expandUserAspectCategory(self, category_id, item):
-        categories = self.__realm.get_user_category_childs(self.secondary_tree.GetPyData(item))
+        categories = self.__realm.get_user_category_childs(category_id)
         self.view.addChildCategoriesTreeUserAspect(category_id, categories, item)
         pass
     
