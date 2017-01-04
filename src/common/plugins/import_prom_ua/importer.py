@@ -6,11 +6,12 @@ from common.db.types.types import Category
 from common.image_loader import ImageURLLoader
 from common.models.realm import Realm
 from common.db.types.types import Item, ItemMapping
+from sre_constants import CATEGORY
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class Importer():
-    def __init__(self, specs, filename, user, user_group, db):
+    def __init__(self, specs, filename, user, user_group, db, keep_groups = False):
         self.specs = specs
         self.user = user
         self.user_group = user_group
@@ -18,6 +19,7 @@ class Importer():
         self.db = db
         self.filename = filename
         self.realm = Realm(self.specs)
+        self.keep_groups = keep_groups
         
 #----------------------------------------------------------------------------------------------
     def run(self):
@@ -102,37 +104,54 @@ class Importer():
         user_category_node = self.realm.user_aspects_container.get_aspect_default_category(self.user_aspect)
         
         if 'user_category' in item:
-            str_ = item['user_category'].replace('root/', '')
-            category_words = str_.split('/')
-            user_category_node = self.user_aspect.node_root
-            
-            for name in category_words:
+            user_category_node = EnsureUserCategory(item['user_category'], self.user_aspect)
 
-                node = user_category_node.getChildByName(name)
-
-                if node:
-                    user_category_node = node
-                    continue
-                
-                parent_id = None
-                if user_category_node.parent:
-                    parent_id = user_category_node.parent.category._id
-                    
-                new_category = Category({'_id': ObjectId(), 'parent_id': parent_id, 'name':name})
-                    
-                if self.user_aspect.addChildCategory(user_category_node, new_category):
-                    self.db.user_aspects.add_category(self.user_aspect._id, new_category)
-                else:
-                    print('fail add')
-                    break
-                    
-                user_category_node = user_category_node.getChildByName(name)
-                if not user_category_node:
-                    print(item['uniqID'])
-                    user_category_node = self.realm.user_aspects_container.get_aspect_default_category(self.user_aspect)
-                    break
-        #
+        #base_category = 
         #prom_ua_category =
         
         #mapping =         
 #----------------------------------------------------------------------------------------------
+def EnsureUserCategory(category_path, aspect):
+    ''' check category_path parameter and create if it's not exist.
+    otherwise return default category 
+    @param category_path [in] slash splitted path
+    @return categoryNode
+    '''
+    
+    category_path = item['user_category'].replace('root/', '')
+    category_words = category_path.split('/')
+    user_category_node = aspect.node_root
+    
+    bFail = False
+    
+    for name in category_words:
+        node = user_category_node.getChildByName(name)
+
+        if node:
+            user_category_node = node
+            continue
+        
+        parent_id = None
+        if user_category_node.parent:
+            parent_id = user_category_node.parent.category._id
+            
+        new_category = Category({'_id': ObjectId(), 'parent_id': parent_id, 'name':name})
+            
+        if self.user_aspect.addChildCategory(user_category_node, new_category):
+            self.db.user_aspects.add_category(aspect._id, new_category)
+        else:
+            print('fail add')
+            bFail = True
+            break
+            
+        user_category_node = user_category_node.getChildByName(name)
+        if not user_category_node:
+            print(item['uniqID'])
+            user_category_node = self.realm.user_aspects_container.get_aspect_default_category(aspect)
+            bFail = True
+            break
+    
+    if len(category_words) == 0 or bFail:
+        user_category_node = self.realm.user_aspects_container.get_aspect_default_category(aspect)
+        
+    return user_category_node

@@ -466,6 +466,11 @@ class BaseAspectHelper():
         full_name = category_node.category.name
         parent = category_node.parent
         while parent:
-            full_name = parent.category.name + '/' + full_name
+            try:
+                full_name = parent.category.name + '/' + full_name
+            except:
+                print('category_node {}'.format(category_node._id))
+                print('parent.category {}'.format(parent.category._id))
+                print(parent.category.name)
             parent = parent.parent
         return full_name
