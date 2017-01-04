@@ -1,3 +1,5 @@
+from common.db.types.types import ID_NONE
+
 #----------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------- 
 class CategoryNode():
@@ -38,8 +40,11 @@ class Aspect():
         self.name = name
         self.root = root
         self.hashmap = {}
+        self.foreign_hashmap = {}
         if self.root:
             self.hashmap[str(self.root.category._id)] = self.root
+            if self.root.category.foreign_id != ID_NONE:
+                self.foreign_hashmap[str(self.root.category.foreign_id)] = self.root
         
     def getCategoryNodeById(self, _id):
         ''' find category with specified _id in tree
@@ -51,6 +56,18 @@ class Aspect():
             out = self.hashmap[str(_id)]
         return out
     
+    def getCategoryNodeByForeignId(self, foreign_id):
+        ''' find category with specified foreign_id in tree
+        @param _id category id
+        @return: Node if found otherwise None
+        '''
+        out = None
+        if str(_id) in self.hashmap:
+            out = self.foreign_hashmap[str(foreign_id)]
+        return out
+    
     def addChild(self, parent_node, child_node):
         parent_node.addChild(child_node)
         self.hashmap[str(child_node.category._id)] = child_node
+        if child_node.category.foreign_id != ID_NONE:
+            self.foreign_hashmap[str(child_node.category.foreign_id)] = child_node

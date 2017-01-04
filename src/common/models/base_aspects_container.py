@@ -384,16 +384,13 @@ class BaseAspectHelper():
 
                 for child in childs:
                     child_node = CategoryNode(child, top)
-                    #aspect_out.hashmap[str(child_node.category._id)] = child_node
                     
                     if cache_ref:
                         cache_ref.add_base_category(aspect, str(child_node.category._id)) #cache
                     
                     aspect_out.addChild(top, child_node)
-                    #top.childs.append(child_node)
                     stack.insert(0, child_node)
-                    
-            
+
             print('end load')
         if count == 0:
             print('aspect {} not loaded completely'.format(aspect))
