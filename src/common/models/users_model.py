@@ -1,6 +1,5 @@
 import time
 from user_session import UserSession
-from groups_model import GroupsModel
 
 USER_TOKEN_START = 456890
 
