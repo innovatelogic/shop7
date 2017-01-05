@@ -26,7 +26,7 @@ class BaseMapping():
         for child in root_node.childNodes:
             if child.nodeType == child.ELEMENT_NODE and child.localName == TAG_MAP:
                 self.__load_mapping(child)
-        print('mapping loaded')
+        print('mapping loaded :{}'.format(len(self.mapping)))
 
 #----------------------------------------------------------------------------------------------
     def __load_mapping(self, node):

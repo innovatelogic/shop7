@@ -192,19 +192,20 @@ class Realm():
                     spec['mapping_id'] = ObjectId()
                     
                     new_mapping = {str(user.group_id):user_category_id, 'basic':base_category_id}
-                    for key, value in dict_mapping:
+                    
+                    for key, value in dict_mapping.iteritems():
                         if key != 'basic':
                             new_mapping[key] = value
-                    
-                    mapping_spec = {'_id':record['mapping_id'],
-                                'item_id':record['_id'],
+
+                    mapping_spec = {'_id':spec['mapping_id'],
+                                'item_id':spec['_id'],
                                 'mapping':new_mapping
-                                }   
-    
-                    self.db.items.add_item(Item(record))
+                                }
                     
+                    self.db.items.add_item(Item(spec))
+
                     node_mapping = ItemMapping(mapping_spec)
-                
+
                     self.db.items_mapping.add_mapping(node_mapping)
                 
                     out = spec['_id']
