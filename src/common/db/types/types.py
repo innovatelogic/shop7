@@ -155,9 +155,6 @@ class ItemMapping:
 		self._id = spec['_id']
 		self.item_id = spec['item_id']
 		self.mapping = spec['mapping']
-		
-		#for key, value in spec['mapping'].iteritems():
-		#	self.mapping[key] = value
 		pass
 	
 	def get(self):

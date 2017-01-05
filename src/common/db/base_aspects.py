@@ -47,9 +47,9 @@ class BaseAspects():
         self.cat.update_one({'_id':aspect}, {'$set': {"default" : name}})
         
 #----------------------------------------------------------------------------------------------
-    def getDefaultCategoryName(self):
+    def getDefaultCategoryName(self, aspect_id):
         out = ''
-        data = self.cat.find_one({'_id':aspect})
+        data = self.cat.find_one({'_id':aspect_id})
         if 'default' in data:
             out = data['default']
         return out

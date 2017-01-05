@@ -53,6 +53,14 @@ class BaseMapping():
             for key, value in node_mapping.iteritems():
                 if key not in self.mapping:
                     self.mapping_keys[key] = {}
-                self.mapping_keys[key][value] = self.mapping[len(self.mapping) - 1]
+                self.mapping_keys[key][str(value)] = self.mapping[len(self.mapping) - 1]
         else:    
             print('error load mapping')
+            
+#---------------------------------------------------------------------------------------------- 
+    def getMapping(self, aspect_id, category_id):
+        dict = {}
+        if aspect_id in self.mapping_keys:
+            if str(category_id) in self.mapping_keys[aspect_id]:
+                dict = self.mapping_keys[aspect_id][str(category_id)]
+        return dict

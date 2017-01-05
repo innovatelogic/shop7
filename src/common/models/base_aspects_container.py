@@ -16,18 +16,19 @@ class BaseAspectsContainer():
 
 #----------------------------------------------------------------------------------------------
     def load(self, cache_ref):
-        aspect = BaseAspectHelper.load_aspect("basic", self.db_inst, cache_ref)
-        if aspect:
-            self.aspects['basic'] = aspect
-        
-        aspect = BaseAspectHelper.load_aspect("prom_ua", self.db_inst, cache_ref)
-        if aspect:
-            self.aspects['prom_ua'] = aspect
+        self.__loadImpl('basic', cache_ref)
+        self.__loadImpl('prom_ua', cache_ref)
+        self.__loadImpl('ebay', cache_ref)
             
-        aspect = BaseAspectHelper.load_aspect("ebay", self.db_inst, cache_ref)
+#----------------------------------------------------------------------------------------------
+    def __loadImpl(self, aspect_name, cache_ref):
+        res = False
+        aspect = BaseAspectHelper.load_aspect(aspect_name, self.db_inst, cache_ref)
         if aspect:
-            self.aspects['ebay'] = aspect
-
+            self.aspects[aspect_name] = aspect
+            res = True
+        return res
+    
 #----------------------------------------------------------------------------------------------
     def get_first_level_categories(self, aspect):
         ''' return categories by id. integer means how levels will return '''
@@ -112,7 +113,14 @@ class BaseAspectsContainer():
                 if out == None:
                     break
         return out
-        
+
+#----------------------------------------------------------------------------------------------
+    def getBaseAspectByForeignId(self, aspect_id, foreign_id):
+        out = None
+        if aspect_id in self.aspects:
+            out = self.aspects[aspect_id].getCategoryNodeByForeignId(foreign_id)
+        return out
+
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class BaseAspectHelper():

@@ -1,3 +1,4 @@
+import time
 from bson.objectid import ObjectId
 import common.db.instance
 from users_model import UsersModel
@@ -7,6 +8,7 @@ from base_aspects_container import BaseAspectsContainer
 from user_aspects_container import UserAspectsContainer
 from category_group_items_cache import CategoryGroupItemsCache
 from base_mapping import BaseMapping
+from common.db.types.types import Item, ItemMapping
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
@@ -165,18 +167,50 @@ class Realm():
     def addItem(self, 
                 user_id,
                 spec,
-                user_category_id,
                 base_category_id,
-                dict_base_category_ids
+                user_category_id,
+                dict_mapping
                 ):
-        ''' add item to base. update runtime cache and mappings'''
-        out = None
-        user = self.realm.db.users.getUserById(user_id)
-        if user:
-            pass
-        else:
-            print('[addItem] failed get user: return None')
+        ''' add item to base. update runtime cache and mappings
+        @return id of newly created item. otherwise None
         
+        '''
+        out = None
+        if user_id and base_category_id and user_category_id:
+            
+            user = self.db.users.getUserById(user_id)
+            if user:
+                user_group = self.db.user_groups.get_user_group(user.group_id)
+                if user_group:
+                    spec['_id'] = ObjectId()
+                    spec['user_id'] = user._id,
+                    spec['user_group_id'] = user.group_id
+                    
+                    time_now = time.asctime()
+                    spec['creation_time'] = time_now
+                    spec['update_time'] = time_now
+                    spec['mapping_id'] = ObjectId()
+                    
+                    new_mapping = {str(user.group_id):user_category_id, 'basic':base_category_id}
+                    for key, value in dict_mapping:
+                        if key != 'basic':
+                            new_mapping[key] = value
+                    
+                    mapping_spec = {'_id':record['mapping_id'],
+                                'item_id':record['_id'],
+                                'mapping':new_mapping
+                                }   
+    
+                    self.db.items.add_item(Item(record))
+                    
+                    node_mapping = ItemMapping(mapping_spec)
+                
+                    self.db.items_mapping.add_mapping(node_mapping)
+                
+                    out = spec['_id']
+                pass
+            else:
+                print('[addItem] failed get user: return None')
         return out
 
 #----------------------------------------------------------------------------------------------
@@ -185,3 +219,16 @@ class Realm():
         @param path_list array on node names started from most top. root may be omitted.
         '''
         return self.base_aspects_container.getBaseCategoryByPath(aspect, path_list)
+
+#----------------------------------------------------------------------------------------------
+    def getBaseAspectDefaultCategory(self, aspect_id):
+        default_name = self.db.base_aspects.getDefaultCategoryName(aspect_id)
+        return self.getBaseCategoryByPath(aspect_id, [default_name])
+
+#----------------------------------------------------------------------------------------------
+    def getBaseAspectCategoryById(self, aspect_id, _id):
+        return self.base_aspects_container.get_aspect_category(aspect_id, _id)
+    
+#----------------------------------------------------------------------------------------------
+    def getBaseAspectCategoryByForeignId(self, aspect_id, foreign_id):
+        return self.base_aspects_container.getBaseAspectByForeignId(aspect_id, foreign_id)

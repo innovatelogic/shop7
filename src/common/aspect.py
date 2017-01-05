@@ -62,7 +62,7 @@ class Aspect():
         @return: Node if found otherwise None
         '''
         out = None
-        if str(_id) in self.hashmap:
+        if str(foreign_id) in self.foreign_hashmap:
             out = self.foreign_hashmap[str(foreign_id)]
         return out
     

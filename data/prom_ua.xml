@@ -8804,7 +8804,7 @@
          </node>
          <node foreign_id="150199" local="" name="Товары для детей, общее"/>
      </node>
-     <node foreign_id="29" local="" name="Товары, общее"/>
+     <node foreign_id="29" local="" name="Товары, общее" default="1"/>
      <node foreign_id="" local="" name="Украшения и часы">
          <node foreign_id="" local="" name="Наручные и карманные часы">
              <node foreign_id="36110710" local="" name="Ремешки и браслеты для часов"/>

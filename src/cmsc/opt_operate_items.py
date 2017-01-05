@@ -15,7 +15,7 @@ def importUserItemsPromUA(params_tup):
             print('input items filename (xlsx)')
             items_filename = Opt.input()
             
-            importer = common.plugins.import_prom_ua.importer.Importer(params_tup[0], items_filename, user, user_group, db)
+            importer = common.plugins.import_prom_ua.importer.Importer(params_tup[0], items_filename, user, user_group, db, keep_groups = True)
             importer.run()
             pass
         else:
