@@ -15,13 +15,13 @@ class BaseAspectsContainer():
         pass
 
 #----------------------------------------------------------------------------------------------
-    def load(self, cache_ref):
-        self.__loadImpl('basic', cache_ref)
-        self.__loadImpl('prom_ua', cache_ref)
-        self.__loadImpl('ebay', cache_ref)
+    def loadAll(self, cache_ref):
+        self.load('basic', cache_ref)
+        self.load('prom_ua', cache_ref)
+        self.load('ebay', cache_ref)
             
 #----------------------------------------------------------------------------------------------
-    def __loadImpl(self, aspect_name, cache_ref):
+    def load(self, aspect_name, cache_ref):
         res = False
         aspect = BaseAspectHelper.load_aspect(aspect_name, self.db_inst, cache_ref)
         if aspect:
@@ -153,7 +153,7 @@ class BaseAspectHelper():
         stack_dest.append(dest_root)
         
         while(stack_src or stack_dest):
-            print('------')
+            #print('------')
             new_stack_src = []
             new_stack_dst = []
             new_prev_dst = []
@@ -181,9 +181,6 @@ class BaseAspectHelper():
                 ''' add source children to next iteration '''
                 for child in src_node.childs:
                     new_stack_src.append(child)
-                    
-            #for a in common_ab:
-            #    print a.category.name
 
             ''' add source's unique to destination space'''
             for src_node in stack_src:
@@ -259,7 +256,7 @@ class BaseAspectHelper():
         stack_db.append(db_root)
         
         while(stack_src or stack_db):
-            print('-----')
+            #print('-----')
             new_stack_src = []
             new_stack_dst = []
             new_prev_dst = []

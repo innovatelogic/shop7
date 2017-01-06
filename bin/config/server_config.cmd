@@ -15,3 +15,5 @@ set MASTER_DB_NAME=shop7_test
 
 
 set RES_FOLDER=%~dp0../data/res
+
+set CATEGORY_MAPPING_FILENAME=ut/mapping.xml

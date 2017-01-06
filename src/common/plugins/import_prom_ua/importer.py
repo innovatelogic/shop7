@@ -34,10 +34,17 @@ class Importer():
             print('start loading realm')
             
             self.realm.start()
+            
+            print('items processing...')
         
+            n_count = 0
+
             for item in items:
-                self.storeItem(item)
-                
+                id = self.storeItem(item)
+                if id:
+                    n_count += 1
+                    pass
+            print('{}:items added, {}:skipped'.format(n_count, len(items) - n_count))
             self.realm.stop()
             
         else:
@@ -57,24 +64,19 @@ class Importer():
 
 #----------------------------------------------------------------------------------------------
     def storeItem(self, item):
-        
-        record = {'name':item['name'],
-                      #'_id':ObjectId(),
-                      #'user_id':self.user._id,
-                      #'user_group_id':self.user.group_id
-                      }
+        record = {'name':item['name']}
 
         if 'desc' in item:
             record['desc'] = item['desc']
         
         if 'price' not in item:
-            print('WARNING! item # %s have not price. Set \'0\'' % item['uniqID'])
+            #print('WARNING! item # %s have not price. Set \'0\'' % item['uniqID'])
             record['price'] = 0
         else:
             record['price'] = item['price']
         
         if 'currency' not in item:
-            print('WARNING! item # %s have not currency. Set \'UAH\'' % item['uniqID'])
+            #print('WARNING! item # %s have not currency. Set \'UAH\'' % item['uniqID'])
             record['currency'] = 'UAH'
         else:
             record['currency'] = item['currency']
@@ -92,7 +94,7 @@ class Importer():
         if 'amount' in item:
             record['amount'] = item['amount'] 
         else:
-            print('WARNING! Item\'s # %s does not have amount. Set to default value 1' % item['uniqID'])
+            #print('WARNING! Item\'s # %s does not have amount. Set to default value 1' % item['uniqID'])
             record['amount'] = 1
 
         for idx in range(0, Item.CHARACTERISTICS_MAX):
@@ -100,44 +102,35 @@ class Importer():
             if field in item:                 
                 record[field] = item[field]
         
+        
+        # get user categry
         user_category_node = None
         if 'user_category' in item and self.keep_groups:
-            user_category_node = self.EnsureUserCategory(item['user_category'], self.user_aspect)
+            user_category_node = self.EnsureUserCategory(self.user_aspect, item['user_category'])
         if not user_category_node:
             user_category_node = self.realm.user_aspects_container.get_aspect_default_category(self.user_aspect)
-            
+        
+        # get prom_ua category
         prom_ua_category_node = None
         if 'subsectionID' in item:
             prom_ua_category_node = self.realm.getBaseAspectCategoryByForeignId('prom_ua', item['subsectionID'])
+        else:
+            prom_ua_category_node = self.realm.getBaseAspectDefaultCategory('prom_ua')
         
         if not prom_ua_category_node:
-            prom_ua_category_node = self.realm.getBaseAspectDefaultCategory('prom_ua')
-
-        mapping_dict = self.realm.base_mapping.getMapping('prom_ua', prom_ua_category_node.category._id)
+            return None
         
-        base_category_node = None
-        if 'basic' in mapping_dict:
-            base_category_node = self.realm.getBaseAspectCategoryByForeignId('basic', mapping_dict['basic'])
-            del mapping_dict['basic']
-        if not base_category_node:
-            base_category_node = self.realm.getBaseAspectDefaultCategory('basic')
-            
-        if 'prom_ua' in mapping_dict:
-            del mapping_dict['prom_ua']
-        
-        mapping_dict['prom_ua'] = prom_ua_category_node.category._id
-        
-        self.realm.addItem(self.user._id,
+        return self.realm.addItem(self.user._id,
                 record,
-                base_category_node.category._id,
                 user_category_node.category._id,
-                mapping_dict
-                )
+                'prom_ua',
+                prom_ua_category_node.category._id)
 
 #----------------------------------------------------------------------------------------------
-    def EnsureUserCategory(self, category_path, aspect):
+    def EnsureUserCategory(self, aspect, category_path):
         ''' check category_path parameter and create if it's not exist.
-        otherwise return default category 
+        otherwise return default category
+        @param aspect [in] user aspect object 
         @param category_path [in] slash splitted path
         @return categoryNode
         '''

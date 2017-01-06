@@ -21,18 +21,18 @@ class Realm():
         self.category_group_items_cache = CategoryGroupItemsCache(self)
         self.base_aspects_container = BaseAspectsContainer(self.db)
         self.user_aspects_container = UserAspectsContainer(self.db)
-        self.base_mapping = BaseMapping(self)
+        self.base_mapping = BaseMapping(self, self.specs)
         pass
 
 #----------------------------------------------------------------------------------------------
     def start(self):
         self.db.connect()
         
-        self.base_aspects_container.load(self.category_group_items_cache)
-        self.user_aspects_container.load(self.category_group_items_cache)
+        self.base_aspects_container.loadAll(self.category_group_items_cache)
+        self.user_aspects_container.loadAll(self.category_group_items_cache)
         
         self.category_group_items_cache.build_cache()
-        self.base_mapping.load(self.specs['path']['data_dir'] + 'mapping.xml')
+        self.base_mapping.load()
 
 #----------------------------------------------------------------------------------------------
     def stop(self):
@@ -167,52 +167,80 @@ class Realm():
     def addItem(self, 
                 user_id,
                 spec,
-                base_category_id,
                 user_category_id,
-                dict_mapping
+                aspect,
+                aspect_category_id
                 ):
         ''' add item to base. update runtime cache and mappings
+        @param user_id valid user id 
+        @param user_category_id valid user category _id
+        @param valid aspect name
+        @param valid aspect_category id
         @return id of newly created item. otherwise None
-        
         '''
         out = None
-        if user_id and base_category_id and user_category_id:
-            
-            user = self.db.users.getUserById(user_id)
-            if user:
-                user_group = self.db.user_groups.get_user_group(user.group_id)
-                if user_group:
-                    spec['_id'] = ObjectId()
-                    spec['user_id'] = user._id,
-                    spec['user_group_id'] = user.group_id
-                    
-                    time_now = time.asctime()
-                    spec['creation_time'] = time_now
-                    spec['update_time'] = time_now
-                    spec['mapping_id'] = ObjectId()
-                    
-                    new_mapping = {str(user.group_id):user_category_id, 'basic':base_category_id}
-                    for key, value in dict_mapping:
-                        if key != 'basic':
-                            new_mapping[key] = value
-                    
-                    mapping_spec = {'_id':record['mapping_id'],
-                                'item_id':record['_id'],
-                                'mapping':new_mapping
-                                }   
+        
+        base_aspect = self.base_aspects_container.get_aspect(aspect)
+        if not base_aspect:
+            return out 
+        category_node = base_aspect.getCategoryNodeById(aspect_category_id)
+        if not category_node:
+            return out
+        user = self.db.users.getUserById(user_id)
+        if not user:
+            return out
+        user_group = self.db.user_groups.get_user_group(user.group_id)
+        if not user_group:
+            return out
+        user_aspect = self.db.user_aspects.get_aspect(user_group.aspect_id)
+        if not user_aspect:
+            return out
+        user_category_node = user_aspect.getCategoryNodeById(user_category_id)
+        if not user_category_node:
+            return out
+        
+        spec['_id'] = ObjectId()
+        spec['user_id'] = user._id,
+        spec['user_group_id'] = user.group_id
+        
+        time_now = time.asctime()
+        spec['creation_time'] = time_now
+        spec['update_time'] = time_now
+        spec['mapping_id'] = ObjectId()
     
-                    self.db.items.add_item(Item(record))
-                    
-                    node_mapping = ItemMapping(mapping_spec)
-                
-                    self.db.items_mapping.add_mapping(node_mapping)
-                
-                    out = spec['_id']
-                pass
-            else:
-                print('[addItem] failed get user: return None')
+        
+        mapping_dict = self.resolveMappingByAspect(aspect, aspect_category_id)
+        
+        # basic ref is necessary
+        if 'basic' not in mapping_dict:
+            base_category_node = self.getBaseAspectDefaultCategory('basic')
+            #TODO throw if failde
+            mapping_dict['basic'] = base_category_node.category._id
+                                
+        if aspect not in mapping_dict:
+            mapping_dict[aspect] = category_node.category._id
+                                      
+        mapping_dict[str(user.group_id)] = user_category_node.category._id  
+    
+        mapping_spec = {'_id':spec['mapping_id'],
+                    'item_id':spec['_id'],
+                    'mapping':mapping_dict
+                    }   
+    
+        self.db.items.add_item(Item(spec))
+        
+        node_mapping = ItemMapping(mapping_spec)
+    
+        self.db.items_mapping.add_mapping(node_mapping)
+        
+        out = spec['_id']
+        
         return out
 
+#----------------------------------------------------------------------------------------------
+    def resolveMappingByAspect(self, aspect_name, category_id):
+        return self.base_mapping.getMapping(aspect_name, category_id)
+        
 #----------------------------------------------------------------------------------------------
     def getBaseCategoryByPath(self, aspect, path_list):
         ''' Retrieve category by path. 

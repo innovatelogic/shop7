@@ -1,6 +1,7 @@
 from xml.dom import minidom
 from xml.dom.minidom import *
 
+DEFALUT_FILENAME = 'mapping.xml'
 TAG_MAPPING = 'mappings'
 TAG_MAP = 'map'
 TAG_CATEGORY = 'category'
@@ -10,15 +11,22 @@ TAG_PATH = 'path'
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class BaseMapping():
-    def __init__(self, realm):
+    def __init__(self, realm, specs):
         self.realm = realm
+        self.specs = specs
         self.mapping = []  # [{aspect_name_0: category_id, aspect_name_1: category_id, ...}, ...]
         self.mapping_keys = {}
         pass
 
 #----------------------------------------------------------------------------------------------
-    def load(self, filename):
-        print('stary load base mapping {}'.format(filename))
+    def load(self):
+        filename = self.specs['path']['data_dir']
+        if 'mapping' not in self.specs['path']:
+            filename = filename + 'mapping.xml'
+        else:
+            filename = filename + DEFALUT_FILENAME
+
+        print('start load base mapping {}'.format(filename))
         
         doc = minidom.parse(filename)
         root_node = doc.getElementsByTagName(TAG_MAPPING)[0]
@@ -26,6 +34,7 @@ class BaseMapping():
         for child in root_node.childNodes:
             if child.nodeType == child.ELEMENT_NODE and child.localName == TAG_MAP:
                 self.__load_mapping(child)
+        
         print('mapping loaded')
 
 #----------------------------------------------------------------------------------------------

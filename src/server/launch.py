@@ -33,7 +33,7 @@ def main():
     parser.add_argument('--ms_client_queue', type=str, help='master-client queue name')
     parser.add_argument('--ms_queue_port', type=str, help='master-client queue port')
     parser.add_argument('--res', type=str, help='resource data folder')
-    
+    parser.add_argument('--mapping', type=str, help='categories mapping file')
     args = parser.parse_args()
     
     if not hasattr(args, 'host'):
@@ -81,6 +81,8 @@ def main():
         'logs_dir':proj_dir + '\\logs',
         'data_dir':proj_dir + '\\data\\',
         'auth_proc':proj_dir+'\\bin\\auth_server.cmd',
+        'res':args.res,
+        'mapping':args.mapping,
         }
     
     init_logging(specs['path']['logs_dir'])
