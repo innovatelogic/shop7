@@ -127,7 +127,7 @@ class Importer():
                 prom_ua_category_node.category._id)
 
 #----------------------------------------------------------------------------------------------
-    def EnsureUserCategory(self, aspect, category_path):
+    def EnsureUserCategory(self, user_aspect, category_path):
         ''' check category_path parameter and create if it's not exist.
         otherwise return default category
         @param aspect [in] user aspect object 
@@ -137,7 +137,7 @@ class Importer():
         
         category_path = category_path.replace('root/', '')
         category_words = category_path.split('/')
-        user_category_node = aspect.node_root
+        user_category_node = user_aspect.node_root
         
         bFail = False
         
@@ -147,28 +147,14 @@ class Importer():
             if node:
                 user_category_node = node
                 continue
-            
-            parent_id = None
-            if user_category_node.parent:
-                parent_id = user_category_node.parent.category._id
-                
-            new_category = Category({'_id': ObjectId(), 'parent_id': parent_id, 'name':name})
-                
-            if self.user_aspect.addChildCategory(user_category_node, new_category):
-                self.db.user_aspects.add_category(aspect._id, new_category)
             else:
-                print('fail add')
-                bFail = True
-                break
+                parent_id = user_category_node.category._id
                 
-            user_category_node = user_category_node.getChildByName(name)
-            if not user_category_node:
-                print(item['uniqID'])
-                user_category_node = self.realm.user_aspects_container.get_aspect_default_category(aspect)
-                bFail = True
-                break
-        
-        if len(category_words) == 0 or bFail:
-            user_category_node = self.realm.user_aspects_container.get_aspect_default_category(aspect)
+                new_category = Category({'_id': ObjectId(), 'parent_id': parent_id, 'name':name})
+                
+                self.db.user_aspects.add_category(user_aspect._id, new_category)
+                self.user_aspect.addChildCategory(user_category_node, new_category) 
+                
+                user_category_node = user_category_node.getChildByName(name)
             
         return user_category_node

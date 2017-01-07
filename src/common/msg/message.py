@@ -1,6 +1,8 @@
 import pika
 from bson.objectid import ObjectId
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class Message():
     def __init__(self, master, get, send):
         self.send_params = []
@@ -34,7 +36,6 @@ class Message_server_auth_activate(Message):
 
     def do_process(self, ch, method, props, body):
         dict = eval(body)
-        
         return self.master.realm().users_model.activateUserAuth(dict['token'])
 
 #----------------------------------------------------------------------------------------------
