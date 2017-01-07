@@ -288,37 +288,39 @@ class UserSettings():
 					'settings':{},
 					'statistics':{},
 					'dashboard':{},
-					'curr_lang':{'EN':1, 'UA':0, 'RU':0},
 					}
-				}
+				},
+			'curr_lang':0
 		}
 		
 		if 'options' in spec and 'client' in spec['options'] and 'ui' in spec['options']['client'] and 'cases' in spec['options']['client']['ui']:
+			src_ui_cases_dict = spec['options']['client']['ui']['cases']
+			dst_ui_cases_dict = self.options['client']['ui']['cases']
 			
-			if 'item_columns' in spec['options']['client']['ui']['cases']:
-				spec_columns = spec['options']['client']['ui']['cases']['item_columns']
+			if 'item_columns' in src_ui_cases_dict:
+				src_spec_columns = src_ui_cases_dict['item_columns']
 				
-				if 'image' in spec_columns:
-					self.options['client']['ui']['cases']['item_columns']['image'] = spec_columns['image']
-				if 'name' in spec_columns:
-					self.options['client']['ui']['cases']['item_columns']['name'] = spec_columns['name']
-				if 'availability' in spec_columns:
-					self.options['client']['ui']['cases']['item_columns']['availability'] = spec_columns['availability']
-				if 'amount' in spec_columns:
-					self.options['client']['ui']['cases']['item_columns']['amount'] = spec_columns['amount']	
-				if 'unit' in spec_columns:
-					self.options['client']['ui']['cases']['item_columns']['unit'] = spec_columns['unit']
-				if 'price' in spec_columns:
-					self.options['client']['ui']['cases']['item_columns']['price'] = spec_columns['price']
-				if 'currency' in spec_columns:
-					self.options['client']['ui']['cases']['item_columns']['currency'] = spec_columns['currency']
-				if 'desc' in spec_columns:
-					self.options['client']['ui']['cases']['item_columns']['desc'] = spec_columns['desc']
+				if 'image' in src_spec_columns:
+					dst_ui_cases_dict['image'] = src_spec_columns['image']
+				if 'name' in src_spec_columns:
+					dst_ui_cases_dict['name'] = src_spec_columns['name']
+				if 'availability' in src_spec_columns:
+					dst_ui_cases_dict['availability'] = src_spec_columns['availability']
+				if 'amount' in src_spec_columns:
+					dst_ui_cases_dict['amount'] = src_spec_columns['amount']	
+				if 'unit' in src_spec_columns:
+					dst_ui_cases_dict['unit'] = src_spec_columns['unit']
+				if 'price' in src_spec_columns:
+					dst_ui_cases_dict['price'] = src_spec_columns['price']
+				if 'currency' in src_spec_columns:
+					dst_ui_cases_dict['currency'] = src_spec_columns['currency']
+				if 'desc' in src_spec_columns:
+					dst_ui_cases_dict['desc'] = src_spec_columns['desc']
       	
-		      	if 'active_base_aspect' in spec['options']['client']['ui']['cases']:
-		      		self.options['client']['ui']['cases']['active_base_aspect'] = spec['options']['client']['ui']['cases']['active_base_aspect']
-		      	if 'show_base_aspect_whole_tree' in spec['options']['client']['ui']['cases']:
-		      		self.options['client']['ui']['cases']['show_base_aspect_whole_tree'] = spec['options']['client']['ui']['cases']['show_base_aspect_whole_tree']
+		      	if 'active_base_aspect' in src_ui_cases_dict:
+		      		dst_ui_cases_dict['active_base_aspect'] = src_ui_cases_dict['active_base_aspect']
+		      	if 'show_base_aspect_whole_tree' in src_ui_cases_dict:
+		      		dst_ui_cases_dict['show_base_aspect_whole_tree'] = src_ui_cases_dict['show_base_aspect_whole_tree']
 
     def get(self):
     	record = {
@@ -345,7 +347,6 @@ class UserMapping():
 			self.mapping[str(user_category_id)] = {}
 			
 		self.mapping[str(user_category_id)][base_aspect_name] = base_category_id
-		
 		
 	def remove(self, user_category_id, base_aspect_name):
 		res = False

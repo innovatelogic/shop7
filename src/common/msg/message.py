@@ -1,5 +1,5 @@
 import pika
-#from wx.lib.pubsub.core import kwargs
+from bson.objectid import ObjectId
 
 class Message():
     def __init__(self, master, get, send):
