@@ -12,7 +12,7 @@ class ClientsConnection:
         self.master = master
         self.specs = specs
         self.client_creator = client_creator
-        self.message_cont = MessageContaier(self.master, '../res/msg/messages.xml', EAspect.EAspect_Server)
+        self.message_cont = MessageContaier(self.master, self.specs['path']['res'] + 'msg/messages.xml', EAspect.EAspect_Server)
         
     #----------------------------------------------------------------------------------------------
     @defer.inlineCallbacks

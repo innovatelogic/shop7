@@ -42,8 +42,6 @@ class CategoryGroupItemsCache():
 
 #----------------------------------------------------------------------------------------------
     def add_base_category(self, aspect, category_id):
-        #str_category_id = str(category_id)
-        
         if aspect not in self._mapping:
             self._mapping[aspect] = {}
         if category_id not in self._mapping[aspect]:
@@ -63,25 +61,27 @@ class CategoryGroupItemsCache():
 #----------------------------------------------------------------------------------------------
     def get_item_count(self, aspect, category_id, group_id):
         out = 0
+        flag = False
         if aspect in self._mapping:
-            if group_id in self._mapping[aspect][category_id]:
-                print('get cache')
-                out = self._mapping[aspect][category_id][group_id][self.IDX_COMMON_COUNTER]
+            if category_id in self._mapping[aspect]:
+                if group_id in self._mapping[aspect][category_id]:
+                    out = self._mapping[aspect][category_id][group_id][self.IDX_COMMON_COUNTER]
+                    flag = True
+        #if not flag:
+        #    print('invalid data get items count {} {} {}'.format(aspect, category_id, group_id))
         return out
     
 #----------------------------------------------------------------------------------------------
     def get_category_items_count_self(self, aspect, category_id, group_id):
         out = 0
         bRes = False
-        print('red')
         if aspect in self._mapping:
-            print(self._mapping[aspect])
             if category_id in self._mapping[aspect]:
                 if group_id in self._mapping[aspect][category_id]:
                     out = self._mapping[aspect][category_id][group_id][self.IDX_SELF_COUNTER]
                     bRes = True
-        if not bRes:
-            print('[get_category_items_count_self] failed get data by param {} {} {}'.format(aspect, category_id, group_id))
+        #if not bRes:
+        #    print('[get_category_items_count_self] failed get data by param {} {} {}'.format(aspect, category_id, group_id))
         return out
 
 #----------------------------------------------------------------------------------------------

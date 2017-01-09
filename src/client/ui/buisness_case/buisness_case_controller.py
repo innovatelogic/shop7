@@ -25,10 +25,13 @@ class BuisnessCaseController():
 
 #----------------------------------------------------------------------------------------------
     def init(self):
-        base_aspect = self.__realm.getUserSettings().options['client']['ui']['cases']['active_base_aspect']  
-        self.view.setSecondAspect(base_aspect)
+        self.view.setSecondAspect(self.getActiveSecondaryAspect())
         pass
 
+#----------------------------------------------------------------------------------------------
+    def getActiveSecondaryAspect(self):
+        return self.__realm.getUserSettings().options['client']['ui']['cases']['active_base_aspect']
+    
 #----------------------------------------------------------------------------------------------
     def addEvent(self, ID, func):
         if str(ID) not in self.events:
@@ -88,13 +91,20 @@ class BuisnessCaseController():
         user_settings.options['client']['ui']['cases']['show_base_aspect_whole_tree'] = flag
         self.__realm.set_user_settings(user_settings)
         
-#----------------------------------------------------------------------------------------------    
+#----------------------------------------------------------------------------------------------
     def itemColumnChange(self, text, flag):
-        print('[item_column_change]')
         user_settings = self.__realm.getUserSettings()
         if text in user_settings.options['client']['ui']['cases']['item_columns']:
             user_settings.options['client']['ui']['cases']['item_columns'][text] = flag
             self.__realm.set_user_settings(user_settings)
+        pass
+
+#----------------------------------------------------------------------------------------------
+    def setActiveSecondaryAspect(self, aspect):
+        user_settings = self.__realm.getUserSettings()
+        user_settings.options['client']['ui']['cases']['active_base_aspect'] = aspect
+        self.__realm.set_user_settings(user_settings)
+        self.view.setSecondAspect(self.getActiveSecondaryAspect())
         pass
 
 #----------------------------------------------------------------------------------------------        
@@ -116,14 +126,14 @@ class BuisnessCaseController():
         pass
     
 #----------------------------------------------------------------------------------------------
-    def expandBaseAspectCategory(self, aspect, category_id, item):
+    def expandBaseAspectCategory(self, category_id, item):
+        aspect = self.getActiveSecondaryAspect()
         categories = self.__realm.get_category_childs(aspect, category_id)
         self.view.addChildCategoriesTreeBaseAspect(category_id, categories, item)
         pass
  
 #----------------------------------------------------------------------------------------------
     def categoryUserAspectSelected(self, category_id):
-        print("[categoryUserAspectSelected]")
         info = self.__realm.get_user_category_info(category_id)
         state = self.__realm.get_items_category_state()
         
@@ -136,9 +146,10 @@ class BuisnessCaseController():
         pass
     
 #----------------------------------------------------------------------------------------------
-    def categoryBaseAspectSelected(self, aspect, category_id):
+    def categoryBaseAspectSelected(self, category_id):
         ''' process user category selection'''
-        print('categoryBaseAspectSelected {} {}'.format(aspect, category_id))
+
+        aspect = self.getActiveSecondaryAspect()
         info = self.__realm.get_category_info(aspect, category_id)
         state = self.__realm.get_items_category_state()
         

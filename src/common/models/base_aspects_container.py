@@ -374,9 +374,6 @@ class BaseAspectHelper():
         if root_node.category:
             aspect_out = Aspect(aspect, root_node)
             
-            if cache_ref:
-                cache_ref.add_base_category(aspect, str(root_node.category._id)) #cache
-            
             stack = []
             stack.append(root_node)
             
@@ -384,15 +381,15 @@ class BaseAspectHelper():
             while len(stack):
                 top = stack.pop(0)
                 
+                if cache_ref:
+                    cache_ref.add_base_category(aspect, str(top.category._id)) #cache
+                    
                 childs = db.base_aspects.get_childs(aspect, top.category)
                 count += 1
 
                 for child in childs:
                     child_node = CategoryNode(child, top)
-                    
-                    if cache_ref:
-                        cache_ref.add_base_category(aspect, str(child_node.category._id)) #cache
-                    
+
                     aspect_out.addChild(top, child_node)
                     stack.insert(0, child_node)
 

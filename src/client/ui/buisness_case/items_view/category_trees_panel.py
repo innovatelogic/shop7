@@ -14,7 +14,6 @@ class CategoryTreesPanel(wx.Panel):
         self.cases_controller = cases_controller
         self.view_panels = []
         self.doLayout()
-        self.aspect = ''
         self.TogglePanel(EPanelCategory.EPanel_Base)
 
 #----------------------------------------------------------------------------------------------
@@ -33,7 +32,6 @@ class CategoryTreesPanel(wx.Panel):
         self.gridsizer.AddGrowableCol(0)
            
         self.SetSizer(self.gridsizer)
-        self.bind()
         self.Layout()
 
 #----------------------------------------------------------------------------------------------
@@ -45,18 +43,32 @@ class CategoryTreesPanel(wx.Panel):
         self.secondary_tree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.OnCollapseTreeNode_Secondary)
         self.secondary_tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.OnSelChangedTreeNode_Secondary)
         
+#----------------------------------------------------------------------------------------------   
+    def unbind(self):
+        self.base_tree.Unbind(wx.EVT_TREE_ITEM_EXPANDING)
+        self.base_tree.Unbind(wx.EVT_TREE_ITEM_COLLAPSED)
+        self.base_tree.Unbind(wx.EVT_TREE_SEL_CHANGED)
+        self.secondary_tree.Unbind(wx.EVT_TREE_ITEM_EXPANDING)
+        self.secondary_tree.Unbind(wx.EVT_TREE_ITEM_COLLAPSED)
+        self.secondary_tree.Unbind(wx.EVT_TREE_SEL_CHANGED)
+        
 #----------------------------------------------------------------------------------------------
     def PopulateBaseList(self):
         categories = self.realm.get_user_categiries_1st_lvl()
+        
+        self.unbind();
         self.base_tree.DeleteAllItems()
         self.base_tree.init_list(categories)
-
+        self.bind()
+        
 #----------------------------------------------------------------------------------------------
     def PopulateSecondaryList(self, aspect):
-        self.aspect = aspect
         categories = self.realm.get_categiries_1st_lvl(aspect)
+        
+        self.unbind();           
         self.secondary_tree.DeleteAllItems()
         self.secondary_tree.init_list(categories)
+        self.bind()
         
 #----------------------------------------------------------------------------------------------
     def TogglePanel(self, index):
@@ -88,13 +100,13 @@ class CategoryTreesPanel(wx.Panel):
         
 #----------------------------------------------------------------------------------------------
     def OnSelChangedTreeNode_User(self, event):
-        item =  event.GetItem()
+        item = event.GetItem()
         self.cases_controller.categoryUserAspectSelected(self.base_tree.GetPyData(item))
 
 #----------------------------------------------------------------------------------------------
     def OnExpandingTreeNode_Secondary(self, event):
         item = event.GetItem()
-        self.cases_controller.expandBaseAspectCategory(self.aspect, self.secondary_tree.GetPyData(item), item)
+        self.cases_controller.expandBaseAspectCategory(self.secondary_tree.GetPyData(item), item)
 
 #----------------------------------------------------------------------------------------------        
     def OnCollapseTreeNode_Secondary(self, event):
@@ -104,5 +116,5 @@ class CategoryTreesPanel(wx.Panel):
 
 #----------------------------------------------------------------------------------------------
     def OnSelChangedTreeNode_Secondary(self, event):
-        item =  event.GetItem()
-        self.cases_controller.categoryBaseAspectSelected(self.aspect, self.secondary_tree.GetPyData(item))
+        item = event.GetItem()
+        self.cases_controller.categoryBaseAspectSelected(self.secondary_tree.GetPyData(item))

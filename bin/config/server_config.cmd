@@ -14,6 +14,6 @@ set DB_PORT=27017
 set MASTER_DB_NAME=shop7_test
 
 
-set RES_FOLDER=%~dp0../data/res
+set RES_FOLDER=data/res
 
 set CATEGORY_MAPPING_FILENAME=ut/mapping.xml

@@ -81,7 +81,7 @@ def main():
         'logs_dir':proj_dir + '\\logs',
         'data_dir':proj_dir + '\\data\\',
         'auth_proc':proj_dir+'\\bin\\auth_server.cmd',
-        'res':args.res,
+        'res':proj_dir + '\\res\\',
         'mapping':args.mapping,
         }
     

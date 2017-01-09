@@ -41,6 +41,7 @@ class Importer():
 
             for item in items:
                 id = self.storeItem(item)
+                break
                 if id:
                     n_count += 1
                     pass

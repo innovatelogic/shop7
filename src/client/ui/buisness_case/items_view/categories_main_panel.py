@@ -85,11 +85,7 @@ class CategoriesMainPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------        
     def OnPopupItemAspectSelected(self, event):
         item = self.popupmenu.FindItemById(event.GetId())
-        text = item.GetText()
-        for i in range(len(self.base_aspects)):
-            if self.base_aspects[i] == text:
-                self.PopulateSecondaryList(text)
-                break
+        self.cases_controller.setActiveSecondaryAspect(item.GetText())
 
 #----------------------------------------------------------------------------------------------            
     def OnShowAllCategoryTree(self, event):
