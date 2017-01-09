@@ -101,6 +101,7 @@ class CategoryTreesPanel(wx.Panel):
         ''' binds to on node collapse event'''
         self.secondary_tree.delete_childs(event.GetItem())
         pass
+
 #----------------------------------------------------------------------------------------------
     def OnSelChangedTreeNode_Secondary(self, event):
         item =  event.GetItem()

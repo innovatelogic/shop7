@@ -97,7 +97,7 @@ class CategoriesControllerPanel(wx.Panel):
     def OnClick_BaseAspect(self, event):
         self.btnpanel.ToggleUp(self.btnpanel.base_aspect_button)
         self.callback_ToggleBaseAspect()
-        self.cases_controller.toggleBaseAspect()
+        #self.cases_controller.toggleBaseAspect()
         
 #----------------------------------------------------------------------------------------------
     def OnClick_SecondAspect(self, event):

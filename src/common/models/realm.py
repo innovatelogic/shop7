@@ -207,7 +207,6 @@ class Realm():
         spec['creation_time'] = time_now
         spec['update_time'] = time_now
         spec['mapping_id'] = ObjectId()
-    
         
         mapping_dict = self.resolveMappingByAspect(aspect, aspect_category_id)
         

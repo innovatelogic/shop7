@@ -114,10 +114,11 @@ class Importer():
         prom_ua_category_node = None
         if 'subsectionID' in item:
             prom_ua_category_node = self.realm.getBaseAspectCategoryByForeignId('prom_ua', item['subsectionID'])
-        else:
+        if not prom_ua_category_node:
             prom_ua_category_node = self.realm.getBaseAspectDefaultCategory('prom_ua')
         
         if not prom_ua_category_node:
+            print('Failed get prom_ua category. skip item')
             return None
         
         return self.realm.addItem(self.user._id,

@@ -52,13 +52,11 @@ class DocumentViewPanel(wx.Panel):
 
 #----------------------------------------------------------------------------------------------
     def addChildCategoriesTreeUserAspect(self, category_id, childs, item):
-        #item = self.lpanel.bottompanel.base_tree.GetItemPyData(wx.TreeItemData(category_id))
         self.itemsViewPanel.lpanel.bottompanel.base_tree.append_childs(childs, item)
         pass
     
 #----------------------------------------------------------------------------------------------
     def addChildCategoriesTreeBaseAspect(self, category_id, childs, item):
-        #item = self.lpanel.bottompanel.secondary_tree.GetItemPyData(wx.TreeItemData(category_id))
         self.itemsViewPanel.lpanel.bottompanel.secondary_tree.append_childs(childs, item)
         pass
     
@@ -105,3 +103,8 @@ class DocumentViewPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------
     def addItemSetPage(self, page):
         self.addItemPanel.setPage(page)
+        
+#----------------------------------------------------------------------------------------------   
+    def setSecondAspect(self, aspect_id):
+        self.itemsViewPanel.lpanel.initSecondaryAspectList(aspect_id)
+        pass

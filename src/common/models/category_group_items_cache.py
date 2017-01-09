@@ -21,7 +21,7 @@ class CategoryGroupItemsCache():
 
 #----------------------------------------------------------------------------------------------    
     def build(self, items, user_groups):
-        ''' iterates through all items and assing counter to corresponding category node
+        ''' iterates through all items and assign counter to corresponding category node
             and all ancestors
         '''
         base_aspects = self.__realm.base_aspects_container.get_aspects()
@@ -65,6 +65,7 @@ class CategoryGroupItemsCache():
         out = 0
         if aspect in self._mapping:
             if group_id in self._mapping[aspect][category_id]:
+                print('get cache')
                 out = self._mapping[aspect][category_id][group_id][self.IDX_COMMON_COUNTER]
         return out
     
@@ -72,7 +73,9 @@ class CategoryGroupItemsCache():
     def get_category_items_count_self(self, aspect, category_id, group_id):
         out = 0
         bRes = False
+        print('red')
         if aspect in self._mapping:
+            print(self._mapping[aspect])
             if category_id in self._mapping[aspect]:
                 if group_id in self._mapping[aspect][category_id]:
                     out = self._mapping[aspect][category_id][group_id][self.IDX_SELF_COUNTER]
@@ -93,6 +96,7 @@ class CategoryGroupItemsCache():
     def inc_item_count_base_aspect(self, aspect, category_id, group_id):
         base_node = True
         category_node = self.__realm.base_aspects_container.get_aspect_category(aspect, str(category_id))
+        
         if category_node:
             while category_node:
                 if group_id not in self._mapping[aspect][str(category_node.category._id)]: # add group if not exist

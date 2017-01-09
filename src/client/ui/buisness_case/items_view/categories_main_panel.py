@@ -13,7 +13,7 @@ class CategoriesMainPanel(wx.Panel):
         self.cases_controller = cases_controller
         self.realm = cases_controller.realm()
         self.base_aspects = self.realm.get_aspects()
-        self.active_aspect_idx = -1
+        self.active_aspect_idx = ''
         
         self.doLayout()
         self.bottompanel.PopulateBaseList()
@@ -33,10 +33,7 @@ class CategoriesMainPanel(wx.Panel):
         posCenterPanelVertSzr.Add(self.bottompanel, 1, wx.GROW)
         
         self.SetSizer(posCenterPanelVertSzr)
-        self.initPopupMenu()
         self.Layout()
-        
-        self.initSecondaryAspectList()
         
 #----------------------------------------------------------------------------------------------        
     def initPopupMenu(self):
@@ -46,6 +43,7 @@ class CategoriesMainPanel(wx.Panel):
         for aspect in self.base_aspects:
             radio = wx.MenuItem(self.popupmenu, -1, text = aspect, kind = wx.ITEM_RADIO)
             self.popupmenu.AppendItem(radio)
+            self.popupmenu.Check(radio.GetId(), self.active_aspect_idx == aspect)
             self.Bind(wx.EVT_MENU, self.OnPopupItemAspectSelected, radio)
             
         self.popupmenu.AppendSeparator()
@@ -56,13 +54,8 @@ class CategoriesMainPanel(wx.Panel):
         self.popupmenu.Check(item_show_all.GetId(), show_whoe_tree)
 
 #----------------------------------------------------------------------------------------------        
-    def initSecondaryAspectList(self):
-        try:
-            base_aspect = self.realm.getUserSettings().options['client']['ui']['cases']['active_base_aspect']
-            idx = self.base_aspects.index(base_aspect)
-        except ValueError:
-            idx = 0
-        self.PopulateSecondaryList(idx)
+    def initSecondaryAspectList(self, aspect_id):
+        self.PopulateSecondaryList(aspect_id)
         
 #----------------------------------------------------------------------------------------------        
     def callback_ToggleBaseAspect(self):
@@ -86,6 +79,7 @@ class CategoriesMainPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------        
     def OnShowPopup(self, pos):
         cl_pos = self.ScreenToClient(pos)
+        self.initPopupMenu()
         self.PopupMenu(self.popupmenu, cl_pos)
         
 #----------------------------------------------------------------------------------------------        
@@ -94,7 +88,7 @@ class CategoriesMainPanel(wx.Panel):
         text = item.GetText()
         for i in range(len(self.base_aspects)):
             if self.base_aspects[i] == text:
-                self.PopulateSecondaryList(i)
+                self.PopulateSecondaryList(text)
                 break
 
 #----------------------------------------------------------------------------------------------            
@@ -103,9 +97,7 @@ class CategoriesMainPanel(wx.Panel):
         self.cases_controller.showAllCategoryTree(item.IsChecked())
         
 #----------------------------------------------------------------------------------------------            
-    def PopulateSecondaryList(self, index):
-        if index >= 0 and index < len(self.base_aspects):
-            if index != self.active_aspect_idx:
-                self.active_aspect_idx = index
-                self.bottompanel.PopulateSecondaryList(self.base_aspects[index])
-                self.toppanel.SetSecondAspectName(self.base_aspects[index])
+    def PopulateSecondaryList(self, aspect_id):
+        self.active_aspect_idx = aspect_id
+        self.bottompanel.PopulateSecondaryList(aspect_id)
+        self.toppanel.SetSecondAspectName(aspect_id)

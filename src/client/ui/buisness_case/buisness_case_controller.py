@@ -1,8 +1,19 @@
 from add_item.add_item_controller import AddItemController
 
+ON_SECOND_ASPECT_CHANGED = 1
+    
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class BuisnessCaseController():
     ITEMS_PER_PAGE = 5
     USER_ASPECT_FLAG = '__USER_ASPECT__'
+    
+    class Event():
+        def __init__(self, func):
+            self.funcs = [func]
+        def fire(self):
+            for i in self.runcs():
+                i()
     
     def __init__(self, realm):
         self.__realm = realm
@@ -10,8 +21,22 @@ class BuisnessCaseController():
         self.items_offset = 0
         self.items_per_page = 0
         self.addItemController = AddItemController(self)
+        self.events = {}
 
-#----------------------------------------------------------------------------------------------        
+#----------------------------------------------------------------------------------------------
+    def init(self):
+        base_aspect = self.__realm.getUserSettings().options['client']['ui']['cases']['active_base_aspect']  
+        self.view.setSecondAspect(base_aspect)
+        pass
+
+#----------------------------------------------------------------------------------------------
+    def addEvent(self, ID, func):
+        if str(ID) not in self.events:
+            self.events[str(ID)] = Event(func)
+        else:
+            self.events[ID].funcs.append(func)
+             
+#----------------------------------------------------------------------------------------------
     def setView(self, view):
         self.view = view
 
@@ -73,7 +98,7 @@ class BuisnessCaseController():
         pass
 
 #----------------------------------------------------------------------------------------------        
-    def toggleBaseAspect(self):
+    def toggleBaseAspect(self, aspect_id):
         pass
     
 #----------------------------------------------------------------------------------------------    
@@ -154,3 +179,4 @@ class BuisnessCaseController():
     def page_select(self, page_index):
         print('[page_select]')
         pass
+    

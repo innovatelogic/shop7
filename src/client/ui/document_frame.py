@@ -66,7 +66,9 @@ class DocumentFrame(wx.Frame):
         self.bottompanel.SetSizer(posHorSzr)
         
         # toggle panels
-        self.cases_panel = DocumentViewPanel(BuisnessCaseController(self.realm), self.centerpanel, wx.ID_ANY, size = (-1, -1))
+        self.cases_controller = BuisnessCaseController(self.realm)
+        self.cases_panel = DocumentViewPanel(self.cases_controller, self.centerpanel, wx.ID_ANY, size = (-1, -1))
+        self.cases_controller.init()
         
         self.clients_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (-1, -1))
         self.connect_panel = wx.Panel(self.centerpanel, wx.ID_ANY, size = (-1, -1))
