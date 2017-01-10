@@ -219,10 +219,11 @@ class Realm():
         if aspect not in mapping_dict:
             mapping_dict[aspect] = category_node.category._id
                                       
-        mapping_dict[str(user.group_id)] = user_category_node.category._id  
+        mapping_dict['user'] = user_category_node.category._id  
     
         mapping_spec = {'_id':spec['mapping_id'],
                     'item_id':spec['_id'],
+                    'user_group_id':ObjectId(user_group._id),
                     'mapping':mapping_dict
                     }   
     

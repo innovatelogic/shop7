@@ -84,7 +84,6 @@ class CategoriesControllerPanel(wx.Panel):
         gridsizer.Add(sizer_1, flag = wx.EXPAND) 
 
         self.SetSizer(gridsizer)
-        
         self.Layout()
         
 #----------------------------------------------------------------------------------------------      
