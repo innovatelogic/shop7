@@ -33,7 +33,7 @@ class CategoryGroupItemsCache():
                 for key, value in mapping.mapping.iteritems(): # key - aspect; value - category_id
                     if key in base_aspects:
                         self.inc_item_count_base_aspect(key, value, item.user_group_id)
-                    else:
+                    elif key == 'user':
                         self.inc_item_count_user_aspect(item.user_group_id, value)
                         b_mapped_usr_ctry = True
 
@@ -90,7 +90,7 @@ class CategoryGroupItemsCache():
     
 #----------------------------------------------------------------------------------------------
     def get_user_category_items_count_self(self, category_id, group_id):
-        return self._user_mapping[group_id][category_id][self.IDX_COMMON_COUNTER]
+        return self._user_mapping[group_id][category_id][self.IDX_SELF_COUNTER]
     
 #----------------------------------------------------------------------------------------------    
     def inc_item_count_base_aspect(self, aspect, category_id, group_id):

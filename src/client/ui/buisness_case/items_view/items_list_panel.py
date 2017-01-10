@@ -26,11 +26,10 @@ class ItemsListPanel(wx.Panel):
 
 #----------------------------------------------------------------------------------------------
     def doLayout(self):
+        
         self.toppanel = wx.Panel(self, wx.ID_ANY, size=(-1, 25))
         self.bottompanel = ItemsListBottomControlPanel(self.cases_controller,
                                                        self, wx.ID_ANY, size=(-1, 30))
-      
-        self.list_ctrl = self.initListCtrl(self.toppanel)
         
         gridsizer = wx.FlexGridSizer(cols=1, rows = 2)
         gridsizer.AddGrowableRow(0)
@@ -39,15 +38,31 @@ class ItemsListPanel(wx.Panel):
         gridsizer.Add(self.toppanel, flag = wx.ALL|wx.EXPAND)
         gridsizer.Add(self.bottompanel, flag = wx.ALL|wx.EXPAND)
         
+        self.SetSizer(gridsizer)
+        
+        self.split = wx.SplitterWindow(self.toppanel, style = wx.SP_THIN_SASH)
+        
+        self.list_ctrl = self.initListCtrl(self.split)
+        self.rpanel = wx.Panel(self.split, wx.ID_ANY, size=(-1, 125))
+        
+        self.split.SplitVertically(self.list_ctrl, self.rpanel)
+        
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(self.split, 1, wx.EXPAND)
+        self.toppanel.SetSizer(sizer)
+        self.split.SetSashPosition(200, True)
+        
         list_gridsizer = wx.FlexGridSizer(cols=1, rows = 2)
         list_gridsizer.AddGrowableRow(0)
         list_gridsizer.AddGrowableCol(0)
         list_gridsizer.Add(self.list_ctrl, flag = wx.ALL|wx.EXPAND)
-        self.toppanel.SetSizer(list_gridsizer)
+        self.split.SetSizer(list_gridsizer)
         
-        self.SetSizer(gridsizer)
         self.Layout()
 
+    def initItemsPreview(self):
+        pass
+        
 #----------------------------------------------------------------------------------------------
     def initListCtrl(self, parent):
         list_ctrl = CheckListCtrl(parent)

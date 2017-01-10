@@ -50,8 +50,8 @@ class CategoriesMainPanel(wx.Panel):
         item_show_all = self.popupmenu.AppendCheckItem(-1, self.LABEL_SHOW_WHOLE_TREE)
         self.Bind(wx.EVT_MENU, self.OnShowAllCategoryTree, item_show_all)
         
-        show_whoe_tree = user_settings.options['client']['ui']['cases']['show_base_aspect_whole_tree']
-        self.popupmenu.Check(item_show_all.GetId(), show_whoe_tree)
+        show_whole_tree = user_settings.options['client']['ui']['cases']['show_base_aspect_whole_tree']
+        self.popupmenu.Check(item_show_all.GetId(), show_whole_tree)
 
 #----------------------------------------------------------------------------------------------        
     def initSecondaryAspectList(self, aspect_id):

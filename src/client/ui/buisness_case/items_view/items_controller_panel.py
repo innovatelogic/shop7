@@ -25,6 +25,8 @@ class ItemsControllerPanel(wx.Panel):
     COLOR_LIGHT_GRAY_THEME = wx.Colour(215, 215, 215)
     IMAGE_DROPDOWN = "../res/img/dropdown.png"
     COLUMN_LABEL="columns"
+    LABEL_SHOW_ITEM_PREVIEW="item preview"
+    
     def __init__(self, 
                  cases_controller, 
                  parent, *args, **kwargs):
@@ -97,6 +99,13 @@ class ItemsControllerPanel(wx.Panel):
             item = self.popupmenu.AppendCheckItem(-1, key)
             self.popupmenu.Check(item.GetId(), value)
             self.Bind(wx.EVT_MENU, self.OnPopupItemColumnSelected, item)
+        
+        self.popupmenu.AppendSeparator()
+        item_show_preview = self.popupmenu.AppendCheckItem(-1, self.LABEL_SHOW_ITEM_PREVIEW)
+        self.Bind(wx.EVT_MENU, self.onPopupItemShowItemPreview, item_show_preview)
+        
+        show_preview = user_settings.options['client']['ui']['cases']['item_preview_column']
+        self.popupmenu.Check(item_show_preview.GetId(), show_preview)
 
 #----------------------------------------------------------------------------------------------
     def OnShowPopup(self, pos):
@@ -111,7 +120,10 @@ class ItemsControllerPanel(wx.Panel):
     def OnPopupItemColumnSelected(self, event):
         item = self.popupmenu.FindItemById(event.GetId())
         self.cases_controller.itemColumnChange(item.GetText(), item.IsChecked())
-        
+
+#----------------------------------------------------------------------------------------------
+    def onPopupItemShowItemPreview(self, event):
+        pass   
 #----------------------------------------------------------------------------------------------
     def OnClick_ColumnsCheck(self, event):
         pos = self.columns_btn.GetScreenPosition()
