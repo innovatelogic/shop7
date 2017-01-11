@@ -97,8 +97,15 @@ class BuisnessCaseController():
         if text in user_settings.options['client']['ui']['cases']['item_columns']:
             user_settings.options['client']['ui']['cases']['item_columns'][text] = flag
             self.__realm.set_user_settings(user_settings)
-        pass
-
+        self.view.updateItemList()
+        
+#----------------------------------------------------------------------------------------------
+    def toggleItemPreviewColumn(self, flag):
+        user_settings = self.__realm.getUserSettings()
+        user_settings.options['client']['ui']['cases']['item_preview_column'] = flag
+        self.__realm.set_user_settings(user_settings)
+        self.view.toggleItemPreveiewColumn(flag)
+        
 #----------------------------------------------------------------------------------------------
     def setActiveSecondaryAspect(self, aspect):
         user_settings = self.__realm.getUserSettings()
@@ -190,4 +197,22 @@ class BuisnessCaseController():
     def page_select(self, page_index):
         print('[page_select]')
         pass
+
+#----------------------------------------------------------------------------------------------
+    def getItemsListInfo(self):
+        user_settings = self.__realm.getUserSettings()
+        
+        dsc = user_settings.options['client']['ui']['cases']['item_columns']
+        
+        info = [('#', True),
+                ('Img', dsc['image']),
+                ('Name', dsc['name']),
+                ('Availability', dsc['availability']),
+                ('Amount', dsc['amount']),
+                ('Unit', dsc['unit']),
+                ('Price', dsc['price']),
+                ('Currency', dsc['currency']),
+                ('Desc', dsc['desc'])]
+        
+        return info
     

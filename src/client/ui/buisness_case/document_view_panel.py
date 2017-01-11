@@ -108,3 +108,11 @@ class DocumentViewPanel(wx.Panel):
     def setSecondAspect(self, aspect_id):
         self.itemsViewPanel.lpanel.initSecondaryAspectList(aspect_id)
         pass
+
+#---------------------------------------------------------------------------------------------- 
+    def toggleItemPreveiewColumn(self, flag):
+        self.itemsViewPanel.rpanel.bottompanel.toggleItemPreveiewColumn(flag)
+
+#----------------------------------------------------------------------------------------------   
+    def updateItemList(self):
+        self.itemsViewPanel.rpanel.bottompanel.initListCtrl()

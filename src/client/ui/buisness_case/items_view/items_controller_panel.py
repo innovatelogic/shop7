@@ -123,7 +123,9 @@ class ItemsControllerPanel(wx.Panel):
 
 #----------------------------------------------------------------------------------------------
     def onPopupItemShowItemPreview(self, event):
-        pass   
+        item = self.popupmenu.FindItemById(event.GetId())
+        self.cases_controller.toggleItemPreviewColumn(item.IsChecked())
+        
 #----------------------------------------------------------------------------------------------
     def OnClick_ColumnsCheck(self, event):
         pos = self.columns_btn.GetScreenPosition()
