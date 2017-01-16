@@ -1,6 +1,7 @@
 import time
 from bson.objectid import ObjectId
 import common.db.instance
+from common.db.types.types import Item, ItemMapping
 from users_model import UsersModel
 from user_groups_model import UserGroupsModel
 from items_cache_model import ItemsCacheModel
@@ -8,7 +9,7 @@ from base_aspects_container import BaseAspectsContainer
 from user_aspects_container import UserAspectsContainer
 from category_group_items_cache import CategoryGroupItemsCache
 from base_mapping import BaseMapping
-from common.db.types.types import Item, ItemMapping
+from common.models.item_controllers_container import ItemControllerContainer
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
@@ -22,6 +23,7 @@ class Realm():
         self.base_aspects_container = BaseAspectsContainer(self.db)
         self.user_aspects_container = UserAspectsContainer(self.db)
         self.base_mapping = BaseMapping(self, self.specs)
+        self.item_controllers_holder = ItemControllerContainer(self, self.specs)
         pass
 
 #----------------------------------------------------------------------------------------------
@@ -32,7 +34,10 @@ class Realm():
         self.user_aspects_container.loadAll(self.category_group_items_cache)
         
         self.category_group_items_cache.build_cache()
+        
         self.base_mapping.load()
+        
+        self.item_controllers_holder.loadAll()
 
 #----------------------------------------------------------------------------------------------
     def stop(self):

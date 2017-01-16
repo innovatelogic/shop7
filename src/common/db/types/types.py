@@ -1,6 +1,7 @@
 ID_NONE = -1
 
 #----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class Category():
 	def __init__(self, spec):
 		self._id = spec['_id']
@@ -15,9 +16,9 @@ class Category():
 		if 'foreign_id' in spec:
 			self.foreign_id = spec['foreign_id']
 		
-		self.controller_name = ''
-		if 'controller_name' in spec:
-			self.controller_name = spec['controller_name']
+		self.controller = ''
+		if 'controller' in spec:
+			self.controller = spec['controller']
 		
 	def get(self):
 		record = {
@@ -26,10 +27,11 @@ class Category():
 			'name':self.name,
 			'local':self.local,
 			'foreign_id':self.foreign_id,
-			'controller_name':self.controller_name,
+			'controller':self.controller,
 			}
 		return record
 
+#----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class User():
 	def __init__(self, spec):
@@ -50,6 +52,7 @@ class User():
 			}
 		return record
 
+#----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class UserRecord():
 	'''user id to rights correspondences. uses in construction spec for UserGroup'''

@@ -28,7 +28,7 @@ def importBaseAspect(params_tup):
             db.base_aspects.add_category(aspect_name, Category({'_id':ObjectId(), 'parent_id':None, 'name':'root', 'local':''}))
             aspect_dst = BaseAspectHelper.load_aspect(aspect_name, db, None)
 
-        BaseAspectHelper.treeMerge(aspect_src[0], aspect_dst.root)
+        BaseAspectHelper.treeMerge(aspect_dst.root, aspect_src[0])
         
         BaseAspectHelper.save_aspect(db, aspect_name, aspect_dst.root)
         

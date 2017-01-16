@@ -5,6 +5,7 @@ from bson.objectid import ObjectId
 from common.db.types.types import Category
 from pyexpat import ExpatError
 from common.aspect import Aspect, CategoryNode
+from common.models.item_controllers_container import ItemControllerContainer
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------        
@@ -63,10 +64,17 @@ class BaseAspectsContainer():
     
 #----------------------------------------------------------------------------------------------
     def get_aspects(self):
-        ''' returns array of loaded aspects'''
+        ''' returns array of names of loaded aspects'''
         out = []
         for key in self.aspects:
             out.append(key)
+        return out
+    
+#----------------------------------------------------------------------------------------------
+    def getAspects(self):
+        out = []
+        for key, value in self.aspects.iteritems():
+            out.append(value)
         return out
     
 #----------------------------------------------------------------------------------------------
@@ -135,7 +143,7 @@ class BaseAspectHelper():
                 
     #----------------------------------------------------------------------------------------------
     @staticmethod
-    def treeMerge(source_root, dest_root):
+    def treeMerge(dest_root, source_root):
         ''' merge two trees. assign diff from source to dest.
             modify dest tree.
             not consistent with cache. offline only
@@ -272,7 +280,7 @@ class BaseAspectHelper():
                         common_ab.append(dst_node)
                         new_prev_dst.append(src_node)
                         
-                        db.base_aspects.updateCategory(aspect, dst_node)
+                        db.base_aspects.updateCategory(aspect, src_node.category) # save updated scr node to db
                         cat_updated += 1
                         
                         db_childs = db.base_aspects.get_childs(aspect, dst_node) # add dst children to next iteration
@@ -377,7 +385,6 @@ class BaseAspectHelper():
             stack = []
             stack.append(root_node)
             
-            print('start load')
             while len(stack):
                 top = stack.pop(0)
                 
@@ -393,7 +400,6 @@ class BaseAspectHelper():
                     aspect_out.addChild(top, child_node)
                     stack.insert(0, child_node)
 
-            print('end load')
         if count == 0:
             print('aspect {} not loaded completely'.format(aspect))
         else:
@@ -442,7 +448,17 @@ class BaseAspectHelper():
                             if child.hasAttribute('default'):
                                 default_name = name
                                 
-                            cat = CategoryNode(Category({'_id':INVALID_ID, 'parent_id':INVALID_ID, 'name':name, 'local':local, 'foreign_id':foreign_id}), node[1])
+                            controller = ''
+                            if child.hasAttribute('controller'):
+                                controller = child.getAttribute('controller')
+                                
+                            cat = CategoryNode(Category({'_id':INVALID_ID,
+                                                         'parent_id':INVALID_ID,
+                                                         'name':name,
+                                                         'local':local,
+                                                         'foreign_id':foreign_id,
+                                                         'controller':controller}), node[1])
+                                             
                             node[1].childs.append(cat)
                             
                             new_stack.append((child, cat))
@@ -453,7 +469,6 @@ class BaseAspectHelper():
         except ExpatError as e:
             print(str(e))
         
-        #BaseAspectHelper.dump_category_tree(filename + '.tmp2', root)
         return [root, default_name]
     
     #----------------------------------------------------------------------------------------------
@@ -461,7 +476,8 @@ class BaseAspectHelper():
     def UpdateCategory(dst_cat, src_cat):
         dst_cat.local = src_cat.local
         dst_cat.foreign_id = src_cat.foreign_id
-        
+        dst_cat.controller = src_cat.controller
+
     #----------------------------------------------------------------------------------------------    
     @staticmethod    
     def GetCategoryFullName(category_node):

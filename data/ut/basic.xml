@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
  <node name="root">
-     <node foreign_id="" local="_UA:Одяг;_RU:Одежда" name="Clothing">
-         <node foreign_id="" local="" name="Men's">
+     <node foreign_id="" local="_UA:Одяг;_RU:Одежда" name="Clothing" >
+         <node foreign_id="" local="" name="Men's" controller="clothes/clothes_man.xml">
              <node foreign_id="" local="" name="Pants">
                 <node foreign_id="" local="" name="Cargo"/>
 				<node foreign_id="" local="" name="Jeans"/>
 			 </node>
          </node>
-         <node foreign_id="" local="" name="Women's">
+         <node foreign_id="" local="" name="Women's" controller="clothes/clothes_woman.xml">
              <node foreign_id="" local="" name="Dresses">
                  <node foreign_id="" local="" name="Tank"/>
                  <node foreign_id="" local="" name="Wrap"/>

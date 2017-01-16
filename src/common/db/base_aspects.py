@@ -39,7 +39,10 @@ class BaseAspects():
 #----------------------------------------------------------------------------------------------
     def updateCategory(self, aspect, category):
         updateResult = self.cat.update_one(
-            {'_id':aspect, "categories._id":category._id}, {'$set': {"categories.$.local" : category.local, 'categories.$.foreign_id':category.foreign_id}}
+            {'_id':aspect, "categories._id":category._id},
+            {'$set': {"categories.$.local" : category.local,
+                      'categories.$.foreign_id':category.foreign_id,
+                      'categories.$.controller':category.controller}}
             )
     
 #----------------------------------------------------------------------------------------------

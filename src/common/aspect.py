@@ -6,6 +6,7 @@ class CategoryNode():
     def __init__(self, category, parent):
         self.category = category
         self.parent = parent
+        self.controller_inst = None
         self.childs = []
         
     def addChild(self, child_node):
