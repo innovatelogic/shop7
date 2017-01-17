@@ -2,4 +2,4 @@
 	<characteristic id="0" type="text" name="Woman size 1" local=""/>
 	<characteristic id="1" type="text" name="Woman size 2" local=""/>
 	<characteristic id="2" type="text" name="Woman size 3" local=""/>
-<controller>
+</controller>

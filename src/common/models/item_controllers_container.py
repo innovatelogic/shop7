@@ -1,4 +1,5 @@
-from common.db.types.item_controller import ItemController, ItemControllerHelper
+from common.db.types.item_controller import ItemController
+
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class ItemControllerContainer():
@@ -14,7 +15,6 @@ class ItemControllerContainer():
         
         for aspect in aspects:
             self.__load(aspect)
-        
         pass
 
 #----------------------------------------------------------------------------------------------
@@ -27,12 +27,13 @@ class ItemControllerContainer():
             while stack:
                 top = stack.pop(0)
                 
-                if top.category.controller_name:
-                    print('load controller {}'.format(top.category.controller_name))
-                    #filename = ''
-                    #top.category.controller_inst = ItemControllerHelper.loadXML()
+                if top.category.controller:
+                    filename = self.specs['path']['data_dir'] +'controllers/' + top.category.controller
+                    
+                    ctrl = ItemController(top.category.controller)
+                    if ctrl.loadXML(filename):
+                        top.category.controller_inst = ctrl
                 
                 for child in top.childs:
                     stack.append(child)
-            
         pass
