@@ -7,6 +7,8 @@ class ItemControllerContainer():
         self.realm = realm
         self.specs = specs
         self.container = {}
+        self.default_controller = ItemController('default')
+        self.default_controller.loadXML(self.specs['path']['data_dir'] +'controllers/default.xml')
         pass
     
 #----------------------------------------------------------------------------------------------
@@ -28,12 +30,15 @@ class ItemControllerContainer():
                 top = stack.pop(0)
                 
                 if top.category.controller:
-                    filename = self.specs['path']['data_dir'] +'controllers/' + top.category.controller
+                    if top.category.controller not in self.container:
+                        filename = self.specs['path']['data_dir'] +'controllers/' + top.category.controller
+                        ctrl = ItemController(top.category.controller)
+                        if ctrl.loadXML(filename):
+                            top.category.controller_inst = ctrl
+                            self.container[top.category.controller] = ctrl
+                    else:
+                        top.category.controller_inst = self.container[top.category.controller]
                     
-                    ctrl = ItemController(top.category.controller)
-                    if ctrl.loadXML(filename):
-                        top.category.controller_inst = ctrl
-                
                 for child in top.childs:
                     stack.append(child)
         pass
