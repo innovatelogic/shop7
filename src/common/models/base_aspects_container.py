@@ -79,8 +79,8 @@ class BaseAspectsContainer():
 #----------------------------------------------------------------------------------------------
     def getAspect(self, aspect_id):
         out = None
-        if id in self.aspects:
-            out = self.aspects[id]
+        if aspect_id in self.aspects:
+            out = self.aspects[aspect_id]
         return out
     
 #----------------------------------------------------------------------------------------------

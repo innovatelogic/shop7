@@ -212,7 +212,7 @@ class Realm():
         spec['update_time'] = time_now
         spec['mapping_id'] = ObjectId()
         
-        mapping_dict = self.resolveMappingByAspect(aspect, aspect_category_id)
+        mapping_dict = self.getMappingByAspect(aspect, aspect_category_id)
         
         # basic ref is necessary
         if 'basic' not in mapping_dict:
@@ -242,9 +242,14 @@ class Realm():
         return out
 
 #----------------------------------------------------------------------------------------------
-    def resolveMappingByAspect(self, aspect_name, category_id):
+    def getMappingByAspect(self, aspect_name, category_id):
         return self.base_mapping.getMapping(aspect_name, category_id)
-        
+ 
+#----------------------------------------------------------------------------------------------
+    def getBasicCategoryByMapping(self, aspect, category_id):
+        category = self.base_mapping.getBasicCategoryByMapping(aspect, category_id)
+        return 
+
 #----------------------------------------------------------------------------------------------
     def getBaseCategoryByPath(self, aspect, path_list):
         ''' Retrieve category by path. 
@@ -266,8 +271,8 @@ class Realm():
         return self.base_aspects_container.getBaseAspectByForeignId(aspect_id, foreign_id)
     
 #----------------------------------------------------------------------------------------------
-    def getBaseAspectCategoryController(self, token, aspect_id, category_id):
-        ''' retreieve category's controller desc. 
+    def getBasicAspectCategoryController(self, token, category_id):
+        ''' retreieve basic category's controller desc. 
             if controller not specifiec default returns'''
         # TODO check token for valid
-        return self.item_controllers_holder.getBaseAspectCategoryController(aspect_id, category_id)
+        return self.item_controllers_holder.getBasicAspectCategoryController(category_id)

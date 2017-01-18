@@ -137,7 +137,7 @@ class BuisnessCaseController():
         aspect = self.getActiveSecondaryAspect()
         categories = self.__realm.get_category_childs(aspect, category_id)
         self.view.addChildCategoriesTreeBaseAspect(category_id, categories, item)
-        print self.realm().getBaseAspectCategoryController(aspect, category_id)
+        print self.realm().getBasicAspectCategoryController(category_id)
         pass
  
 #----------------------------------------------------------------------------------------------

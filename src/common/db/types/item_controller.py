@@ -18,6 +18,13 @@ class CharInfo():
         self.opt = opt
         pass 
     
+    def desc(self):
+        return {'name':self.name,
+                'id':self.id,
+                'type':self.type,
+                'local':self.local,
+                'opt':self.opt}
+    
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class ItemController():
@@ -30,7 +37,12 @@ class ItemController():
         pass
     
     def desc(self):
-        return str(self.characteristics)
+        out = {}
+        for char in self.characteristics:
+            out[char.id] = char.desc()
+        return out
+        
+        #return {'1':1}
 
 #----------------------------------------------------------------------------------------------
     def loadXML(self, filename):

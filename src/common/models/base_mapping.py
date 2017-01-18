@@ -66,10 +66,22 @@ class BaseMapping():
         else:    
             print('error load mapping')
             
-#---------------------------------------------------------------------------------------------- 
+#----------------------------------------------------------------------------------------------
     def getMapping(self, aspect_id, category_id):
         dict = {}
         if aspect_id in self.mapping_keys:
             if str(category_id) in self.mapping_keys[aspect_id]:
                 dict = self.mapping_keys[aspect_id][str(category_id)]
         return dict
+
+#----------------------------------------------------------------------------------------------
+    def getBasicCategoryByMapping(self, aspect_id, category_id):
+        out_id = None
+        if aspect_id != 'basic':     
+            if aspect_id in self.mapping_keys:
+                if str(category_id) in self.mapping_keys[aspect_id]:
+                    if 'basic' in self.mapping_keys[aspect_id][str(category_id)]:
+                        out_id = self.mapping_keys[aspect_id][str(category_id)]['basic']
+        else:
+            out_id = category_id
+        return out_id

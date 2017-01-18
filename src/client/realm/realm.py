@@ -96,6 +96,6 @@ class Realm():
         return self.items_category_state
 
 #----------------------------------------------------------------------------------------------
-    def getBaseAspectCategoryController(self, aspect, category_id):
-        self.ms_connection().send_msg(Message_client_getBaseAspectCategoryController.opcode(), 
-                                             {'aspect':str(aspect), 'category_id':str(category_id)})['res']
+    def getBasicAspectCategoryController(self, category_id):
+        return self.ms_connection().send_msg(Message_client_getBasicAspectCategoryController.opcode(), 
+                                             {'category_id':str(category_id)})['res']

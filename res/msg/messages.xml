@@ -45,9 +45,9 @@
 		<server get="token" send="res"/>
 	</msg>
 	
-	<msg name="getBaseAspectCategoryController">
-		<client send="token;aspect,category_id" get="res"/>
-		<server get="token;aspect,category_id" send="res"/>
+	<msg name="getBasicAspectCategoryController">
+		<client send="token;category_id" get="res"/>
+		<server get="token;category_id" send="res"/>
 	</msg>
 	
 </messages>

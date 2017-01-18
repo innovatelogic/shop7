@@ -20,6 +20,9 @@ class CategoryNode():
                     out = child
                     break
         return out
+    
+    def setController(self, controller):
+        self.controller_inst = controller
 
     def dump(self, f, deep):
         ''' debug serialize '''

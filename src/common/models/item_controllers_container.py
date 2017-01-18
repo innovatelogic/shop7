@@ -13,10 +13,8 @@ class ItemControllerContainer():
     
 #----------------------------------------------------------------------------------------------
     def loadAll(self):
-        aspects = self.realm.base_aspects_container.getAspects()
-        
-        for aspect in aspects:
-            self.__load(aspect)
+        aspect = self.realm.base_aspects_container.getAspect('basic')
+        self.__load(aspect)
         pass
 
 #----------------------------------------------------------------------------------------------
@@ -29,13 +27,16 @@ class ItemControllerContainer():
             while stack:
                 top = stack.pop(0)
                 
-                if top.category.controller:
-                    if top.category.controller not in self.container:
-                        filename = self.specs['path']['data_dir'] +'controllers/' + top.category.controller
-                        ctrl = ItemController(top.category.controller)
+                name = top.category.controller
+                if name:
+                    if name not in self.container:
+                        filename = self.specs['path']['data_dir'] +'controllers/' + name
+                        ctrl = ItemController(name)
                         if ctrl.loadXML(filename):
-                            top.category.controller_inst = ctrl
-                            self.container[top.category.controller] = ctrl
+                            top.setController(ctrl)
+                            self.container[name] = ctrl
+                        else:
+                            print('fail load {}'.format(filename))
                     else:
                         top.category.controller_inst = self.container[top.category.controller]
                     
@@ -44,25 +45,21 @@ class ItemControllerContainer():
         pass
     
 #----------------------------------------------------------------------------------------------
-    def getBaseAspectCategoryController(self, aspect_id, category_id):
+    def getBasicAspectCategoryController(self, category_id):
         ''' return category's controller. otherwise default '''
-        out = None
-        aspect = self.realm.base_aspects_container.getAspect(aspect_id)
+        out = self.default_controller.desc()
+        aspect = self.realm.base_aspects_container.getAspect('basic')
         if aspect:
-            category = aspect.getCategoryNodeById(category_id)
-            if category:
-                
-                top = category
+            category_node = aspect.getCategoryNodeById(category_id)
+            if category_node:
+                top = category_node
                 while top:
                     if top.controller_inst:
                         out = top.controller_inst.desc()
                         break
                     top = top.parent
             else:
-                print('[getBaseAspectCategoryController] find category {} fail '.format(category_id))
+                print('[getBasicAspectCategoryController] find category {} fail '.format(category_id))
         else:
-            print('[getBaseAspectCategoryController] find aspect {} fail '.format(aspect_id))
-        
-        if not out:
-            out = self.default_controller
+            print('[getBasicAspectCategoryController] find aspect basic fail ')
         return out
