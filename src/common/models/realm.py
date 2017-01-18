@@ -160,14 +160,13 @@ class Realm():
 #----------------------------------------------------------------------------------------------
     def get_category_info(self, token, aspect, category_id):
         ''' retrieve items using cache '''
-        print('get_category_info {} {}'.format(aspect, category_id))
         return {'items_num':self.category_group_items_cache.get_item_count(aspect, category_id, self.users_model.get_group_id_by_token(token))}
     
 #----------------------------------------------------------------------------------------------
     def get_user_category_info(self, token, category_id):
         ''' retrieve items count from user category using cache '''
         return {'items_num':self.category_group_items_cache.get_user_category_items_count(category_id, self.users_model.get_group_id_by_token(token))}
-
+    
 #----------------------------------------------------------------------------------------------
     def addItem(self, 
                 user_id,
@@ -265,3 +264,10 @@ class Realm():
 #----------------------------------------------------------------------------------------------
     def getBaseAspectCategoryByForeignId(self, aspect_id, foreign_id):
         return self.base_aspects_container.getBaseAspectByForeignId(aspect_id, foreign_id)
+    
+#----------------------------------------------------------------------------------------------
+    def getBaseAspectCategoryController(self, token, aspect_id, category_id):
+        ''' retreieve category's controller desc. 
+            if controller not specifiec default returns'''
+        # TODO check token for valid
+        return self.item_controllers_holder.getBaseAspectCategoryController(aspect_id, category_id)

@@ -7,7 +7,7 @@ class CategoryNode():
         self.category = category
         self.parent = parent
         self.controller_inst = None
-        self.childs = []
+        self.childs = [] # CategoryNode's
         
     def addChild(self, child_node):
         self.childs.append(child_node)
@@ -39,8 +39,8 @@ class CategoryNode():
 class Aspect():
     def __init__(self, name, root):
         self.name = name
-        self.root = root
-        self.hashmap = {}
+        self.root = root # CategoryNode
+        self.hashmap = {} # id <-> CategoryNode's
         self.foreign_hashmap = {}
         if self.root:
             self.hashmap[str(self.root.category._id)] = self.root

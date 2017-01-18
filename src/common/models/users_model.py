@@ -1,7 +1,6 @@
 import time
 from user_session import UserSession
-
-USER_TOKEN_START = 456890
+from random import randint
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
@@ -11,10 +10,14 @@ class UsersModel():
         self.groups_model = groups_model
         self.userSessions = {}
         self.groupSessions = {}
+        self.USER_TOKEN_START = randint(1000, 10000)
         
 #----------------------------------------------------------------------------------------------
     def authentificateUser(self, login, password):
-        '''comes from http request'''
+        '''comes from http request
+        @param login 
+        @param hashed password
+        '''
         loginPass = False
         ausPass = False
         
@@ -33,11 +36,11 @@ class UsersModel():
                         break
                     
                 if user_session == None:
-                    ++USER_TOKEN_START
-                    user_session = UserSession(self.db_instance, USER_TOKEN_START, user._id, user.name, user.group_id)
-                    self.userSessions[USER_TOKEN_START] = user_session
+                    ++self.USER_TOKEN_START
+                    user_session = UserSession(self.db_instance, self.USER_TOKEN_START, user._id, user.name, user.group_id)
+                    self.userSessions[self.USER_TOKEN_START] = user_session
                     
-                    self.groups_model.loadUserGroupSession(user.group_id, USER_TOKEN_START) #cache group info
+                    self.groups_model.loadUserGroupSession(user.group_id, self.USER_TOKEN_START) #cache group info
                     ausPass = True
                 else:
                     print(time.asctime(), "user try to %s re-authentificate" % login)

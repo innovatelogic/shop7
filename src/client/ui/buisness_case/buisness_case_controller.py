@@ -92,7 +92,7 @@ class BuisnessCaseController():
         self.__realm.set_user_settings(user_settings)
         
 #----------------------------------------------------------------------------------------------
-    def itemColumnChange(self, text, flag):
+    def itemColumnSettingsChange(self, text, flag):
         user_settings = self.__realm.getUserSettings()
         if text in user_settings.options['client']['ui']['cases']['item_columns']:
             user_settings.options['client']['ui']['cases']['item_columns'][text] = flag
@@ -137,6 +137,7 @@ class BuisnessCaseController():
         aspect = self.getActiveSecondaryAspect()
         categories = self.__realm.get_category_childs(aspect, category_id)
         self.view.addChildCategoriesTreeBaseAspect(category_id, categories, item)
+        print self.realm().getBaseAspectCategoryController(aspect, category_id)
         pass
  
 #----------------------------------------------------------------------------------------------

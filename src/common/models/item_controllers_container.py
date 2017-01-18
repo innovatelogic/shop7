@@ -21,7 +21,7 @@ class ItemControllerContainer():
 
 #----------------------------------------------------------------------------------------------
     def __load(self, aspect):
-        
+        ''' iterate through aspect and load all aspects'''
         stack = []
         if aspect:
             stack.append(aspect.root)
@@ -42,3 +42,27 @@ class ItemControllerContainer():
                 for child in top.childs:
                     stack.append(child)
         pass
+    
+#----------------------------------------------------------------------------------------------
+    def getBaseAspectCategoryController(self, aspect_id, category_id):
+        ''' return category's controller. otherwise default '''
+        out = None
+        aspect = self.realm.base_aspects_container.getAspect(aspect_id)
+        if aspect:
+            category = aspect.getCategoryNodeById(category_id)
+            if category:
+                
+                top = category
+                while top:
+                    if top.controller_inst:
+                        out = top.controller_inst.desc()
+                        break
+                    top = top.parent
+            else:
+                print('[getBaseAspectCategoryController] find category {} fail '.format(category_id))
+        else:
+            print('[getBaseAspectCategoryController] find aspect {} fail '.format(aspect_id))
+        
+        if not out:
+            out = self.default_controller
+        return out

@@ -92,4 +92,8 @@ class Message_client_get_category_info(Message):
 class Message_client_get_user_category_info(Message):
     def __init__(self, *args, **kwargs):
         Message.__init__(self, *args, **kwargs)
-    
+
+#----------------------------------------------------------------------------------------------
+class Message_client_getBaseAspectCategoryController(Message):
+    def __init__(self, *args, **kwargs):
+        Message.__init__(self, *args, **kwargs)

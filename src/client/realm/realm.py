@@ -3,16 +3,7 @@ from connections.ms_connection import MSConnection
 from common.db.types.types import UserSettings
 from router import Router
 from items_category_state import ItemsCategoryState
-from connections.msg.messages import Message_client_get_category_info
-from connections.msg.messages import Message_client_logout
-from connections.msg.messages import Message_client_get_categiries_1st_lvl
-from connections.msg.messages import Message_client_get_category_childs
-from connections.msg.messages import Message_client_get_items
-from connections.msg.messages import Message_client_get_aspects
-from connections.msg.messages import Message_client_get_user_settings
-from connections.msg.messages import Message_client_set_user_settings
-from connections.msg.messages import Message_client_get_user_category_info
-from connections.msg.messages import Message_client_get_user_category_items
+from connections.msg.messages import *
 
 class Realm():
     def __init__(self, ms_connection, specs, connection_info):
@@ -103,3 +94,8 @@ class Realm():
 #----------------------------------------------------------------------------------------------
     def get_items_category_state(self):
         return self.items_category_state
+
+#----------------------------------------------------------------------------------------------
+    def getBaseAspectCategoryController(self, aspect, category_id):
+        self.ms_connection().send_msg(Message_client_getBaseAspectCategoryController.opcode(), 
+                                             {'aspect':str(aspect), 'category_id':str(category_id)})['res']

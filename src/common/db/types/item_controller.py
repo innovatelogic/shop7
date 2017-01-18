@@ -28,6 +28,9 @@ class ItemController():
         self.name = name
         self.characteristics = {}
         pass
+    
+    def desc(self):
+        return str(self.characteristics)
 
 #----------------------------------------------------------------------------------------------
     def loadXML(self, filename):

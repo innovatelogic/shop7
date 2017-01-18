@@ -119,7 +119,7 @@ class ItemsControllerPanel(wx.Panel):
 #----------------------------------------------------------------------------------------------
     def OnPopupItemColumnSelected(self, event):
         item = self.popupmenu.FindItemById(event.GetId())
-        self.cases_controller.itemColumnChange(item.GetText(), item.IsChecked())
+        self.cases_controller.itemColumnSettingsChange(item.GetText(), item.IsChecked())
 
 #----------------------------------------------------------------------------------------------
     def onPopupItemShowItemPreview(self, event):

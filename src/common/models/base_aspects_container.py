@@ -19,7 +19,6 @@ class BaseAspectsContainer():
     def loadAll(self, cache_ref):
         self.load('basic', cache_ref)
         self.load('prom_ua', cache_ref)
-        self.load('ebay', cache_ref)
             
 #----------------------------------------------------------------------------------------------
     def load(self, aspect_name, cache_ref):
@@ -78,11 +77,16 @@ class BaseAspectsContainer():
         return out
     
 #----------------------------------------------------------------------------------------------
-    def get_aspect(self, id):
+    def getAspect(self, aspect_id):
         out = None
         if id in self.aspects:
             out = self.aspects[id]
         return out
+    
+#----------------------------------------------------------------------------------------------
+    def get_aspect(self, id):
+        ''' obsolete TO REMOVE'''
+        self.getAspect(id)
     
 #----------------------------------------------------------------------------------------------
     def get_aspect_category(self, aspect, category_id):
