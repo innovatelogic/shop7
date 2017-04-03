@@ -10,6 +10,7 @@ from connections.auth_connection import AuthConnection
 from connections.client_connection import ClientsConnection
     
 #----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class MasterServer:
     def __init__(self, specs):
         self.specs = specs

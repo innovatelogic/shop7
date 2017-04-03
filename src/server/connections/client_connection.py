@@ -6,6 +6,8 @@ from common.msg.message_cont import MessageContaier, EAspect
 MASTER_NAME = 'master'
 MS_CLIENT_QUEUE_NAME = 'ms_client_queue'
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class ClientsConnection:
     '''process communication between clients & ms'''
     def __init__(self, master, specs, client_creator):

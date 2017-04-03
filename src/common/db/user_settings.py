@@ -1,4 +1,4 @@
-from types.types import UserSettings
+from types.user_settings import UserSettings
 from bson.objectid import ObjectId
 
 USER_SETTINGS_CATEGORY_NAME = 'user_settings'

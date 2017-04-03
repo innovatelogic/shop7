@@ -8,11 +8,13 @@ from os import path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from master_server import MasterServer
 
+#----------------------------------------------------------------------------------------------
 def ensure_dir(f):
     d = os.path.dirname(f)
     if not os.path.exists(d):
         os.makedirs(d)
-        
+
+#---------------------------------------------------------------------------------------------- 
 def init_logging(path_dir):
     ensure_dir(path_dir)
     log_filename  = time.strftime("ms_%d%m%y_%H-%M.log", time.localtime())
@@ -22,6 +24,8 @@ def init_logging(path_dir):
                         level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(threadName)-10s %(message)s')
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, help='server host')
