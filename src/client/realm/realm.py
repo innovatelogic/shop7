@@ -1,6 +1,6 @@
 
 from connections.ms_connection import MSConnection
-from common.db.types.types import UserSettings
+from common.db.types.user_settings import UserSettings
 from router import Router
 from items_category_state import ItemsCategoryState
 from connections.msg.messages import *
