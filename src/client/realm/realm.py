@@ -5,6 +5,8 @@ from router import Router
 from items_category_state import ItemsCategoryState
 from connections.msg.messages import *
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class Realm():
     def __init__(self, ms_connection, specs, connection_info):
         self.ms_connection_ = ms_connection
@@ -14,7 +16,7 @@ class Realm():
         self.user_settings_changed = True
         self.items_category_state = ItemsCategoryState()
 
-#----------------------------------------------------------------------------------------------        
+#----------------------------------------------------------------------------------------------
     def ms_connection(self):
         return self.ms_connection_
 

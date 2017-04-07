@@ -1,4 +1,7 @@
-from types.types import User, UserRecord, UserGroup, UserMapping
+from types.user import User
+from types.user_mapping import UserMapping
+from types.user_group import UserGroup
+from types.user_record import UserRecord
 from user_groups import UserGroups
 from bson.objectid import ObjectId
 

@@ -1,4 +1,4 @@
-from types.types import ItemMapping
+from types.item_mapping import ItemMapping
 from bson.objectid import ObjectId
 
 ITEMS_MAPPING_NAME = 'items_mapping'

@@ -1,4 +1,6 @@
-from types.types import UserGroup, UserRecord, UserMapping
+from types.user_mapping import UserMapping
+from types.user_group import UserGroup
+from types.user_record import UserRecord
 from bson.objectid import ObjectId
 
 USER_GROUPS_CATEGORY_NAME = 'user_groups'

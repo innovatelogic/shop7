@@ -1,4 +1,4 @@
-from types.types import UserMapping
+from types.user_mapping import UserMapping
 
 USER_GROUPS_MAPPING_NAME = "user_category_mapping"
 

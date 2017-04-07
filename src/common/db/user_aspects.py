@@ -1,4 +1,4 @@
-from types.types import UserAspect
+from types.user_aspect import UserAspect
 from types.category import Category
 from bson.objectid import ObjectId
 

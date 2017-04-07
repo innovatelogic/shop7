@@ -1,7 +1,8 @@
 import time
 from bson.objectid import ObjectId
 import common.db.instance
-from common.db.types.types import Item, ItemMapping
+from common.db.types.types import Item
+from common.db.types.item_mapping import ItemMapping
 from users_model import UsersModel
 from user_groups_model import UserGroupsModel
 from items_cache_model import ItemsCacheModel

@@ -1,10 +1,13 @@
 
 from bson.objectid import ObjectId
 from common.db.types.category import Category
-from common.db.types.types import UserAspect, User
+from common.db.types.user_aspect import UserAspect
+from common.db.types.user import User
 
 DEFAULT_CATEGORY_NAME = 'All'
 
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
 class UserAspectsContainer():
     def __init__(self, db_inst):
         self.db_inst = db_inst
