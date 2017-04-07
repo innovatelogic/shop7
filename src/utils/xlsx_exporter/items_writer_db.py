@@ -1,7 +1,8 @@
 import time, io, json
 from group_tree import find_node_by_id
 from bson.objectid import ObjectId
-from common.db.types.types import Item, ItemMapping
+from common.db.types.item import Item
+from common.db.types.item_mapping import ItemMapping
 
 from category_mapping import CategoryMapping
 

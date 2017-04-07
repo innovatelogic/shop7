@@ -1,5 +1,5 @@
 import time
-from types.types import Item
+from types.item import Item
 
 ITEMS_CATEGORY_NAME = 'items'
 

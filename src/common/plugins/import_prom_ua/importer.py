@@ -5,7 +5,8 @@ from bson.objectid import ObjectId
 from common.db.types.category import Category
 from common.image_loader import ImageURLLoader
 from common.models.realm import Realm
-from common.db.types.types import Item, ItemMapping
+from common.db.types.item import Item
+from common.db.types.item_mapping import ItemMapping
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
