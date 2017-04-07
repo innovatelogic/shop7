@@ -1,4 +1,4 @@
-from types.types import Category
+from types.category import Category
 
 CATEGORIES_NAME = 'categories'
 

@@ -2,7 +2,7 @@ import io
 from xml.dom import minidom
 from xml.dom.minidom import *
 from bson.objectid import ObjectId
-from common.db.types.types import Category
+from common.db.types.category import Category
 from pyexpat import ExpatError
 from common.aspect import Aspect, CategoryNode
 from common.models.item_controllers_container import ItemControllerContainer

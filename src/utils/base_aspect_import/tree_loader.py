@@ -2,7 +2,7 @@ from xml.dom import minidom
 from xml.dom.minidom import *
 import common.db.instance
 from common.models.base_aspects_container import BaseAspectsContainer, CategoryNode, BaseAspectHelper
-from common.db.types.types import Category
+from common.db.types.category import Category
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------

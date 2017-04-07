@@ -2,7 +2,7 @@ import io, json, time
 import cache_groups
 import cache_data
 from bson.objectid import ObjectId
-from common.db.types.types import Category
+from common.db.types.category import Category
 from common.image_loader import ImageURLLoader
 from common.models.realm import Realm
 from common.db.types.types import Item, ItemMapping

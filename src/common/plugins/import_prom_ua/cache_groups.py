@@ -4,7 +4,7 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
 from openpyxl.compat import range
 from openpyxl.cell import get_column_letter
-from common.db.types.types import Category
+from common.db.types.category import Category
 from common.aspect import Aspect, CategoryNode
 from common.models.base_aspects_container import BaseAspectsContainer, BaseAspectHelper
 

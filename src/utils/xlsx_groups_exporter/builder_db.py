@@ -1,7 +1,7 @@
 import codecs, json, io
 from bson.objectid import ObjectId
 import common.db.instance
-from common.db.types.types import Category
+from common.db.types.category import Category
 
 class BuilderDB():
     ASPECT_ID = 'prom_ua'

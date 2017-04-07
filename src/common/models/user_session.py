@@ -1,5 +1,5 @@
 from bson.objectid import ObjectId
-from common.db.types.types import UserSettings
+from common.db.types.user_settings import UserSettings
 
 class UserSession:
     def __init__(self, db_instance, token, id, name, group_id):

@@ -1,4 +1,5 @@
-from types.types import Category, UserAspect
+from types.types import UserAspect
+from types.category import Category
 from bson.objectid import ObjectId
 
 USER_ASPECTS = 'user_aspects'

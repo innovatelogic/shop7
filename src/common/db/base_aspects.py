@@ -1,4 +1,4 @@
-from types.types import Category
+from types.category import Category
 
 BASE_ASPECTS = 'base_aspects'
 

@@ -9,7 +9,7 @@ from base_file_reader import BaseFileReader
 from tree_loader import TreeLoader
 import common.db.instance
 from common.models.base_aspects_container import BaseAspectsContainer, BaseAspectHelper
-from common.db.types.types import Category
+from common.db.types.category import Category
 
 #----------------------------------------------------------------------------------------------
 def main():

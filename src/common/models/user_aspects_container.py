@@ -1,6 +1,7 @@
 
 from bson.objectid import ObjectId
-from common.db.types.types import Category, UserAspect, User
+from common.db.types.category import Category
+from common.db.types.types import UserAspect, User
 
 DEFAULT_CATEGORY_NAME = 'All'
 
