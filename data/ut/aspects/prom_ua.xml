@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+ <node name="root">
+     <node foreign_id="" local="" name="Одежда, обувь, аксессуары">
+		<node foreign_id="" local="" name="Галантерея и аксессуары">
+			<node foreign_id="32801" local="" name="Ремни и пояса"/>
+		</node>
+		<node foreign_id="" local="" name="Карнавальные костюмы">
+             <node foreign_id="34706" local="" name="Аксессуары для карнавальных костюмов"/>
+             <node foreign_id="32819" local="" name="Боа"/>
+             <node foreign_id="32707" local="" name="Карнавальные головные уборы"/>
+             <node foreign_id="34704" local="" name="Карнавальные костюмы детские"/>
+             <node foreign_id="34701" local="" name="Карнавальные костюмы женские"/>
+             <node foreign_id="34703" local="" name="Карнавальные костюмы мужские"/>
+             <node foreign_id="34705" local="" name="Карнавальные костюмы, общее"/>
+             <node foreign_id="34702" local="" name="Карнавальные маски"/>
+         </node>
+		<node foreign_id="" local="" name="Одежда женская">
+			<node foreign_id="318" local="" name="Брюки женские"/>
+			<node foreign_id="35402" local="" name="Платья женские"/>
+			<node foreign_id="315" local="" name="Футболки и майки женские"/>
+			<node foreign_id="349" local="" name="Юбки женские"/>
+			<node foreign_id="306" local="" name="Шорты и бриджи женские"/>
+		</node>
+		<node foreign_id="" local="" name="Одежда мужская">	
+			 <node foreign_id="35501" local="" name="Брюки мужские"/>
+			 <node foreign_id="35502" local="" name="Джинсы мужские"/>
+			 <node foreign_id="35506" local="" name="Футболки и майки мужские"/>
+			 <node foreign_id="348" local="" name="Рубашки мужские"/>
+		</node>
+		<node foreign_id="" local="" name="Спортивная одежда и обувь">
+             <node foreign_id="3220713" local="" name="Кроссовки, кеды повседневные"/>
+             <node foreign_id="30199" local="" name="Спортивная одежда, общее"/>
+             <node foreign_id="30107" local="" name="Спортивные костюмы"/>
+             <node foreign_id="30111" local="" name="Спортивные кофты и свитеры"/>
+             <node foreign_id="34301" local="" name="Спортивные куртки"/>
+             <node foreign_id="30110" local="" name="Спортивные носки, гетры"/>
+             <node foreign_id="30104" local="" name="Спортивные футболки и майки"/>
+             <node foreign_id="30105" local="" name="Спортивные шорты"/>
+             <node foreign_id="30113" local="" name="Спортивные штаны"/>
+             <node foreign_id="3120602" local="" name="Термобелье"/>
+         </node>
+     </node>
+	 
+	 <node foreign_id="" local="" name="Спорт и отдых">
+		<node foreign_id="" local="" name="Зимние виды спорта">
+			<node foreign_id="" local="" name="Лыжный спорт и сноубординг">
+				<node foreign_id="20060106" local="" name="Ботинки лыжные, сноубордические"/>
+			</node>
+		</node>
+		<node foreign_id="" local="" name="Командные виды спорта">
+			<node foreign_id="" local="" name="Баскетбол">
+                 <node foreign_id="203308" local="" name="Баскетбол, общее"/>
+                 <node foreign_id="203306" local="" name="Стойки для игровых площадок"/>
+             </node>
+		</node>
+		<node foreign_id="" local="" name="Водные виды спорта">
+			<node foreign_id="203401" local="" name="Водные виды спорта, общее"/>
+		</node>
+	 </node>
+	 
+     <node foreign_id="29" local="" name="Товары, общее" default="1"/>
+</node>

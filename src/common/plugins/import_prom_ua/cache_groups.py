@@ -33,6 +33,7 @@ class CacheGroupsDB:
 		
 		for row in self.sheet.iter_rows(range):
 			dict = {}
+			dict['GroupParentNumber'] = str(-1)
 			for cell in row:
 				self.store_cell(cell, dict)
 			rows.append(dict)
@@ -42,7 +43,6 @@ class CacheGroupsDB:
 		
 		while stack:
 			top = stack.pop(0)
-			
 			for row in rows:
 				if row and str(top.category._id) == row['GroupParentNumber']:
 					node = self.addCategoryImpl(Category({'_id': row['GroupNumber'], 
@@ -65,12 +65,9 @@ class CacheGroupsDB:
 			elif cell.column == 'C':
 				dict['GroupID'] = str(cell.value)
 			elif cell.column == 'D':
-				if cell.value:
-					dict['GroupParentNumber'] = str(cell.value)
-				else:
-					dict['GroupParentNumber'] = str(-1)
-			elif cell.column == 'E' and cell.value:
-					dict['GroupParentID'] = cell.value
+				dict['GroupParentNumber'] = str(cell.value)
+			elif cell.column == 'E':
+				dict['GroupParentID'] = cell.value
 
 #----------------------------------------------------------------------------------------------			
 	def addCategoryImpl(self, category, parent_node):
