@@ -9,7 +9,6 @@ ADD ./bin/config/server_config.sh ./bin/config/server_config.sh
 ADD ./bin/server.sh ./bin/server.sh
 
 WORKDIR ./bin
-RUN pip install -r requirements.txt
 
 EXPOSE  9000
 EXPOSE  5672
