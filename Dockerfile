@@ -1,14 +1,14 @@
 FROM alpine:3.1
 FROM python:2.7.13-onbuild
 
-COPY go ./src/common/
-COPY go ./src/server
-COPY go ./src/utils
+ADD ./src/common/ ./src/common/
+ADD ./src/server ./src/server
+ADD ./src/utils ./src/utils
 
-COPY go ./bin/config/server_config.sh
-COPY go ./bin/server.sh
+ADD ./bin/config/server_config.sh ./bin/config/server_config.sh
+ADD ./bin/server.sh ./bin/server.sh
 
-WORKDIR ./go/bin
+WORKDIR ./bin
 RUN pip install -r requirements.txt
 
 EXPOSE  9000
