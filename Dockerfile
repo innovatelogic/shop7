@@ -8,10 +8,8 @@ ADD ./src/utils ./src/utils
 ADD ./bin/config/server_config.sh ./bin/config/server_config.sh
 ADD ./bin/server.sh ./bin/server.sh
 
-WORKDIR ./bin
-
 EXPOSE  9000
 EXPOSE  5672
 EXPOSE 	27017
 
-CMD ["server.sh"]
+CMD ["./bin/server.sh"]
