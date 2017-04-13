@@ -1,8 +1,4 @@
-#!/bin/bash
-
-#PYTHON=
-#echo "$0"
-#dirname "$0"
+#!/bin/sh
 
 . config/server_config.sh
 
