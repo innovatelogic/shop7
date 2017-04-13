@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "server starting script"
+
 . config/server_config.sh
 
 SCRIPT="-u ../src/server/launch.py --host $MASTER_SERVER_HOST --res $RES_FOLDER --mapping $CATEGORY_MAPPING_FILENAME"
