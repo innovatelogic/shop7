@@ -2,6 +2,8 @@ FROM ubuntu:14.04
 FROM python:2.7.13-onbuild
 FROM rabbitmq
 
+RUN apt-get install -y net-tools
+
 RUN apt-get update\
 	&& apt-get upgrade -y\
 	&& apt-get install -y\
