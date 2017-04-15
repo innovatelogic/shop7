@@ -3,11 +3,8 @@ FROM python:2.7.13-onbuild
 FROM rabbitmq
 
 RUN apt-get update
-RUN apt-get install -y curl
-RUN apt-get install -y net-tools
 
 RUN apt-get update\
-	&& apt-get upgrade -y\
 	&& apt-get install -y\
 	python-pika \
 	python-twisted \
