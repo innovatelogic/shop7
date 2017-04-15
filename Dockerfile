@@ -8,4 +8,5 @@ EXPOSE  9000
 EXPOSE  5672
 EXPOSE 	27017
 
-RUN chmod +x ./bin/server.sh
+#RUN chmod +x ./bin/server.sh
+ENTRYPOINT ["./bin/server.sh"]
