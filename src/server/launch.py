@@ -81,11 +81,11 @@ def main():
     
     specs['path'] = {
         'proj_dir':proj_dir,
-        'bin_dir':proj_dir+'\\bin',
+        'bin_dir':proj_dir+'/bin',
         'logs_dir':proj_dir + '/logs',
-        'data_dir':proj_dir + '\\data\\',
-        'auth_proc':proj_dir+'\\bin\\auth_server.cmd',
-        'res':proj_dir + '\\res\\',
+        'data_dir':proj_dir + '/data/',
+        'auth_proc':proj_dir+'/bin/auth_server.cmd',
+        'res':proj_dir + '/res/',
         'mapping':args.mapping,
         }
     
