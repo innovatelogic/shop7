@@ -21,6 +21,6 @@ EXPOSE  9000
 EXPOSE  5672
 EXPOSE 	27017
 
-WORKDIR ./bin
+WORKDIR ./app/bin
 RUN chmod +x ./server.sh
 ENTRYPOINT ["./server.sh"]
