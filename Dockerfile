@@ -1,5 +1,15 @@
 FROM ubuntu:14.04
 FROM python:2.7.13-onbuild
+FROM rabbitmq
+
+RUN apt-get updata && apt-get install -y\
+	pika \
+	twisted \
+	pymongo
+	
+
+ENV RABBITMQ_USER user
+ENV RABBITMQ_PASSWORD user
 
 RUN mkdir /app
 COPY . /app
