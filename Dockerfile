@@ -2,7 +2,9 @@ FROM ubuntu:14.04
 FROM python:2.7.13-onbuild
 FROM rabbitmq
 
-RUN apt-get update && apt-get install -y\
+RUN apt-get update\
+	&& apt-get upgrade -y\
+	&& apt-get install -y\
 	pika \
 	twisted \
 	pymongo
