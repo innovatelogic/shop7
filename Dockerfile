@@ -11,7 +11,7 @@ RUN apt-get update\
 	&& apt-get install -y\
 	python-pika \
 	python-twisted \
-	pymongo
+	python-pymongo
 	
 
 ENV RABBITMQ_USER user
