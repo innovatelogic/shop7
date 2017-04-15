@@ -10,7 +10,7 @@ RUN apt-get update\
 	&& apt-get upgrade -y\
 	&& apt-get install -y\
 	python-pika \
-	twisted \
+	python-twisted \
 	pymongo
 	
 
