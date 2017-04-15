@@ -9,7 +9,7 @@ RUN apt-get install -y net-tools
 RUN apt-get update\
 	&& apt-get upgrade -y\
 	&& apt-get install -y\
-	pika \
+	python-pika \
 	twisted \
 	pymongo
 	
