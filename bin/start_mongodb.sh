@@ -1,7 +1,6 @@
 #!/bin/sh
 
 echo off
-
 echo "start_modgodb"
 
 . ./set_env.sh
@@ -9,5 +8,3 @@ echo "start_modgodb"
 CONFIG_FILE="${DIR}/config/mongod.conf"
 
 mongod --config ${CONFIG_FILE}
-
-sleep 10
