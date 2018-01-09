@@ -2,7 +2,10 @@ import os, sys, shutil, argparse
 import codecs, json, io
 from openpyxl import Workbook, load_workbook
 from openpyxl.compat import range
-from openpyxl.cell import get_column_letter
+try:
+    from openpyxl.cell import get_column_letter
+except ImportError:
+    from openpyxl.utils import get_column_letter
 from common.models.base_aspects_container import BaseAspectHelper
 
 #----------------------------------------------------------------------------------------------
