@@ -8,6 +8,8 @@ from os import path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from master_server import MasterServer
 
+from common.utils import log
+
 #----------------------------------------------------------------------------------------------
 def ensure_dir(f):
     d = os.path.dirname(f)
@@ -19,12 +21,8 @@ def init_logging(path_dir):
     ensure_dir(path_dir)
     log_filename  = time.strftime("ms_%d%m%y_%H-%M.log", time.localtime())
     log_filename = path_dir + '/' + log_filename
-    logging.basicConfig(filename=log_filename,
-                        #level=logging.DEBUG,
-                        level=logging.INFO,
-                        format='%(asctime)s %(levelname)s %(threadName)-10s %(message)s')
+    log.Init(log_filename)
 
-#----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 def main():
     parser = argparse.ArgumentParser()
@@ -95,5 +93,6 @@ def main():
     
     master.run()
 
+#----------------------------------------------------------------------------------------------
 if __name__== "__main__":
     main()

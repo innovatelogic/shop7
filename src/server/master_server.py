@@ -1,6 +1,5 @@
 import os, sys, time
 import subprocess
-import logging
 from pika.connection import ConnectionParameters
 from twisted.internet import protocol, reactor
 from pika.adapters.twisted_connection import TwistedProtocolConnection
@@ -8,7 +7,8 @@ from common.models.realm import Realm
 
 from connections.auth_connection import AuthConnection
 from connections.client_connection import ClientsConnection
-    
+from common.utils import log
+
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
 class MasterServer:
@@ -21,7 +21,7 @@ class MasterServer:
     
 #----------------------------------------------------------------------------------------------
     def run(self):
-        logging.info("Master Server Starts")
+        log.MsgOK("Master Server Starts")
         
         parameters = ConnectionParameters(heartbeat_interval=0)
         
