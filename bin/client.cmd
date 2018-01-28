@@ -1,6 +1,6 @@
 @echo off
 
-call %~dp0/local_config.cmd
+call %~dp0/config/local_config.cmd
 
 set DEF_LOGIN=admin	
 set DEF_PASS=admin
