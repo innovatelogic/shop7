@@ -43,7 +43,7 @@ class MasterServer:
 
         self.__realm.stop()
         
-        print(time.asctime(), "Master Server Stops")
+        log.Msg("Master Server Stops")
         
 #----------------------------------------------------------------------------------------------
     def realm(self):

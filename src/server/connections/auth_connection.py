@@ -1,6 +1,7 @@
 import pika
 
 from twisted.internet import defer, protocol, task
+from common.utils import log
 
 class AuthConnection:
     '''process communication between master server & auth'''
@@ -12,31 +13,33 @@ class AuthConnection:
     #----------------------------------------------------------------------------------------------
     @defer.inlineCallbacks
     def run(self, connection):
-        
+        log.MsgOK("Auth run")
         channel = yield connection.channel()
     
         exchange = yield channel.exchange_declare(exchange='0', type='topic')
     
         queue = yield channel.queue_declare(queue=self.specs['master']['ms_auth_queue'], auto_delete=True, exclusive=False)
-    
+
         yield channel.queue_bind(exchange='0', queue=self.specs['master']['ms_auth_queue'])
     
         yield channel.basic_qos(prefetch_count=1)
     
         queue_object, consumer_tag = yield channel.basic_consume(queue=self.specs['master']['ms_auth_queue'], no_ack=True)
-    
+        
         l = task.LoopingCall(self.read, queue_object)
     
         l.start(0.01)
         
-        print('Auth connection queue established')
+        log.MsgOK('Auth connection queue established')
     
     #----------------------------------------------------------------------------------------------   
     def start(self):
+        log.Msg("Starting auth server")
         d = self.client_creator.connectTCP(self.specs['master']['host'], self.specs['master']['ms_queue_port'])
         d.addCallback(lambda protocol: protocol.ready)
         d.addCallback(self.run)
-    
+        log.MsgOK("auth started")
+
     #----------------------------------------------------------------------------------------------
     def stop(self):
         pass

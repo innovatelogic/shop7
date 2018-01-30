@@ -11,6 +11,7 @@ from user_aspects_container import UserAspectsContainer
 from category_group_items_cache import CategoryGroupItemsCache
 from base_mapping import BaseMapping
 from common.models.item_controllers_container import ItemControllerContainer
+from common.utils import log
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
@@ -29,6 +30,7 @@ class Realm():
 
 #----------------------------------------------------------------------------------------------
     def start(self):
+        log.Msg("Realm init")
         self.db.connect()
         
         self.base_aspects_container.loadAll(self.category_group_items_cache)
@@ -39,6 +41,7 @@ class Realm():
         self.base_mapping.load()
         
         self.item_controllers_holder.loadAll()
+        log.MsgOK("Realm loaded") 
 
 #----------------------------------------------------------------------------------------------
     def stop(self):

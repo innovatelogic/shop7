@@ -2,9 +2,11 @@
 import argparse
 from auth_server import AuthServer
 
+
 AUTH_MS_CHANNEL_NAME = 'ms-auth-pipe'
 
 def main():
+    print("Auth starting")
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', type=str, help='server host')
     parser.add_argument('--port', help='server port')
@@ -38,7 +40,10 @@ def main():
         'ms_queue_port':int(args.ms_queue_port)
         }
     
+    print("Auth init")
     auth_server = AuthServer(specs)
+
+    print("Auth running")
     auth_server.run()
         
     #key = base64.b64encode('guest:guest')

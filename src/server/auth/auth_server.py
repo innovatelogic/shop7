@@ -15,7 +15,8 @@ class AuthServer:
 
         self.ms_connection = MSConnection(self.specs)
         self.ms_connection.start()
-        
+        print("Auth ms connection")
+
         server_class = BaseHTTPServer.HTTPServer
         HandlerClass = MakeHandlerClassFromArgv(self.ms_connection)
         

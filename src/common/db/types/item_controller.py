@@ -1,6 +1,7 @@
 from xml.dom import minidom
 from xml.dom.minidom import *
 from xml.parsers.expat import ExpatError
+from common.utils import log
 
 #----------------------------------------------------------------------------------------------
 class CharControlType():
