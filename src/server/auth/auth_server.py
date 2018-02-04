@@ -6,13 +6,13 @@ import time
 from http_auth_handler import HTTPAuthHandler, MakeHandlerClassFromArgv
 from ms_connection import MSConnection
 
+#----------------------------------------------------------------------------------------------
 class AuthServer:
     def __init__(self, specs):
         self.specs = specs
         self.ms_connection = None
     
     def run(self):
-
         self.ms_connection = MSConnection(self.specs)
         self.ms_connection.start()
         print("Auth ms connection")

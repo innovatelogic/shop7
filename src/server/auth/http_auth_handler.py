@@ -1,5 +1,3 @@
-import BaseHTTPServer
-from SimpleHTTPServer import SimpleHTTPRequestHandler
 import sys
 import base64
 import time
@@ -7,6 +5,8 @@ import argparse
 import urlparse
 import cgi
 
+import BaseHTTPServer
+from SimpleHTTPServer import SimpleHTTPRequestHandler
 from ms_connection import MSConnection
 
 #----------------------------------------------------------------------------------------------

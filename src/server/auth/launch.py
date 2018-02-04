@@ -5,6 +5,7 @@ from auth_server import AuthServer
 
 AUTH_MS_CHANNEL_NAME = 'ms-auth-pipe'
 
+#----------------------------------------------------------------------------------------------
 def main():
     print("Auth starting")
     parser = argparse.ArgumentParser()
@@ -48,7 +49,8 @@ def main():
         
     #key = base64.b64encode('guest:guest')
     #run_forever(args.host, int(args.port))
-    
+
+#----------------------------------------------------------------------------------------------
 if __name__ == '__main__':
     main()
     
