@@ -23,4 +23,5 @@ EXPOSE 	27017
 
 WORKDIR ./app/bin
 RUN chmod +x ./server.sh
+RUN chmod +x ./config/server_config.sh
 ENTRYPOINT ["./server.sh"]
