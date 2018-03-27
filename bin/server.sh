@@ -4,6 +4,7 @@ echo "server starting script"
 
 . config/server_config.sh
 
+echo $IS_CONTAINER
 echo $MASTER_SERVER_HOST
 echo $AUTH_SERVER_PORT
 

@@ -89,3 +89,10 @@ WxPython
 #########################################################################
 LINUX
 sudo apt-get install ssh
+
+
+docker image ls
+docker build -f Dockerfile .
+
+docker run -ti --entrypoint=/bin/bash --net=host cfdbc26302f6
+docker stop fc7f41b492fe

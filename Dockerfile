@@ -11,6 +11,7 @@ RUN apt-get update\
 	python-pymongo
 	
 
+ENV IS_CONTAINER 1
 ENV RABBITMQ_USER user
 ENV RABBITMQ_PASSWORD user
 
