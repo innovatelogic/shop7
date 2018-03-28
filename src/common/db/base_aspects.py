@@ -8,6 +8,7 @@ class BaseAspects():
         pass
 #----------------------------------------------------------------------------------------------
     def init(self):
+        print("BaseAspects init:" + BASE_ASPECTS)
         self.cat = self.instance.connection.db[BASE_ASPECTS]
         
 #----------------------------------------------------------------------------------------------

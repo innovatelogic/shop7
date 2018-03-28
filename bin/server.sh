@@ -4,6 +4,11 @@ echo "server starting script"
 
 . config/server_config.sh
 
+if [$IS_CONTAINER -eq 1]
+then
+echo "In container"
+fi
+
 echo $IS_CONTAINER
 echo $MASTER_SERVER_HOST
 echo $AUTH_SERVER_PORT
