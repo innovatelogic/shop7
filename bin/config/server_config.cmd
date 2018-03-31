@@ -9,7 +9,7 @@ set MS_AUTH_QUEUE_NAME=ms-auth-pipe-XCXX
 set MS_CLIENT_QUEUE_NAME=ms-client-pipe-XCXX
 
 :: database
-set DB_HOST_NAME=127.0.0.1
+set DB_HOST_NAME=mongodb://127.0.0.1
 set DB_PORT=27017
 set MASTER_DB_NAME=shop7_test
 
