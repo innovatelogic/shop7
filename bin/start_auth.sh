@@ -2,12 +2,13 @@
 
 echo "auth server starting"
 
-. config/server_config.sh
-
-if [ $IS_CONTAINER -eq 1 ]
+if [ -z ${IS_CONTAINER+x}]
 then
+. config/server_config.sh
+else
 echo "In container"
 fi
+
 
 echo $AUTH_SERVER_HOST
 echo $AUTH_SERVER_PORT

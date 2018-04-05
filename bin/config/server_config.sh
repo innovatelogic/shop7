@@ -9,7 +9,8 @@ MS_AUTH_QUEUE_NAME="ms-auth-pipe-XCXX"
 MS_CLIENT_QUEUE_NAME="ms-client-pipe-XCXX"
 
 # database
-DB_HOST_NAME="mongodb://172.17.0.2"
+# DB_HOST_NAME="mongodb://172.17.0.2"
+DB_HOST_NAME="mongodb://127.0.0.1"
 DB_PORT=27017
 MASTER_DB_NAME="shop7_test"
 
