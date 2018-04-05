@@ -37,7 +37,7 @@ class MasterServer:
         self.auth_handler.start()
         self.clients_connection.start()
         
-        self.start_auth_server()
+        #self.start_auth_server()
         
         reactor.run()
 
