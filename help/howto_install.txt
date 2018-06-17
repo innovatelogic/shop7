@@ -96,3 +96,10 @@ docker build -f Dockerfile .
 
 docker run -ti --entrypoint=/bin/bash --net=host cfdbc26302f6
 docker stop fc7f41b492fe
+
+
+#!/bin/bash
+# Delete all containers
+docker rm $(docker ps -a -q)
+# Delete all images
+docker rmi $(docker images -q)

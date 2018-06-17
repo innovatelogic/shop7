@@ -1,10 +1,8 @@
 FROM ubuntu:14.04
-FROM python:2.7.13-onbuild
+FROM micktwomey/python3.4:latest
 FROM rabbitmq
 
 MAINTAINER yura.gunko@gmail.com
-
-RUN apt-get update
 
 RUN apt-get update\
 	&& apt-get install -y\
