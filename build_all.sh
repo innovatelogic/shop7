@@ -5,11 +5,15 @@
 
 # Delete all images
 #docker rmi $(docker images -q)
-echo [db_mongo_shop7]------------------------------------------------------------------ 
-docker build -t db_mongo_shop7 -f mongodb.dockerfile .
 
-echo [auth_shop7]------------------------------------------------------------------ 
-docker build -t auth_shop7 -f auth.dockerfile .
+DB_NAME_TAG="db_mongo_shop7"
+echo "build ${DB_NAME_TAG}" 
+docker build -t ${DB_NAME_TAG} -f mongodb.dockerfile .
 
-echo [ms_shop7]------------------------------------------------------------------ 
-docker build -t ms_shop7 -f ms.dockerfile .
+AUTH_NAME_TAG="auth_shop7"
+echo "build ${AUTH_NAME_TAG}" 
+docker build -t ${AUTH_NAME_TAG} -f auth.dockerfile .
+
+MS_NAME_TAG="ms_shop7"
+echo "build ${MS_NAME_TAG}" 
+docker build -t ${MS_NAME_TAG} -f ms.dockerfile .
