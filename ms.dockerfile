@@ -9,7 +9,7 @@ RUN apt-get update\
 	python-pika \
 	python-twisted \
 	python-pymongo
-	
+
 
 ENV IS_CONTAINER 1
 ENV RABBITMQ_USER user
@@ -18,7 +18,7 @@ ENV RABBITMQ_PASSWORD user
 RUN mkdir /app
 COPY . /app
 
-EXPOSE  9000 5672 27017
+EXPOSE 9000 5672 27017
 
 WORKDIR ./app/bin
 RUN chmod +x ./server.sh

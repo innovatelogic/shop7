@@ -18,9 +18,7 @@ ENV RABBITMQ_PASSWORD user
 RUN mkdir /app
 COPY . /app
 
-EXPOSE  9000
-EXPOSE  5672
-EXPOSE 	27017
+EXPOSE  9000 5672 27017
 
 WORKDIR ./app/bin
 RUN chmod +x ./start_auth.sh

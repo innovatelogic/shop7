@@ -2,7 +2,7 @@
 
 echo "auth server starting"
 
-if [ -z ${IS_CONTAINER+x}]
+if [ -z ${IS_CONTAINER+x} ]
 then
 . config/server_config.sh
 else
