@@ -103,3 +103,13 @@ docker stop fc7f41b492fe
 docker rm $(docker ps -a -q)
 # Delete all images
 docker rmi $(docker images -q)
+
+
+#########################################################################
+# clean docker default
+#########################################################################
+docker-machine rm default
+
+docker-machine create --driver virtualbox --virtualbox-disk-size "100100" default
+
+docker-machine env default
